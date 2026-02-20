@@ -1,42 +1,143 @@
+/* Градиентный дизайн - Сине-зеленый */
+:root {
+    --gradient-start: #00b4db;
+    --gradient-end: #00d4a0;
+    --gradient: linear-gradient(135deg, #00b4db 0%, #00d4a0 100%);
+    --gradient-hover: linear-gradient(135deg, #00a3c4 0%, #00c091 100%);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --text-primary: #1a2b3c;
+    --text-secondary: #4a5a6a;
+    --shadow: 0 20px 40px rgba(0, 180, 219, 0.2);
+    --glow: 0 0 30px rgba(0, 212, 160, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--tg-theme-bg-color, #f8f9fa);
-    color: var(--tg-theme-text-color, #1a1a1a);
-    margin: 0;
-    padding: 16px;
+    min-height: 100vh;
+    background: var(--gradient);
+    color: var(--text-primary);
+    position: relative;
+    animation: gradientShift 10s ease infinite;
+}
+
+/* Анимация градиента */
+@keyframes gradientShift {
+    0% {
+        background: linear-gradient(135deg, #00b4db 0%, #00d4a0 100%);
+    }
+    50% {
+        background: linear-gradient(135deg, #00d4a0 0%, #00b4db 100%);
+    }
+    100% {
+        background: linear-gradient(135deg, #00b4db 0%, #00d4a0 100%);
+    }
+}
+
+/* Декоративные волны */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+    pointer-events: none;
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
+/* Шапка со стеклянным эффектом */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: var(--shadow);
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .header h1 {
-    font-size: 24px;
+    font-size: 28px;
     margin: 0;
-    color: var(--tg-theme-button-color, #40a7e3);
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .date {
     font-size: 14px;
-    color: #666;
-    background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-    padding: 6px 12px;
-    border-radius: 20px;
+    color: white;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* Карточка дня */
 .day-card {
-    background: var(--tg-theme-secondary-bg-color, #ffffff);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background: var(--card-bg);
+    border-radius: 30px;
+    padding: 25px;
+    box-shadow: var(--shadow), var(--glow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.day-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 50px rgba(0, 180, 219, 0.3), var(--glow);
 }
 
 .day-header {
@@ -44,142 +145,334 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(0, 180, 219, 0.2);
 }
 
 .day-header h2 {
     margin: 0;
-    font-size: 28px;
+    font-size: 32px;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
 }
 
+/* Статус дня */
 .day-status {
-    padding: 6px 12px;
-    border-radius: 20px;
+    padding: 8px 16px;
+    border-radius: 30px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .day-status.not-started {
-    background: #ffd966;
-    color: #856404;
+    background: #ffd93e;
+    color: #8b6e00;
+    box-shadow: 0 4px 10px rgba(255, 217, 62, 0.3);
 }
 
 .day-status.in-progress {
-    background: #b8daff;
-    color: #004085;
+    background: #00b4db;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 180, 219, 0.3);
 }
 
 .day-status.completed {
-    background: #c3e6cb;
-    color: #155724;
+    background: #00d4a0;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 212, 160, 0.3);
 }
 
+/* Кнопки */
 .btn {
     width: 100%;
     padding: 16px;
     font-size: 18px;
     font-weight: 600;
     border: none;
-    border-radius: 12px;
+    border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.2s, opacity 0.2s;
+    transition: all 0.3s ease;
     margin: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
 }
 
-.btn:active {
-    transform: scale(0.98);
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:active::before {
+    width: 300px;
+    height: 300px;
 }
 
 .start-btn {
-    background: var(--tg-theme-button-color, #40a7e3);
-    color: var(--tg-theme-button-text-color, #ffffff);
+    background: var(--gradient);
+    color: white;
+    box-shadow: 0 10px 20px rgba(0, 180, 219, 0.3);
+}
+
+.start-btn:hover {
+    background: var(--gradient-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(0, 180, 219, 0.4);
 }
 
 .complete-btn {
-    background: #28a745;
+    background: #00d4a0;
     color: white;
-    margin-top: 20px;
+    box-shadow: 0 10px 20px rgba(0, 212, 160, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .btn-small {
-    background: var(--tg-theme-button-color, #40a7e3);
-    color: var(--tg-theme-button-text-color, #ffffff);
+    background: var(--gradient);
+    color: white;
     border: none;
-    border-radius: 8px;
-    padding: 10px 16px;
+    border-radius: 25px;
+    padding: 12px 24px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 180, 219, 0.2);
 }
 
+.btn-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 180, 219, 0.3);
+}
+
+/* Секция задач */
 .tasks-section {
-    margin-top: 20px;
+    margin-top: 25px;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tasks-section h3 {
+    color: var(--text-primary);
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 .tasks-list {
     margin: 15px 0;
 }
 
+/* Элемент задачи */
 .task-item {
     display: flex;
     align-items: center;
-    padding: 12px;
-    background: var(--tg-theme-bg-color, #f8f9fa);
-    border-radius: 8px;
-    margin-bottom: 8px;
+    padding: 15px;
+    background: white;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 180, 219, 0.1);
+    animation: taskAppear 0.3s ease;
+}
+
+@keyframes taskAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.task-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 15px rgba(0, 180, 219, 0.1);
+    border-color: rgba(0, 180, 219, 0.3);
 }
 
 .task-checkbox {
-    width: 20px;
-    height: 20px;
-    margin-right: 12px;
+    width: 22px;
+    height: 22px;
+    margin-right: 15px;
     cursor: pointer;
-    accent-color: var(--tg-theme-button-color, #40a7e3);
+    accent-color: #00d4a0;
 }
 
 .task-text {
     flex: 1;
     font-size: 16px;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
 }
 
 .task-text.completed {
     text-decoration: line-through;
+    color: var(--text-secondary);
     opacity: 0.7;
 }
 
 .delete-task {
     background: none;
     border: none;
-    color: #dc3545;
+    color: #ff6b6b;
     font-size: 20px;
     cursor: pointer;
     padding: 0 8px;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.delete-task:hover {
+    opacity: 1;
+    background: #ff6b6b;
+    color: white;
+    transform: rotate(90deg);
+}
+
+/* Добавление задачи */
 .add-task {
     display: flex;
     gap: 10px;
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .add-task input {
     flex: 1;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 18px;
+    border: 2px solid rgba(0, 180, 219, 0.2);
+    border-radius: 25px;
     font-size: 14px;
-    background: var(--tg-theme-bg-color, #ffffff);
-    color: var(--tg-theme-text-color, #1a1a1a);
+    background: white;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    outline: none;
 }
 
+.add-task input:focus {
+    border-color: #00b4db;
+    box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.1);
+}
+
+.add-task input::placeholder {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+/* Сообщение о завершении марафона */
 .congrats {
     text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border-radius: 16px;
+    padding: 50px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
     margin-top: 20px;
+    box-shadow: var(--shadow), var(--glow);
+    animation: congratsPop 0.6s ease;
+}
+
+@keyframes congratsPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .congrats h2 {
-    font-size: 32px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.congrats p {
+    font-size: 18px;
+    color: var(--text-secondary);
+}
+
+/* Адаптация под Telegram темы */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --card-bg: rgba(30, 40, 50, 0.95);
+        --text-primary: #ffffff;
+        --text-secondary: #a0b0c0;
+    }
+    
+    .task-item {
+        background: rgba(40, 50, 60, 0.8);
+    }
+    
+    .add-task input {
+        background: rgba(40, 50, 60, 0.8);
+        color: white;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Анимация загрузки */
+.loading {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
