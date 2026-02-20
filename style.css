@@ -1,14 +1,17 @@
-/* Градиентный дизайн для марафона баланса */
+/* Черный дизайн с мягким зеленым неоном */
 :root {
-    --mind-color: #4169E1;      /* Королевский синий */
-    --spirit-color: #32CD32;     /* Лаймово-зеленый */
-    --mind-gradient: linear-gradient(135deg, #4169E1, #1E90FF);
-    --spirit-gradient: linear-gradient(135deg, #32CD32, #98FB98);
-    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --text-primary: #2c3e50;
-    --text-secondary: #7f8c8d;
-    --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-card: rgba(20, 20, 20, 0.95);
+    --neon-green: #00ff9d;
+    --neon-glow: rgba(0, 255, 157, 0.3);
+    --neon-gradient: linear-gradient(135deg, #00ff9d 0%, #00cc88 100%);
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --mind-color: #00ff9d;
+    --spirit-color: #7cffb0;
+    --shadow: 0 20px 40px rgba(0, 255, 157, 0.1);
+    --glow: 0 0 30px rgba(0, 255, 157, 0.2);
 }
 
 * {
@@ -20,23 +23,54 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
-    background: var(--bg-gradient);
+    background: var(--bg-primary);
     color: var(--text-primary);
     position: relative;
+    overflow-x: hidden;
 }
 
-/* Анимированный фон */
+/* Размытый зеленый градиент на фоне */
 body::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 30% 50%, rgba(0, 255, 157, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(0, 255, 157, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(0, 255, 157, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 80% 30%, rgba(0, 255, 157, 0.08) 0%, transparent 50%);
+    filter: blur(80px);
+    transform: rotate(45deg);
+    animation: glowPulse 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes glowPulse {
+    0%, 100% {
+        opacity: 0.5;
+        transform: rotate(45deg) scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: rotate(45deg) scale(1.2);
+    }
+}
+
+/* Второй слой градиента для глубины */
+body::after {
     content: '';
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 30%);
+    background: radial-gradient(circle at 80% 10%, rgba(0, 255, 157, 0.05) 0%, transparent 40%);
     pointer-events: none;
+    z-index: 0;
 }
 
 .container {
@@ -47,47 +81,120 @@ body::before {
     z-index: 1;
 }
 
-/* Шапка */
+/* Шапка с неоновым свечением */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
     padding: 15px 20px;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--bg-card);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    box-shadow: var(--shadow), 0 0 20px rgba(0, 255, 157, 0.1);
+    position: relative;
+    overflow: hidden;
+    animation: borderPulse 3s infinite;
+}
+
+@keyframes borderPulse {
+    0%, 100% {
+        border-color: rgba(0, 255, 157, 0.2);
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.1);
+    }
+    50% {
+        border-color: rgba(0, 255, 157, 0.4);
+        box-shadow: 0 0 30px rgba(0, 255, 157, 0.2);
+    }
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 255, 157, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.header:hover::before {
+    opacity: 1;
 }
 
 .header h1 {
     font-size: 24px;
     margin: 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.3);
 }
 
 .date {
     font-size: 14px;
-    background: rgba(255, 255, 255, 0.25);
+    color: var(--text-primary);
+    background: rgba(0, 255, 157, 0.1);
     padding: 6px 12px;
     border-radius: 20px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    backdrop-filter: blur(5px);
 }
 
 /* Стартовый экран */
 .start-screen {
-    background: var(--card-bg);
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
     border-radius: 30px;
     padding: 40px 20px;
     text-align: center;
-    box-shadow: var(--shadow);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    box-shadow: var(--shadow), var(--glow);
+    position: relative;
+    overflow: hidden;
     animation: fadeIn 0.5s ease;
+}
+
+.start-screen::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 255, 157, 0.1) 0%, transparent 50%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.start-content {
+    position: relative;
+    z-index: 1;
 }
 
 .start-content h2 {
     font-size: 48px;
-    color: var(--mind-color);
+    background: var(--neon-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
 }
 
 .start-content p {
@@ -98,19 +205,44 @@ body::before {
 
 /* Баланс система */
 .balance-section {
-    background: var(--card-bg);
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
     border-radius: 25px;
     padding: 20px;
     margin-bottom: 20px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
     box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.balance-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.1), transparent);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 200%;
+    }
 }
 
 .balance-title {
     text-align: center;
-    color: var(--text-primary);
+    color: var(--neon-green);
     margin-bottom: 20px;
     font-size: 18px;
     letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
 }
 
 .balance-item {
@@ -127,41 +259,62 @@ body::before {
 
 .balance-icon {
     font-size: 24px;
+    filter: drop-shadow(0 0 5px var(--neon-glow));
 }
 
 .balance-percent {
     margin-left: auto;
     font-weight: 600;
-    color: var(--text-secondary);
+    color: var(--neon-green);
+    text-shadow: 0 0 5px rgba(0, 255, 157, 0.5);
 }
 
 .progress-bar {
     width: 100%;
     height: 12px;
-    background: #e0e0e0;
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     overflow: hidden;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .progress-fill {
     height: 100%;
     transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
 }
 
 .mind-fill {
-    background: var(--mind-gradient);
+    background: linear-gradient(90deg, #00ff9d, #00cc88);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.5);
 }
 
 .spirit-fill {
-    background: var(--spirit-gradient);
+    background: linear-gradient(90deg, #7cffb0, #00ff9d);
+    box-shadow: 0 0 20px rgba(124, 255, 176, 0.5);
 }
 
-/* Секции привычек и задач */
+/* Секции */
 .habits-section, .tasks-section {
-    background: var(--card-bg);
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
     border-radius: 25px;
     padding: 20px;
     margin-bottom: 20px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
     box-shadow: var(--shadow);
 }
 
@@ -173,48 +326,73 @@ body::before {
 }
 
 .section-header h3 {
-    color: var(--text-primary);
+    color: var(--neon-green);
     font-size: 16px;
     letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(0, 255, 157, 0.3);
 }
 
 .add-btn {
     width: 36px;
     height: 36px;
     border: none;
-    background: var(--mind-gradient);
-    color: white;
-    font-size: 24px;
+    background: transparent;
+    color: var(--neon-green);
+    font-size: 28px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s;
+    transition: all 0.3s;
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    text-shadow: 0 0 10px var(--neon-green);
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
 }
 
 .add-btn:hover {
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(90deg);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 30px rgba(0, 255, 157, 0.4);
 }
 
 .add-input {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .add-input input {
     flex: 1;
     padding: 12px;
-    border: 2px solid #e0e0e0;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 255, 157, 0.3);
     border-radius: 12px;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.3s;
+    color: var(--text-primary);
+    transition: all 0.3s;
 }
 
 .add-input input:focus {
-    border-color: var(--mind-color);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+}
+
+.add-input input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
 }
 
 /* Элементы списков */
@@ -222,16 +400,25 @@ body::before {
     display: flex;
     align-items: center;
     padding: 12px;
-    background: #f8f9fa;
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
     margin-bottom: 8px;
+    border: 1px solid rgba(0, 255, 157, 0.1);
+    transition: all 0.3s;
     animation: slideIn 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.habit-item:hover, .task-item:hover {
+    border-color: rgba(0, 255, 157, 0.3);
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.1);
+    transform: translateX(5px);
 }
 
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateX(-10px);
+        transform: translateX(-20px);
     }
     to {
         opacity: 1;
@@ -244,12 +431,14 @@ body::before {
     height: 22px;
     margin-right: 12px;
     cursor: pointer;
-    accent-color: var(--mind-color);
+    accent-color: var(--neon-green);
+    filter: drop-shadow(0 0 5px var(--neon-green));
 }
 
 .habit-text, .task-text {
     flex: 1;
     font-size: 15px;
+    color: var(--text-primary);
 }
 
 .habit-text.completed, .task-text.completed {
@@ -261,51 +450,123 @@ body::before {
 .delete-btn {
     background: none;
     border: none;
-    color: #ff6b6b;
+    color: rgba(255, 255, 255, 0.3);
     font-size: 18px;
     cursor: pointer;
     padding: 0 8px;
-    opacity: 0.6;
-    transition: all 0.2s;
+    transition: all 0.3s;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
 }
 
 .delete-btn:hover {
-    opacity: 1;
+    color: #ff4444;
+    background: rgba(255, 68, 68, 0.1);
     transform: rotate(90deg);
+    text-shadow: 0 0 10px #ff4444;
+}
+
+/* Кнопка старта дня */
+.start-day-btn {
+    background: transparent;
+    color: var(--neon-green);
+    border: 2px solid rgba(0, 255, 157, 0.5);
+    padding: 16px 40px;
+    font-size: 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+}
+
+.start-day-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 255, 157, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.start-day-btn:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 40px rgba(0, 255, 157, 0.4);
+    transform: translateY(-2px);
+}
+
+.start-day-btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 /* Кнопка завершения дня */
 .complete-day-btn {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
+    background: transparent;
+    color: var(--neon-green);
+    border: 2px solid rgba(0, 255, 157, 0.5);
     border-radius: 15px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s;
     margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
 }
 
-.complete-day-btn:hover {
+.complete-day-btn:not(:disabled) {
+    animation: btnPulse 2s infinite;
+}
+
+@keyframes btnPulse {
+    0%, 100% {
+        border-color: rgba(0, 255, 157, 0.5);
+        box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
+    }
+    50% {
+        border-color: var(--neon-green);
+        box-shadow: 0 0 40px rgba(0, 255, 157, 0.4);
+    }
+}
+
+.complete-day-btn:hover:not(:disabled) {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 50px rgba(0, 255, 157, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
 .complete-day-btn:disabled {
-    opacity: 0.5;
-    pointer-events: none;
+    opacity: 0.3;
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Экран завершения */
 .congrats {
-    background: var(--card-bg);
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
     border-radius: 30px;
     padding: 40px 20px;
     text-align: center;
-    box-shadow: var(--shadow);
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    box-shadow: var(--shadow), var(--glow);
     animation: popIn 0.6s ease;
 }
 
@@ -325,52 +586,62 @@ body::before {
 
 .congrats h2 {
     font-size: 36px;
-    background: var(--bg-gradient);
+    background: var(--neon-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+.congrats p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
 }
 
 .final-balance {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     margin-top: 20px;
-    font-size: 18px;
-}
-
-/* Кнопка старта */
-.start-day-btn {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: 16px 40px;
     font-size: 20px;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s;
 }
 
-.start-day-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+.final-balance div {
+    background: rgba(0, 255, 157, 0.1);
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(0, 255, 157, 0.2);
+    color: var(--neon-green);
 }
 
-/* Адаптация под темную тему */
+/* Адаптация под темную тему (уже черная, но добавим) */
 @media (prefers-color-scheme: dark) {
     :root {
-        --card-bg: rgba(30, 40, 50, 0.95);
-        --text-primary: #ffffff;
-        --text-secondary: #a0b0c0;
+        --bg-primary: #000000;
+        --bg-secondary: #0a0a0a;
+        --bg-card: rgba(0, 0, 0, 0.9);
     }
-    
-    .habit-item, .task-item {
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    .add-input input {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        border-color: rgba(255, 255, 255, 0.2);
-    }
+}
+
+/* Неоновый текст для особых элементов */
+.neon-text {
+    color: var(--neon-green);
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+/* Стили для кнопки добавления */
+.btn-small {
+    background: transparent;
+    color: var(--neon-green);
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    padding: 10px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: 500;
+}
+
+.btn-small:hover {
+    border-color: var(--neon-green);
+    box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
 }
