@@ -56,7 +56,10 @@ const menuBtn = document.getElementById('menu-btn');
 const menuDropdown = document.getElementById('menu-dropdown');
 const resetDayBtn = document.getElementById('reset-day');
 const newMarathonBtn = document.getElementById('new-marathon');
-const aboutBtn = document.getElementById('about');
+const statsBtn = document.getElementById('stats');
+const supportBtn = document.getElementById('support');
+const telegramSupport = document.getElementById('telegram-support');
+const faqBtn = document.getElementById('faq');
 
 // Показываем дату
 function updateDate() {
@@ -111,9 +114,10 @@ function updateBalance() {
 function renderHabits() {
     habitsList.innerHTML = '';
     
-    habits.forEach(habit => {
+    habits.forEach((habit, index) => {
         const habitDiv = document.createElement('div');
         habitDiv.className = 'habit-item';
+        habitDiv.style.animationDelay = `${index * 0.05}s`;
         habitDiv.innerHTML = `
             <input type="checkbox" class="habit-checkbox" data-id="${habit.id}" ${habit.completed ? 'checked' : ''}>
             <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
@@ -150,9 +154,10 @@ function renderHabits() {
 function renderTasks() {
     tasksList.innerHTML = '';
     
-    tasks.forEach(task => {
+    tasks.forEach((task, index) => {
         const taskDiv = document.createElement('div');
         taskDiv.className = 'task-item';
+        taskDiv.style.animationDelay = `${index * 0.05}s`;
         taskDiv.innerHTML = `
             <input type="checkbox" class="task-checkbox" data-id="${task.id}" ${task.completed ? 'checked' : ''}>
             <span class="task-text ${task.completed ? 'completed' : ''}">${task.text}</span>
@@ -258,19 +263,31 @@ habitText.addEventListener('keypress', (e) => {
     }
 });
 
-// Меню
+// Меню с анимацией
 menuBtn.addEventListener('click', () => {
     if (menuDropdown.style.display === 'none') {
         menuDropdown.style.display = 'block';
+        menuBtn.classList.add('active');
+        setTimeout(() => {
+            menuDropdown.style.opacity = '1';
+        }, 10);
     } else {
-        menuDropdown.style.display = 'none';
+        menuDropdown.style.opacity = '0';
+        menuBtn.classList.remove('active');
+        setTimeout(() => {
+            menuDropdown.style.display = 'none';
+        }, 300);
     }
 });
 
 // Закрыть меню при клике вне его
 document.addEventListener('click', (e) => {
     if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
-        menuDropdown.style.display = 'none';
+        menuDropdown.style.opacity = '0';
+        menuBtn.classList.remove('active');
+        setTimeout(() => {
+            menuDropdown.style.display = 'none';
+        }, 300);
     }
 });
 
@@ -283,7 +300,11 @@ resetDayBtn.addEventListener('click', (e) => {
         tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
         saveData();
         updateUI();
-        menuDropdown.style.display = 'none';
+        menuDropdown.style.opacity = '0';
+        menuBtn.classList.remove('active');
+        setTimeout(() => {
+            menuDropdown.style.display = 'none';
+        }, 300);
     }
 });
 
@@ -296,14 +317,53 @@ newMarathonBtn.addEventListener('click', (e) => {
         tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
         saveData();
         updateUI();
-        menuDropdown.style.display = 'none';
+        menuDropdown.style.opacity = '0';
+        menuBtn.classList.remove('active');
+        setTimeout(() => {
+            menuDropdown.style.display = 'none';
+        }, 300);
     }
 });
 
-aboutBtn.addEventListener('click', (e) => {
+statsBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert('Марафон Баланса v1.0\nРазработано с ❤️');
-    menuDropdown.style.display = 'none';
+    const totalDays = currentDay - 1;
+    tg.showAlert(`📊 Статистика:\nПройдено дней: ${totalDays}\nТекущий день: ${currentDay}`);
+    menuDropdown.style.opacity = '0';
+    menuBtn.classList.remove('active');
+    setTimeout(() => {
+        menuDropdown.style.display = 'none';
+    }, 300);
+});
+
+supportBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    tg.showAlert('💬 Поддержка: @frontendchikk\n📧 Почта: frontendchikk@mail.ru');
+    menuDropdown.style.opacity = '0';
+    menuBtn.classList.remove('active');
+    setTimeout(() => {
+        menuDropdown.style.display = 'none';
+    }, 300);
+});
+
+telegramSupport.addEventListener('click', (e) => {
+    e.preventDefault();
+    tg.openTelegramLink('https://t.me/frontendchikk');
+    menuDropdown.style.opacity = '0';
+    menuBtn.classList.remove('active');
+    setTimeout(() => {
+        menuDropdown.style.display = 'none';
+    }, 300);
+});
+
+faqBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    tg.showAlert('❓ Часто задаваемые вопросы:\n\n1. Как сбросить день? - В меню "Сбросить день"\n2. Как добавить привычку? - Нажмите +\n3. Связь с автором: @frontendchikk');
+    menuDropdown.style.opacity = '0';
+    menuBtn.classList.remove('active');
+    setTimeout(() => {
+        menuDropdown.style.display = 'none';
+    }, 300);
 });
 
 // Кнопка для продолжения после завершения
