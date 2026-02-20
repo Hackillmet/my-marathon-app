@@ -9,7 +9,8 @@ const STORAGE_KEYS = {
     DAY_STARTED: `day_started_${userId}`,
     HABITS: `habits_${userId}`,
     TASKS: `tasks_${userId}`,
-    CURRENT_DAY: `current_day_${userId}`
+    CURRENT_DAY: `current_day_${userId}`,
+    DAY_COMPLETED_TIME: `day_completed_time_${userId}` // Время завершения дня
 };
 
 // Стартовые данные
@@ -31,6 +32,7 @@ let currentDay = 1;
 let habits = [];
 let tasks = [];
 let dayStarted = false;
+let dayCompletedTime = null;
 
 // DOM элементы
 const startScreen = document.getElementById('start-screen');
@@ -72,6 +74,7 @@ function updateDate() {
 function loadData() {
     dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true';
     currentDay = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_DAY)) || 1;
+    dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
     
     const savedHabits = localStorage.getItem(STORAGE_KEYS.HABITS);
     habits = savedHabits ? JSON.parse(savedHabits) : DEFAULT_HABITS.map(h => ({...h}));
@@ -86,6 +89,39 @@ function saveData() {
     localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
     localStorage.setItem(STORAGE_KEYS.HABITS, JSON.stringify(habits));
     localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
+    if (dayCompletedTime) {
+        localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime);
+    }
+}
+
+// Проверка, можно ли начать новый день
+function canStartNewDay() {
+    if (!dayCompletedTime) return true; // Если день не завершен, можно начать
+    
+    const now = new Date().getTime();
+    const completedTime = parseInt(dayCompletedTime);
+    const hoursPassed = (now - completedTime) / (1000 * 60 * 60);
+    
+    return hoursPassed >= 24; // Прошло 24 часа?
+}
+
+// Получить оставшееся время до следующего дня
+function getTimeRemaining() {
+    if (!dayCompletedTime) return null;
+    
+    const now = new Date().getTime();
+    const completedTime = parseInt(dayCompletedTime);
+    const hoursPassed = (now - completedTime) / (1000 * 60 * 60);
+    
+    if (hoursPassed >= 24) return null;
+    
+    const remainingHours = 24 - hoursPassed;
+    const remainingMinutes = Math.ceil((remainingHours - Math.floor(remainingHours)) * 60);
+    
+    return {
+        hours: Math.floor(remainingHours),
+        minutes: remainingMinutes
+    };
 }
 
 // Обновление баланса
@@ -183,10 +219,27 @@ function renderTasks() {
 function updateUI() {
     startDayNumber.textContent = currentDay;
     
+    // Проверяем, можно ли начать день
+    const canStart = canStartNewDay();
+    
     if (!dayStarted) {
         startScreen.style.display = 'block';
         marathonScreen.style.display = 'none';
         congratsDiv.style.display = 'none';
+        
+        // Если день завершен и еще не прошло 24 часа
+        if (dayCompletedTime && !canStart) {
+            const remaining = getTimeRemaining();
+            if (remaining) {
+                startDayBtn.textContent = `⏳ Следующий день через ${remaining.hours}ч ${remaining.minutes}м`;
+                startDayBtn.disabled = true;
+                startDayBtn.style.opacity = '0.5';
+            }
+        } else {
+            startDayBtn.textContent = '🚀 Начать день';
+            startDayBtn.disabled = false;
+            startDayBtn.style.opacity = '1';
+        }
     } else {
         startScreen.style.display = 'none';
         marathonScreen.style.display = 'block';
@@ -199,7 +252,15 @@ function updateUI() {
 
 // Начать день
 startDayBtn.addEventListener('click', () => {
+    if (!canStartNewDay()) {
+        const remaining = getTimeRemaining();
+        tg.showAlert(`⏳ Еще не прошло 24 часа! Следующий день откроется через ${remaining.hours}ч ${remaining.minutes}м`);
+        return;
+    }
+    
     dayStarted = true;
+    dayCompletedTime = null; // Сбрасываем время завершения
+    localStorage.removeItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
     saveData();
     updateUI();
 });
@@ -217,19 +278,18 @@ completeDayBtn.addEventListener('click', () => {
     document.getElementById('final-mind').textContent = mindProgress;
     document.getElementById('final-spirit').textContent = spiritProgress;
     
-    currentDay++;
+    // Сохраняем время завершения дня
+    dayCompletedTime = new Date().getTime().toString();
     dayStarted = false;
     
-    habits = DEFAULT_HABITS.map(h => ({...h, completed: false}));
-    tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
-    
+    // Не увеличиваем currentDay сразу, ждем 24 часа
     saveData();
     
     startScreen.style.display = 'none';
     marathonScreen.style.display = 'none';
     congratsDiv.style.display = 'block';
     
-    tg.showAlert(`🎉 Молодец! День ${currentDay-1} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%`);
+    tg.showAlert(`🎉 Молодец! День ${currentDay} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%\n\n⏳ Следующий день откроется через 24 часа`);
 });
 
 // Добавление привычки
@@ -294,8 +354,9 @@ document.addEventListener('click', (e) => {
 // Функции меню
 resetDayBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (confirm('Сбросить текущий день? Все прогресс будет потерян.')) {
+    if (confirm('Сбросить текущий день? Весь прогресс будет потерян.')) {
         dayStarted = false;
+        dayCompletedTime = null;
         habits = DEFAULT_HABITS.map(h => ({...h, completed: false}));
         tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
         saveData();
@@ -313,6 +374,7 @@ newMarathonBtn.addEventListener('click', (e) => {
     if (confirm('Начать новый марафон? Весь прогресс будет сброшен.')) {
         currentDay = 1;
         dayStarted = false;
+        dayCompletedTime = null;
         habits = DEFAULT_HABITS.map(h => ({...h, completed: false}));
         tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
         saveData();
@@ -327,7 +389,7 @@ newMarathonBtn.addEventListener('click', (e) => {
 
 statsBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const totalDays = currentDay - 1;
+    const totalDays = dayCompletedTime ? currentDay : currentDay - 1;
     tg.showAlert(`📊 Статистика:\nПройдено дней: ${totalDays}\nТекущий день: ${currentDay}`);
     menuDropdown.style.opacity = '0';
     menuBtn.classList.remove('active');
@@ -358,7 +420,7 @@ telegramSupport.addEventListener('click', (e) => {
 
 faqBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert('❓ Часто задаваемые вопросы:\n\n1. Как сбросить день? - В меню "Сбросить день"\n2. Как добавить привычку? - Нажмите +\n3. Связь с автором: @frontendchikk');
+    tg.showAlert('❓ Часто задаваемые вопросы:\n\n1. Как сбросить день? - В меню "Сбросить день"\n2. Как добавить привычку? - Нажмите +\n3. Связь с автором: @frontendchikk\n4. Следующий день открывается через 24 часа');
     menuDropdown.style.opacity = '0';
     menuBtn.classList.remove('active');
     setTimeout(() => {
@@ -369,13 +431,20 @@ faqBtn.addEventListener('click', (e) => {
 // Кнопка для продолжения после завершения
 const continueBtn = document.createElement('button');
 continueBtn.className = 'start-day-btn';
-continueBtn.textContent = '🚀 К следующему дню';
+continueBtn.textContent = '🏠 На главную';
 continueBtn.style.marginTop = '20px';
 continueBtn.addEventListener('click', () => {
     congratsDiv.style.display = 'none';
     updateUI();
 });
 congratsDiv.appendChild(continueBtn);
+
+// Проверяем каждую минуту, не прошло ли 24 часа
+setInterval(() => {
+    if (!dayStarted && dayCompletedTime) {
+        updateUI(); // Обновляем UI, чтобы изменить текст кнопки если время прошло
+    }
+}, 60000); // Проверка каждую минуту
 
 // Инициализация
 updateDate();
