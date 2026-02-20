@@ -1,4 +1,4 @@
-/* Черный минималистичный дизайн */
+/* Черный минималистичный дизайн с анимациями */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
@@ -8,6 +8,9 @@
     --text-primary: #ffffff;
     --text-secondary: #888888;
     --blue: #0066ff;
+    --blue-hover: #0052cc;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --menu-transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 * {
@@ -21,12 +24,25 @@ body {
     min-height: 100vh;
     background: var(--bg-primary);
     color: var(--text-primary);
+    transition: var(--transition);
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
     padding: 16px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Новая шапка как на сайте */
@@ -37,23 +53,46 @@ body {
     padding: 12px 0;
     margin-bottom: 8px;
     border-bottom: 1px solid var(--border-color);
+    animation: slideDown 0.5s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .logo {
     font-size: 20px;
     font-weight: 700;
     letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .logo-white {
     color: #ffffff;
+    transition: var(--transition);
 }
 
 .logo-blue {
     color: #0066ff;
+    transition: var(--transition);
 }
 
-/* Кнопка меню (бургер) */
+.logo:hover .logo-blue {
+    text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
+}
+
+/* Кнопка меню (бургер) с анимацией */
 .menu-btn {
     width: 30px;
     height: 30px;
@@ -64,13 +103,14 @@ body {
     border: none;
     cursor: pointer;
     padding: 5px 0;
+    transition: var(--transition);
 }
 
 .menu-btn span {
     width: 100%;
     height: 2px;
     background: #ffffff;
-    transition: all 0.3s;
+    transition: var(--transition);
     border-radius: 2px;
 }
 
@@ -78,18 +118,76 @@ body {
     background: #0066ff;
 }
 
-/* Выпадающее меню */
+.menu-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-btn.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+.menu-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Выпадающее меню с анимацией */
 .menu-dropdown {
     position: absolute;
     top: 70px;
     right: 16px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 8px 0;
-    min-width: 200px;
+    border-radius: 16px;
+    padding: 16px;
+    min-width: 280px;
     z-index: 1000;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    animation: menuPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: top right;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+@keyframes menuPop {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.menu-section {
+    margin-bottom: 20px;
+    animation: slideIn 0.3s ease;
+    animation-fill-mode: both;
+}
+
+.menu-section:nth-child(1) { animation-delay: 0.05s; }
+.menu-section:nth-child(2) { animation-delay: 0.1s; }
+.menu-section:nth-child(3) { animation-delay: 0.15s; }
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.menu-title {
+    color: var(--text-secondary);
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    text-transform: uppercase;
 }
 
 .menu-item {
@@ -98,12 +196,64 @@ body {
     color: var(--text-primary);
     text-decoration: none;
     font-size: 14px;
-    transition: all 0.2s;
+    transition: var(--transition);
+    border-radius: 8px;
+    margin-bottom: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-item::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(0, 102, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.menu-item:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .menu-item:hover {
     background: var(--accent);
     color: #0066ff;
+    transform: translateX(5px);
+}
+
+.contact-info {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.contact-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 13px;
+    transition: var(--transition);
+}
+
+.contact-item:hover {
+    transform: translateX(5px);
+    color: #0066ff;
+}
+
+.contact-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.contact-highlight {
+    color: #0066ff;
+    font-weight: 500;
 }
 
 /* Дата под шапкой */
@@ -113,6 +263,7 @@ body {
     font-size: 14px;
     color: var(--text-secondary);
     padding: 4px 0;
+    animation: fadeIn 0.5s ease 0.2s both;
 }
 
 /* Стартовый экран */
@@ -122,6 +273,18 @@ body {
     padding: 40px 20px;
     text-align: center;
     border: 1px solid var(--border-color);
+    animation: scaleIn 0.5s ease;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .start-content h2 {
@@ -129,6 +292,16 @@ body {
     color: var(--text-primary);
     margin-bottom: 10px;
     font-weight: 300;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
 }
 
 .start-content p {
@@ -144,6 +317,18 @@ body {
     padding: 20px;
     margin-bottom: 16px;
     border: 1px solid var(--border-color);
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .balance-title {
@@ -157,6 +342,22 @@ body {
 
 .balance-item {
     margin-bottom: 16px;
+    animation: slideRight 0.5s ease;
+    animation-fill-mode: both;
+}
+
+.balance-item:nth-child(1) { animation-delay: 0.1s; }
+.balance-item:nth-child(2) { animation-delay: 0.2s; }
+
+@keyframes slideRight {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .balance-label {
@@ -170,11 +371,17 @@ body {
 
 .balance-icon {
     font-size: 18px;
+    transition: var(--transition);
+}
+
+.balance-item:hover .balance-icon {
+    transform: scale(1.2);
 }
 
 .balance-percent {
     margin-left: auto;
     color: var(--text-primary);
+    transition: var(--transition);
 }
 
 .progress-bar {
@@ -187,7 +394,29 @@ body {
 
 .progress-fill {
     height: 100%;
-    transition: width 0.3s ease;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 200%;
+    }
 }
 
 .mind-fill {
@@ -205,6 +434,7 @@ body {
     padding: 20px;
     margin-bottom: 16px;
     border: 1px solid var(--border-color);
+    animation: slideUp 0.5s ease 0.1s both;
 }
 
 .section-header {
@@ -233,19 +463,21 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: var(--transition);
     border: 1px solid var(--border-color);
 }
 
 .add-btn:hover {
     background: var(--accent);
     color: #0066ff;
+    transform: rotate(90deg) scale(1.1);
 }
 
 .add-input {
     display: flex;
     gap: 8px;
     margin-bottom: 16px;
+    animation: slideDown 0.3s ease;
 }
 
 .add-input input {
@@ -257,10 +489,12 @@ body {
     font-size: 14px;
     outline: none;
     color: var(--text-primary);
+    transition: var(--transition);
 }
 
 .add-input input:focus {
     border-color: #0066ff;
+    box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
 }
 
 /* Элементы списков */
@@ -272,6 +506,15 @@ body {
     border-radius: 8px;
     margin-bottom: 8px;
     border: 1px solid var(--border-color);
+    transition: var(--transition);
+    animation: slideIn 0.3s ease;
+    animation-fill-mode: both;
+}
+
+.habit-item:hover, .task-item:hover {
+    transform: translateX(5px);
+    border-color: #0066ff;
+    box-shadow: 0 0 20px rgba(0, 102, 255, 0.1);
 }
 
 .habit-checkbox, .task-checkbox {
@@ -282,12 +525,18 @@ body {
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
     accent-color: #0066ff;
+    transition: var(--transition);
+}
+
+.habit-checkbox:checked, .task-checkbox:checked {
+    transform: scale(1.1);
 }
 
 .habit-text, .task-text {
     flex: 1;
     font-size: 14px;
     color: var(--text-primary);
+    transition: var(--transition);
 }
 
 .habit-text.completed, .task-text.completed {
@@ -303,12 +552,15 @@ body {
     cursor: pointer;
     padding: 4px 8px;
     opacity: 0.5;
-    transition: all 0.2s;
+    transition: var(--transition);
+    border-radius: 4px;
 }
 
 .delete-btn:hover {
     opacity: 1;
     color: #ff4444;
+    transform: rotate(90deg) scale(1.2);
+    background: rgba(255, 68, 68, 0.1);
 }
 
 .habit-note, .task-note {
@@ -316,6 +568,7 @@ body {
     color: var(--text-secondary);
     margin-top: 10px;
     text-align: right;
+    animation: fadeIn 0.5s ease;
 }
 
 /* Кнопки */
@@ -327,13 +580,35 @@ body {
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition);
     font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.start-day-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.start-day-btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 .start-day-btn:hover {
     background: #0066ff;
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
 }
 
 .complete-day-btn {
@@ -346,13 +621,17 @@ body {
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition);
     margin-top: 8px;
+    position: relative;
+    overflow: hidden;
 }
 
 .complete-day-btn:hover:not(:disabled) {
     background: #0066ff;
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
 }
 
 .complete-day-btn:disabled {
@@ -367,7 +646,7 @@ body {
     padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: var(--transition);
     font-size: 14px;
 }
 
@@ -375,6 +654,7 @@ body {
     background: #0066ff;
     border-color: #0066ff;
     color: white;
+    transform: scale(1.05);
 }
 
 /* Экран завершения */
@@ -384,6 +664,21 @@ body {
     padding: 40px 20px;
     text-align: center;
     border: 1px solid var(--border-color);
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .congrats h2 {
@@ -391,6 +686,7 @@ body {
     color: var(--text-primary);
     margin-bottom: 10px;
     font-weight: 300;
+    animation: float 3s ease-in-out infinite;
 }
 
 .congrats p {
@@ -411,4 +707,10 @@ body {
     border-radius: 6px;
     border: 1px solid var(--border-color);
     color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.final-balance div:hover {
+    transform: scale(1.05);
+    border-color: #0066ff;
 }
