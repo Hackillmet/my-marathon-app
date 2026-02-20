@@ -11,84 +11,175 @@ body {
     margin: 0 auto;
 }
 
-h1 {
-    font-size: 24px;
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 24px;
+    margin: 0;
     color: var(--tg-theme-button-color, #40a7e3);
 }
 
-.progress-bar {
+.date {
+    font-size: 14px;
+    color: #666;
+    background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.day-card {
+    background: var(--tg-theme-secondary-bg-color, #ffffff);
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.day-header h2 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.day-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.day-status.not-started {
+    background: #ffd966;
+    color: #856404;
+}
+
+.day-status.in-progress {
+    background: #b8daff;
+    color: #004085;
+}
+
+.day-status.completed {
+    background: #c3e6cb;
+    color: #155724;
+}
+
+.btn {
     width: 100%;
-    height: 10px;
-    background-color: #e9ecef;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    overflow: hidden;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s;
+    margin: 10px 0;
 }
 
-.progress-fill {
-    height: 100%;
-    background-color: var(--tg-theme-button-color, #40a7e3);
-    width: 0%;
-    transition: width 0.3s ease;
+.btn:active {
+    transform: scale(0.98);
 }
 
-.tasks {
-    margin-bottom: 30px;
+.start-btn {
+    background: var(--tg-theme-button-color, #40a7e3);
+    color: var(--tg-theme-button-text-color, #ffffff);
+}
+
+.complete-btn {
+    background: #28a745;
+    color: white;
+    margin-top: 20px;
+}
+
+.btn-small {
+    background: var(--tg-theme-button-color, #40a7e3);
+    color: var(--tg-theme-button-text-color, #ffffff);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tasks-section {
+    margin-top: 20px;
+}
+
+.tasks-list {
+    margin: 15px 0;
 }
 
 .task-item {
-    background-color: var(--tg-theme-secondary-bg-color, #ffffff);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 12px;
+    background: var(--tg-theme-bg-color, #f8f9fa);
+    border-radius: 8px;
+    margin-bottom: 8px;
 }
 
 .task-checkbox {
-    width: 24px;
-    height: 24px;
-    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
     cursor: pointer;
     accent-color: var(--tg-theme-button-color, #40a7e3);
 }
 
 .task-text {
+    flex: 1;
     font-size: 16px;
-    font-weight: 500;
 }
 
-.task-completed .task-text {
+.task-text.completed {
     text-decoration: line-through;
     opacity: 0.7;
 }
 
-.nav-buttons {
+.delete-task {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 8px;
+}
+
+.add-task {
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    margin: 15px 0;
 }
 
-.btn {
-    background-color: var(--tg-theme-button-color, #40a7e3);
-    color: var(--tg-theme-button-text-color, #ffffff);
-    border: none;
-    border-radius: 12px;
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
+.add-task input {
     flex: 1;
-    transition: opacity 0.2s;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    background: var(--tg-theme-bg-color, #ffffff);
+    color: var(--tg-theme-text-color, #1a1a1a);
 }
 
-.btn:active {
-    opacity: 0.8;
+.congrats {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 16px;
+    margin-top: 20px;
 }
 
-.btn:disabled {
-    opacity: 0.5;
-    pointer-events: none;
+.congrats h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
 }
