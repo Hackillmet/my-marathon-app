@@ -5,12 +5,8 @@
     --bg-card: #111111;
     --border-color: #2a2a2a;
     --accent: #333333;
-    --accent-hover: #444444;
     --text-primary: #ffffff;
     --text-secondary: #888888;
-    --mind-color: #ffffff;
-    --spirit-color: #cccccc;
-    --shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -133,7 +129,6 @@ body {
 .progress-fill {
     height: 100%;
     transition: width 0.3s ease;
-    background: var(--text-primary);
 }
 
 .mind-fill {
@@ -254,6 +249,13 @@ body {
 .delete-btn:hover {
     opacity: 1;
     color: #ff4444;
+}
+
+.habit-note, .task-note {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    text-align: right;
 }
 
 /* Кнопки */
