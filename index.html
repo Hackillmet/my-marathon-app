@@ -5,27 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мой Марафон</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Подключаем SDK Telegram -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
     <div class="container">
-        <h1 id="marathon-title">🔥 Марафон: День <span id="current-day">1</span></h1>
-        
-        <!-- Прогресс бар -->
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill" style="width: 0%;"></div>
+        <!-- Шапка с датой -->
+        <div class="header">
+            <h1>🔥 Марафон</h1>
+            <div class="date" id="current-date"></div>
         </div>
 
-        <!-- Список заданий на день -->
-        <div class="tasks" id="tasks-list">
-            <!-- Задачи будут грузиться сюда через JS -->
+        <!-- Блок текущего дня -->
+        <div class="day-card" id="day-card">
+            <div class="day-header">
+                <h2 id="day-title">День 1</h2>
+                <span class="day-status" id="day-status">❌ Не начат</span>
+            </div>
+            
+            <!-- Кнопка начала дня (показывается только если день не начат) -->
+            <button class="btn start-btn" id="start-day-btn" style="display: block;">
+                🚀 Начать день
+            </button>
+            
+            <!-- Задачи (скрыты пока день не начат) -->
+            <div class="tasks-section" id="tasks-section" style="display: none;">
+                <h3>Задачи на сегодня:</h3>
+                
+                <!-- Список задач -->
+                <div class="tasks-list" id="tasks-list"></div>
+                
+                <!-- Добавление своей задачи -->
+                <div class="add-task">
+                    <input type="text" id="new-task-input" placeholder="➕ Добавить свою задачу...">
+                    <button class="btn-small" id="add-task-btn">Добавить</button>
+                </div>
+                
+                <!-- Кнопка завершения дня -->
+                <button class="btn complete-btn" id="complete-day-btn" style="display: none;">
+                    ✅ Завершить день
+                </button>
+            </div>
         </div>
 
-        <!-- Кнопки навигации по дням -->
-        <div class="nav-buttons">
-            <button id="prev-day" class="btn">← Предыдущий</button>
-            <button id="next-day" class="btn">Следующий →</button>
+        <!-- Сообщение об окончании марафона -->
+        <div class="congrats" id="congrats" style="display: none;">
+            <h2>🎉 ПОЗДРАВЛЯЕМ!</h2>
+            <p>Ты прошел весь марафон!</p>
         </div>
     </div>
 
