@@ -1,244 +1,266 @@
 let tg = window.Telegram.WebApp;
 tg.expand();
 
-// Получаем ID пользователя Telegram
+// Получаем ID пользователя
 const userId = tg.initDataUnsafe?.user?.id || 'local_user';
 
-// Ключи для хранения данных
+// Ключи для хранения
 const STORAGE_KEYS = {
-    CURRENT_DAY: `marathon_current_day_${userId}`,
-    DAY_STATUS: (day) => `marathon_day_${day}_status_${userId}`,
-    DAY_TASKS: (day) => `marathon_day_${day}_tasks_${userId}`
+    DAY_STARTED: `day_started_${userId}`,
+    HABITS: `habits_${userId}`,
+    TASKS: `tasks_${userId}`,
+    BALANCE: `balance_${userId}`
 };
 
-// Готовые задачи для каждого дня
-const DEFAULT_TASKS = {
-    1: [
-        "🔋 Сделать зарядку",
-        "💻 Писать код 15 минут",
-        "📖 Почитать книгу 10 страниц",
-        "🚶 Прогулка на свежем воздухе"
-    ],
-    2: [
-        "🏃 Пробежка 1 км",
-        "💻 Писать код 30 минут",
-        "🧘 Медитация 10 минут",
-        "🥗 Здоровый завтрак"
-    ],
-    3: [
-        "💪 Силовая тренировка",
-        "💻 Писать код 45 минут",
-        "📝 План на неделю",
-        "🎯 Изучить что-то новое"
-    ],
-    4: [
-        "🧘 Йога 20 минут",
-        "💻 Писать код 1 час",
-        "📚 Чтение 30 минут",
-        "🤝 Помочь кому-то"
-    ],
-    5: [
-        "🏊 Бассейн",
-        "💻 Проект 2 часа",
-        "🎨 Творчество",
-        "🌟 Визуализация целей"
-    ]
-};
+// Стартовые данные
+const DEFAULT_HABITS = [
+    { id: 1, text: "💧 Выпить стакан воды", completed: false, type: 'mind' },
+    { id: 2, text: "🏃 Сделать зарядку", completed: false, type: 'spirit' },
+    { id: 3, text: "📖 Почитать 10 минут", completed: false, type: 'mind' },
+    { id: 4, text: "🧘 Медитация 5 минут", completed: false, type: 'spirit' }
+];
+
+const DEFAULT_TASKS = [
+    { id: 1, text: "🧹 Убраться в комнате", completed: false },
+    { id: 2, text: "💻 Сделать проект", completed: false },
+    { id: 3, text: "📞 Позвонить родителям", completed: false }
+];
 
 // Состояние приложения
 let currentDay = 1;
-let maxDay = 5; // Всего дней в марафоне
+let habits = [];
+let tasks = [];
+let dayStarted = false;
 
 // DOM элементы
-const dayTitle = document.getElementById('day-title');
-const dayStatus = document.getElementById('day-status');
-const startBtn = document.getElementById('start-day-btn');
-const tasksSection = document.getElementById('tasks-section');
-const tasksList = document.getElementById('tasks-list');
-const completeBtn = document.getElementById('complete-day-btn');
+const startScreen = document.getElementById('start-screen');
+const marathonScreen = document.getElementById('marathon-screen');
 const congratsDiv = document.getElementById('congrats');
+const startDayBtn = document.getElementById('start-day-btn');
+const completeDayBtn = document.getElementById('complete-day-btn');
+const startDayNumber = document.getElementById('start-day-number');
 const currentDateEl = document.getElementById('current-date');
-const addTaskBtn = document.getElementById('add-task-btn');
-const newTaskInput = document.getElementById('new-task-input');
+const habitsList = document.getElementById('habits-list');
+const tasksList = document.getElementById('tasks-list');
+const mindFill = document.getElementById('mind-fill');
+const spiritFill = document.getElementById('spirit-fill');
+const mindPercent = document.getElementById('mind-percent');
+const spiritPercent = document.getElementById('spirit-percent');
+const addHabitBtn = document.getElementById('add-habit-btn');
+const addHabitInput = document.getElementById('add-habit-input');
+const habitText = document.getElementById('habit-text');
+const saveHabitBtn = document.getElementById('save-habit-btn');
 
-// Показываем текущую дату
+// Показываем дату
 function updateDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long' };
     currentDateEl.textContent = now.toLocaleDateString('ru-RU', options);
 }
 
-// Загрузка статуса дня
-function getDayStatus(day) {
-    const status = localStorage.getItem(STORAGE_KEYS.DAY_STATUS(day));
-    return status || 'not_started'; // not_started, in_progress, completed
+// Загрузка данных
+function loadData() {
+    dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true';
+    
+    const savedHabits = localStorage.getItem(STORAGE_KEYS.HABITS);
+    habits = savedHabits ? JSON.parse(savedHabits) : DEFAULT_HABITS.map(h => ({...h}));
+    
+    const savedTasks = localStorage.getItem(STORAGE_KEYS.TASKS);
+    tasks = savedTasks ? JSON.parse(savedTasks) : DEFAULT_TASKS.map(t => ({...t}));
 }
 
-// Сохранение статуса дня
-function setDayStatus(day, status) {
-    localStorage.setItem(STORAGE_KEYS.DAY_STATUS(day), status);
+// Сохранение данных
+function saveData() {
+    localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
+    localStorage.setItem(STORAGE_KEYS.HABITS, JSON.stringify(habits));
+    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
 }
 
-// Загрузка задач дня
-function getDayTasks(day) {
-    const tasks = localStorage.getItem(STORAGE_KEYS.DAY_TASKS(day));
-    if (tasks) {
-        return JSON.parse(tasks);
-    } else {
-        // Если задач нет, берем готовые
-        const defaultTasks = DEFAULT_TASKS[day] || DEFAULT_TASKS[1];
-        return defaultTasks.map((text, index) => ({
-            id: Date.now() + index,
-            text: text,
-            completed: false
-        }));
-    }
+// Обновление баланса
+function updateBalance() {
+    // Считаем выполненные привычки для разума и духа
+    const mindHabits = habits.filter(h => h.type === 'mind');
+    const spiritHabits = habits.filter(h => h.type === 'spirit');
+    
+    const mindCompleted = mindHabits.filter(h => h.completed).length;
+    const spiritCompleted = spiritHabits.filter(h => h.completed).length;
+    
+    const mindTotal = mindHabits.length || 1; // Чтобы не делить на 0
+    const spiritTotal = spiritHabits.length || 1;
+    
+    const mindProgress = (mindCompleted / mindTotal) * 100;
+    const spiritProgress = (spiritCompleted / spiritTotal) * 100;
+    
+    // Обновляем полоски
+    mindFill.style.width = `${mindProgress}%`;
+    spiritFill.style.width = `${spiritProgress}%`;
+    
+    mindPercent.textContent = `${Math.round(mindProgress)}%`;
+    spiritPercent.textContent = `${Math.round(spiritProgress)}%`;
+    
+    // Проверяем, можно ли завершить день
+    const allTasksCompleted = tasks.every(t => t.completed);
+    completeDayBtn.disabled = !allTasksCompleted;
 }
 
-// Сохранение задач
-function saveDayTasks(day, tasks) {
-    localStorage.setItem(STORAGE_KEYS.DAY_TASKS(day), JSON.stringify(tasks));
-}
-
-// Определяем какой день сегодня должен быть
-function calculateCurrentDay() {
-    // Проверяем все дни по порядку, ищем первый незавершенный
-    for (let day = 1; day <= maxDay; day++) {
-        const status = getDayStatus(day);
-        if (status !== 'completed') {
-            return day;
-        }
-    }
-    return maxDay + 1; // Все дни завершены
-}
-
-// Обновляем интерфейс
-function updateUI() {
-    // Сначала вычисляем текущий день
-    currentDay = calculateCurrentDay();
+// Отрисовка привычек
+function renderHabits() {
+    habitsList.innerHTML = '';
     
-    // Проверяем, закончен ли марафон
-    if (currentDay > maxDay) {
-        document.getElementById('day-card').style.display = 'none';
-        congratsDiv.style.display = 'block';
-        return;
-    } else {
-        document.getElementById('day-card').style.display = 'block';
-        congratsDiv.style.display = 'none';
-    }
+    habits.forEach(habit => {
+        const habitDiv = document.createElement('div');
+        habitDiv.className = 'habit-item';
+        habitDiv.innerHTML = `
+            <input type="checkbox" class="habit-checkbox" data-id="${habit.id}" ${habit.completed ? 'checked' : ''}>
+            <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
+            <button class="delete-btn" data-id="${habit.id}">✕</button>
+        `;
+        habitsList.appendChild(habitDiv);
+    });
     
-    const status = getDayStatus(currentDay);
-    const tasks = getDayTasks(currentDay);
+    // Обработчики для чекбоксов
+    document.querySelectorAll('.habit-checkbox').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const id = parseInt(this.dataset.id);
+            const habit = habits.find(h => h.id === id);
+            if (habit) {
+                habit.completed = this.checked;
+                saveData();
+                updateBalance();
+                renderHabits(); // Перерисовываем для изменения стиля текста
+            }
+        });
+    });
     
-    // Обновляем заголовок
-    dayTitle.textContent = `День ${currentDay}`;
-    
-    // Обновляем статус
-    dayStatus.textContent = status === 'not_started' ? '❌ Не начат' : 
-                           status === 'in_progress' ? '⏳ В процессе' : '✅ Завершен';
-    dayStatus.className = `day-status ${status}`;
-    
-    // Показываем/скрываем кнопки
-    startBtn.style.display = status === 'not_started' ? 'block' : 'none';
-    tasksSection.style.display = status === 'in_progress' ? 'block' : 'none';
-    
-    // Если день в процессе, показываем задачи
-    if (status === 'in_progress') {
-        renderTasks(tasks);
-    }
-    
-    // Проверяем, все ли задачи выполнены
-    if (status === 'in_progress') {
-        const allCompleted = tasks.every(task => task.completed);
-        completeBtn.style.display = allCompleted ? 'block' : 'none';
-    } else {
-        completeBtn.style.display = 'none';
-    }
+    // Обработчики для удаления
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = parseInt(this.dataset.id);
+            habits = habits.filter(h => h.id !== id);
+            saveData();
+            renderHabits();
+            updateBalance();
+        });
+    });
 }
 
 // Отрисовка задач
-function renderTasks(tasks) {
+function renderTasks() {
     tasksList.innerHTML = '';
     
     tasks.forEach(task => {
         const taskDiv = document.createElement('div');
         taskDiv.className = 'task-item';
         taskDiv.innerHTML = `
-            <input type="checkbox" class="task-checkbox" data-task-id="${task.id}" ${task.completed ? 'checked' : ''}>
+            <input type="checkbox" class="task-checkbox" data-id="${task.id}" ${task.completed ? 'checked' : ''}>
             <span class="task-text ${task.completed ? 'completed' : ''}">${task.text}</span>
-            <button class="delete-task" data-task-id="${task.id}">✕</button>
         `;
         tasksList.appendChild(taskDiv);
     });
     
-    // Добавляем обработчики на чекбоксы
-    document.querySelectorAll('.task-checkbox').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const taskId = parseInt(this.dataset.taskId);
-            const tasks = getDayTasks(currentDay);
-            const task = tasks.find(t => t.id === taskId);
+    // Обработчики для чекбоксов
+    document.querySelectorAll('.task-checkbox').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const id = parseInt(this.dataset.id);
+            const task = tasks.find(t => t.id === id);
             if (task) {
                 task.completed = this.checked;
-                saveDayTasks(currentDay, tasks);
-                updateUI(); // Обновляем интерфейс (для кнопки завершения)
+                saveData();
+                renderTasks();
+                updateBalance();
             }
-        });
-    });
-    
-    // Добавляем обработчики на удаление
-    document.querySelectorAll('.delete-task').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const taskId = parseInt(this.dataset.taskId);
-            let tasks = getDayTasks(currentDay);
-            tasks = tasks.filter(t => t.id !== taskId);
-            saveDayTasks(currentDay, tasks);
-            updateUI();
         });
     });
 }
 
+// Обновление UI
+function updateUI() {
+    if (!dayStarted) {
+        startScreen.style.display = 'block';
+        marathonScreen.style.display = 'none';
+        congratsDiv.style.display = 'none';
+        startDayNumber.textContent = currentDay;
+    } else {
+        startScreen.style.display = 'none';
+        marathonScreen.style.display = 'block';
+        congratsDiv.style.display = 'none';
+        renderHabits();
+        renderTasks();
+        updateBalance();
+    }
+}
+
 // Начать день
-startBtn.addEventListener('click', () => {
-    setDayStatus(currentDay, 'in_progress');
+startDayBtn.addEventListener('click', () => {
+    dayStarted = true;
+    saveData();
     updateUI();
 });
 
 // Завершить день
-completeBtn.addEventListener('click', () => {
-    setDayStatus(currentDay, 'completed');
+completeDayBtn.addEventListener('click', () => {
+    // Показываем итоги
+    const mindHabits = habits.filter(h => h.type === 'mind');
+    const spiritHabits = habits.filter(h => h.type === 'spirit');
+    
+    const mindCompleted = mindHabits.filter(h => h.completed).length;
+    const spiritCompleted = spiritHabits.filter(h => h.completed).length;
+    
+    const mindTotal = mindHabits.length || 1;
+    const spiritTotal = spiritHabits.length || 1;
+    
+    const mindProgress = Math.round((mindCompleted / mindTotal) * 100);
+    const spiritProgress = Math.round((spiritCompleted / spiritTotal) * 100);
+    
+    document.getElementById('final-mind').textContent = mindProgress;
+    document.getElementById('final-spirit').textContent = spiritProgress;
     
     // Показываем поздравление
-    tg.showAlert(`🎉 Молодец! Ты выполнил все задачи дня ${currentDay}! Завтра откроется следующий день.`);
+    startScreen.style.display = 'none';
+    marathonScreen.style.display = 'none';
+    congratsDiv.style.display = 'block';
     
-    updateUI();
+    tg.showAlert(`🎉 Молодец! День ${currentDay} завершен! Баланс: Разум ${mindProgress}%, Дух ${spiritProgress}%`);
 });
 
-// Добавить свою задачу
-addTaskBtn.addEventListener('click', () => {
-    const taskText = newTaskInput.value.trim();
-    if (taskText) {
-        const tasks = getDayTasks(currentDay);
-        const newTask = {
+// Добавление привычки
+addHabitBtn.addEventListener('click', () => {
+    addHabitInput.style.display = 'flex';
+    addHabitBtn.style.display = 'none';
+});
+
+saveHabitBtn.addEventListener('click', () => {
+    const text = habitText.value.trim();
+    if (text) {
+        // Случайно определяем тип (mind или spirit)
+        const type = Math.random() > 0.5 ? 'mind' : 'spirit';
+        const newHabit = {
             id: Date.now(),
-            text: taskText,
-            completed: false
+            text: text,
+            completed: false,
+            type: type
         };
-        tasks.push(newTask);
-        saveDayTasks(currentDay, tasks);
-        newTaskInput.value = '';
-        updateUI();
+        habits.push(newHabit);
+        saveData();
+        renderHabits();
+        updateBalance();
+        
+        habitText.value = '';
+        addHabitInput.style.display = 'none';
+        addHabitBtn.style.display = 'flex';
     }
 });
 
 // Добавление по Enter
-newTaskInput.addEventListener('keypress', (e) => {
+habitText.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
-        addTaskBtn.click();
+        saveHabitBtn.click();
     }
 });
 
 // Инициализация
 updateDate();
+loadData();
 updateUI();
 
 tg.ready();
