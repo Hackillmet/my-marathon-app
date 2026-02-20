@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Марафон</title>
+    <title>Марафон Баланса</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -11,46 +11,91 @@
     <div class="container">
         <!-- Шапка с датой -->
         <div class="header">
-            <h1>🔥 Марафон</h1>
+            <h1>⚖️ Баланс</h1>
             <div class="date" id="current-date"></div>
         </div>
 
-        <!-- Блок текущего дня -->
-        <div class="day-card" id="day-card">
-            <div class="day-header">
-                <h2 id="day-title">День 1</h2>
-                <span class="day-status" id="day-status">❌ Не начат</span>
-            </div>
-            
-            <!-- Кнопка начала дня (показывается только если день не начат) -->
-            <button class="btn start-btn" id="start-day-btn" style="display: block;">
-                🚀 Начать день
-            </button>
-            
-            <!-- Задачи (скрыты пока день не начат) -->
-            <div class="tasks-section" id="tasks-section" style="display: none;">
-                <h3>Задачи на сегодня:</h3>
-                
-                <!-- Список задач -->
-                <div class="tasks-list" id="tasks-list"></div>
-                
-                <!-- Добавление своей задачи -->
-                <div class="add-task">
-                    <input type="text" id="new-task-input" placeholder="➕ Добавить свою задачу...">
-                    <button class="btn-small" id="add-task-btn">Добавить</button>
-                </div>
-                
-                <!-- Кнопка завершения дня -->
-                <button class="btn complete-btn" id="complete-day-btn" style="display: none;">
-                    ✅ Завершить день
+        <!-- Главный экран (виден до начала дня) -->
+        <div id="start-screen" class="start-screen">
+            <div class="start-content">
+                <h2>День <span id="start-day-number">1</span></h2>
+                <p>Готов начать свой путь к балансу?</p>
+                <button class="btn start-day-btn" id="start-day-btn">
+                    🚀 Начать день
                 </button>
             </div>
         </div>
 
-        <!-- Сообщение об окончании марафона -->
+        <!-- Экран марафона (виден после начала дня) -->
+        <div id="marathon-screen" style="display: none;">
+            <!-- Баланс системы -->
+            <div class="balance-section">
+                <h3 class="balance-title">⚖️ БАЛАНС СИСТЕМЫ</h3>
+                
+                <div class="balance-bars">
+                    <!-- Разум -->
+                    <div class="balance-item">
+                        <div class="balance-label">
+                            <span class="balance-icon">🧠</span>
+                            <span>Разум</span>
+                            <span class="balance-percent" id="mind-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill mind-fill" id="mind-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Дух -->
+                    <div class="balance-item">
+                        <div class="balance-label">
+                            <span class="balance-icon">💚</span>
+                            <span>Дух</span>
+                            <span class="balance-percent" id="spirit-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill spirit-fill" id="spirit-fill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Привычки с кнопкой добавления -->
+            <div class="habits-section">
+                <div class="section-header">
+                    <h3>🌱 ПРИВЫЧКИ</h3>
+                    <button class="add-btn" id="add-habit-btn">+</button>
+                </div>
+                
+                <!-- Добавление привычки (скрыто по умолчанию) -->
+                <div class="add-input" id="add-habit-input" style="display: none;">
+                    <input type="text" id="habit-text" placeholder="Новая привычка...">
+                    <button class="btn-small" id="save-habit-btn">Добавить</button>
+                </div>
+                
+                <!-- Список привычек -->
+                <div class="habits-list" id="habits-list"></div>
+            </div>
+
+            <!-- Задачи на сегодня -->
+            <div class="tasks-section">
+                <h3>📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
+                <div class="tasks-list" id="tasks-list"></div>
+            </div>
+
+            <!-- Кнопка завершения дня -->
+            <button class="btn complete-day-btn" id="complete-day-btn">
+                ✅ Завершить день
+            </button>
+        </div>
+
+        <!-- Сообщение о завершении марафона -->
         <div class="congrats" id="congrats" style="display: none;">
             <h2>🎉 ПОЗДРАВЛЯЕМ!</h2>
-            <p>Ты прошел весь марафон!</p>
+            <p>Ты достиг баланса!</p>
+            <div class="final-balance">
+                <div>🧠 Разум: <span id="final-mind">0</span>%</div>
+                <div>💚 Дух: <span id="final-spirit">0</span>%</div>
+            </div>
         </div>
     </div>
 
