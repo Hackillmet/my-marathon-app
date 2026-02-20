@@ -1,4 +1,4 @@
-/* Черный минималистичный дизайн с анимациями */
+/* Черный минималистичный дизайн с оптимизацией для мобильных */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
@@ -9,14 +9,17 @@
     --text-secondary: #888888;
     --blue: #0066ff;
     --blue-hover: #0052cc;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --menu-transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Упрощенные transitions для мобильных */
+    --transition: all 0.2s ease-out;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Отключаем ненужные эффекты на телефоне */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
 }
 
 body {
@@ -24,24 +27,35 @@ body {
     min-height: 100vh;
     background: var(--bg-primary);
     color: var(--text-primary);
-    transition: var(--transition);
+    /* Включаем аппаратное ускорение */
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -ms-perspective: 1000;
+    perspective: 1000;
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 16px;
-    animation: fadeIn 0.5s ease;
+    padding: 12px; /* Уменьшил отступы для мобильных */
+    animation: fadeIn 0.3s ease; /* Ускорил анимацию */
 }
 
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(-10px);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
     }
 }
 
@@ -50,142 +64,100 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    margin-bottom: 8px;
+    padding: 10px 0;
+    margin-bottom: 6px;
     border-bottom: 1px solid var(--border-color);
-    animation: slideDown 0.5s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .logo {
-    font-size: 20px;
+    font-size: 18px; /* Чуть меньше для мобильных */
     font-weight: 700;
-    letter-spacing: 1px;
-    transition: var(--transition);
-}
-
-.logo:hover {
-    transform: scale(1.05);
+    letter-spacing: 0.5px;
+    /* Убираем hover на мобильных */
 }
 
 .logo-white {
     color: #ffffff;
-    transition: var(--transition);
 }
 
 .logo-blue {
     color: #0066ff;
-    transition: var(--transition);
 }
 
-.logo:hover .logo-blue {
-    text-shadow: 0 0 10px rgba(0, 102, 255, 0.5);
-}
-
-/* Кнопка меню (бургер) с анимацией */
+/* Кнопка меню (бургер) */
 .menu-btn {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 5px 0;
-    transition: var(--transition);
+    padding: 4px 0;
+    /* Убираем transition для плавности */
 }
 
 .menu-btn span {
     width: 100%;
     height: 2px;
     background: #ffffff;
-    transition: var(--transition);
     border-radius: 2px;
-}
-
-.menu-btn:hover span {
-    background: #0066ff;
+    /* Упрощенная анимация */
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .menu-btn.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: rotate(45deg) translate(4px, 4px);
 }
 
 .menu-btn.active span:nth-child(2) {
     opacity: 0;
-    transform: translateX(-10px);
 }
 
 .menu-btn.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: rotate(-45deg) translate(4px, -4px);
 }
 
-/* Выпадающее меню с анимацией */
+/* Выпадающее меню - упрощенная анимация */
 .menu-dropdown {
     position: absolute;
-    top: 70px;
-    right: 16px;
+    top: 65px;
+    right: 12px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 16px;
     padding: 16px;
-    min-width: 280px;
+    min-width: 260px;
     z-index: 1000;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    animation: menuPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    /* Простая анимация */
+    animation: simplePop 0.2s ease;
     transform-origin: top right;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
 }
 
-@keyframes menuPop {
+@keyframes simplePop {
     from {
         opacity: 0;
-        transform: scale(0.8) translateY(-20px);
+        transform: scale(0.95);
     }
     to {
         opacity: 1;
-        transform: scale(1) translateY(0);
+        transform: scale(1);
     }
 }
 
 .menu-section {
-    margin-bottom: 20px;
-    animation: slideIn 0.3s ease;
-    animation-fill-mode: both;
-}
-
-.menu-section:nth-child(1) { animation-delay: 0.05s; }
-.menu-section:nth-child(2) { animation-delay: 0.1s; }
-.menu-section:nth-child(3) { animation-delay: 0.15s; }
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    margin-bottom: 16px;
 }
 
 .menu-title {
     color: var(--text-secondary);
     font-size: 12px;
-    letter-spacing: 1px;
-    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
     padding-left: 8px;
     text-transform: uppercase;
 }
@@ -196,41 +168,21 @@ body {
     color: var(--text-primary);
     text-decoration: none;
     font-size: 14px;
-    transition: var(--transition);
     border-radius: 8px;
     margin-bottom: 2px;
-    position: relative;
-    overflow: hidden;
+    /* Убираем сложные эффекты */
+    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.1);
 }
 
-.menu-item::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(0, 102, 255, 0.2);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.menu-item:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-.menu-item:hover {
+.menu-item:active {
     background: var(--accent);
     color: #0066ff;
-    transform: translateX(5px);
 }
 
 .contact-info {
     background: var(--bg-primary);
     border-radius: 12px;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid var(--border-color);
 }
 
@@ -239,12 +191,6 @@ body {
     justify-content: space-between;
     padding: 8px 0;
     font-size: 13px;
-    transition: var(--transition);
-}
-
-.contact-item:hover {
-    transform: translateX(5px);
-    color: #0066ff;
 }
 
 .contact-item:not(:last-child) {
@@ -259,27 +205,26 @@ body {
 /* Дата под шапкой */
 .date-header {
     text-align: right;
-    margin-bottom: 16px;
-    font-size: 14px;
+    margin-bottom: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
     padding: 4px 0;
-    animation: fadeIn 0.5s ease 0.2s both;
 }
 
-/* Стартовый экран */
+/* Стартовый экран - упрощенная анимация */
 .start-screen {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 40px 20px;
+    padding: 30px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
-    animation: scaleIn 0.5s ease;
+    animation: simpleScale 0.3s ease;
 }
 
-@keyframes scaleIn {
+@keyframes simpleScale {
     from {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
     to {
         opacity: 1;
@@ -288,100 +233,57 @@ body {
 }
 
 .start-content h2 {
-    font-size: 42px;
+    font-size: 36px;
     color: var(--text-primary);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: 300;
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(-5px);
-    }
+    /* Убираем float анимацию на мобильных */
 }
 
 .start-content p {
-    font-size: 16px;
+    font-size: 15px;
     color: var(--text-secondary);
-    margin-bottom: 30px;
+    margin-bottom: 24px;
 }
 
 /* Баланс система */
 .balance-section {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
     border: 1px solid var(--border-color);
-    animation: slideUp 0.5s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .balance-title {
     text-align: center;
     color: var(--text-secondary);
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 16px;
+    font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
 
 .balance-item {
-    margin-bottom: 16px;
-    animation: slideRight 0.5s ease;
-    animation-fill-mode: both;
-}
-
-.balance-item:nth-child(1) { animation-delay: 0.1s; }
-.balance-item:nth-child(2) { animation-delay: 0.2s; }
-
-@keyframes slideRight {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    margin-bottom: 14px;
 }
 
 .balance-label {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 6px;
-    font-size: 14px;
+    gap: 8px;
+    margin-bottom: 5px;
+    font-size: 13px;
     color: var(--text-secondary);
 }
 
 .balance-icon {
-    font-size: 18px;
-    transition: var(--transition);
-}
-
-.balance-item:hover .balance-icon {
-    transform: scale(1.2);
+    font-size: 16px;
 }
 
 .balance-percent {
     margin-left: auto;
     color: var(--text-primary);
-    transition: var(--transition);
 }
 
 .progress-bar {
@@ -394,29 +296,7 @@ body {
 
 .progress-fill {
     height: 100%;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.progress-fill::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: shimmer 2s infinite;
-}
-
-@keyframes shimmer {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 200%;
-    }
+    transition: width 0.2s linear; /* Более простая анимация */
 }
 
 .mind-fill {
@@ -431,22 +311,21 @@ body {
 .habits-section, .tasks-section {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
     border: 1px solid var(--border-color);
-    animation: slideUp 0.5s ease 0.1s both;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .section-header h3 {
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 1px;
     text-transform: uppercase;
 }
@@ -463,21 +342,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition);
     border: 1px solid var(--border-color);
+    /* Упрощаем */
+    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.2);
 }
 
-.add-btn:hover {
+.add-btn:active {
     background: var(--accent);
     color: #0066ff;
-    transform: rotate(90deg) scale(1.1);
 }
 
 .add-input {
     display: flex;
     gap: 8px;
-    margin-bottom: 16px;
-    animation: slideDown 0.3s ease;
+    margin-bottom: 12px;
 }
 
 .add-input input {
@@ -489,12 +367,11 @@ body {
     font-size: 14px;
     outline: none;
     color: var(--text-primary);
-    transition: var(--transition);
+    /* Убираем transition для инпутов */
 }
 
 .add-input input:focus {
     border-color: #0066ff;
-    box-shadow: 0 0 0 2px rgba(0, 102, 255, 0.2);
 }
 
 /* Элементы списков */
@@ -506,37 +383,23 @@ body {
     border-radius: 8px;
     margin-bottom: 8px;
     border: 1px solid var(--border-color);
-    transition: var(--transition);
-    animation: slideIn 0.3s ease;
-    animation-fill-mode: both;
-}
-
-.habit-item:hover, .task-item:hover {
-    transform: translateX(5px);
-    border-color: #0066ff;
-    box-shadow: 0 0 20px rgba(0, 102, 255, 0.1);
+    /* Убираем сложные эффекты */
 }
 
 .habit-checkbox, .task-checkbox {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     margin-right: 12px;
     cursor: pointer;
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
     accent-color: #0066ff;
-    transition: var(--transition);
-}
-
-.habit-checkbox:checked, .task-checkbox:checked {
-    transform: scale(1.1);
 }
 
 .habit-text, .task-text {
     flex: 1;
     font-size: 14px;
     color: var(--text-primary);
-    transition: var(--transition);
 }
 
 .habit-text.completed, .task-text.completed {
@@ -551,64 +414,43 @@ body {
     font-size: 16px;
     cursor: pointer;
     padding: 4px 8px;
-    opacity: 0.5;
-    transition: var(--transition);
-    border-radius: 4px;
+    opacity: 0.7;
+    /* Убираем transform */
 }
 
-.delete-btn:hover {
+.delete-btn:active {
     opacity: 1;
     color: #ff4444;
-    transform: rotate(90deg) scale(1.2);
-    background: rgba(255, 68, 68, 0.1);
 }
 
 .habit-note, .task-note {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
-    margin-top: 10px;
+    margin-top: 8px;
     text-align: right;
-    animation: fadeIn 0.5s ease;
 }
 
-/* Кнопки */
+/* Кнопки - оптимизированы для тапа */
 .start-day-btn {
     background: var(--text-primary);
     color: var(--bg-primary);
     border: none;
-    padding: 14px 32px;
+    padding: 14px 28px;
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    transition: var(--transition);
     font-weight: 500;
-    position: relative;
-    overflow: hidden;
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    /* Убираем сложные эффекты */
+    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.3);
 }
 
-.start-day-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.5);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
-
-.start-day-btn:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-.start-day-btn:hover {
+.start-day-btn:active {
     background: #0066ff;
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+    transform: scale(0.98);
 }
 
 .complete-day-btn {
@@ -621,17 +463,14 @@ body {
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
-    transition: var(--transition);
     margin-top: 8px;
-    position: relative;
-    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.3);
 }
 
-.complete-day-btn:hover:not(:disabled) {
+.complete-day-btn:active:not(:disabled) {
     background: #0066ff;
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 102, 255, 0.3);
+    transform: scale(0.98);
 }
 
 .complete-day-btn:disabled {
@@ -646,71 +485,88 @@ body {
     padding: 8px 16px;
     border-radius: 6px;
     cursor: pointer;
-    transition: var(--transition);
     font-size: 14px;
+    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.3);
 }
 
-.btn-small:hover {
+.btn-small:active {
     background: #0066ff;
     border-color: #0066ff;
     color: white;
-    transform: scale(1.05);
 }
 
-/* Экран завершения */
+/* Экран завершения - упрощенная анимация */
 .congrats {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 40px 20px;
+    padding: 30px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
-    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-@keyframes popIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
+    animation: simplePop 0.3s ease;
 }
 
 .congrats h2 {
-    font-size: 32px;
+    font-size: 28px;
     color: var(--text-primary);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: 300;
-    animation: float 3s ease-in-out infinite;
 }
 
 .congrats p {
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .final-balance {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
+    gap: 20px;
+    margin-top: 16px;
 }
 
 .final-balance div {
     background: var(--bg-primary);
-    padding: 8px 16px;
+    padding: 8px 12px;
     border-radius: 6px;
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    transition: var(--transition);
 }
 
-.final-balance div:hover {
-    transform: scale(1.05);
-    border-color: #0066ff;
+/* Медиа-запрос для очень маленьких экранов */
+@media (max-width: 380px) {
+    .container {
+        padding: 8px;
+    }
+    
+    .logo {
+        font-size: 16px;
+    }
+    
+    .start-content h2 {
+        font-size: 32px;
+    }
+    
+    .menu-dropdown {
+        min-width: 240px;
+        right: 8px;
+    }
+}
+
+/* Отключаем hover эффекты на мобильных */
+@media (hover: none) and (pointer: coarse) {
+    .menu-item:hover,
+    .add-btn:hover,
+    .btn-small:hover,
+    .start-day-btn:hover,
+    .complete-day-btn:hover {
+        /* Отключаем hover на мобильных */
+        transform: none;
+        background: inherit;
+    }
+    
+    /* Оставляем только active состояния */
+    .menu-item:active {
+        background: var(--accent);
+        color: #0066ff;
+    }
 }
