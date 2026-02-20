@@ -9,10 +9,29 @@
 </head>
 <body>
     <div class="container">
-        <!-- Шапка с датой -->
-        <div class="header">
-            <h1>⚖️ Баланс</h1>
-            <div class="date" id="current-date"></div>
+        <!-- Новая шапка как на сайте -->
+        <div class="site-header">
+            <div class="logo">
+                <span class="logo-white">FRONTEND</span>
+                <span class="logo-blue">CHIK</span>
+            </div>
+            <button class="menu-btn" id="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Меню (скрыто по умолчанию) -->
+        <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
+            <a href="#" class="menu-item" id="reset-day">🔄 Сбросить день</a>
+            <a href="#" class="menu-item" id="new-marathon">✨ Новый марафон</a>
+            <a href="#" class="menu-item" id="about">ℹ️ О проекте</a>
+        </div>
+
+        <!-- Дата под шапкой -->
+        <div class="date-header">
+            <span id="current-date"></span>
         </div>
 
         <!-- Главный экран (виден до начала дня) -->
@@ -20,7 +39,7 @@
             <div class="start-content">
                 <h2>День <span id="start-day-number">1</span></h2>
                 <p>Готов начать свой путь к балансу?</p>
-                <button class="btn start-day-btn" id="start-day-btn">
+                <button class="start-day-btn" id="start-day-btn">
                     🚀 Начать день
                 </button>
             </div>
@@ -66,32 +85,34 @@
                     <button class="add-btn" id="add-habit-btn">+</button>
                 </div>
                 
-                <!-- Добавление привычки (скрыто по умолчанию) -->
+                <!-- Добавление привычки -->
                 <div class="add-input" id="add-habit-input" style="display: none;">
-                    <input type="text" id="habit-text" placeholder="Новая привычка...">
+                    <input type="text" id="habit-text" placeholder="➕ Добавить свою привычку...">
                     <button class="btn-small" id="save-habit-btn">Добавить</button>
                 </div>
                 
                 <!-- Список привычек -->
                 <div class="habits-list" id="habits-list"></div>
+                <div class="habit-note">☝️ Привычки влияют на <span style="color: white;">РАЗУМ</span></div>
             </div>
 
             <!-- Задачи на сегодня -->
             <div class="tasks-section">
                 <h3>📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
                 <div class="tasks-list" id="tasks-list"></div>
+                <div class="task-note">☝️ Задачи влияют на <span style="color: #cccccc;">ДУХ</span></div>
             </div>
 
             <!-- Кнопка завершения дня -->
-            <button class="btn complete-day-btn" id="complete-day-btn">
+            <button class="complete-day-btn" id="complete-day-btn" disabled>
                 ✅ Завершить день
             </button>
         </div>
 
-        <!-- Сообщение о завершении марафона -->
+        <!-- Сообщение о завершении дня -->
         <div class="congrats" id="congrats" style="display: none;">
-            <h2>🎉 ПОЗДРАВЛЯЕМ!</h2>
-            <p>Ты достиг баланса!</p>
+            <h2>🎉 ДЕНЬ ЗАВЕРШЕН!</h2>
+            <p>Твой баланс:</p>
             <div class="final-balance">
                 <div>🧠 Разум: <span id="final-mind">0</span>%</div>
                 <div>💚 Дух: <span id="final-spirit">0</span>%</div>
