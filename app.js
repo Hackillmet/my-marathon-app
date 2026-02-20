@@ -338,7 +338,7 @@ statsBtn.addEventListener('click', (e) => {
 
 supportBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert('💬 Поддержка: @frontendchikk\n📧 Почта: frontendchikk@mail.ru');
+    tg.showAlert('💬 Поддержка: @frontendchikk');
     menuDropdown.style.opacity = '0';
     menuBtn.classList.remove('active');
     setTimeout(() => {
