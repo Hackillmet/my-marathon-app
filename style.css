@@ -1,14 +1,14 @@
-/* Градиентный дизайн - Сине-зеленый */
+/* Градиентный дизайн для марафона баланса */
 :root {
-    --gradient-start: #00b4db;
-    --gradient-end: #00d4a0;
-    --gradient: linear-gradient(135deg, #00b4db 0%, #00d4a0 100%);
-    --gradient-hover: linear-gradient(135deg, #00a3c4 0%, #00c091 100%);
+    --mind-color: #4169E1;      /* Королевский синий */
+    --spirit-color: #32CD32;     /* Лаймово-зеленый */
+    --mind-gradient: linear-gradient(135deg, #4169E1, #1E90FF);
+    --spirit-gradient: linear-gradient(135deg, #32CD32, #98FB98);
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --card-bg: rgba(255, 255, 255, 0.95);
-    --text-primary: #1a2b3c;
-    --text-secondary: #4a5a6a;
-    --shadow: 0 20px 40px rgba(0, 180, 219, 0.2);
-    --glow: 0 0 30px rgba(0, 212, 160, 0.3);
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -18,28 +18,14 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     min-height: 100vh;
-    background: var(--gradient);
+    background: var(--bg-gradient);
     color: var(--text-primary);
     position: relative;
-    animation: gradientShift 10s ease infinite;
 }
 
-/* Анимация градиента */
-@keyframes gradientShift {
-    0% {
-        background: linear-gradient(135deg, #00b4db 0%, #00d4a0 100%);
-    }
-    50% {
-        background: linear-gradient(135deg, #00d4a0 0%, #00b4db 100%);
-    }
-    100% {
-        background: linear-gradient(135deg, #00b4db 0%, #00d4a0 100%);
-    }
-}
-
-/* Декоративные волны */
+/* Анимированный фон */
 body::before {
     content: '';
     position: fixed;
@@ -48,10 +34,8 @@ body::before {
     right: 0;
     bottom: 0;
     background: 
-        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.15) 0%, transparent 30%),
-        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 90% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 40%);
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,0.15) 0%, transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.15) 0%, transparent 30%);
     pointer-events: none;
 }
 
@@ -63,256 +47,188 @@ body::before {
     z-index: 1;
 }
 
-/* Шапка со стеклянным эффектом */
+/* Шапка */
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     padding: 15px 20px;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 30px;
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: var(--shadow);
-    animation: slideDown 0.5s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    color: white;
 }
 
 .header h1 {
-    font-size: 28px;
+    font-size: 24px;
     margin: 0;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    font-weight: 700;
-    letter-spacing: 1px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
 .date {
     font-size: 14px;
-    color: white;
     background: rgba(255, 255, 255, 0.25);
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-weight: 500;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 12px;
+    border-radius: 20px;
 }
 
-/* Карточка дня */
-.day-card {
+/* Стартовый экран */
+.start-screen {
     background: var(--card-bg);
     border-radius: 30px;
-    padding: 25px;
-    box-shadow: var(--shadow), var(--glow);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
     animation: fadeIn 0.5s ease;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.start-content h2 {
+    font-size: 48px;
+    color: var(--mind-color);
+    margin-bottom: 15px;
 }
 
-.day-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 50px rgba(0, 180, 219, 0.3), var(--glow);
-}
-
-.day-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid rgba(0, 180, 219, 0.2);
-}
-
-.day-header h2 {
-    margin: 0;
-    font-size: 32px;
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 700;
-}
-
-/* Статус дня */
-.day-status {
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.day-status.not-started {
-    background: #ffd93e;
-    color: #8b6e00;
-    box-shadow: 0 4px 10px rgba(255, 217, 62, 0.3);
-}
-
-.day-status.in-progress {
-    background: #00b4db;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 180, 219, 0.3);
-}
-
-.day-status.completed {
-    background: #00d4a0;
-    color: white;
-    box-shadow: 0 4px 10px rgba(0, 212, 160, 0.3);
-}
-
-/* Кнопки */
-.btn {
-    width: 100%;
-    padding: 16px;
+.start-content p {
     font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+/* Баланс система */
+.balance-section {
+    background: var(--card-bg);
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.balance-title {
+    text-align: center;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.balance-item {
+    margin-bottom: 20px;
+}
+
+.balance-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.balance-icon {
+    font-size: 24px;
+}
+
+.balance-percent {
+    margin-left: auto;
     font-weight: 600;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 10px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
+    color: var(--text-secondary);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 20px;
     overflow: hidden;
 }
 
-.btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
+.progress-fill {
+    height: 100%;
+    transition: width 0.5s ease;
 }
 
-.btn:active::before {
-    width: 300px;
-    height: 300px;
+.mind-fill {
+    background: var(--mind-gradient);
 }
 
-.start-btn {
-    background: var(--gradient);
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 180, 219, 0.3);
+.spirit-fill {
+    background: var(--spirit-gradient);
 }
 
-.start-btn:hover {
-    background: var(--gradient-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px rgba(0, 180, 219, 0.4);
-}
-
-.complete-btn {
-    background: #00d4a0;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 212, 160, 0.3);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.02);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.btn-small {
-    background: var(--gradient);
-    color: white;
-    border: none;
+/* Секции привычек и задач */
+.habits-section, .tasks-section {
+    background: var(--card-bg);
     border-radius: 25px;
-    padding: 12px 24px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 180, 219, 0.2);
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
 }
 
-.btn-small:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 180, 219, 0.3);
-}
-
-/* Секция задач */
-.tasks-section {
-    margin-top: 25px;
-    animation: slideUp 0.5s ease;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.tasks-section h3 {
-    color: var(--text-primary);
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
-    font-size: 18px;
-    font-weight: 600;
 }
 
-.tasks-list {
-    margin: 15px 0;
+.section-header h3 {
+    color: var(--text-primary);
+    font-size: 16px;
+    letter-spacing: 1px;
 }
 
-/* Элемент задачи */
-.task-item {
+.add-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: var(--mind-gradient);
+    color: white;
+    font-size: 24px;
+    border-radius: 50%;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    padding: 15px;
-    background: white;
-    border-radius: 15px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-    transition: all 0.3s ease;
-    border: 1px solid rgba(0, 180, 219, 0.1);
-    animation: taskAppear 0.3s ease;
+    justify-content: center;
+    transition: transform 0.2s;
 }
 
-@keyframes taskAppear {
+.add-btn:hover {
+    transform: scale(1.1);
+}
+
+.add-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.add-input input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.add-input input:focus {
+    border-color: var(--mind-color);
+}
+
+/* Элементы списков */
+.habit-item, .task-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
     from {
         opacity: 0;
         transform: translateX(-10px);
@@ -323,98 +239,77 @@ body::before {
     }
 }
 
-.task-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 6px 15px rgba(0, 180, 219, 0.1);
-    border-color: rgba(0, 180, 219, 0.3);
-}
-
-.task-checkbox {
+.habit-checkbox, .task-checkbox {
     width: 22px;
     height: 22px;
-    margin-right: 15px;
+    margin-right: 12px;
     cursor: pointer;
-    accent-color: #00d4a0;
+    accent-color: var(--mind-color);
 }
 
-.task-text {
+.habit-text, .task-text {
     flex: 1;
-    font-size: 16px;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
+    font-size: 15px;
 }
 
-.task-text.completed {
+.habit-text.completed, .task-text.completed {
     text-decoration: line-through;
     color: var(--text-secondary);
     opacity: 0.7;
 }
 
-.delete-task {
+.delete-btn {
     background: none;
     border: none;
     color: #ff6b6b;
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
     padding: 0 8px;
     opacity: 0.6;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: all 0.2s;
 }
 
-.delete-task:hover {
+.delete-btn:hover {
     opacity: 1;
-    background: #ff6b6b;
-    color: white;
     transform: rotate(90deg);
 }
 
-/* Добавление задачи */
-.add-task {
-    display: flex;
-    gap: 10px;
-    margin: 20px 0;
+/* Кнопка завершения дня */
+.complete-day-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 10px;
 }
 
-.add-task input {
-    flex: 1;
-    padding: 14px 18px;
-    border: 2px solid rgba(0, 180, 219, 0.2);
-    border-radius: 25px;
-    font-size: 14px;
-    background: white;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-    outline: none;
+.complete-day-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
-.add-task input:focus {
-    border-color: #00b4db;
-    box-shadow: 0 0 0 3px rgba(0, 180, 219, 0.1);
-}
-
-.add-task input::placeholder {
-    color: var(--text-secondary);
+.complete-day-btn:disabled {
     opacity: 0.5;
+    pointer-events: none;
 }
 
-/* Сообщение о завершении марафона */
+/* Экран завершения */
 .congrats {
-    text-align: center;
-    padding: 50px 30px;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--card-bg);
     border-radius: 30px;
-    margin-top: 20px;
-    box-shadow: var(--shadow), var(--glow);
-    animation: congratsPop 0.6s ease;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    animation: popIn 0.6s ease;
 }
 
-@keyframes congratsPop {
+@keyframes popIn {
     0% {
         opacity: 0;
         transform: scale(0.8);
@@ -430,20 +325,38 @@ body::before {
 
 .congrats h2 {
     font-size: 36px;
-    background: var(--gradient);
+    background: var(--bg-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-clip: text;
     margin-bottom: 15px;
-    font-weight: 700;
 }
 
-.congrats p {
+.final-balance {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
     font-size: 18px;
-    color: var(--text-secondary);
 }
 
-/* Адаптация под Telegram темы */
+/* Кнопка старта */
+.start-day-btn {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    font-size: 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.start-day-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Адаптация под темную тему */
 @media (prefers-color-scheme: dark) {
     :root {
         --card-bg: rgba(30, 40, 50, 0.95);
@@ -451,28 +364,13 @@ body::before {
         --text-secondary: #a0b0c0;
     }
     
-    .task-item {
-        background: rgba(40, 50, 60, 0.8);
+    .habit-item, .task-item {
+        background: rgba(255, 255, 255, 0.1);
     }
     
-    .add-task input {
-        background: rgba(40, 50, 60, 0.8);
+    .add-input input {
+        background: rgba(255, 255, 255, 0.1);
         color: white;
-        border-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
     }
-}
-
-/* Анимация загрузки */
-.loading {
-    display: inline-block;
-    width: 50px;
-    height: 50px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
 }
