@@ -114,7 +114,10 @@
                         </div>
                         
                         <div class="habits-list" id="habits-list"></div>
-                        <div class="habit-note">☝️ Привычки влияют на РАЗУМ</div>
+                        <div class="habit-note">
+                            <span>📌 фиксированные</span>
+                            <span>✕ можно удалить</span>
+                        </div>
                     </div>
 
                     <!-- Задачи -->
@@ -130,7 +133,10 @@
                         </div>
                         
                         <div class="tasks-list" id="tasks-list"></div>
-                        <div class="task-note">☝️ Задачи влияют на ДУХ</div>
+                        <div class="task-note">
+                            <span>📌 фиксированные</span>
+                            <span>✕ можно удалить</span>
+                        </div>
                     </div>
 
                     <!-- Кнопка завершения -->
@@ -188,7 +194,7 @@
 
         <!-- НИЖНЯЯ НАВИГАЦИЯ -->
         <div class="bottom-nav">
-            <button class="nav-btn" id="nav-home" onclick="switchPage(0)">
+            <button class="nav-btn active" id="nav-home" onclick="switchPage(0)">
                 <span class="nav-icon">🏠</span>
                 <span class="nav-text">Главная</span>
             </button>
@@ -206,6 +212,7 @@
                 <div>🧠 Разум: <span id="final-mind">0</span>%</div>
                 <div>💚 Дух: <span id="final-spirit">0</span>%</div>
             </div>
+            <button class="start-day-btn" id="continue-btn" style="margin-top: 20px;">🏠 На главную</button>
         </div>
     </div>
 
