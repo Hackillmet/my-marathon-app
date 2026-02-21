@@ -119,13 +119,16 @@ const translations = {
         // Меню
         marathon: "🏃 МАРАФОН",
         resetMarathon: "🔄 Сбросить марафон",
+        stats: "📊 Статистика",
         help: "🆘 ПОМОЩЬ",
         support: "💬 Поддержка",
         contact: "Связаться:",
+        faq: "❓ FAQ",
         contacts: "📞 КОНТАКТЫ",
         author: "👤 Автор:",
         
         confirmReset: "Сбросить весь марафон? Весь прогресс будет потерян.",
+        faqText: "❓ Часто задаваемые вопросы:\n\n• Каждый день новая тренировка\n• Начать бег можно с 4 утра\n• Завершить день до 23:00\n• После завершения дня - 24ч таймер\n• Статистика сохраняется",
         
         // Дневник
         newEntry: "Новая запись",
@@ -162,13 +165,16 @@ const translations = {
         // Menu
         marathon: "🏃 MARATHON",
         resetMarathon: "🔄 Reset Marathon",
+        stats: "📊 Statistics",
         help: "🆘 HELP",
         support: "💬 Support",
         contact: "Contact:",
+        faq: "❓ FAQ",
         contacts: "📞 CONTACTS",
         author: "👤 Author:",
         
         confirmReset: "Reset entire marathon? All progress will be lost.",
+        faqText: "❓ Frequently Asked Questions:\n\n• New workout every day\n• Start running from 4 AM\n• Complete day before 11 PM\n• 24h timer after completion\n• Statistics are saved",
         
         // Diary
         newEntry: "New entry",
@@ -649,8 +655,10 @@ function updateAllText() {
     if (menuTitles[2]) menuTitles[2].textContent = t('contacts');
     
     document.getElementById('reset-marathon').innerHTML = t('resetMarathon');
+    document.getElementById('stats-menu').innerHTML = `📊 ${t('stats')}`;
     document.getElementById('support').innerHTML = t('support');
     document.getElementById('telegram-support').innerHTML = `📱 ${t('contact')} @frontendchikk`;
+    document.getElementById('faq').innerHTML = t('faq');
     
     const contactItem = document.querySelector('.contact-item');
     if (contactItem) {
@@ -806,7 +814,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Сброс марафона
+    // Пункты меню
     document.getElementById('reset-marathon').addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm(t('confirmReset'))) {
@@ -828,7 +836,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Поддержка
+    document.getElementById('stats-menu').addEventListener('click', (e) => {
+        e.preventDefault();
+        switchPage(1); // Переключаем на слайд статистики
+        document.getElementById('menu-dropdown').style.display = 'none';
+        document.getElementById('menu-btn').classList.remove('active');
+    });
+    
     document.getElementById('support').addEventListener('click', (e) => {
         e.preventDefault();
         tg.showAlert('💬 Поддержка: @frontendchikk');
@@ -839,6 +853,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('telegram-support').addEventListener('click', (e) => {
         e.preventDefault();
         tg.openTelegramLink('https://t.me/frontendchikk');
+        document.getElementById('menu-dropdown').style.display = 'none';
+        document.getElementById('menu-btn').classList.remove('active');
+    });
+    
+    document.getElementById('faq').addEventListener('click', (e) => {
+        e.preventDefault();
+        tg.showAlert(t('faqText'));
         document.getElementById('menu-dropdown').style.display = 'none';
         document.getElementById('menu-btn').classList.remove('active');
     });
