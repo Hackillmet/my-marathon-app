@@ -202,7 +202,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: ДРУЗЬЯ (НОВЫЙ) -->
+            <!-- СЛАЙД 3: ДРУЗЬЯ (обновленный с заявками) -->
             <div class="slide" id="slide3">
                 <div class="friends-section">
                     <h2 class="friends-title">👥 ДРУЗЬЯ</h2>
@@ -221,13 +221,30 @@
                         </button>
                     </div>
 
+                    <!-- Входящие заявки -->
+                    <div class="friend-requests-card" id="friend-requests-card" style="display: none;">
+                        <h3>📨 ВХОДЯЩИЕ ЗАЯВКИ</h3>
+                        <div class="friend-requests-list" id="friend-requests-list">
+                            <!-- Заявки будут загружаться сюда -->
+                        </div>
+                    </div>
+
+                    <!-- Исходящие заявки -->
+                    <div class="friend-requests-sent-card" id="friend-requests-sent-card" style="display: none;">
+                        <h3>📤 ИСХОДЯЩИЕ ЗАЯВКИ</h3>
+                        <div class="friend-requests-sent-list" id="friend-requests-sent-list">
+                            <!-- Отправленные заявки будут загружаться сюда -->
+                        </div>
+                    </div>
+
                     <!-- Добавление друга -->
                     <div class="add-friend-card">
                         <h3>➕ ДОБАВИТЬ ДРУГА</h3>
                         <div class="add-friend-form">
                             <input type="text" id="friend-username" placeholder="Telegram username (например: @username)">
-                            <button class="add-friend-btn" id="add-friend-btn">Добавить</button>
+                            <button class="add-friend-btn" id="add-friend-btn">Отправить заявку</button>
                         </div>
+                        <p class="add-friend-hint">Пользователь получит уведомление и сможет принять заявку</p>
                     </div>
 
                     <!-- Список друзей -->
@@ -352,9 +369,9 @@
                     <div class="settings-group">
                         <h3>ℹ️ О ПРИЛОЖЕНИИ</h3>
                         <div class="about-info">
-                            <p>Версия: 6.0.0</p>
+                            <p>Версия: 7.0.0</p>
                             <p>Автор: @frontendchikk</p>
-                            <p>Беговой марафон с социальными функциями</p>
+                            <p>Беговой марафон с системой друзей</p>
                         </div>
                     </div>
                 </div>
