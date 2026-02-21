@@ -14,6 +14,8 @@ const STORAGE_KEYS = {
     WORKOUT_NAME: `run_name_${userId}`,
     WORKOUT_DIFFICULTY: `run_difficulty_${userId}`,
     TOTAL_DISTANCE: `run_total_${userId}`,
+    CURRENT_WORKOUT_DISTANCE: `current_workout_distance_${userId}`,
+    WORKOUT_COMPLETED: `workout_completed_${userId}`,
     HISTORY: `run_history_${userId}`,
     DIARY_ENTRIES: `diary_entries_${userId}`,
     THEME: `theme_${userId}`,
@@ -23,6 +25,7 @@ const STORAGE_KEYS = {
 // Тренировки для каждого дня
 const DAILY_WORKOUTS = {
     1: {
+        id: 1,
         name: "🌅 Легкая пробежка",
         difficulty: "easy",
         steps: [
@@ -33,6 +36,7 @@ const DAILY_WORKOUTS = {
         totalDistance: 2
     },
     2: {
+        id: 2,
         name: "⚡ Интервальная тренировка",
         difficulty: "medium",
         steps: [
@@ -44,6 +48,7 @@ const DAILY_WORKOUTS = {
         totalDistance: 4
     },
     3: {
+        id: 3,
         name: "🏔️ Длинная пробежка",
         difficulty: "hard",
         steps: [
@@ -54,6 +59,7 @@ const DAILY_WORKOUTS = {
         totalDistance: 5
     },
     4: {
+        id: 4,
         name: "🏃‍♂️ Бег с ускорениями",
         difficulty: "medium",
         steps: [
@@ -65,6 +71,7 @@ const DAILY_WORKOUTS = {
         totalDistance: 3.5
     },
     5: {
+        id: 5,
         name: "🌄 Восстановительная",
         difficulty: "easy",
         steps: [
@@ -81,9 +88,11 @@ for (let i = 6; i <= 30; i++) {
     const sourceDay = ((i - 1) % 5) + 1;
     DAILY_WORKOUTS[i] = {
         ...DAILY_WORKOUTS[sourceDay],
+        id: i,
         name: DAILY_WORKOUTS[sourceDay].name + ` (День ${i})`,
         steps: DAILY_WORKOUTS[sourceDay].steps.map(step => ({
             ...step,
+            id: step.id + (i * 10),
             completed: false
         }))
     };
@@ -94,7 +103,8 @@ const translations = {
     ru: {
         startMessage: "Готов к тренировке?",
         startBtn: "🏃 Начать бег",
-        completeBtn: "✅ Завершить день",
+        completeWorkoutBtn: "✅ Завершить тренировку",
+        completeDayBtn: "✅ Завершить день",
         waitUntil4am: "⏰ Жди 4 утра",
         waitHours: (h, m) => `⏳ Следующий день через ${h}ч ${m}м`,
         canStart: "✅ Можно начинать",
@@ -103,6 +113,7 @@ const translations = {
         until23: "⏳ До 23:00",
         timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
         dayExpiredMsg: "⏰ Время вышло! Новый день с 4 утра.",
+        workoutCompletedMsg: "🎉 Тренировка завершена! Теперь можно завершить день.",
         completedMessage: (day, km) => `🎉 День ${day} завершен!\nПробежал(а): ${km} км`,
         
         // Меню
@@ -135,7 +146,8 @@ const translations = {
     en: {
         startMessage: "Ready for workout?",
         startBtn: "🏃 Start Run",
-        completeBtn: "✅ Complete Day",
+        completeWorkoutBtn: "✅ Complete Workout",
+        completeDayBtn: "✅ Complete Day",
         waitUntil4am: "⏰ Wait 4 AM",
         waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
         canStart: "✅ You can start",
@@ -144,6 +156,7 @@ const translations = {
         until23: "⏳ Until 11 PM",
         timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
         dayExpiredMsg: "⏰ Time is up! New day at 4 AM.",
+        workoutCompletedMsg: "🎉 Workout completed! Now you can complete the day.",
         completedMessage: (day, km) => `🎉 Day ${day} completed!\nRan: ${km} km`,
         
         // Menu
@@ -181,6 +194,8 @@ let dayStarted = false;
 let dayStartTime = null;
 let dayCompletedTime = null;
 let currentWorkout = null;
+let workoutCompleted = false;
+let currentWorkoutDistance = 0;
 let currentLanguage = 'ru';
 let currentTheme = 'dark';
 let runningHistory = [];
@@ -244,6 +259,8 @@ function loadData() {
     dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true';
     dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
     dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
+    workoutCompleted = localStorage.getItem(STORAGE_KEYS.WORKOUT_COMPLETED) === 'true';
+    currentWorkoutDistance = parseFloat(localStorage.getItem(STORAGE_KEYS.CURRENT_WORKOUT_DISTANCE)) || 0;
     runningHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY)) || [];
     diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) || [];
     
@@ -259,10 +276,21 @@ function loadData() {
         const steps = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_STEPS));
         if (steps) {
             currentWorkout = {
+                id: parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_DAY)),
                 name: localStorage.getItem(STORAGE_KEYS.WORKOUT_NAME),
                 difficulty: localStorage.getItem(STORAGE_KEYS.WORKOUT_DIFFICULTY),
                 steps: steps,
                 totalDistance: parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE))
+            };
+        } else {
+            // Создаем тренировку для текущего дня
+            const template = DAILY_WORKOUTS[currentDay] || DAILY_WORKOUTS[((currentDay - 1) % 5) + 1];
+            currentWorkout = {
+                id: currentDay,
+                name: template.name,
+                difficulty: template.difficulty,
+                steps: template.steps.map(s => ({...s, completed: false})),
+                totalDistance: template.totalDistance
             };
         }
     }
@@ -273,6 +301,8 @@ function saveData() {
     localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
     localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime);
     localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime);
+    localStorage.setItem(STORAGE_KEYS.WORKOUT_COMPLETED, workoutCompleted);
+    localStorage.setItem(STORAGE_KEYS.CURRENT_WORKOUT_DISTANCE, currentWorkoutDistance);
     localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(runningHistory));
     localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
     localStorage.setItem(STORAGE_KEYS.THEME, currentTheme);
@@ -385,11 +415,14 @@ function renderWorkout() {
     if (!currentWorkout) {
         const template = DAILY_WORKOUTS[currentDay] || DAILY_WORKOUTS[((currentDay - 1) % 5) + 1];
         currentWorkout = {
+            id: currentDay,
             name: template.name,
             difficulty: template.difficulty,
             steps: template.steps.map(s => ({...s, completed: false})),
             totalDistance: template.totalDistance
         };
+        workoutCompleted = false;
+        currentWorkoutDistance = 0;
     }
     
     document.getElementById('workout-name').textContent = currentWorkout.name;
@@ -435,7 +468,31 @@ function updateProgress() {
     document.getElementById('workout-fill').style.width = `${progress}%`;
     document.getElementById('workout-percent').textContent = `${Math.round(progress)}%`;
     
-    const allCompleted = currentWorkout.steps.every(s => s.completed);
+    // Проверяем, завершена ли тренировка (все шаги отмечены)
+    const allStepsCompleted = currentWorkout.steps.every(s => s.completed);
+    
+    if (allStepsCompleted && !workoutCompleted) {
+        // Тренировка только что завершена
+        workoutCompleted = true;
+        
+        // Считаем дистанцию
+        let distance = 0;
+        currentWorkout.steps.forEach(step => {
+            if (step.completed) distance += step.distance || 0;
+        });
+        currentWorkoutDistance = distance;
+        
+        saveData();
+        
+        // Показываем сообщение
+        tg.showPopup({
+            title: '🎉 Отлично!',
+            message: t('workoutCompletedMsg'),
+            buttons: [{ type: 'close' }]
+        });
+    }
+    
+    // Обновляем состояние кнопки завершения дня
     const canComplete = canCompleteByTime();
     const expired = isDayExpired();
     
@@ -448,8 +505,9 @@ function updateProgress() {
         btn.disabled = true;
         btn.textContent = t('until23');
     } else {
-        btn.disabled = !allCompleted;
-        btn.textContent = t('completeBtn');
+        // Кнопка активна только если тренировка завершена
+        btn.disabled = !workoutCompleted;
+        btn.textContent = t('completeDayBtn');
     }
 }
 
@@ -657,7 +715,19 @@ document.addEventListener('DOMContentLoaded', () => {
         dayStarted = true;
         dayStartTime = new Date().getTime().toString();
         dayCompletedTime = null;
-        currentWorkout = null;
+        workoutCompleted = false;
+        currentWorkoutDistance = 0;
+        
+        // Создаем тренировку для этого дня
+        const template = DAILY_WORKOUTS[currentDay] || DAILY_WORKOUTS[((currentDay - 1) % 5) + 1];
+        currentWorkout = {
+            id: currentDay,
+            name: template.name,
+            difficulty: template.difficulty,
+            steps: template.steps.map(s => ({...s, completed: false})),
+            totalDistance: template.totalDistance
+        };
+        
         saveData();
         updateUI();
     });
@@ -674,24 +744,27 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        let totalKm = 0;
-        currentWorkout.steps.forEach(step => {
-            if (step.completed) totalKm += step.distance || 0;
-        });
+        if (!workoutCompleted) {
+            tg.showAlert('⚠️ Сначала заверши тренировку!');
+            return;
+        }
         
+        // Сохраняем в историю
         runningHistory.push({
             day: currentDay,
-            distance: totalKm,
+            distance: currentWorkoutDistance,
             date: new Date().toISOString(),
             workout: currentWorkout.name
         });
         
-        document.getElementById('final-distance').textContent = totalKm.toFixed(1);
+        document.getElementById('final-distance').textContent = currentWorkoutDistance.toFixed(1);
         
         dayCompletedTime = new Date().getTime().toString();
         dayStarted = false;
         dayStartTime = null;
         currentDay++;
+        workoutCompleted = false;
+        currentWorkoutDistance = 0;
         
         saveData();
         
@@ -699,14 +772,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('marathon-screen').style.display = 'none';
         document.getElementById('congrats').style.display = 'block';
         
-        tg.showAlert(t('completedMessage', currentDay - 1, totalKm.toFixed(1)));
+        tg.showAlert(t('completedMessage', currentDay - 1, currentWorkoutDistance.toFixed(1)));
+        
+        // Обновляем статистику
+        updateStats();
     });
     
     // Продолжить
     document.getElementById('continue-btn').addEventListener('click', () => {
         document.getElementById('congrats').style.display = 'none';
         updateUI();
-        updateStats();
     });
     
     // Меню
@@ -740,6 +815,8 @@ document.addEventListener('DOMContentLoaded', () => {
             dayStartTime = null;
             dayCompletedTime = null;
             currentWorkout = null;
+            workoutCompleted = false;
+            currentWorkoutDistance = 0;
             runningHistory = [];
             diaryEntries = [];
             saveData();
