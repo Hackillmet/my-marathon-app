@@ -84,20 +84,20 @@ const translations = {
         settings: "Настройки",
         
         // Статистика
-        totalWorkouts: "Всего тренировок",
+        totalWorkouts: "Тренировок",
         totalKm: "Всего км",
-        avgDistance: "Средняя км",
+        avgDistance: "Средняя",
         bestDistance: "Лучшая",
         currentStreak: "Дней подряд",
-        thisWeek: "Эта неделя",
-        recent: "Последние",
+        thisWeek: "НЕДЕЛЯ",
+        recent: "ПОСЛЕДНИЕ",
         
         // Бег
-        runningTitle: "🏃 БЕГ",
+        runningTitle: "БЕГ",
         totalRuns: "Тренировок",
         totalKmShort: "Всего км",
-        startRun: "🏃 Начать бегать",
-        workoutHistory: "📋 История тренировок",
+        startRun: "Начать бегать",
+        workoutHistory: "ИСТОРИЯ",
         emptyHistory: "Пока нет тренировок",
         completeWorkout: "✅ Завершить тренировку",
         cancelWorkout: "❌ Отменить",
@@ -105,25 +105,24 @@ const translations = {
         workoutCompletedText: (name, km) => `Ты пробежал ${km} км!`,
         
         // Дневник
-        diaryTitle: "📔 ДНЕВНИК ТРЕНИРОВОК",
+        diaryTitle: "ДНЕВНИК",
         newEntry: "Новая запись",
         save: "Сохранить",
         cancel: "Отмена",
         noEntries: "📝 Пока нет записей",
-        entryPlaceholder: "Как прошла тренировка? Поделись впечатлениями...",
+        entryPlaceholder: "Как прошла тренировка?",
         
         // Настройки
-        settingsTitle: "⚙️ НАСТРОЙКИ",
-        themeTitle: "🎨 Тема оформления",
+        settingsTitle: "НАСТРОЙКИ",
+        themeTitle: "ТЕМА",
         dark: "🌑 Темная",
         light: "☀️ Светлая",
-        languageTitle: "🌍 Язык",
-        goalsTitle: "🎯 Цели",
-        weeklyGoal: "Недельная цель (км)",
-        aboutTitle: "ℹ️ О приложении",
+        languageTitle: "ЯЗЫК",
+        goalsTitle: "ЦЕЛЬ",
+        weeklyGoal: "км в неделю",
+        aboutTitle: "О ПРИЛОЖЕНИИ",
         version: "Версия:",
         author: "Автор:",
-        description: "Спортивная дисциплина - трекинг тренировок",
         
         // Меню
         stats_menu: "📊 СТАТИСТИКА",
@@ -147,20 +146,20 @@ const translations = {
         settings: "Settings",
         
         // Statistics
-        totalWorkouts: "Total workouts",
+        totalWorkouts: "Workouts",
         totalKm: "Total km",
-        avgDistance: "Avg km",
+        avgDistance: "Avg",
         bestDistance: "Best",
-        currentStreak: "Day streak",
-        thisWeek: "This week",
-        recent: "Recent",
+        currentStreak: "Streak",
+        thisWeek: "THIS WEEK",
+        recent: "RECENT",
         
         // Running
-        runningTitle: "🏃 RUNNING",
+        runningTitle: "RUNNING",
         totalRuns: "Workouts",
         totalKmShort: "Total km",
-        startRun: "🏃 Start Running",
-        workoutHistory: "📋 Workout History",
+        startRun: "Start Running",
+        workoutHistory: "HISTORY",
         emptyHistory: "No workouts yet",
         completeWorkout: "✅ Complete Workout",
         cancelWorkout: "❌ Cancel",
@@ -168,25 +167,24 @@ const translations = {
         workoutCompletedText: (name, km) => `You ran ${km} km!`,
         
         // Diary
-        diaryTitle: "📔 WORKOUT DIARY",
+        diaryTitle: "DIARY",
         newEntry: "New entry",
         save: "Save",
         cancel: "Cancel",
         noEntries: "📝 No entries yet",
-        entryPlaceholder: "How was your workout? Share your thoughts...",
+        entryPlaceholder: "How was your workout?",
         
         // Settings
-        settingsTitle: "⚙️ SETTINGS",
-        themeTitle: "🎨 Theme",
+        settingsTitle: "SETTINGS",
+        themeTitle: "THEME",
         dark: "🌑 Dark",
         light: "☀️ Light",
-        languageTitle: "🌍 Language",
-        goalsTitle: "🎯 Goals",
-        weeklyGoal: "Weekly goal (km)",
-        aboutTitle: "ℹ️ About",
+        languageTitle: "LANGUAGE",
+        goalsTitle: "GOAL",
+        weeklyGoal: "km per week",
+        aboutTitle: "ABOUT",
         version: "Version:",
         author: "Author:",
-        description: "Sport Discipline - workout tracking",
         
         // Menu
         stats_menu: "📊 STATISTICS",
@@ -294,7 +292,6 @@ function updateStats() {
     document.getElementById('total-distance').textContent = totalDistance.toFixed(1);
     document.getElementById('avg-distance').textContent = avgDistance;
     document.getElementById('best-distance').textContent = bestDistance.toFixed(1);
-    document.getElementById('current-streak').textContent = streak;
     document.getElementById('week-current').textContent = weekDistance.toFixed(1);
     document.getElementById('week-goal').textContent = weeklyGoal;
     document.getElementById('week-progress').style.width = `${Math.min(weekProgress, 100)}%`;
@@ -613,16 +610,13 @@ function updateAllText() {
     document.querySelector('.settings-title').textContent = t('settingsTitle');
     
     // Статистика
-    document.querySelectorAll('.stat-card.large .stat-label')[0].textContent = t('totalWorkouts');
-    document.querySelectorAll('.stat-card.large .stat-label')[1].textContent = t('totalKm');
+    document.querySelectorAll('.stat-card .stat-label')[0].textContent = t('totalWorkouts');
+    document.querySelectorAll('.stat-card .stat-label')[1].textContent = t('totalKm');
+    document.querySelectorAll('.stat-card .stat-label')[2].textContent = t('avgDistance');
+    document.querySelectorAll('.stat-card .stat-label')[3].textContent = t('bestDistance');
     
-    const secondaryLabels = document.querySelectorAll('.secondary-stats .stat-label');
-    if (secondaryLabels[0]) secondaryLabels[0].textContent = t('avgDistance');
-    if (secondaryLabels[1]) secondaryLabels[1].textContent = t('bestDistance');
-    if (secondaryLabels[2]) secondaryLabels[2].textContent = t('currentStreak');
-    
-    document.querySelector('.weekly-progress h3').textContent = t('thisWeek');
-    document.querySelector('.recent-workouts h3').textContent = t('recent');
+    document.querySelector('.weekly-card h3').textContent = t('thisWeek');
+    document.querySelector('.recent-card h3').textContent = t('recent');
     
     // Настройки
     const settingsGroups = document.querySelectorAll('.settings-group h3');
@@ -634,14 +628,13 @@ function updateAllText() {
     document.getElementById('theme-dark').innerHTML = '<span class="theme-preview dark-preview"></span><span>' + t('dark') + '</span>';
     document.getElementById('theme-light').innerHTML = '<span class="theme-preview light-preview"></span><span>' + t('light') + '</span>';
     
-    document.querySelector('.goal-setting label').textContent = t('weeklyGoal');
+    document.querySelector('.goal-setting span').textContent = t('weeklyGoal');
     
     const aboutInfo = document.querySelector('.about-info');
     if (aboutInfo) {
         aboutInfo.innerHTML = `
             <p>${t('version')} 2.0.0</p>
             <p>${t('author')} @frontendchikk</p>
-            <p>${t('description')}</p>
         `;
     }
     
@@ -671,7 +664,7 @@ function updateAllText() {
     const startWorkoutBtn = document.getElementById('start-workout-btn');
     if (startWorkoutBtn) startWorkoutBtn.innerHTML = `🏃 ${t('startRun')}`;
     
-    const workoutHistoryTitle = document.querySelector('.workout-history h3');
+    const workoutHistoryTitle = document.querySelector('.recent-card h3');
     if (workoutHistoryTitle) workoutHistoryTitle.textContent = t('workoutHistory');
 }
 
