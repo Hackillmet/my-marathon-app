@@ -54,7 +54,7 @@ const BASE_WORKOUTS = [
 
 // ========== СОСТОЯНИЕ ==========
 let currentDay = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_DAY)) || 1;
-let dayStarted = false;
+let dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true' || false;
 let dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
 let dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
 let completedSteps = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_STEPS)) || [false, false, false, false];
@@ -122,6 +122,7 @@ function isDayExpired() {
 // ========== СОХРАНЕНИЕ ==========
 function saveState() {
     localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
+    localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
     localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime || '');
     localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime || '');
     localStorage.setItem(STORAGE_KEYS.COMPLETED_STEPS, JSON.stringify(completedSteps));
@@ -129,7 +130,6 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.CUSTOM_WORKOUTS, JSON.stringify(customWorkouts));
     localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
     localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
-    localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
 }
 
 // ========== СТАТИСТИКА ==========
@@ -193,7 +193,8 @@ function renderCustomTasks() {
     
     if (currentCustomTasks.length === 0) {
         container.innerHTML = '<div class="empty-tasks">➕ Добавь задания для тренировки</div>';
-        document.getElementById('create-plan-btn').disabled = true;
+        const createBtn = document.getElementById('create-plan-btn');
+        if (createBtn) createBtn.disabled = true;
         return;
     }
     
@@ -290,13 +291,12 @@ function saveCustomWorkout() {
     
     // Очищаем форму
     currentCustomTasks = [];
-    document.getElementById('goal-distance').value = 5;
-    document.getElementById('new-task-text').value = '';
-    document.getElementById('new-task-distance').value = 0;
+    goalInput.value = 5;
+    const taskText = document.getElementById('new-task-text');
+    const taskDistance = document.getElementById('new-task-distance');
+    if (taskText) taskText.value = '';
+    if (taskDistance) taskDistance.value = 0;
     renderCustomTasks();
-    
-    // Переключаем на слайд бега
-    setTimeout(() => switchPage(0), 1000);
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
@@ -520,7 +520,7 @@ function renderDiary() {
     });
 }
 
-// ========== ОБНОВЛЕНИЕ ТЕКСТА ==========
+// ========== ОБНОВЛЕНИЕ ДАТЫ ==========
 function updateDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -704,7 +704,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== СОЗДАНИЕ ТРЕНИРОВКИ =====
     const addTaskBtn = document.getElementById('add-task-btn');
     if (addTaskBtn) {
+        console.log('Кнопка добавления задания найдена');
         addTaskBtn.addEventListener('click', function() {
+            console.log('Добавление задания');
             const taskText = document.getElementById('new-task-text')?.value.trim();
             const taskDistance = parseFloat(document.getElementById('new-task-distance')?.value) || 0;
             
@@ -718,10 +720,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 distance: taskDistance
             });
             
-            document.getElementById('new-task-text').value = '';
-            document.getElementById('new-task-distance').value = 0;
+            const taskTextInput = document.getElementById('new-task-text');
+            const taskDistanceInput = document.getElementById('new-task-distance');
+            if (taskTextInput) taskTextInput.value = '';
+            if (taskDistanceInput) taskDistanceInput.value = 0;
             renderCustomTasks();
         });
+    } else {
+        console.log('Кнопка добавления задания НЕ найдена');
     }
     
     const goalInput = document.getElementById('goal-distance');
@@ -731,7 +737,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const createPlanBtn = document.getElementById('create-plan-btn');
     if (createPlanBtn) {
-        createPlanBtn.addEventListener('click', createCustomWorkout);
+        console.log('Кнопка создания плана найдена');
+        createPlanBtn.addEventListener('click', function() {
+            console.log('Создание плана');
+            createCustomWorkout();
+        });
+    } else {
+        console.log('Кнопка создания плана НЕ найдена');
     }
     
     // ===== МЕНЮ =====
@@ -740,7 +752,7 @@ document.addEventListener('DOMContentLoaded', function() {
         menuBtn.addEventListener('click', function() {
             const menu = document.getElementById('menu-dropdown');
             if (menu) {
-                if (menu.style.display === 'none') {
+                if (menu.style.display === 'none' || menu.style.display === '') {
                     menu.style.display = 'block';
                     menuBtn.classList.add('active');
                 } else {
