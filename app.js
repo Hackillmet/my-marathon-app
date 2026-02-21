@@ -100,7 +100,8 @@ const translations = {
         shareProfile: "📤 Поделиться",
         addFriend: "➕ ДОБАВИТЬ ДРУГА",
         friendPlaceholder: "Telegram username (например: @username)",
-        sendRequest: "Отправить заявку",
+        sendRequest: "📨 Отправить заявку",
+        addDirect: "👥 Добавить в друзья",
         requests: "📨 ВХОДЯЩИЕ ЗАЯВКИ",
         sentRequests: "📤 ИСХОДЯЩИЕ ЗАЯВКИ",
         myFriends: "👥 МОИ ДРУЗЬЯ",
@@ -115,7 +116,7 @@ const translations = {
         teamGoal: "км",
         newUser: "NEW",
         zeroStats: "0 км (новичок)",
-        hint: "Пользователь получит уведомление и сможет принять заявку",
+        hint: "Нажми 'Отправить заявку' для подтверждения или 'Добавить в друзья' сразу",
         
         // Сообщения
         enterUsername: "Введите username друга",
@@ -127,6 +128,7 @@ const translations = {
         requestDeclined: (name) => `❌ Заявка от ${name} отклонена`,
         requestCancelled: (name) => `✕ Заявка ${name} отменена`,
         friendRemoved: (name) => `✕ Друг ${name} удален`,
+        friendAdded: (name) => `✅ Пользователь ${name} добавлен в друзья!`,
         writeToTelegram: "💬 Написать в Telegram",
         
         // Создание заданий
@@ -247,7 +249,8 @@ const translations = {
         shareProfile: "📤 Share",
         addFriend: "➕ ADD FRIEND",
         friendPlaceholder: "Telegram username (e.g., @username)",
-        sendRequest: "Send request",
+        sendRequest: "📨 Send request",
+        addDirect: "👥 Add friend",
         requests: "📨 INCOMING REQUESTS",
         sentRequests: "📤 OUTGOING REQUESTS",
         myFriends: "👥 MY FRIENDS",
@@ -262,7 +265,7 @@ const translations = {
         teamGoal: "km",
         newUser: "NEW",
         zeroStats: "0 km (newbie)",
-        hint: "The user will receive a notification and can accept the request",
+        hint: "Click 'Send request' for confirmation or 'Add friend' immediately",
         
         // Messages
         enterUsername: "Enter friend's username",
@@ -274,6 +277,7 @@ const translations = {
         requestDeclined: (name) => `❌ Request from ${name} declined`,
         requestCancelled: (name) => `✕ Request to ${name} cancelled`,
         friendRemoved: (name) => `✕ Friend ${name} removed`,
+        friendAdded: (name) => `✅ User ${name} added to friends!`,
         writeToTelegram: "💬 Write in Telegram",
         
         // Create tasks
@@ -705,7 +709,10 @@ function renderFriends() {
     });
 }
 
-function addFriend() {
+// ========== НОВЫЕ ФУНКЦИИ ДЛЯ КНОПОК ==========
+
+// Отправить заявку в друзья (с подтверждением)
+function sendFriendRequest() {
     const input = document.getElementById('friend-username');
     const username = input?.value.trim();
     
@@ -778,6 +785,70 @@ function addFriend() {
             tg.openTelegramLink(`https://t.me/${cleanUsername}`);
         }
     });
+}
+
+// Добавить в друзья сразу (без подтверждения)
+function addFriendDirect() {
+    const input = document.getElementById('friend-username');
+    const username = input?.value.trim();
+    
+    if (!username) {
+        tg.showAlert(t('enterUsername'));
+        return;
+    }
+    
+    // Проверяем, не добавляем ли мы сами себя
+    if (username === `@${userUsername}` || username === userUsername) {
+        tg.showAlert(t('cantAddSelf'));
+        return;
+    }
+    
+    // Проверяем, не является ли уже другом
+    const alreadyFriend = friends.some(f => f.username === username);
+    if (alreadyFriend) {
+        tg.showAlert(t('alreadyFriend'));
+        return;
+    }
+    
+    // Проверяем, нет ли входящей заявки от этого пользователя
+    const incomingRequestIndex = friendRequests.findIndex(r => r.username === username);
+    if (incomingRequestIndex !== -1) {
+        // Удаляем заявку
+        friendRequests.splice(incomingRequestIndex, 1);
+        localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+    }
+    
+    // Проверяем, нет ли исходящей заявки
+    const outgoingRequestIndex = sentRequests.findIndex(r => r.username === username);
+    if (outgoingRequestIndex !== -1) {
+        sentRequests.splice(outgoingRequestIndex, 1);
+        localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    }
+    
+    // Создаем нового друга
+    const newFriend = {
+        id: Date.now(),
+        name: username,
+        username: username,
+        avatar: '👤',
+        workouts: 0,
+        distance: 0,
+        addedDate: new Date().toISOString()
+    };
+    
+    friends.push(newFriend);
+    localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+    
+    // Очищаем поле ввода
+    input.value = '';
+    
+    // Обновляем отображение
+    renderFriendRequests();
+    renderSentRequests();
+    renderFriends();
+    updateTeamProgress();
+    
+    tg.showAlert(t('friendAdded', username));
 }
 
 function acceptFriendRequest(index) {
@@ -1652,8 +1723,11 @@ function updateAllText() {
     const friendInput = document.getElementById('friend-username');
     if (friendInput) friendInput.placeholder = t('friendPlaceholder');
     
-    const addFriendBtn = document.getElementById('add-friend-btn');
-    if (addFriendBtn) addFriendBtn.textContent = t('sendRequest');
+    const sendRequestBtn = document.getElementById('send-request-btn');
+    if (sendRequestBtn) sendRequestBtn.textContent = t('sendRequest');
+    
+    const addDirectBtn = document.getElementById('add-direct-btn');
+    if (addDirectBtn) addDirectBtn.textContent = t('addDirect');
     
     const friendRequestsCardH3 = document.querySelector('.friend-requests-card h3');
     if (friendRequestsCardH3) friendRequestsCardH3.textContent = t('requests');
@@ -1728,7 +1802,7 @@ function updateAllText() {
     const aboutInfo = document.querySelector('.about-info');
     if (aboutInfo) {
         aboutInfo.innerHTML = `
-            <p>${t('version')} 7.0.0</p>
+            <p>${t('version')} 8.0.0</p>
             <p>${t('author')} @frontendchikk</p>
             <p>${t('description')}</p>
         `;
@@ -2018,15 +2092,14 @@ document.addEventListener('DOMContentLoaded', function() {
         shareProfileBtn.addEventListener('click', shareProfile);
     }
     
-    const addFriendBtn = document.getElementById('add-friend-btn');
-    if (addFriendBtn) {
-        console.log('Кнопка добавления друга найдена');
-        addFriendBtn.addEventListener('click', function() {
-            console.log('Кнопка добавления друга нажата');
-            addFriend();
-        });
-    } else {
-        console.error('Кнопка добавления друга НЕ найдена');
+    const sendRequestBtn = document.getElementById('send-request-btn');
+    if (sendRequestBtn) {
+        sendRequestBtn.addEventListener('click', sendFriendRequest);
+    }
+    
+    const addDirectBtn = document.getElementById('add-direct-btn');
+    if (addDirectBtn) {
+        addDirectBtn.addEventListener('click', addFriendDirect);
     }
     
     // Создание заданий
