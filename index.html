@@ -64,10 +64,11 @@
                 <div id="start-screen" class="start-screen">
                     <div class="start-content">
                         <h2>День <span id="start-day-number">1</span></h2>
-                        <p>Готов начать свой путь к балансу?</p>
+                        <p id="start-message">Готов начать свой путь к балансу?</p>
                         <button class="start-day-btn" id="start-day-btn">
                             🚀 Начать день
                         </button>
+                        <div class="time-info" id="time-info"></div>
                     </div>
                 </div>
 
@@ -114,7 +115,10 @@
                         </div>
                         
                         <div class="habits-list" id="habits-list"></div>
-                        <div class="habit-note">✕ Нажми на крестик чтобы удалить</div>
+                        <div class="habit-note">
+                            <span>📌 Стандартные (4 шт)</span>
+                            <span>➕ Добавленные</span>
+                        </div>
                     </div>
 
                     <!-- Задачи -->
@@ -130,13 +134,17 @@
                         </div>
                         
                         <div class="tasks-list" id="tasks-list"></div>
-                        <div class="task-note">✕ Нажми на крестик чтобы удалить</div>
+                        <div class="task-note">
+                            <span>📌 Стандартные (4 шт)</span>
+                            <span>➕ Добавленные</span>
+                        </div>
                     </div>
 
                     <!-- Кнопка завершения -->
                     <button class="complete-day-btn" id="complete-day-btn" disabled>
                         ✅ Завершить день
                     </button>
+                    <div class="deadline-info" id="deadline-info"></div>
                 </div>
             </div>
 
@@ -177,16 +185,42 @@
                     <div class="settings-group">
                         <h3>ℹ️ О приложении</h3>
                         <div class="about-info">
-                            <p>Версия: 2.0.0</p>
+                            <p>Версия: 3.0.0</p>
                             <p>Автор: @frontendchikk</p>
                             <p>Марафон баланса - развивай разум и дух каждый день</p>
+                            <p>⏰ Режим: 4:00 - 23:00</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- СЛАЙД 3: Дневник -->
+            <div class="slide" id="slide3">
+                <div class="diary-section">
+                    <h2 class="diary-title">📔 ДНЕВНИК</h2>
+                    
+                    <!-- Кнопка добавления записи -->
+                    <button class="add-entry-btn" id="add-entry-btn">
+                        <span class="plus-icon">+</span>
+                        Новая запись
+                    </button>
+                    
+                    <!-- Форма добавления записи (скрыта) -->
+                    <div class="add-entry-form" id="add-entry-form" style="display: none;">
+                        <textarea id="entry-text" placeholder="Что сегодня произошло? Поделись своими мыслями..." rows="4"></textarea>
+                        <div class="form-buttons">
+                            <button class="btn-small" id="save-entry-btn">Сохранить</button>
+                            <button class="btn-small cancel-btn" id="cancel-entry-btn">Отмена</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Список записей -->
+                    <div class="entries-list" id="entries-list"></div>
+                </div>
+            </div>
         </div>
 
-        <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+        <!-- НИЖНЯЯ НАВИГАЦИЯ (3 кнопки) -->
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-home" onclick="switchPage(0)">
                 <span class="nav-icon">🏠</span>
@@ -195,6 +229,10 @@
             <button class="nav-btn" id="nav-settings" onclick="switchPage(1)">
                 <span class="nav-icon">⚙️</span>
                 <span class="nav-text">Настройки</span>
+            </button>
+            <button class="nav-btn" id="nav-diary" onclick="switchPage(2)">
+                <span class="nav-icon">📔</span>
+                <span class="nav-text">Дневник</span>
             </button>
         </div>
 
