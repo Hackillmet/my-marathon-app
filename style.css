@@ -638,6 +638,291 @@ body {
     font-size: 14px;
 }
 
+/* ===== СТИЛИ ДЛЯ СЛАЙДА БЕГ ===== */
+.running-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 20px;
+}
+
+.running-title {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.running-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--blue);
+    display: block;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.start-workout-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 25px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.start-workout-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.4);
+}
+
+/* Карточка тренировки */
+.workout-card {
+    background: var(--bg-primary);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid var(--blue);
+    animation: workoutAppear 0.3s ease;
+}
+
+@keyframes workoutAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.workout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.workout-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--blue);
+}
+
+.workout-difficulty {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.difficulty-easy {
+    background: rgba(0, 255, 0, 0.1);
+    color: #00cc88;
+}
+
+.difficulty-medium {
+    background: rgba(255, 165, 0, 0.1);
+    color: #ffaa00;
+}
+
+.difficulty-hard {
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4444;
+}
+
+.workout-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    padding: 12px;
+    background: var(--bg-card);
+    border-radius: 12px;
+}
+
+.workout-stat {
+    text-align: center;
+}
+
+.workout-stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--blue);
+}
+
+.workout-stat-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.workout-steps {
+    margin: 20px 0;
+}
+
+.workout-step {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    background: var(--bg-card);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.workout-step.step-completed {
+    background: rgba(0, 204, 136, 0.1);
+    border-color: var(--success);
+}
+
+.workout-checkbox {
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+    accent-color: var(--blue);
+}
+
+.step-text {
+    flex: 1;
+    font-size: 15px;
+}
+
+.step-completed .step-text {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+}
+
+.step-distance {
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.complete-workout-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--success);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.2s ease;
+}
+
+.complete-workout-btn:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+}
+
+.cancel-workout-btn {
+    width: 100%;
+    padding: 14px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.cancel-workout-btn:active {
+    background: var(--danger);
+    color: white;
+    border-color: var(--danger);
+}
+
+/* История тренировок */
+.workout-history {
+    margin-top: 20px;
+}
+
+.workout-history h3 {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    animation: itemAppear 0.2s ease;
+}
+
+.history-date {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.history-workout {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--blue);
+}
+
+.history-stats {
+    font-size: 13px;
+    color: var(--success);
+}
+
+.empty-history {
+    text-align: center;
+    padding: 30px 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+}
+
 /* Дневник */
 .diary-section {
     background: var(--bg-card);
