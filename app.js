@@ -10,8 +10,8 @@ const STORAGE_KEYS = {
     HABITS: `habits_${userId}`,
     TASKS: `tasks_${userId}`,
     CURRENT_DAY: `current_day_${userId}`,
-    DAY_COMPLETED_TIME: `day_completed_time_${userId}`,
-    DAY_START_TIME: `day_start_time_${userId}` // Время начала дня
+    THEME: `theme_${userId}`,
+    LANGUAGE: `language_${userId}`
 };
 
 // Стартовые данные
@@ -28,13 +28,129 @@ const DEFAULT_TASKS = [
     { id: 3, text: "📞 Позвонить родителям", completed: false }
 ];
 
+// Переводы
+const translations = {
+    ru: {
+        // Общее
+        day: "День",
+        startMessage: "Готов начать свой путь к балансу?",
+        startDayBtn: "🚀 Начать день",
+        completeBtn: "✅ Завершить день",
+        
+        // Баланс
+        balance: {
+            system: "⚖️ БАЛАНС СИСТЕМЫ",
+            mind: "Разум",
+            spirit: "Дух"
+        },
+        
+        // Привычки
+        habits: {
+            title: "🌱 ПРИВЫЧКИ",
+            placeholder: "➕ Добавить свою привычку...",
+            addBtn: "Добавить",
+            note: "Привычки влияют на"
+        },
+        
+        // Задачи
+        tasks: {
+            title: "📋 ЗАДАЧИ НА СЕГОДНЯ",
+            note: "Задачи влияют на"
+        },
+        
+        // Меню
+        menu: {
+            marathon: "📋 МАРАФОН",
+            resetDay: "🔄 Сбросить день",
+            newMarathon: "✨ Новый марафон",
+            stats: "📊 Моя статистика",
+            help: "🆘 ПОМОЩЬ",
+            support: "💬 Поддержка",
+            contact: "Связаться:",
+            faq: "❓ FAQ",
+            contacts: "📞 КОНТАКТЫ",
+            author: "👤 Автор:"
+        },
+        
+        // Настройки
+        settings: {
+            title: "⚙️ НАСТРОЙКИ",
+            theme: "🎨 Тема оформления",
+            dark: "🌑 Темная",
+            light: "☀️ Светлая",
+            language: "🌍 Язык",
+            about: "ℹ️ О приложении",
+            version: "Версия:",
+            author: "Автор:",
+            description: "Марафон баланса - развивай разум и дух каждый день"
+        }
+    },
+    en: {
+        // General
+        day: "Day",
+        startMessage: "Ready to start your journey to balance?",
+        startDayBtn: "🚀 Start Day",
+        completeBtn: "✅ Complete Day",
+        
+        // Balance
+        balance: {
+            system: "⚖️ SYSTEM BALANCE",
+            mind: "Mind",
+            spirit: "Spirit"
+        },
+        
+        // Habits
+        habits: {
+            title: "🌱 HABITS",
+            placeholder: "➕ Add your habit...",
+            addBtn: "Add",
+            note: "Habits affect"
+        },
+        
+        // Tasks
+        tasks: {
+            title: "📋 TODAY'S TASKS",
+            note: "Tasks affect"
+        },
+        
+        // Menu
+        menu: {
+            marathon: "📋 MARATHON",
+            resetDay: "🔄 Reset Day",
+            newMarathon: "✨ New Marathon",
+            stats: "📊 My Stats",
+            help: "🆘 HELP",
+            support: "💬 Support",
+            contact: "Contact:",
+            faq: "❓ FAQ",
+            contacts: "📞 CONTACTS",
+            author: "👤 Author:"
+        },
+        
+        // Settings
+        settings: {
+            title: "⚙️ SETTINGS",
+            theme: "🎨 Theme",
+            dark: "🌑 Dark",
+            light: "☀️ Light",
+            language: "🌍 Language",
+            about: "ℹ️ About",
+            version: "Version:",
+            author: "Author:",
+            description: "Balance Marathon - develop your mind and spirit every day"
+        }
+    }
+};
+
+// Текущий язык и тема
+let currentLanguage = 'ru';
+let currentTheme = 'dark';
+
 // Состояние приложения
 let currentDay = 1;
 let habits = [];
 let tasks = [];
 let dayStarted = false;
-let dayCompletedTime = null;
-let dayStartTime = null;
 
 // DOM элементы
 const startScreen = document.getElementById('start-screen');
@@ -65,63 +181,109 @@ const supportBtn = document.getElementById('support');
 const telegramSupport = document.getElementById('telegram-support');
 const faqBtn = document.getElementById('faq');
 
+// Функция перевода
+function t(key) {
+    const keys = key.split('.');
+    let value = translations[currentLanguage];
+    
+    for (const k of keys) {
+        if (value && value[k]) {
+            value = value[k];
+        } else {
+            return key;
+        }
+    }
+    
+    return value;
+}
+
+// Обновление всего текста на странице
+function updateLanguage() {
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = t(key);
+    });
+    
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        element.placeholder = t(key);
+    });
+}
+
+// Переключение языка
+function setLanguage(lang) {
+    currentLanguage = lang;
+    localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
+    
+    // Обновляем активную кнопку
+    document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
+    document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+    
+    updateLanguage();
+}
+
+// Переключение темы
+function setTheme(theme) {
+    currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(STORAGE_KEYS.THEME, theme);
+    
+    // Обновляем активную кнопку
+    document.getElementById('theme-dark').classList.toggle('active', theme === 'dark');
+    document.getElementById('theme-light').classList.toggle('active', theme === 'light');
+}
+
+// Переключение слайдов
+function switchPage(pageIndex) {
+    const slides = document.querySelectorAll('.slide');
+    const indicators = document.querySelectorAll('.indicator');
+    
+    slides.forEach((slide, index) => {
+        if (index === pageIndex) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    
+    indicators.forEach((indicator, index) => {
+        if (index === pageIndex) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.remove('active');
+        }
+    });
+    
+    // Прокрутка к слайду
+    document.getElementById('slidesContainer').scrollTo({
+        left: pageIndex * window.innerWidth,
+        behavior: 'smooth'
+    });
+}
+
 // Показываем дату
 function updateDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
-    currentDateEl.textContent = now.toLocaleDateString('ru-RU', options);
-}
-
-// Проверка времени для начала дня (можно только с 4 утра)
-function canStartDayByTime() {
-    const now = new Date();
-    const hours = now.getHours();
-    return hours >= 4; // Можно начинать с 4 утра
-}
-
-// Проверка времени для завершения дня (нужно до 23:00)
-function canCompleteDayByTime() {
-    const now = new Date();
-    const hours = now.getHours();
-    return hours < 23; // Можно завершать до 23:00
-}
-
-// Проверка, не прошло ли больше 24 часов с начала дня
-function isDayExpired() {
-    if (!dayStartTime) return false;
-    
-    const now = new Date().getTime();
-    const startTime = parseInt(dayStartTime);
-    const hoursPassed = (now - startTime) / (1000 * 60 * 60);
-    
-    return hoursPassed >= 24; // День "сгорает" через 24 часа
-}
-
-// Получить время до окончания дня
-function getTimeUntilDeadline() {
-    if (!dayStartTime) return null;
-    
-    const now = new Date().getTime();
-    const startTime = parseInt(dayStartTime);
-    const hoursPassed = (now - startTime) / (1000 * 60 * 60);
-    
-    if (hoursPassed >= 24) return null;
-    
-    const remainingHours = 24 - hoursPassed;
-    const remainingMinutes = Math.ceil((remainingHours - Math.floor(remainingHours)) * 60);
-    
-    return {
-        hours: Math.floor(remainingHours),
-        minutes: remainingMinutes
-    };
+    currentDateEl.textContent = now.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', options);
 }
 
 // Загрузка данных
 function loadData() {
     dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true';
     currentDay = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_DAY)) || 1;
-    dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
-    dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
+    
+    // Загрузка темы
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
+    
+    // Загрузка языка
+    const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
+    if (savedLang) {
+        setLanguage(savedLang);
+    }
     
     const savedHabits = localStorage.getItem(STORAGE_KEYS.HABITS);
     habits = savedHabits ? JSON.parse(savedHabits) : DEFAULT_HABITS.map(h => ({...h}));
@@ -136,52 +298,14 @@ function saveData() {
     localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
     localStorage.setItem(STORAGE_KEYS.HABITS, JSON.stringify(habits));
     localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
-    if (dayCompletedTime) {
-        localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime);
-    }
-    if (dayStartTime) {
-        localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime);
-    }
-}
-
-// Проверка, можно ли начать новый день
-function canStartNewDay() {
-    if (!dayCompletedTime) return true;
-    
-    const now = new Date().getTime();
-    const completedTime = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completedTime) / (1000 * 60 * 60);
-    
-    return hoursPassed >= 24;
-}
-
-// Получить оставшееся время до следующего дня
-function getTimeRemaining() {
-    if (!dayCompletedTime) return null;
-    
-    const now = new Date().getTime();
-    const completedTime = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completedTime) / (1000 * 60 * 60);
-    
-    if (hoursPassed >= 24) return null;
-    
-    const remainingHours = 24 - hoursPassed;
-    const remainingMinutes = Math.ceil((remainingHours - Math.floor(remainingHours)) * 60);
-    
-    return {
-        hours: Math.floor(remainingHours),
-        minutes: remainingMinutes
-    };
 }
 
 // Обновление баланса
 function updateBalance() {
-    // РАЗУМ - заполняется от привычек
     const totalHabits = habits.length || 1;
     const completedHabits = habits.filter(h => h.completed).length;
     const mindProgress = (completedHabits / totalHabits) * 100;
     
-    // ДУХ - заполняется от задач на сегодня
     const totalTasks = tasks.length || 1;
     const completedTasks = tasks.filter(t => t.completed).length;
     const spiritProgress = (completedTasks / totalTasks) * 100;
@@ -193,21 +317,7 @@ function updateBalance() {
     spiritPercent.textContent = `${Math.round(spiritProgress)}%`;
     
     const allTasksCompleted = tasks.every(t => t.completed);
-    
-    // Проверяем время для завершения и не истек ли день
-    const canComplete = canCompleteDayByTime();
-    const dayExpired = isDayExpired();
-    
-    if (dayExpired) {
-        completeDayBtn.disabled = true;
-        completeDayBtn.textContent = '⏰ День истек (прошло 24 часа)';
-    } else if (!canComplete) {
-        completeDayBtn.disabled = true;
-        completeDayBtn.textContent = '⏳ Можно завершить только до 23:00';
-    } else {
-        completeDayBtn.disabled = !allTasksCompleted;
-        completeDayBtn.textContent = allTasksCompleted ? '✅ Завершить день' : '❌ Выполни все задачи';
-    }
+    completeDayBtn.disabled = !allTasksCompleted;
 }
 
 // Отрисовка привычек
@@ -283,51 +393,14 @@ function renderTasks() {
 function updateUI() {
     startDayNumber.textContent = currentDay;
     
-    // Проверяем, можно ли начать день
-    const canStart = canStartNewDay();
-    const canStartByTime = canStartDayByTime();
-    
     if (!dayStarted) {
         startScreen.style.display = 'block';
         marathonScreen.style.display = 'none';
         congratsDiv.style.display = 'none';
-        
-        // Если день завершен и еще не прошло 24 часа
-        if (dayCompletedTime && !canStart) {
-            const remaining = getTimeRemaining();
-            if (remaining) {
-                startDayBtn.textContent = `⏳ Следующий день через ${remaining.hours}ч ${remaining.minutes}м`;
-                startDayBtn.disabled = true;
-                startDayBtn.style.opacity = '0.5';
-            }
-        } 
-        // Проверка времени начала (только с 4 утра)
-        else if (!canStartByTime) {
-            startDayBtn.textContent = '⏰ Новый день можно начать с 4:00 утра';
-            startDayBtn.disabled = true;
-            startDayBtn.style.opacity = '0.5';
-        }
-        else {
-            startDayBtn.textContent = '🚀 Начать день';
-            startDayBtn.disabled = false;
-            startDayBtn.style.opacity = '1';
-        }
     } else {
         startScreen.style.display = 'none';
         marathonScreen.style.display = 'block';
         congratsDiv.style.display = 'none';
-        
-        // Проверяем, не истек ли день
-        if (isDayExpired()) {
-            // День истек, автоматически завершаем его
-            dayStarted = false;
-            dayCompletedTime = new Date().getTime().toString();
-            saveData();
-            tg.showAlert('⏰ День истек! Не успел выполнить задачи вовремя. Начни следующий день с 4 утра.');
-            updateUI();
-            return;
-        }
-        
         renderHabits();
         renderTasks();
         updateBalance();
@@ -336,37 +409,13 @@ function updateUI() {
 
 // Начать день
 startDayBtn.addEventListener('click', () => {
-    if (!canStartNewDay()) {
-        const remaining = getTimeRemaining();
-        tg.showAlert(`⏳ Еще не прошло 24 часа! Следующий день откроется через ${remaining.hours}ч ${remaining.minutes}м`);
-        return;
-    }
-    
-    if (!canStartDayByTime()) {
-        tg.showAlert('⏰ Новый день можно начать только с 4:00 утра!');
-        return;
-    }
-    
     dayStarted = true;
-    dayStartTime = new Date().getTime().toString(); // Запоминаем время начала
-    dayCompletedTime = null;
-    localStorage.removeItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
     saveData();
     updateUI();
 });
 
 // Завершить день
 completeDayBtn.addEventListener('click', () => {
-    if (!canCompleteDayByTime()) {
-        tg.showAlert('⏰ Завершить день можно только до 23:00!');
-        return;
-    }
-    
-    if (isDayExpired()) {
-        tg.showAlert('⏰ День истек! Не успел выполнить задачи вовремя.');
-        return;
-    }
-    
     const totalHabits = habits.length || 1;
     const completedHabits = habits.filter(h => h.completed).length;
     const mindProgress = Math.round((completedHabits / totalHabits) * 100);
@@ -378,10 +427,11 @@ completeDayBtn.addEventListener('click', () => {
     document.getElementById('final-mind').textContent = mindProgress;
     document.getElementById('final-spirit').textContent = spiritProgress;
     
-    // Сохраняем время завершения дня
-    dayCompletedTime = new Date().getTime().toString();
+    currentDay++;
     dayStarted = false;
-    dayStartTime = null;
+    
+    habits = DEFAULT_HABITS.map(h => ({...h, completed: false}));
+    tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
     
     saveData();
     
@@ -389,7 +439,11 @@ completeDayBtn.addEventListener('click', () => {
     marathonScreen.style.display = 'none';
     congratsDiv.style.display = 'block';
     
-    tg.showAlert(`🎉 Молодец! День ${currentDay} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%\n\n⏳ Следующий день можно начать с 4 утра!`);
+    const message = currentLanguage === 'ru' 
+        ? `🎉 Молодец! День ${currentDay-1} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%`
+        : `🎉 Great job! Day ${currentDay-1} completed!\n🧠 Mind: ${mindProgress}%\n💚 Spirit: ${spiritProgress}%`;
+    
+    tg.showAlert(message);
 });
 
 // Добавление привычки
@@ -423,117 +477,99 @@ habitText.addEventListener('keypress', (e) => {
     }
 });
 
-// Меню с анимацией
+// Меню
 menuBtn.addEventListener('click', () => {
     if (menuDropdown.style.display === 'none') {
         menuDropdown.style.display = 'block';
         menuBtn.classList.add('active');
-        setTimeout(() => {
-            menuDropdown.style.opacity = '1';
-        }, 10);
     } else {
-        menuDropdown.style.opacity = '0';
+        menuDropdown.style.display = 'none';
         menuBtn.classList.remove('active');
-        setTimeout(() => {
-            menuDropdown.style.display = 'none';
-        }, 300);
     }
 });
 
-// Закрыть меню при клике вне его
 document.addEventListener('click', (e) => {
     if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
-        menuDropdown.style.opacity = '0';
+        menuDropdown.style.display = 'none';
         menuBtn.classList.remove('active');
-        setTimeout(() => {
-            menuDropdown.style.display = 'none';
-        }, 300);
     }
 });
 
 // Функции меню
 resetDayBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (confirm('Сбросить текущий день? Весь прогресс будет потерян.')) {
+    const confirmMsg = currentLanguage === 'ru' 
+        ? 'Сбросить текущий день? Весь прогресс будет потерян.'
+        : 'Reset current day? All progress will be lost.';
+    
+    if (confirm(confirmMsg)) {
         dayStarted = false;
-        dayCompletedTime = null;
-        dayStartTime = null;
         habits = DEFAULT_HABITS.map(h => ({...h, completed: false}));
         tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
         saveData();
         updateUI();
-        menuDropdown.style.opacity = '0';
-        menuBtn.classList.remove('active');
-        setTimeout(() => {
-            menuDropdown.style.display = 'none';
-        }, 300);
+        menuDropdown.style.display = 'none';
     }
 });
 
 newMarathonBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (confirm('Начать новый марафон? Весь прогресс будет сброшен.')) {
+    const confirmMsg = currentLanguage === 'ru'
+        ? 'Начать новый марафон? Весь прогресс будет сброшен.'
+        : 'Start new marathon? All progress will be reset.';
+    
+    if (confirm(confirmMsg)) {
         currentDay = 1;
         dayStarted = false;
-        dayCompletedTime = null;
-        dayStartTime = null;
         habits = DEFAULT_HABITS.map(h => ({...h, completed: false}));
         tasks = DEFAULT_TASKS.map(t => ({...t, completed: false}));
         saveData();
         updateUI();
-        menuDropdown.style.opacity = '0';
-        menuBtn.classList.remove('active');
-        setTimeout(() => {
-            menuDropdown.style.display = 'none';
-        }, 300);
+        menuDropdown.style.display = 'none';
     }
 });
 
 statsBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const totalDays = dayCompletedTime ? currentDay : currentDay - 1;
-    tg.showAlert(`📊 Статистика:\nПройдено дней: ${totalDays}\nТекущий день: ${currentDay}`);
-    menuDropdown.style.opacity = '0';
-    menuBtn.classList.remove('active');
-    setTimeout(() => {
-        menuDropdown.style.display = 'none';
-    }, 300);
+    const totalDays = currentDay - 1;
+    const message = currentLanguage === 'ru'
+        ? `📊 Статистика:\nПройдено дней: ${totalDays}\nТекущий день: ${currentDay}`
+        : `📊 Statistics:\nDays completed: ${totalDays}\nCurrent day: ${currentDay}`;
+    
+    tg.showAlert(message);
+    menuDropdown.style.display = 'none';
 });
 
 supportBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert('💬 Поддержка: @frontendchikk');
-    menuDropdown.style.opacity = '0';
-    menuBtn.classList.remove('active');
-    setTimeout(() => {
-        menuDropdown.style.display = 'none';
-    }, 300);
+    const message = currentLanguage === 'ru'
+        ? '💬 Поддержка: @frontendchikk'
+        : '💬 Support: @frontendchikk';
+    
+    tg.showAlert(message);
+    menuDropdown.style.display = 'none';
 });
 
 telegramSupport.addEventListener('click', (e) => {
     e.preventDefault();
     tg.openTelegramLink('https://t.me/frontendchikk');
-    menuDropdown.style.opacity = '0';
-    menuBtn.classList.remove('active');
-    setTimeout(() => {
-        menuDropdown.style.display = 'none';
-    }, 300);
+    menuDropdown.style.display = 'none';
 });
 
 faqBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert('❓ Часто задаваемые вопросы:\n\n1. Когда можно начать день? - С 4:00 утра\n2. Когда нужно завершить день? - До 23:00\n3. Что если не завершить до 23:00? - День считается проваленным\n4. Сколько длится день? - 24 часа с момента начала\n5. Связь с автором: @frontendchikk');
-    menuDropdown.style.opacity = '0';
-    menuBtn.classList.remove('active');
-    setTimeout(() => {
-        menuDropdown.style.display = 'none';
-    }, 300);
+    const message = currentLanguage === 'ru'
+        ? '❓ Часто задаваемые вопросы:\n\n1. Как сбросить день? - В меню "Сбросить день"\n2. Как добавить привычку? - Нажмите +\n3. Связь с автором: @frontendchikk'
+        : '❓ FAQ:\n\n1. How to reset day? - In menu "Reset Day"\n2. How to add habit? - Press +\n3. Contact author: @frontendchikk';
+    
+    tg.showAlert(message);
+    menuDropdown.style.display = 'none';
 });
 
-// Кнопка для продолжения после завершения
+// Кнопка продолжения
 const continueBtn = document.createElement('button');
 continueBtn.className = 'start-day-btn';
-continueBtn.textContent = '🏠 На главную';
+continueBtn.textContent = currentLanguage === 'ru' ? '🏠 На главную' : '🏠 Home';
 continueBtn.style.marginTop = '20px';
 continueBtn.addEventListener('click', () => {
     congratsDiv.style.display = 'none';
@@ -541,15 +577,15 @@ continueBtn.addEventListener('click', () => {
 });
 congratsDiv.appendChild(continueBtn);
 
-// Проверяем каждую минуту
-setInterval(() => {
-    if (!dayStarted && dayCompletedTime) {
-        updateUI();
-    }
-    if (dayStarted) {
-        updateUI(); // Проверяем не истек ли день
-    }
-}, 60000); // Каждую минуту
+// Обработчики для слайдов
+document.getElementById('slidesContainer').addEventListener('scroll', (e) => {
+    const scrollLeft = e.target.scrollLeft;
+    const pageIndex = Math.round(scrollLeft / window.innerWidth);
+    
+    document.querySelectorAll('.indicator').forEach((ind, i) => {
+        ind.classList.toggle('active', i === pageIndex);
+    });
+});
 
 // Инициализация
 updateDate();
@@ -557,3 +593,8 @@ loadData();
 updateUI();
 
 tg.ready();
+
+// Делаем функции глобальными
+window.setTheme = setTheme;
+window.setLanguage = setLanguage;
+window.switchPage = switchPage;
