@@ -33,6 +33,188 @@ const DEFAULT_TASKS = [
     { id: 4, text: "🚶 Прогулка на свежем воздухе", completed: false }
 ];
 
+// ПЕРЕВОДЫ
+const translations = {
+    ru: {
+        // Общее
+        day: "День",
+        startMessage: "Готов начать свой путь к балансу?",
+        startDayBtn: "🚀 Начать день",
+        completeBtn: "✅ Завершить день",
+        home: "Главная",
+        settings: "Настройки",
+        diary: "Дневник",
+        
+        // Баланс
+        balanceTitle: "⚖️ БАЛАНС СИСТЕМЫ",
+        mind: "Разум",
+        spirit: "Дух",
+        
+        // Привычки
+        habitsTitle: "🌱 ПРИВЫЧКИ",
+        habitPlaceholder: "➕ Добавить свою привычку...",
+        addBtn: "Добавить",
+        habitsNote: "📌 Стандартные (4 шт)  ➕ Добавленные",
+        
+        // Задачи
+        tasksTitle: "📋 ЗАДАЧИ НА СЕГОДНЯ",
+        taskPlaceholder: "➕ Добавить свою задачу...",
+        tasksNote: "📌 Стандартные (4 шт)  ➕ Добавленные",
+        
+        // Время
+        waitUntil4am: "⏰ Жди 4 утра",
+        waitHours: (h, m) => `⏳ ${h}ч ${m}м`,
+        canStart: "✅ Можно начинать день",
+        nextDayIn: (h, m) => `⏳ Следующий день через ${h}ч ${m}м`,
+        dayExpired: "⏰ День истек",
+        until23: "⏳ До 23:00",
+        timeLeft: (h, m) => `⏳ Осталось времени: ${h}ч ${m}м`,
+        
+        // Дневник
+        newEntry: "Новая запись",
+        save: "Сохранить",
+        cancel: "Отмена",
+        noEntries: "📝 Пока нет записей",
+        entryPlaceholder: "Что сегодня произошло? Поделись своими мыслями...",
+        
+        // Меню
+        marathon: "📋 МАРАФОН",
+        resetDay: "🔄 Сбросить день",
+        newMarathon: "✨ Новый марафон",
+        stats: "📊 Моя статистика",
+        help: "🆘 ПОМОЩЬ",
+        support: "💬 Поддержка",
+        contact: "Связаться:",
+        faq: "❓ FAQ",
+        contacts: "📞 КОНТАКТЫ",
+        author: "👤 Автор:",
+        
+        // Настройки
+        settingsTitle: "⚙️ НАСТРОЙКИ",
+        themeTitle: "🎨 Тема оформления",
+        dark: "🌑 Темная",
+        light: "☀️ Светлая",
+        languageTitle: "🌍 Язык",
+        aboutTitle: "ℹ️ О приложении",
+        version: "Версия:",
+        authorLabel: "Автор:",
+        description: "Марафон баланса - развивай разум и дух каждый день",
+        timeMode: "⏰ Режим: 4:00 - 23:00",
+        
+        // Завершение
+        congratsTitle: "🎉 ДЕНЬ ЗАВЕРШЕН!",
+        yourBalance: "Твой баланс:",
+        homeBtn: "🏠 На главную",
+        
+        // Сообщения
+        confirmReset: "Сбросить текущий день? Весь прогресс будет потерян.",
+        confirmNew: "Начать новый марафон? Весь прогресс будет сброшен.",
+        cantDeleteStandard: "❌ Это стандартная привычка",
+        cantDeleteStandardTask: "❌ Это стандартная задача",
+        waitMessage: (h, m) => `⏳ Подожди ${h}ч ${m}м`,
+        onlyFrom4am: "⏰ Новый день можно начать только с 4 утра!",
+        onlyUntil23: "⏰ Завершить день можно только до 23:00!",
+        dayExpiredMsg: "⏰ День истек! Начни следующий день с 4 утра.",
+        completedMessage: (day, mind, spirit) => `🎉 Молодец! День ${day} завершен!\n🧠 Разум: ${mind}%\n💚 Дух: ${spirit}%`,
+        
+        // Статистика
+        statsMessage: (day, customHabits, customTasks, entries) => 
+            `📊 Статистика:\nДень: ${day}\nСтандартных привычек: 4\nДобавленных привычек: ${customHabits}\nСтандартных задач: 4\nДобавленных задач: ${customTasks}\nЗаписей в дневнике: ${entries}`,
+        
+        // FAQ
+        faqText: "❓ FAQ:\n\n📌 Стандартные - нельзя удалить\n➕ Добавленные - можно удалить\n⏰ Режим: 4:00 - 23:00\n📔 Дневник для записей"
+    },
+    en: {
+        // General
+        day: "Day",
+        startMessage: "Ready to start your journey to balance?",
+        startDayBtn: "🚀 Start Day",
+        completeBtn: "✅ Complete Day",
+        home: "Home",
+        settings: "Settings",
+        diary: "Diary",
+        
+        // Balance
+        balanceTitle: "⚖️ SYSTEM BALANCE",
+        mind: "Mind",
+        spirit: "Spirit",
+        
+        // Habits
+        habitsTitle: "🌱 HABITS",
+        habitPlaceholder: "➕ Add your habit...",
+        addBtn: "Add",
+        habitsNote: "📌 Standard (4)  ➕ Added",
+        
+        // Tasks
+        tasksTitle: "📋 TODAY'S TASKS",
+        taskPlaceholder: "➕ Add your task...",
+        tasksNote: "📌 Standard (4)  ➕ Added",
+        
+        // Time
+        waitUntil4am: "⏰ Wait 4 AM",
+        waitHours: (h, m) => `⏳ ${h}h ${m}m`,
+        canStart: "✅ You can start",
+        nextDayIn: (h, m) => `⏳ Next day in ${h}h ${m}m`,
+        dayExpired: "⏰ Day expired",
+        until23: "⏳ Until 11 PM",
+        timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
+        
+        // Diary
+        newEntry: "New entry",
+        save: "Save",
+        cancel: "Cancel",
+        noEntries: "📝 No entries yet",
+        entryPlaceholder: "What happened today? Share your thoughts...",
+        
+        // Menu
+        marathon: "📋 MARATHON",
+        resetDay: "🔄 Reset Day",
+        newMarathon: "✨ New Marathon",
+        stats: "📊 My Stats",
+        help: "🆘 HELP",
+        support: "💬 Support",
+        contact: "Contact:",
+        faq: "❓ FAQ",
+        contacts: "📞 CONTACTS",
+        author: "👤 Author:",
+        
+        // Settings
+        settingsTitle: "⚙️ SETTINGS",
+        themeTitle: "🎨 Theme",
+        dark: "🌑 Dark",
+        light: "☀️ Light",
+        languageTitle: "🌍 Language",
+        aboutTitle: "ℹ️ About",
+        version: "Version:",
+        authorLabel: "Author:",
+        description: "Balance Marathon - develop your mind and spirit every day",
+        timeMode: "⏰ Mode: 4 AM - 11 PM",
+        
+        // Completion
+        congratsTitle: "🎉 DAY COMPLETED!",
+        yourBalance: "Your balance:",
+        homeBtn: "🏠 Home",
+        
+        // Messages
+        confirmReset: "Reset current day? All progress will be lost.",
+        confirmNew: "Start new marathon? All progress will be reset.",
+        cantDeleteStandard: "❌ This is a standard habit",
+        cantDeleteStandardTask: "❌ This is a standard task",
+        waitMessage: (h, m) => `⏳ Wait ${h}h ${m}m`,
+        onlyFrom4am: "⏰ New day can only start at 4 AM!",
+        onlyUntil23: "⏰ You can only complete day before 11 PM!",
+        dayExpiredMsg: "⏰ Day expired! Start next day at 4 AM.",
+        completedMessage: (day, mind, spirit) => `🎉 Great job! Day ${day} completed!\n🧠 Mind: ${mind}%\n💚 Spirit: ${spirit}%`,
+        
+        // Statistics
+        statsMessage: (day, customHabits, customTasks, entries) => 
+            `📊 Statistics:\nDay: ${day}\nStandard habits: 4\nAdded habits: ${customHabits}\nStandard tasks: 4\nAdded tasks: ${customTasks}\nDiary entries: ${entries}`,
+        
+        // FAQ
+        faqText: "❓ FAQ:\n\n📌 Standard - cannot delete\n➕ Added - can delete\n⏰ Mode: 4 AM - 11 PM\n📔 Diary for notes"
+    }
+};
+
 // Состояние приложения
 let currentDay = 1;
 let habits = [];
@@ -44,6 +226,122 @@ let dayCompletedTime = null;
 let currentLanguage = 'ru';
 let currentTheme = 'dark';
 let currentSlide = 0;
+
+// Функция перевода
+function t(key, ...args) {
+    const keys = key.split('.');
+    let value = translations[currentLanguage];
+    
+    for (const k of keys) {
+        if (value && value[k] !== undefined) {
+            value = value[k];
+        } else {
+            return key;
+        }
+    }
+    
+    if (typeof value === 'function') {
+        return value(...args);
+    }
+    
+    return value;
+}
+
+// Обновление всего текста на странице
+function updateAllText() {
+    // Обновляем статические элементы с data-i18n
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        el.textContent = t(key);
+    });
+    
+    // Обновляем placeholder
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-i18n-placeholder');
+        el.placeholder = t(key);
+    });
+    
+    // Обновляем навигацию
+    document.querySelectorAll('.nav-text')[0].textContent = t('home');
+    document.querySelectorAll('.nav-text')[1].textContent = t('settings');
+    document.querySelectorAll('.nav-text')[2].textContent = t('diary');
+    
+    // Обновляем заголовки секций
+    const balanceTitle = document.querySelector('.balance-title');
+    if (balanceTitle) balanceTitle.textContent = t('balanceTitle');
+    
+    const habitsTitle = document.querySelector('.habits-section .section-header h3');
+    if (habitsTitle) habitsTitle.textContent = t('habitsTitle');
+    
+    const tasksTitle = document.querySelector('.tasks-section .section-header h3');
+    if (tasksTitle) tasksTitle.textContent = t('tasksTitle');
+    
+    // Обновляем заметки
+    const habitNote = document.querySelector('.habit-note');
+    if (habitNote) habitNote.innerHTML = `<span>${t('habitsNote')}</span>`;
+    
+    const taskNote = document.querySelector('.task-note');
+    if (taskNote) taskNote.innerHTML = `<span>${t('tasksNote')}</span>`;
+    
+    // Обновляем меню
+    document.querySelectorAll('.menu-title')[0].textContent = t('marathon');
+    document.querySelectorAll('.menu-title')[1].textContent = t('help');
+    document.querySelectorAll('.menu-title')[2].textContent = t('contacts');
+    
+    document.getElementById('reset-day').innerHTML = t('resetDay');
+    document.getElementById('new-marathon').innerHTML = t('newMarathon');
+    document.getElementById('stats').innerHTML = t('stats');
+    document.getElementById('support').innerHTML = t('support');
+    document.getElementById('telegram-support').innerHTML = `📱 ${t('contact')} @frontendchikk`;
+    document.getElementById('faq').innerHTML = t('faq');
+    
+    // Обновляем контакты
+    const contactItems = document.querySelectorAll('.contact-item');
+    if (contactItems[0]) {
+        contactItems[0].innerHTML = `<span>${t('author')}</span><span class="contact-highlight">@frontendchikk</span>`;
+    }
+    
+    // Обновляем настройки
+    document.querySelector('.settings-title').textContent = t('settingsTitle');
+    document.querySelectorAll('.settings-group h3')[0].textContent = t('themeTitle');
+    document.querySelectorAll('.settings-group h3')[1].textContent = t('languageTitle');
+    document.querySelectorAll('.settings-group h3')[2].textContent = t('aboutTitle');
+    
+    document.getElementById('theme-dark').innerHTML = '<span class="theme-preview dark-preview"></span><span>' + t('dark') + '</span>';
+    document.getElementById('theme-light').innerHTML = '<span class="theme-preview light-preview"></span><span>' + t('light') + '</span>';
+    
+    // Обновляем информацию о приложении
+    const aboutInfo = document.querySelector('.about-info');
+    if (aboutInfo) {
+        aboutInfo.innerHTML = `
+            <p>${t('version')} 3.0.0</p>
+            <p>${t('authorLabel')} @frontendchikk</p>
+            <p>${t('description')}</p>
+            <p>${t('timeMode')}</p>
+        `;
+    }
+    
+    // Обновляем дневник
+    document.querySelector('.diary-title').textContent = t('diary');
+    document.getElementById('add-entry-btn').innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
+    document.getElementById('save-entry-btn').textContent = t('save');
+    document.getElementById('cancel-entry-btn').textContent = t('cancel');
+    document.getElementById('entry-text').placeholder = t('entryPlaceholder');
+    
+    // Обновляем экран завершения
+    document.querySelector('#congrats h2').textContent = t('congratsTitle');
+    document.querySelector('#congrats p').textContent = t('yourBalance');
+    document.getElementById('continue-btn').textContent = t('homeBtn');
+    
+    // Обновляем стартовый экран
+    document.getElementById('start-message').textContent = t('startMessage');
+    
+    // Обновляем дату
+    updateDate();
+    
+    // Обновляем UI с учетом времени
+    updateUI();
+}
 
 // DOM элементы
 const startScreen = document.getElementById('start-screen');
@@ -90,21 +388,18 @@ const entriesList = document.getElementById('entries-list');
 
 // ========== ФУНКЦИИ ВРЕМЕНИ ==========
 
-// Проверка времени для начала дня (можно только с 4 утра)
 function canStartDayByTime() {
     const now = new Date();
     const hours = now.getHours();
     return hours >= 4;
 }
 
-// Проверка времени для завершения дня (нужно до 23:00)
 function canCompleteDayByTime() {
     const now = new Date();
     const hours = now.getHours();
     return hours < 23;
 }
 
-// Проверка, можно ли начать новый день (прошло 24 часа)
 function canStartNewDay() {
     if (!dayCompletedTime) return true;
     
@@ -115,7 +410,6 @@ function canStartNewDay() {
     return hoursPassed >= 24;
 }
 
-// Получить оставшееся время до следующего дня
 function getTimeRemaining() {
     if (!dayCompletedTime) return null;
     
@@ -134,7 +428,6 @@ function getTimeRemaining() {
     };
 }
 
-// Проверка, не истек ли день (прошло 24 часа с начала)
 function isDayExpired() {
     if (!dayStartTime) return false;
     
@@ -145,34 +438,32 @@ function isDayExpired() {
     return hoursPassed >= 24;
 }
 
-// Обновление информации о времени на стартовом экране
 function updateTimeInfo() {
     if (!timeInfo) return;
     
     if (dayCompletedTime && !canStartNewDay()) {
         const remaining = getTimeRemaining();
         if (remaining) {
-            timeInfo.textContent = `⏳ Следующий день через ${remaining.hours}ч ${remaining.minutes}м`;
+            timeInfo.textContent = t('nextDayIn', remaining.hours, remaining.minutes);
             timeInfo.style.color = 'var(--warning)';
         }
     } else if (!canStartDayByTime()) {
-        timeInfo.textContent = '⏰ Новый день можно начать только с 4:00 утра';
+        timeInfo.textContent = t('waitUntil4am');
         timeInfo.style.color = 'var(--warning)';
     } else {
-        timeInfo.textContent = '✅ Можно начинать день';
+        timeInfo.textContent = t('canStart');
         timeInfo.style.color = 'var(--success)';
     }
 }
 
-// Обновление информации о дедлайне
 function updateDeadlineInfo() {
     if (!deadlineInfo || !dayStarted) return;
     
     if (isDayExpired()) {
-        deadlineInfo.textContent = '⏰ День истек! Не успел выполнить задачи вовремя.';
+        deadlineInfo.textContent = t('dayExpiredMsg');
         deadlineInfo.style.color = 'var(--danger)';
     } else if (!canCompleteDayByTime()) {
-        deadlineInfo.textContent = '⏰ Завершить день можно только до 23:00';
+        deadlineInfo.textContent = t('onlyUntil23');
         deadlineInfo.style.color = 'var(--warning)';
     } else {
         const now = new Date();
@@ -182,7 +473,7 @@ function updateDeadlineInfo() {
         if (timeLeft > 0) {
             const leftHours = Math.floor(timeLeft / 60);
             const leftMinutes = timeLeft % 60;
-            deadlineInfo.textContent = `⏳ Осталось времени: ${leftHours}ч ${leftMinutes}м`;
+            deadlineInfo.textContent = t('timeLeft', leftHours, leftMinutes);
             deadlineInfo.style.color = 'var(--text-secondary)';
         }
     }
@@ -200,9 +491,12 @@ function loadData() {
     if (savedTheme) setTheme(savedTheme);
     
     const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
-    if (savedLang) setLanguage(savedLang);
+    if (savedLang) {
+        currentLanguage = savedLang;
+        document.getElementById('lang-ru').classList.toggle('active', savedLang === 'ru');
+        document.getElementById('lang-en').classList.toggle('active', savedLang === 'en');
+    }
     
-    // Загружаем привычки
     const savedHabits = localStorage.getItem(STORAGE_KEYS.HABITS);
     if (savedHabits) {
         habits = JSON.parse(savedHabits);
@@ -216,7 +510,6 @@ function loadData() {
         habits = DEFAULT_HABITS.map(h => ({...h}));
     }
     
-    // Загружаем задачи
     const savedTasks = localStorage.getItem(STORAGE_KEYS.TASKS);
     if (savedTasks) {
         tasks = JSON.parse(savedTasks);
@@ -230,7 +523,6 @@ function loadData() {
         tasks = DEFAULT_TASKS.map(t => ({...t}));
     }
     
-    // Загружаем записи дневника
     const savedEntries = localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES);
     diaryEntries = savedEntries ? JSON.parse(savedEntries) : [];
     
@@ -276,28 +568,9 @@ function setLanguage(lang) {
     document.getElementById('lang-ru').classList.toggle('active', lang === 'ru');
     document.getElementById('lang-en').classList.toggle('active', lang === 'en');
     
+    updateAllText();
     updateDate();
-    updateUIText();
-}
-
-function updateUIText() {
-    if (currentLanguage === 'ru') {
-        if (startMessage) startMessage.textContent = 'Готов начать свой путь к балансу?';
-        document.querySelectorAll('.nav-text')[0].textContent = 'Главная';
-        document.querySelectorAll('.nav-text')[1].textContent = 'Настройки';
-        document.querySelectorAll('.nav-text')[2].textContent = 'Дневник';
-        if (addEntryBtn) addEntryBtn.innerHTML = '<span class="plus-icon">+</span> Новая запись';
-        if (saveEntryBtn) saveEntryBtn.textContent = 'Сохранить';
-        if (cancelEntryBtn) cancelEntryBtn.textContent = 'Отмена';
-    } else {
-        if (startMessage) startMessage.textContent = 'Ready to start your journey to balance?';
-        document.querySelectorAll('.nav-text')[0].textContent = 'Home';
-        document.querySelectorAll('.nav-text')[1].textContent = 'Settings';
-        document.querySelectorAll('.nav-text')[2].textContent = 'Diary';
-        if (addEntryBtn) addEntryBtn.innerHTML = '<span class="plus-icon">+</span> New entry';
-        if (saveEntryBtn) saveEntryBtn.textContent = 'Save';
-        if (cancelEntryBtn) cancelEntryBtn.textContent = 'Cancel';
-    }
+    updateUI();
 }
 
 // ========== НАВИГАЦИЯ ==========
@@ -350,13 +623,13 @@ function updateBalance() {
     
     if (dayExpired) {
         completeDayBtn.disabled = true;
-        completeDayBtn.textContent = currentLanguage === 'ru' ? '⏰ День истек' : '⏰ Day expired';
+        completeDayBtn.textContent = t('dayExpired');
     } else if (!canComplete) {
         completeDayBtn.disabled = true;
-        completeDayBtn.textContent = currentLanguage === 'ru' ? '⏳ До 23:00' : '⏳ Until 23:00';
+        completeDayBtn.textContent = t('until23');
     } else {
         completeDayBtn.disabled = !allTasksCompleted;
-        completeDayBtn.textContent = currentLanguage === 'ru' ? '✅ Завершить день' : '✅ Complete day';
+        completeDayBtn.textContent = t('completeBtn');
     }
 }
 
@@ -397,7 +670,7 @@ function renderHabits() {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
             if (id <= 4) {
-                tg.showAlert(currentLanguage === 'ru' ? '❌ Это стандартная привычка' : '❌ This is a standard habit');
+                tg.showAlert(t('cantDeleteStandard'));
                 return;
             }
             habits = habits.filter(h => h.id !== id);
@@ -443,7 +716,7 @@ function renderTasks() {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
             if (id <= 4) {
-                tg.showAlert(currentLanguage === 'ru' ? '❌ Это стандартная задача' : '❌ This is a standard task');
+                tg.showAlert(t('cantDeleteStandardTask'));
                 return;
             }
             tasks = tasks.filter(t => t.id !== id);
@@ -460,7 +733,7 @@ function renderDiary() {
     entriesList.innerHTML = '';
     
     if (diaryEntries.length === 0) {
-        entriesList.innerHTML = `<div class="empty-entries">${currentLanguage === 'ru' ? '📝 Пока нет записей' : '📝 No entries yet'}</div>`;
+        entriesList.innerHTML = `<div class="empty-entries">${t('noEntries')}</div>`;
         return;
     }
     
@@ -513,16 +786,14 @@ function updateUI() {
             startDayBtn.disabled = true;
             const remaining = getTimeRemaining();
             if (remaining) {
-                startDayBtn.textContent = currentLanguage === 'ru' 
-                    ? `⏳ ${remaining.hours}ч ${remaining.minutes}м`
-                    : `⏳ ${remaining.hours}h ${remaining.minutes}m`;
+                startDayBtn.textContent = t('waitHours', remaining.hours, remaining.minutes);
             }
         } else if (!canStartByTime) {
             startDayBtn.disabled = true;
-            startDayBtn.textContent = currentLanguage === 'ru' ? '⏰ Жди 4 утра' : '⏰ Wait 4 AM';
+            startDayBtn.textContent = t('waitUntil4am');
         } else {
             startDayBtn.disabled = false;
-            startDayBtn.textContent = currentLanguage === 'ru' ? '🚀 Начать день' : '🚀 Start day';
+            startDayBtn.textContent = t('startDayBtn');
         }
         
         updateTimeInfo();
@@ -535,9 +806,7 @@ function updateUI() {
             dayStarted = false;
             dayCompletedTime = new Date().getTime().toString();
             saveData();
-            tg.showAlert(currentLanguage === 'ru' 
-                ? '⏰ День истек! Начни следующий день с 4 утра.'
-                : '⏰ Day expired! Start next day at 4 AM.');
+            tg.showAlert(t('dayExpiredMsg'));
             updateUI();
             return;
         }
@@ -556,16 +825,12 @@ function updateUI() {
 startDayBtn.addEventListener('click', () => {
     if (!canStartNewDay()) {
         const remaining = getTimeRemaining();
-        tg.showAlert(currentLanguage === 'ru' 
-            ? `⏳ Подожди ${remaining.hours}ч ${remaining.minutes}м`
-            : `⏳ Wait ${remaining.hours}h ${remaining.minutes}m`);
+        tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
         return;
     }
     
     if (!canStartDayByTime()) {
-        tg.showAlert(currentLanguage === 'ru' 
-            ? '⏰ Новый день можно начать только с 4 утра!'
-            : '⏰ New day can only start at 4 AM!');
+        tg.showAlert(t('onlyFrom4am'));
         return;
     }
     
@@ -578,16 +843,12 @@ startDayBtn.addEventListener('click', () => {
 
 completeDayBtn.addEventListener('click', () => {
     if (!canCompleteDayByTime()) {
-        tg.showAlert(currentLanguage === 'ru' 
-            ? '⏰ Завершить день можно только до 23:00!'
-            : '⏰ You can only complete day before 23:00!');
+        tg.showAlert(t('onlyUntil23'));
         return;
     }
     
     if (isDayExpired()) {
-        tg.showAlert(currentLanguage === 'ru' 
-            ? '⏰ День истек!'
-            : '⏰ Day expired!');
+        tg.showAlert(t('dayExpiredMsg'));
         return;
     }
     
@@ -612,9 +873,7 @@ completeDayBtn.addEventListener('click', () => {
     marathonScreen.style.display = 'none';
     congratsDiv.style.display = 'block';
     
-    tg.showAlert(currentLanguage === 'ru' 
-        ? `🎉 Молодец! День ${currentDay} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%`
-        : `🎉 Great job! Day ${currentDay} completed!\n🧠 Mind: ${mindProgress}%\n💚 Spirit: ${spiritProgress}%`);
+    tg.showAlert(t('completedMessage', currentDay, mindProgress, spiritProgress));
 });
 
 // Добавление привычки
@@ -731,9 +990,7 @@ document.addEventListener('click', (e) => {
 // Функции меню
 resetDayBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (confirm(currentLanguage === 'ru' 
-        ? 'Сбросить текущий день? Весь прогресс будет потерян.'
-        : 'Reset current day? All progress will be lost.')) {
+    if (confirm(t('confirmReset'))) {
         dayStarted = false;
         dayStartTime = null;
         dayCompletedTime = null;
@@ -747,9 +1004,7 @@ resetDayBtn.addEventListener('click', (e) => {
 
 newMarathonBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    if (confirm(currentLanguage === 'ru' 
-        ? 'Начать новый марафон? Весь прогресс будет сброшен.'
-        : 'Start new marathon? All progress will be reset.')) {
+    if (confirm(t('confirmNew'))) {
         currentDay = 1;
         dayStarted = false;
         dayStartTime = null;
@@ -768,9 +1023,7 @@ statsBtn.addEventListener('click', (e) => {
     const customHabits = habits.filter(h => h.id > 4).length;
     const customTasks = tasks.filter(t => t.id > 4).length;
     
-    tg.showAlert(currentLanguage === 'ru' 
-        ? `📊 Статистика:\nДень: ${currentDay}\nСтандартных привычек: 4\nДобавленных привычек: ${customHabits}\nСтандартных задач: 4\nДобавленных задач: ${customTasks}\nЗаписей в дневнике: ${diaryEntries.length}`
-        : `📊 Statistics:\nDay: ${currentDay}\nStandard habits: 4\nAdded habits: ${customHabits}\nStandard tasks: 4\nAdded tasks: ${customTasks}\nDiary entries: ${diaryEntries.length}`);
+    tg.showAlert(t('statsMessage', currentDay, customHabits, customTasks, diaryEntries.length));
     menuDropdown.style.display = 'none';
 });
 
@@ -788,9 +1041,7 @@ telegramSupport.addEventListener('click', (e) => {
 
 faqBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert(currentLanguage === 'ru' 
-        ? '❓ FAQ:\n\n📌 Стандартные - нельзя удалить\n➕ Добавленные - можно удалить\n⏰ Режим: 4:00 - 23:00\n📔 Дневник для записей'
-        : '❓ FAQ:\n\n📌 Standard - cannot delete\n➕ Added - can delete\n⏰ Mode: 4 AM - 11 PM\n📔 Diary for notes');
+    tg.showAlert(t('faqText'));
     menuDropdown.style.display = 'none';
 });
 
@@ -830,7 +1081,7 @@ window.setLanguage = setLanguage;
 // Инициализация
 updateDate();
 loadData();
+updateAllText();
 updateUI();
-updateUIText();
 
 tg.ready();
