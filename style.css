@@ -1,6 +1,5 @@
 /* CSS переменные для тем */
 :root {
-    /* Темная тема (по умолчанию) */
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
     --bg-card: #111111;
@@ -15,7 +14,6 @@
     --warning: #ffaa00;
     --danger: #ff4444;
     --success: #00cc88;
-    --transition: all 0.3s ease;
 }
 
 /* Светлая тема */
@@ -202,563 +200,73 @@ body {
     padding: 4px 0;
 }
 
-/* Контейнер слайдов */
-.slides-container {
-    display: flex;
-    overflow-x: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    margin-bottom: 20px;
-}
-
-.slide {
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-    transition: transform 0.3s ease;
-}
-
-/* Прогресс бар */
-.progress-bar {
-    width: 100%;
-    height: 4px;
-    background: var(--bg-primary);
-    border-radius: 2px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    transition: width 0.2s linear;
-}
-
-.mind-fill {
-    background: var(--blue);
-}
-
-/* ===== НОВЫЕ СТИЛИ ДЛЯ СПОРТА ===== */
-.stats-section, .running-section, .diary-section, .settings-section {
+/* Стартовый экран */
+.start-screen {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-}
-
-.stats-title, .running-title, .diary-title, .settings-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 16px;
-}
-
-.stat-card {
-    background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 14px;
+    padding: 40px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
+    animation: fadeIn 0.3s ease;
 }
 
-.stat-value {
-    font-size: 24px;
-    font-weight: bold;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.start-content h2 {
+    font-size: 36px;
     color: var(--blue);
-    display: block;
-    line-height: 1.2;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.weekly-card, .recent-card {
-    background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 14px;
-    margin-bottom: 12px;
-    border: 1px solid var(--border-color);
-}
-
-.weekly-card h3, .recent-card h3 {
-    color: var(--text-secondary);
-    font-size: 12px;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
-
-.week-numbers {
-    text-align: center;
-    margin-top: 8px;
-    font-size: 14px;
-    color: var(--text-secondary);
-}
-
-.week-numbers span:first-child {
-    color: var(--blue);
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.recent-list, .history-list {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.recent-item, .history-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 13px;
-}
-
-.recent-date, .history-date {
-    color: var(--text-secondary);
-}
-
-.recent-distance, .history-stats {
-    color: var(--blue);
-    font-weight: 500;
-}
-
-.goal-setting {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--bg-primary);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.goal-setting input {
-    width: 80px;
-    padding: 8px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    color: var(--text-primary);
-    font-size: 14px;
-    text-align: center;
-}
-
-.goal-setting input:focus {
-    border-color: var(--blue);
-    outline: none;
-}
-
-.goal-setting span {
-    color: var(--text-secondary);
-    font-size: 13px;
-}
-
-/* Кнопки для бега */
-.start-workout-btn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin: 16px 0;
-    transition: all 0.2s ease;
-}
-
-.start-workout-btn:active {
-    transform: scale(0.98);
-    opacity: 0.9;
-}
-
-.workout-card {
-    background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
-    margin: 16px 0;
-    border: 2px solid var(--blue);
-    animation: workoutAppear 0.3s ease;
-}
-
-@keyframes workoutAppear {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.workout-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.workout-name {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--blue);
-}
-
-.workout-difficulty {
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-}
-
-.difficulty-easy {
-    background: rgba(0, 255, 0, 0.1);
-    color: #00cc88;
-}
-
-.difficulty-medium {
-    background: rgba(255, 165, 0, 0.1);
-    color: #ffaa00;
-}
-
-.difficulty-hard {
-    background: rgba(255, 0, 0, 0.1);
-    color: #ff4444;
-}
-
-.workout-stats {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 12px;
-}
-
-.workout-stat {
-    text-align: center;
-}
-
-.workout-stat-value {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--blue);
-}
-
-.workout-stat-label {
-    font-size: 11px;
-    color: var(--text-secondary);
-}
-
-.workout-steps {
-    margin: 12px 0;
-}
-
-.workout-step {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background: var(--bg-card);
-    border-radius: 8px;
-    margin-bottom: 6px;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.workout-step.step-completed {
-    background: rgba(0, 204, 136, 0.1);
-    border-color: var(--success);
-}
-
-.workout-checkbox {
-    width: 20px;
-    height: 20px;
-    margin-right: 10px;
-    cursor: pointer;
-    accent-color: var(--blue);
-}
-
-.step-text {
-    flex: 1;
-    font-size: 13px;
-}
-
-.step-completed .step-text {
-    text-decoration: line-through;
-    color: var(--text-secondary);
-}
-
-.step-distance {
-    font-size: 12px;
-    color: var(--blue);
-    font-weight: 500;
-}
-
-.complete-workout-btn, .cancel-workout-btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.2s ease;
-}
-
-.complete-workout-btn {
-    background: var(--success);
-    color: white;
-    border: none;
-}
-
-.complete-workout-btn:active {
-    transform: scale(0.98);
-    opacity: 0.9;
-}
-
-.cancel-workout-btn {
-    background: transparent;
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
-.cancel-workout-btn:active {
-    background: var(--danger);
-    color: white;
-    border-color: var(--danger);
-}
-
-.empty-history, .empty-entries {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    background: var(--bg-primary);
-    border-radius: 8px;
-    border: 1px dashed var(--border-color);
-}
-
-/* Дневник */
-.add-entry-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    border: 2px dashed var(--border-color);
-    border-radius: 12px;
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    transition: all 0.2s ease;
-}
-
-.add-entry-btn:active {
-    border-color: var(--blue);
-    color: var(--blue);
-}
-
-.plus-icon {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.add-entry-form {
-    margin-bottom: 16px;
-    padding: 16px;
-    background: var(--bg-primary);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    animation: slideIn 0.2s ease;
-}
-
-.add-entry-form textarea {
-    width: 100%;
-    padding: 12px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 14px;
-    outline: none;
-    color: var(--text-primary);
-    resize: vertical;
-    margin-bottom: 12px;
-    font-family: inherit;
-}
-
-.add-entry-form textarea:focus {
-    border-color: var(--blue);
-}
-
-.form-buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.entries-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.entry-item {
-    background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    animation: itemAppear 0.2s ease;
-}
-
-.entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-bottom: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color);
+    font-weight: 300;
 }
 
-.entry-date {
-    font-size: 12px;
-    color: var(--blue);
-    font-weight: 500;
-}
-
-.entry-delete {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
+.start-content p {
     font-size: 16px;
-    cursor: pointer;
-    padding: 4px 8px;
-    opacity: 0.7;
-    transition: all 0.2s ease;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
 }
 
-.entry-delete:active {
-    opacity: 1;
-    color: var(--danger);
-    transform: rotate(90deg);
-}
-
-.entry-content {
-    font-size: 13px;
-    color: var(--text-primary);
-    line-height: 1.5;
-    white-space: pre-wrap;
-}
-
-/* Нижняя навигация */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg-card);
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-around;
-    padding: 8px 16px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 100;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.nav-btn {
-    flex: 1;
-    max-width: 100px;
-    background: transparent;
+/* ===== КНОПКА НАЧАТЬ БЕГ (БОЛЬШАЯ) ===== */
+.start-day-btn {
+    background: var(--text-primary);
+    color: var(--bg-primary);
     border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px;
-    border-radius: 12px;
+    padding: 18px 32px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 14px;
     cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    margin: 20px auto;
+    display: block;
     transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
 }
 
-.nav-icon {
-    font-size: 22px;
-    color: var(--icon-inactive);
-    transition: all 0.2s ease;
+.start-day-btn:active:not(:disabled) {
+    background: var(--blue);
+    color: white;
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
 }
 
-.nav-text {
-    font-size: 11px;
-    color: var(--icon-inactive);
-    transition: all 0.2s ease;
+.start-day-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--text-secondary);
+    box-shadow: none;
 }
 
-.nav-btn.active .nav-icon {
-    color: var(--icon-active);
-    transform: scale(1.1);
-}
-
-.nav-btn.active .nav-text {
-    color: var(--icon-active);
-}
-
-/* Анимации */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes itemAppear {
-    from {
-        opacity: 0;
-        transform: translateX(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Адаптация */
-@media (max-width: 380px) {
-    .nav-text {
-        font-size: 10px;
-    }
-    
-    .nav-icon {
-        font-size: 20px;
-    }
-    
-    .stat-value {
-        font-size: 20px;
-    }
-}
-/* Стили для бегового марафона (добавь в конец файла) */
-
-/* Баланс (переделан под прогресс) */
+/* Баланс/прогресс */
 .balance-section {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
 }
 
@@ -773,6 +281,47 @@ body {
 .balance-title span {
     font-weight: bold;
     font-size: 24px;
+    margin-left: 8px;
+}
+
+.balance-item {
+    margin-bottom: 10px;
+}
+
+.balance-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.balance-icon {
+    font-size: 18px;
+}
+
+.balance-percent {
+    margin-left: auto;
+    color: var(--blue);
+    font-weight: 500;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-primary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    transition: width 0.2s linear;
+}
+
+.mind-fill {
+    background: var(--blue);
 }
 
 /* Карточка тренировки */
@@ -801,9 +350,9 @@ body {
 }
 
 .workout-difficulty {
-    padding: 4px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 500;
 }
 
@@ -832,7 +381,7 @@ body {
 .workout-step {
     display: flex;
     align-items: center;
-    padding: 14px;
+    padding: 16px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 1px solid var(--border-color);
@@ -867,53 +416,58 @@ body {
     color: var(--blue);
     font-weight: 500;
     margin-left: 10px;
-    padding: 2px 8px;
+    padding: 4px 12px;
     background: var(--bg-primary);
     border-radius: 20px;
 }
 
-/* Информация о времени */
-.time-info, .deadline-info {
-    font-size: 13px;
-    margin-top: 10px;
-    padding: 8px;
-    background: var(--bg-primary);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    text-align: center;
-}
-
-/* Кнопка завершения */
+/* ===== КНОПКА ЗАВЕРШИТЬ ДЕНЬ (БОЛЬШАЯ) ===== */
 .complete-day-btn {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     background: var(--text-primary);
     color: var(--bg-primary);
     border: none;
-    border-radius: 12px;
-    font-size: 16px;
+    border-radius: 14px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 8px;
+    margin-top: 20px;
     transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
 }
 
 .complete-day-btn:active:not(:disabled) {
     background: var(--blue);
     color: white;
     transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
 }
 
 .complete-day-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    background: var(--text-secondary);
+    box-shadow: none;
+}
+
+/* Информация о времени */
+.time-info, .deadline-info {
+    font-size: 14px;
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
 }
 
 /* Экран завершения */
 .congrats {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 30px 16px;
+    padding: 40px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
     animation: popIn 0.3s ease;
@@ -936,28 +490,36 @@ body {
     margin-bottom: 16px;
 }
 
+.congrats p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+}
+
 .final-balance div {
     background: var(--bg-primary);
-    padding: 12px 24px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
+    padding: 16px 32px;
+    border-radius: 14px;
+    border: 2px solid var(--blue);
     color: var(--blue);
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     display: inline-block;
+    margin: 16px 0;
 }
 
-/* Адаптация стартового экрана */
-.start-screen {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 40px 16px;
-    text-align: center;
-    border: 1px solid var(--border-color);
-}
-
-.start-content h2 {
-    font-size: 36px;
-    color: var(--blue);
-    margin-bottom: 8px;
+/* Адаптация для маленьких экранов */
+@media (max-width: 380px) {
+    .start-day-btn, .complete-day-btn {
+        padding: 16px;
+        font-size: 16px;
+    }
+    
+    .workout-name {
+        font-size: 16px;
+    }
+    
+    .step-text {
+        font-size: 14px;
+    }
 }
