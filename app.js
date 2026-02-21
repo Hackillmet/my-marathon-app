@@ -9,25 +9,27 @@ const STORAGE_KEYS = {
     DAY_STARTED: `day_started_${userId}`,
     HABITS: `habits_${userId}`,
     TASKS: `tasks_${userId}`,
+    CUSTOM_HABITS: `custom_habits_${userId}`,
+    CUSTOM_TASKS: `custom_tasks_${userId}`,
     CURRENT_DAY: `current_day_${userId}`,
     THEME: `theme_${userId}`,
     LANGUAGE: `language_${userId}`
 };
 
-// Стартовые данные - ВСЕ привычки (можно удалять)
-const DEFAULT_HABITS = [
-    { id: 1, text: "💧 Выпить стакан воды", completed: false },
-    { id: 2, text: "🏃 Сделать зарядку", completed: false },
-    { id: 3, text: "📖 Почитать 10 минут", completed: false },
-    { id: 4, text: "🧘 Медитация 5 минут", completed: false }
+// Стартовые данные - ФИКСИРОВАННЫЕ привычки
+const FIXED_HABITS = [
+    { id: 1, text: "💧 Выпить стакан воды", completed: false, fixed: true },
+    { id: 2, text: "🏃 Сделать зарядку", completed: false, fixed: true },
+    { id: 3, text: "📖 Почитать 10 минут", completed: false, fixed: true },
+    { id: 4, text: "🧘 Медитация 5 минут", completed: false, fixed: true }
 ];
 
-// Стартовые данные - ВСЕ задачи (можно удалять)
-const DEFAULT_TASKS = [
-    { id: 1, text: "🛏️ Заправить кровать", completed: false },
-    { id: 2, text: "🚀 Начать марафон", completed: false },
-    { id: 3, text: "💻 Писать код 30 минут", completed: false },
-    { id: 4, text: "🚶 Прогулка на свежем воздухе", completed: false }
+// Стартовые данные - ФИКСИРОВАННЫЕ задачи
+const FIXED_TASKS = [
+    { id: 1, text: "🛏️ Заправить кровать", completed: false, fixed: true },
+    { id: 2, text: "🚀 Начать марафон", completed: false, fixed: true },
+    { id: 3, text: "💻 Писать код 30 минут", completed: false, fixed: true },
+    { id: 4, text: "🚶 Прогулка на свежем воздухе", completed: false, fixed: true }
 ];
 
 // Переводы
@@ -142,8 +144,10 @@ const translations = {
 
 // Состояние приложения
 let currentDay = 1;
-let habits = [];
-let tasks = [];
+let fixedHabits = [];
+let customHabits = [];
+let fixedTasks = [];
+let customTasks = [];
 let dayStarted = false;
 let currentLanguage = 'ru';
 let currentTheme = 'dark';
@@ -282,29 +286,45 @@ function loadData() {
     const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
     if (savedLang) setLanguage(savedLang);
     
-    const savedHabits = localStorage.getItem(STORAGE_KEYS.HABITS);
-    habits = savedHabits ? JSON.parse(savedHabits) : DEFAULT_HABITS.map(h => ({...h}));
+    const savedCustomHabits = localStorage.getItem(STORAGE_KEYS.CUSTOM_HABITS);
+    customHabits = savedCustomHabits ? JSON.parse(savedCustomHabits) : [];
     
-    const savedTasks = localStorage.getItem(STORAGE_KEYS.TASKS);
-    tasks = savedTasks ? JSON.parse(savedTasks) : DEFAULT_TASKS.map(t => ({...t}));
+    const savedCustomTasks = localStorage.getItem(STORAGE_KEYS.CUSTOM_TASKS);
+    customTasks = savedCustomTasks ? JSON.parse(savedCustomTasks) : [];
+    
+    fixedHabits = FIXED_HABITS.map(h => ({...h, completed: false}));
+    fixedTasks = FIXED_TASKS.map(t => ({...t, completed: false}));
 }
 
 // Сохранение данных
 function saveData() {
     localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
     localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
-    localStorage.setItem(STORAGE_KEYS.HABITS, JSON.stringify(habits));
-    localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks));
+    localStorage.setItem(STORAGE_KEYS.CUSTOM_HABITS, JSON.stringify(customHabits));
+    localStorage.setItem(STORAGE_KEYS.CUSTOM_TASKS, JSON.stringify(customTasks));
+}
+
+// Получить все привычки
+function getAllHabits() {
+    return [...fixedHabits, ...customHabits];
+}
+
+// Получить все задачи
+function getAllTasks() {
+    return [...fixedTasks, ...customTasks];
 }
 
 // Обновление баланса
 function updateBalance() {
-    const totalHabits = habits.length || 1;
-    const completedHabits = habits.filter(h => h.completed).length;
+    const allHabits = getAllHabits();
+    const allTasks = getAllTasks();
+    
+    const totalHabits = allHabits.length || 1;
+    const completedHabits = allHabits.filter(h => h.completed).length;
     const mindProgress = (completedHabits / totalHabits) * 100;
     
-    const totalTasks = tasks.length || 1;
-    const completedTasks = tasks.filter(t => t.completed).length;
+    const totalTasks = allTasks.length || 1;
+    const completedTasks = allTasks.filter(t => t.completed).length;
     const spiritProgress = (completedTasks / totalTasks) * 100;
     
     mindFill.style.width = `${mindProgress}%`;
@@ -313,7 +333,7 @@ function updateBalance() {
     mindPercent.textContent = `${Math.round(mindProgress)}%`;
     spiritPercent.textContent = `${Math.round(spiritProgress)}%`;
     
-    const allTasksCompleted = tasks.every(t => t.completed);
+    const allTasksCompleted = allTasks.every(t => t.completed);
     completeDayBtn.disabled = !allTasksCompleted;
 }
 
@@ -321,14 +341,26 @@ function updateBalance() {
 function renderHabits() {
     habitsList.innerHTML = '';
     
-    habits.forEach((habit, index) => {
+    fixedHabits.forEach((habit, index) => {
         const habitDiv = document.createElement('div');
-        habitDiv.className = 'habit-item';
+        habitDiv.className = 'habit-item fixed';
         habitDiv.style.animationDelay = `${index * 0.05}s`;
         habitDiv.innerHTML = `
-            <input type="checkbox" class="habit-checkbox" data-id="${habit.id}" ${habit.completed ? 'checked' : ''}>
+            <input type="checkbox" class="habit-checkbox" data-id="${habit.id}" data-type="fixed" ${habit.completed ? 'checked' : ''}>
             <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
-            <button class="delete-btn" data-id="${habit.id}">✕</button>
+            <span class="fixed-badge">📌</span>
+        `;
+        habitsList.appendChild(habitDiv);
+    });
+    
+    customHabits.forEach((habit, index) => {
+        const habitDiv = document.createElement('div');
+        habitDiv.className = 'habit-item';
+        habitDiv.style.animationDelay = `${(index + fixedHabits.length) * 0.05}s`;
+        habitDiv.innerHTML = `
+            <input type="checkbox" class="habit-checkbox" data-id="${habit.id}" data-type="custom" ${habit.completed ? 'checked' : ''}>
+            <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
+            <button class="delete-btn" data-id="${habit.id}" data-type="habit">✕</button>
         `;
         habitsList.appendChild(habitDiv);
     });
@@ -336,20 +368,26 @@ function renderHabits() {
     document.querySelectorAll('.habit-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const id = parseInt(this.dataset.id);
-            const habit = habits.find(h => h.id === id);
-            if (habit) {
-                habit.completed = this.checked;
-                saveData();
-                updateBalance();
-                renderHabits();
+            const type = this.dataset.type;
+            
+            if (type === 'fixed') {
+                const habit = fixedHabits.find(h => h.id === id);
+                if (habit) habit.completed = this.checked;
+            } else {
+                const habit = customHabits.find(h => h.id === id);
+                if (habit) habit.completed = this.checked;
             }
+            
+            saveData();
+            updateBalance();
+            renderHabits();
         });
     });
     
-    document.querySelectorAll('.delete-btn').forEach(btn => {
+    document.querySelectorAll('.delete-btn[data-type="habit"]').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
-            habits = habits.filter(h => h.id !== id);
+            customHabits = customHabits.filter(h => h.id !== id);
             saveData();
             renderHabits();
             updateBalance();
@@ -361,14 +399,26 @@ function renderHabits() {
 function renderTasks() {
     tasksList.innerHTML = '';
     
-    tasks.forEach((task, index) => {
+    fixedTasks.forEach((task, index) => {
         const taskDiv = document.createElement('div');
-        taskDiv.className = 'task-item';
+        taskDiv.className = 'task-item fixed';
         taskDiv.style.animationDelay = `${index * 0.05}s`;
         taskDiv.innerHTML = `
-            <input type="checkbox" class="task-checkbox" data-id="${task.id}" ${task.completed ? 'checked' : ''}>
+            <input type="checkbox" class="task-checkbox" data-id="${task.id}" data-type="fixed" ${task.completed ? 'checked' : ''}>
             <span class="task-text ${task.completed ? 'completed' : ''}">${task.text}</span>
-            <button class="delete-btn" data-id="${task.id}">✕</button>
+            <span class="fixed-badge">📌</span>
+        `;
+        tasksList.appendChild(taskDiv);
+    });
+    
+    customTasks.forEach((task, index) => {
+        const taskDiv = document.createElement('div');
+        taskDiv.className = 'task-item';
+        taskDiv.style.animationDelay = `${(index + fixedTasks.length) * 0.05}s`;
+        taskDiv.innerHTML = `
+            <input type="checkbox" class="task-checkbox" data-id="${task.id}" data-type="custom" ${task.completed ? 'checked' : ''}>
+            <span class="task-text ${task.completed ? 'completed' : ''}">${task.text}</span>
+            <button class="delete-btn" data-id="${task.id}" data-type="task">✕</button>
         `;
         tasksList.appendChild(taskDiv);
     });
@@ -376,20 +426,26 @@ function renderTasks() {
     document.querySelectorAll('.task-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const id = parseInt(this.dataset.id);
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = this.checked;
-                saveData();
-                renderTasks();
-                updateBalance();
+            const type = this.dataset.type;
+            
+            if (type === 'fixed') {
+                const task = fixedTasks.find(t => t.id === id);
+                if (task) task.completed = this.checked;
+            } else {
+                const task = customTasks.find(t => t.id === id);
+                if (task) task.completed = this.checked;
             }
+            
+            saveData();
+            renderTasks();
+            updateBalance();
         });
     });
     
-    document.querySelectorAll('.delete-btn').forEach(btn => {
+    document.querySelectorAll('.delete-btn[data-type="task"]').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
-            tasks = tasks.filter(t => t.id !== id);
+            customTasks = customTasks.filter(t => t.id !== id);
             saveData();
             renderTasks();
             updateBalance();
@@ -424,12 +480,15 @@ startDayBtn.addEventListener('click', () => {
 
 // Завершить день
 completeDayBtn.addEventListener('click', () => {
-    const totalHabits = habits.length || 1;
-    const completedHabits = habits.filter(h => h.completed).length;
+    const allHabits = getAllHabits();
+    const allTasks = getAllTasks();
+    
+    const totalHabits = allHabits.length || 1;
+    const completedHabits = allHabits.filter(h => h.completed).length;
     const mindProgress = Math.round((completedHabits / totalHabits) * 100);
     
-    const totalTasks = tasks.length || 1;
-    const completedTasks = tasks.filter(t => t.completed).length;
+    const totalTasks = allTasks.length || 1;
+    const completedTasks = allTasks.filter(t => t.completed).length;
     const spiritProgress = Math.round((completedTasks / totalTasks) * 100);
     
     document.getElementById('final-mind').textContent = mindProgress;
@@ -438,9 +497,10 @@ completeDayBtn.addEventListener('click', () => {
     currentDay++;
     dayStarted = false;
     
-    // Сбрасываем completed статусы, но НЕ удаляем привычки
-    habits.forEach(h => h.completed = false);
-    tasks.forEach(t => t.completed = false);
+    fixedHabits.forEach(h => h.completed = false);
+    fixedTasks.forEach(t => t.completed = false);
+    customHabits.forEach(h => h.completed = false);
+    customTasks.forEach(t => t.completed = false);
     
     saveData();
     
@@ -448,11 +508,7 @@ completeDayBtn.addEventListener('click', () => {
     marathonScreen.style.display = 'none';
     congratsDiv.style.display = 'block';
     
-    const message = currentLanguage === 'ru' 
-        ? `🎉 Молодец! День ${currentDay-1} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%`
-        : `🎉 Great job! Day ${currentDay-1} completed!\n🧠 Mind: ${mindProgress}%\n💚 Spirit: ${spiritProgress}%`;
-    
-    tg.showAlert(message);
+    tg.showAlert(`🎉 Молодец! День ${currentDay-1} завершен!\n🧠 Разум: ${mindProgress}%\n💚 Дух: ${spiritProgress}%`);
 });
 
 // Добавление привычки
@@ -469,7 +525,7 @@ saveHabitBtn.addEventListener('click', () => {
             text: text,
             completed: false
         };
-        habits.push(newHabit);
+        customHabits.push(newHabit);
         saveData();
         renderHabits();
         updateBalance();
@@ -494,7 +550,7 @@ saveTaskBtn.addEventListener('click', () => {
             text: text,
             completed: false
         };
-        tasks.push(newTask);
+        customTasks.push(newTask);
         saveData();
         renderTasks();
         updateBalance();
@@ -539,14 +595,12 @@ document.addEventListener('click', (e) => {
 // Функции меню
 resetDayBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const confirmMsg = currentLanguage === 'ru' 
-        ? 'Сбросить текущий день? Весь прогресс будет потерян.'
-        : 'Reset current day? All progress will be lost.';
-    
-    if (confirm(confirmMsg)) {
+    if (confirm('Сбросить текущий день? Весь прогресс будет потерян.')) {
         dayStarted = false;
-        habits.forEach(h => h.completed = false);
-        tasks.forEach(t => t.completed = false);
+        fixedHabits.forEach(h => h.completed = false);
+        fixedTasks.forEach(t => t.completed = false);
+        customHabits.forEach(h => h.completed = false);
+        customTasks.forEach(t => t.completed = false);
         saveData();
         updateUI();
         menuDropdown.style.display = 'none';
@@ -555,15 +609,13 @@ resetDayBtn.addEventListener('click', (e) => {
 
 newMarathonBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const confirmMsg = currentLanguage === 'ru'
-        ? 'Начать новый марафон? Весь прогресс будет сброшен.'
-        : 'Start new marathon? All progress will be reset.';
-    
-    if (confirm(confirmMsg)) {
+    if (confirm('Начать новый марафон? Весь прогресс будет сброшен.')) {
         currentDay = 1;
         dayStarted = false;
-        habits = DEFAULT_HABITS.map(h => ({...h}));
-        tasks = DEFAULT_TASKS.map(t => ({...t}));
+        fixedHabits.forEach(h => h.completed = false);
+        fixedTasks.forEach(t => t.completed = false);
+        customHabits = [];
+        customTasks = [];
         saveData();
         updateUI();
         menuDropdown.style.display = 'none';
@@ -572,21 +624,15 @@ newMarathonBtn.addEventListener('click', (e) => {
 
 statsBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const message = currentLanguage === 'ru'
-        ? `📊 Статистика:\nДней пройдено: ${currentDay-1}\nТекущий день: ${currentDay}\nПривычек: ${habits.length}\nЗадач: ${tasks.length}`
-        : `📊 Statistics:\nDays completed: ${currentDay-1}\nCurrent day: ${currentDay}\nHabits: ${habits.length}\nTasks: ${tasks.length}`;
-    
-    tg.showAlert(message);
+    const allHabits = getAllHabits();
+    const allTasks = getAllTasks();
+    tg.showAlert(`📊 Статистика:\nДень: ${currentDay}\nПривычек: ${allHabits.length}\nЗадач: ${allTasks.length}`);
     menuDropdown.style.display = 'none';
 });
 
 supportBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const message = currentLanguage === 'ru'
-        ? '💬 Поддержка: @frontendchikk'
-        : '💬 Support: @frontendchikk';
-    
-    tg.showAlert(message);
+    tg.showAlert('💬 Поддержка: @frontendchikk');
     menuDropdown.style.display = 'none';
 });
 
@@ -598,11 +644,7 @@ telegramSupport.addEventListener('click', (e) => {
 
 faqBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    const message = currentLanguage === 'ru'
-        ? '❓ FAQ:\n\n✕ - удалить элемент\n➕ - добавить свой\n🔄 - сбросить день'
-        : '❓ FAQ:\n\n✕ - delete item\n➕ - add your own\n🔄 - reset day';
-    
-    tg.showAlert(message);
+    tg.showAlert('❓ FAQ:\n\n📌 - фиксированные (нельзя удалить)\n✕ - можно удалить\n➕ - добавить своё');
     menuDropdown.style.display = 'none';
 });
 
