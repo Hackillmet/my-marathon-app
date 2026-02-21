@@ -200,6 +200,20 @@ body {
     padding: 4px 0;
 }
 
+/* Контейнер слайдов */
+.slides-container {
+    display: flex;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    margin-bottom: 20px;
+}
+
+.slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+}
+
 /* Стартовый экран */
 .start-screen {
     background: var(--bg-card);
@@ -228,7 +242,7 @@ body {
     margin-bottom: 24px;
 }
 
-/* ===== КНОПКА НАЧАТЬ БЕГ (БОЛЬШАЯ) ===== */
+/* Кнопка начать бег */
 .start-day-btn {
     background: var(--text-primary);
     color: var(--bg-primary);
@@ -331,7 +345,6 @@ body {
     padding: 20px;
     margin-bottom: 20px;
     border: 2px solid var(--blue);
-    animation: fadeIn 0.3s ease;
 }
 
 .workout-header {
@@ -421,7 +434,7 @@ body {
     border-radius: 20px;
 }
 
-/* ===== КНОПКА ЗАВЕРШИТЬ ДЕНЬ (БОЛЬШАЯ) ===== */
+/* Кнопка завершить день */
 .complete-day-btn {
     width: 100%;
     padding: 18px;
@@ -508,18 +521,425 @@ body {
     margin: 16px 0;
 }
 
-/* Адаптация для маленьких экранов */
+/* СТАТИСТИКА */
+.stats-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.stats-title {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 24px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--blue);
+    display: block;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.history-card {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.history-card h3 {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 14px;
+}
+
+.history-date {
+    color: var(--text-secondary);
+}
+
+.history-workout {
+    color: var(--blue);
+    font-weight: 500;
+}
+
+.history-stats {
+    color: var(--success);
+    font-weight: 500;
+}
+
+.empty-history {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    border: 1px dashed var(--border-color);
+}
+
+/* ДНЕВНИК */
+.diary-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.diary-title {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 20px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.add-entry-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+}
+
+.add-entry-btn:active {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.plus-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.add-entry-form {
+    margin-bottom: 20px;
+    padding: 16px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    animation: slideIn 0.2s ease;
+}
+
+.add-entry-form textarea {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    color: var(--text-primary);
+    resize: vertical;
+    margin-bottom: 12px;
+    font-family: inherit;
+}
+
+.add-entry-form textarea:focus {
+    border-color: var(--blue);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-small {
+    padding: 10px 20px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-small:active {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: white;
+}
+
+.cancel-btn:active {
+    background: var(--danger);
+    border-color: var(--danger);
+}
+
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.entry-item {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.entry-date {
+    font-size: 13px;
+    color: var(--blue);
+    font-weight: 500;
+}
+
+.entry-delete {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+    transition: all 0.2s ease;
+}
+
+.entry-delete:active {
+    color: var(--danger);
+    transform: rotate(90deg);
+}
+
+.entry-content {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.empty-entries {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+}
+
+/* НАСТРОЙКИ */
+.settings-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.settings-title {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 24px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.settings-group {
+    margin-bottom: 24px;
+}
+
+.settings-group h3 {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.theme-buttons, .language-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.theme-btn, .lang-btn {
+    flex: 1;
+    padding: 14px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.theme-btn.active, .lang-btn.active {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: white;
+}
+
+.theme-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.dark-preview {
+    background: #000;
+    border: 2px solid #fff;
+}
+
+.light-preview {
+    background: #fff;
+    border: 2px solid #333;
+}
+
+.about-info {
+    background: var(--bg-primary);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.about-info p {
+    margin: 8px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Нижняя навигация */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 100;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.nav-btn {
+    flex: 1;
+    max-width: 100px;
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-icon {
+    font-size: 24px;
+    color: var(--icon-inactive);
+    transition: all 0.2s ease;
+}
+
+.nav-text {
+    font-size: 12px;
+    color: var(--icon-inactive);
+    transition: all 0.2s ease;
+}
+
+.nav-btn.active .nav-icon {
+    color: var(--icon-active);
+    transform: scale(1.1);
+}
+
+.nav-btn.active .nav-text {
+    color: var(--icon-active);
+}
+
+/* Анимации */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптация */
 @media (max-width: 380px) {
-    .start-day-btn, .complete-day-btn {
-        padding: 16px;
-        font-size: 16px;
+    .nav-text {
+        font-size: 10px;
     }
     
-    .workout-name {
-        font-size: 16px;
+    .nav-icon {
+        font-size: 20px;
     }
     
-    .step-text {
-        font-size: 14px;
+    .start-content h2 {
+        font-size: 32px;
+    }
+    
+    .stat-value {
+        font-size: 24px;
     }
 }
