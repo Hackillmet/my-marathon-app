@@ -127,6 +127,7 @@ const translations = {
         requestDeclined: (name) => `❌ Заявка от ${name} отклонена`,
         requestCancelled: (name) => `✕ Заявка ${name} отменена`,
         friendRemoved: (name) => `✕ Друг ${name} удален`,
+        writeToTelegram: "💬 Написать в Telegram",
         
         // Создание заданий
         createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
@@ -273,6 +274,7 @@ const translations = {
         requestDeclined: (name) => `❌ Request from ${name} declined`,
         requestCancelled: (name) => `✕ Request to ${name} cancelled`,
         friendRemoved: (name) => `✕ Friend ${name} removed`,
+        writeToTelegram: "💬 Write in Telegram",
         
         // Create tasks
         createTitle: "🎯 CREATE TASKS",
@@ -733,17 +735,15 @@ function addFriend() {
     }
     
     // Проверяем, нет ли входящей заявки от этого пользователя
-    const incomingRequest = friendRequests.findIndex(r => r.username === username);
-    if (incomingRequest !== -1) {
+    const incomingRequestIndex = friendRequests.findIndex(r => r.username === username);
+    if (incomingRequestIndex !== -1) {
         // Автоматически принимаем заявку
-        acceptFriendRequest(incomingRequest);
+        acceptFriendRequest(incomingRequestIndex);
         input.value = '';
         return;
     }
     
-    // В реальном приложении тут будет запрос к серверу
-    // Сейчас просто имитируем отправку заявки
-    
+    // Создаем новую заявку
     const newRequest = {
         id: Date.now(),
         name: username,
@@ -755,10 +755,29 @@ function addFriend() {
     sentRequests.push(newRequest);
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
     
+    // Очищаем поле ввода
     input.value = '';
+    
+    // Обновляем отображение
     renderSentRequests();
     
+    // Показываем уведомление
     tg.showAlert(t('requestSentSuccess', username));
+    
+    // Предлагаем написать пользователю в Telegram
+    tg.showPopup({
+        title: '📨 Отправить сообщение?',
+        message: `Написать ${username} в Telegram, чтобы он знал о заявке?`,
+        buttons: [
+            { id: 'send', type: 'default', text: t('writeToTelegram') },
+            { type: 'cancel', text: 'Закрыть' }
+        ]
+    }, (buttonId) => {
+        if (buttonId === 'send') {
+            const cleanUsername = username.replace('@', '');
+            tg.openTelegramLink(`https://t.me/${cleanUsername}`);
+        }
+    });
 }
 
 function acceptFriendRequest(index) {
@@ -2001,7 +2020,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const addFriendBtn = document.getElementById('add-friend-btn');
     if (addFriendBtn) {
-        addFriendBtn.addEventListener('click', addFriend);
+        console.log('Кнопка добавления друга найдена');
+        addFriendBtn.addEventListener('click', function() {
+            console.log('Кнопка добавления друга нажата');
+            addFriend();
+        });
+    } else {
+        console.error('Кнопка добавления друга НЕ найдена');
     }
     
     // Создание заданий
