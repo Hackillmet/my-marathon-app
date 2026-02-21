@@ -26,6 +26,7 @@ const STORAGE_KEYS = {
     FRIENDS: 'friends',
     FRIEND_REQUESTS: 'friend_requests',
     SENT_REQUESTS: 'sent_requests',
+    INCOMING_REQUESTS: 'incoming_requests',
     TEAM_GOAL: 'team_goal',
     TEAM_PROGRESS: 'team_progress'
 };
@@ -130,6 +131,7 @@ const translations = {
         friendRemoved: (name) => `✕ Друг ${name} удален`,
         friendAdded: (name) => `✅ Пользователь ${name} добавлен в друзья!`,
         writeToTelegram: "💬 Написать в Telegram",
+        newRequest: "🔔 Новая заявка в друзья",
         
         // Создание заданий
         createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
@@ -279,6 +281,7 @@ const translations = {
         friendRemoved: (name) => `✕ Friend ${name} removed`,
         friendAdded: (name) => `✅ User ${name} added to friends!`,
         writeToTelegram: "💬 Write in Telegram",
+        newRequest: "🔔 New friend request",
         
         // Create tasks
         createTitle: "🎯 CREATE TASKS",
@@ -548,6 +551,7 @@ let currentCustomTasks = [];
 let friends = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIENDS)) || [];
 let friendRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIEND_REQUESTS)) || [];
 let sentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.SENT_REQUESTS)) || [];
+let incomingRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.INCOMING_REQUESTS)) || [];
 let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
 let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
 
@@ -584,6 +588,29 @@ function updateUserProfile() {
     }
 }
 
+function loadIncomingRequests() {
+    // Загружаем входящие заявки из localStorage
+    const savedIncoming = localStorage.getItem(STORAGE_KEYS.INCOMING_REQUESTS);
+    if (savedIncoming) {
+        incomingRequests = JSON.parse(savedIncoming);
+    }
+    
+    // Добавляем входящие заявки в friendRequests
+    incomingRequests.forEach(request => {
+        // Проверяем, нет ли уже такой заявки
+        const exists = friendRequests.some(r => r.id === request.id);
+        if (!exists) {
+            friendRequests.push(request);
+        }
+    });
+    
+    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+}
+
+function saveIncomingRequests() {
+    localStorage.setItem(STORAGE_KEYS.INCOMING_REQUESTS, JSON.stringify(incomingRequests));
+}
+
 function renderFriendRequests() {
     const requestsCard = document.getElementById('friend-requests-card');
     const requestsList = document.getElementById('friend-requests-list');
@@ -604,8 +631,8 @@ function renderFriendRequests() {
         requestItem.innerHTML = `
             <div class="friend-request-avatar">${request.avatar || '👤'}</div>
             <div class="friend-request-info">
-                <span class="friend-request-name">${request.name}</span>
-                <span class="friend-request-username">${request.username}</span>
+                <span class="friend-request-name">${request.fromUserName || request.name}</span>
+                <span class="friend-request-username">${request.fromUserUsername || request.username}</span>
             </div>
             <div class="friend-request-actions">
                 <button class="friend-request-accept" data-index="${index}">${t('accept')}</button>
@@ -709,7 +736,7 @@ function renderFriends() {
     });
 }
 
-// ========== НОВЫЕ ФУНКЦИИ ДЛЯ КНОПОК ==========
+// ========== ФУНКЦИИ ДЛЯ ОТПРАВКИ И ПРИЕМА ЗАЯВОК ==========
 
 // Отправить заявку в друзья (с подтверждением)
 function sendFriendRequest() {
@@ -721,28 +748,31 @@ function sendFriendRequest() {
         return;
     }
     
+    // Очищаем username от @
+    const cleanUsername = username.replace('@', '');
+    
     // Проверяем, не добавляем ли мы сами себя
-    if (username === `@${userUsername}` || username === userUsername) {
+    if (cleanUsername === userUsername) {
         tg.showAlert(t('cantAddSelf'));
         return;
     }
     
     // Проверяем, не отправляли ли уже заявку
-    const alreadySent = sentRequests.some(r => r.username === username);
+    const alreadySent = sentRequests.some(r => r.username === cleanUsername);
     if (alreadySent) {
         tg.showAlert(t('requestSent'));
         return;
     }
     
     // Проверяем, не является ли уже другом
-    const alreadyFriend = friends.some(f => f.username === username);
+    const alreadyFriend = friends.some(f => f.username === cleanUsername);
     if (alreadyFriend) {
         tg.showAlert(t('alreadyFriend'));
         return;
     }
     
     // Проверяем, нет ли входящей заявки от этого пользователя
-    const incomingRequestIndex = friendRequests.findIndex(r => r.username === username);
+    const incomingRequestIndex = friendRequests.findIndex(r => r.fromUserUsername === cleanUsername);
     if (incomingRequestIndex !== -1) {
         // Автоматически принимаем заявку
         acceptFriendRequest(incomingRequestIndex);
@@ -753,14 +783,30 @@ function sendFriendRequest() {
     // Создаем новую заявку
     const newRequest = {
         id: Date.now(),
-        name: username,
-        username: username,
+        name: cleanUsername,
+        username: cleanUsername,
         avatar: '👤',
+        fromUserId: userId,
+        fromUserName: userName,
+        fromUserUsername: userUsername,
         date: new Date().toISOString()
     };
     
+    // Сохраняем в исходящие заявки (для отправителя)
     sentRequests.push(newRequest);
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    
+    // Сохраняем заявку во входящие для друга
+    // В реальном приложении это было бы на сервере
+    // Для демо мы сохраняем в отдельный ключ
+    const friendRequestKey = `friend_request_${cleanUsername}`;
+    const existingRequests = JSON.parse(localStorage.getItem(friendRequestKey)) || [];
+    existingRequests.push(newRequest);
+    localStorage.setItem(friendRequestKey, JSON.stringify(existingRequests));
+    
+    // Также сохраняем в общие входящие
+    incomingRequests.push(newRequest);
+    saveIncomingRequests();
     
     // Очищаем поле ввода
     input.value = '';
@@ -769,19 +815,18 @@ function sendFriendRequest() {
     renderSentRequests();
     
     // Показываем уведомление
-    tg.showAlert(t('requestSentSuccess', username));
+    tg.showAlert(t('requestSentSuccess', cleanUsername));
     
     // Предлагаем написать пользователю в Telegram
     tg.showPopup({
         title: '📨 Отправить сообщение?',
-        message: `Написать ${username} в Telegram, чтобы он знал о заявке?`,
+        message: `Написать ${cleanUsername} в Telegram, чтобы он знал о заявке?`,
         buttons: [
             { id: 'send', type: 'default', text: t('writeToTelegram') },
             { type: 'cancel', text: 'Закрыть' }
         ]
     }, (buttonId) => {
         if (buttonId === 'send') {
-            const cleanUsername = username.replace('@', '');
             tg.openTelegramLink(`https://t.me/${cleanUsername}`);
         }
     });
@@ -797,21 +842,23 @@ function addFriendDirect() {
         return;
     }
     
+    const cleanUsername = username.replace('@', '');
+    
     // Проверяем, не добавляем ли мы сами себя
-    if (username === `@${userUsername}` || username === userUsername) {
+    if (cleanUsername === userUsername) {
         tg.showAlert(t('cantAddSelf'));
         return;
     }
     
     // Проверяем, не является ли уже другом
-    const alreadyFriend = friends.some(f => f.username === username);
+    const alreadyFriend = friends.some(f => f.username === cleanUsername);
     if (alreadyFriend) {
         tg.showAlert(t('alreadyFriend'));
         return;
     }
     
     // Проверяем, нет ли входящей заявки от этого пользователя
-    const incomingRequestIndex = friendRequests.findIndex(r => r.username === username);
+    const incomingRequestIndex = friendRequests.findIndex(r => r.fromUserUsername === cleanUsername);
     if (incomingRequestIndex !== -1) {
         // Удаляем заявку
         friendRequests.splice(incomingRequestIndex, 1);
@@ -819,7 +866,7 @@ function addFriendDirect() {
     }
     
     // Проверяем, нет ли исходящей заявки
-    const outgoingRequestIndex = sentRequests.findIndex(r => r.username === username);
+    const outgoingRequestIndex = sentRequests.findIndex(r => r.username === cleanUsername);
     if (outgoingRequestIndex !== -1) {
         sentRequests.splice(outgoingRequestIndex, 1);
         localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
@@ -828,8 +875,8 @@ function addFriendDirect() {
     // Создаем нового друга
     const newFriend = {
         id: Date.now(),
-        name: username,
-        username: username,
+        name: cleanUsername,
+        username: cleanUsername,
         avatar: '👤',
         workouts: 0,
         distance: 0,
@@ -848,17 +895,18 @@ function addFriendDirect() {
     renderFriends();
     updateTeamProgress();
     
-    tg.showAlert(t('friendAdded', username));
+    tg.showAlert(t('friendAdded', cleanUsername));
 }
 
+// Принять заявку в друзья
 function acceptFriendRequest(index) {
     const request = friendRequests[index];
     
     // Создаем нового друга с 0 км (как новый пользователь)
     const newFriend = {
         id: request.id,
-        name: request.name,
-        username: request.username,
+        name: request.fromUserName || request.name,
+        username: request.fromUserUsername || request.username,
         avatar: request.avatar || '👤',
         workouts: 0,
         distance: 0,
@@ -870,6 +918,13 @@ function acceptFriendRequest(index) {
     // Удаляем заявку
     friendRequests.splice(index, 1);
     
+    // Удаляем из входящих
+    const incomingIndex = incomingRequests.findIndex(r => r.id === request.id);
+    if (incomingIndex !== -1) {
+        incomingRequests.splice(incomingIndex, 1);
+        saveIncomingRequests();
+    }
+    
     // Сохраняем
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
     localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
@@ -879,21 +934,31 @@ function acceptFriendRequest(index) {
     renderFriends();
     updateTeamProgress();
     
-    tg.showAlert(t('requestAccepted', request.name));
+    tg.showAlert(t('requestAccepted', newFriend.name));
 }
 
+// Отклонить заявку
 function declineFriendRequest(index) {
     const request = friendRequests[index];
     
     // Удаляем заявку
     friendRequests.splice(index, 1);
+    
+    // Удаляем из входящих
+    const incomingIndex = incomingRequests.findIndex(r => r.id === request.id);
+    if (incomingIndex !== -1) {
+        incomingRequests.splice(incomingIndex, 1);
+        saveIncomingRequests();
+    }
+    
     localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
     
     renderFriendRequests();
     
-    tg.showAlert(t('requestDeclined', request.name));
+    tg.showAlert(t('requestDeclined', request.fromUserName || request.name));
 }
 
+// Отменить отправленную заявку
 function cancelFriendRequest(index) {
     const request = sentRequests[index];
     
@@ -906,6 +971,7 @@ function cancelFriendRequest(index) {
     tg.showAlert(t('requestCancelled', request.name));
 }
 
+// Удалить друга
 function removeFriend(index) {
     const friend = friends[index];
     
@@ -916,6 +982,42 @@ function removeFriend(index) {
     updateTeamProgress();
     
     tg.showAlert(t('friendRemoved', friend.name));
+}
+
+// Проверить входящие заявки для текущего пользователя
+function checkIncomingRequests() {
+    // В реальном приложении здесь был бы запрос к серверу
+    // Для демо проверяем localStorage
+    const requestKey = `friend_request_${userUsername}`;
+    const requests = JSON.parse(localStorage.getItem(requestKey)) || [];
+    
+    if (requests.length > 0) {
+        requests.forEach(request => {
+            // Проверяем, нет ли уже такой заявки
+            const exists = friendRequests.some(r => r.id === request.id);
+            if (!exists) {
+                friendRequests.push(request);
+                
+                // Показываем уведомление
+                tg.showPopup({
+                    title: t('newRequest'),
+                    message: `${request.fromUserName} (@${request.fromUserUsername}) хочет добавить вас в друзья`,
+                    buttons: [
+                        { id: 'view', type: 'default', text: '👥 Перейти к заявкам' },
+                        { type: 'close', text: 'Закрыть' }
+                    ]
+                }, (buttonId) => {
+                    if (buttonId === 'view') {
+                        switchPage(2); // Переходим на вкладку друзей
+                    }
+                });
+            }
+        });
+        
+        localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+        // Очищаем временное хранилище
+        localStorage.removeItem(requestKey);
+    }
 }
 
 function updateTeamProgress() {
@@ -1958,6 +2060,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (langRu) langRu.classList.toggle('active', savedLang === 'ru');
     if (langEn) langEn.classList.toggle('active', savedLang === 'en');
     
+    // Загружаем входящие заявки
+    loadIncomingRequests();
+    
+    // Проверяем новые заявки
+    checkIncomingRequests();
+    
     // Инициализация
     updateDate();
     updateStats();
@@ -2188,6 +2296,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 friends = [];
                 friendRequests = [];
                 sentRequests = [];
+                incomingRequests = [];
                 localStorage.clear();
                 updateUI();
                 updateStats();
@@ -2335,7 +2444,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Интервал обновления
+    // Периодическая проверка новых заявок (каждые 30 секунд)
+    setInterval(function() {
+        checkIncomingRequests();
+    }, 30000);
+    
+    // Интервал обновления времени
     setInterval(function() {
         if (dayStarted) {
             updateProgress();
