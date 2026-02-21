@@ -14,7 +14,7 @@ const STORAGE_KEYS = {
     LANGUAGE: `language_${userId}`
 };
 
-// Стартовые данные - ВСЕ можно удалять
+// СТАНДАРТНЫЕ привычки (всегда должны быть)
 const DEFAULT_HABITS = [
     { id: 1, text: "💧 Выпить стакан воды", completed: false },
     { id: 2, text: "🏃 Сделать зарядку", completed: false },
@@ -22,6 +22,7 @@ const DEFAULT_HABITS = [
     { id: 4, text: "🧘 Медитация 5 минут", completed: false }
 ];
 
+// СТАНДАРТНЫЕ задачи (всегда должны быть)
 const DEFAULT_TASKS = [
     { id: 1, text: "🛏️ Заправить кровать", completed: false },
     { id: 2, text: "🚀 Начать марафон", completed: false },
@@ -81,11 +82,53 @@ function loadData() {
     const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
     if (savedLang) setLanguage(savedLang);
     
+    // Загружаем привычки, но добавляем стандартные, если их нет
     const savedHabits = localStorage.getItem(STORAGE_KEYS.HABITS);
-    habits = savedHabits ? JSON.parse(savedHabits) : DEFAULT_HABITS.map(h => ({...h}));
+    if (savedHabits) {
+        habits = JSON.parse(savedHabits);
+        // Проверяем, есть ли все стандартные привычки
+        DEFAULT_HABITS.forEach(defaultHabit => {
+            const exists = habits.some(h => h.id === defaultHabit.id);
+            if (!exists) {
+                habits.push({...defaultHabit});
+            }
+        });
+    } else {
+        habits = DEFAULT_HABITS.map(h => ({...h}));
+    }
     
+    // Загружаем задачи, но добавляем стандартные, если их нет
     const savedTasks = localStorage.getItem(STORAGE_KEYS.TASKS);
-    tasks = savedTasks ? JSON.parse(savedTasks) : DEFAULT_TASKS.map(t => ({...t}));
+    if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+        // Проверяем, есть ли все стандартные задачи
+        DEFAULT_TASKS.forEach(defaultTask => {
+            const exists = tasks.some(t => t.id === defaultTask.id);
+            if (!exists) {
+                tasks.push({...defaultTask});
+            }
+        });
+    } else {
+        tasks = DEFAULT_TASKS.map(t => ({...t}));
+    }
+    
+    // Сортируем чтобы стандартные были сверху
+    sortItems();
+}
+
+// Сортировка элементов (стандартные сверху)
+function sortItems() {
+    habits.sort((a, b) => {
+        if (a.id <= 4 && b.id > 4) return -1;
+        if (a.id > 4 && b.id <= 4) return 1;
+        return a.id - b.id;
+    });
+    
+    tasks.sort((a, b) => {
+        if (a.id <= 4 && b.id > 4) return -1;
+        if (a.id > 4 && b.id <= 4) return 1;
+        return a.id - b.id;
+    });
 }
 
 // Сохранение данных
@@ -196,6 +239,13 @@ function renderHabits() {
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
+            
+            // Не даем удалить стандартные привычки (id 1-4)
+            if (id <= 4) {
+                tg.showAlert('❌ Это стандартная привычка, её нельзя удалить');
+                return;
+            }
+            
             habits = habits.filter(h => h.id !== id);
             saveData();
             renderHabits();
@@ -238,6 +288,13 @@ function renderTasks() {
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
+            
+            // Не даем удалить стандартные задачи (id 1-4)
+            if (id <= 4) {
+                tg.showAlert('❌ Это стандартная задача, её нельзя удалить');
+                return;
+            }
+            
             tasks = tasks.filter(t => t.id !== id);
             saveData();
             renderTasks();
@@ -309,8 +366,10 @@ addHabitBtn.addEventListener('click', () => {
 saveHabitBtn.addEventListener('click', () => {
     const text = habitText.value.trim();
     if (text) {
+        // Новый ID больше 4 (чтобы не пересекаться со стандартными)
+        const newId = Math.max(...habits.map(h => h.id), 4) + 1;
         const newHabit = {
-            id: Date.now(),
+            id: newId,
             text: text,
             completed: false
         };
@@ -334,8 +393,10 @@ addTaskBtn.addEventListener('click', () => {
 saveTaskBtn.addEventListener('click', () => {
     const text = taskText.value.trim();
     if (text) {
+        // Новый ID больше 4 (чтобы не пересекаться со стандартными)
+        const newId = Math.max(...tasks.map(t => t.id), 4) + 1;
         const newTask = {
-            id: Date.now(),
+            id: newId,
             text: text,
             completed: false
         };
@@ -399,8 +460,11 @@ newMarathonBtn.addEventListener('click', (e) => {
     if (confirm('Начать новый марафон? Весь прогресс будет сброшен.')) {
         currentDay = 1;
         dayStarted = false;
+        
+        // Сбрасываем к стандартным, удаляем добавленные
         habits = DEFAULT_HABITS.map(h => ({...h}));
         tasks = DEFAULT_TASKS.map(t => ({...t}));
+        
         saveData();
         updateUI();
         menuDropdown.style.display = 'none';
@@ -409,7 +473,16 @@ newMarathonBtn.addEventListener('click', (e) => {
 
 statsBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert(`📊 Статистика:\nДень: ${currentDay}\nПривычек: ${habits.length}\nЗадач: ${tasks.length}`);
+    
+    const customHabits = habits.filter(h => h.id > 4).length;
+    const customTasks = tasks.filter(t => t.id > 4).length;
+    
+    tg.showAlert(`📊 Статистика:\n` +
+                 `День: ${currentDay}\n` +
+                 `Стандартных привычек: 4\n` +
+                 `Добавленных привычек: ${customHabits}\n` +
+                 `Стандартных задач: 4\n` +
+                 `Добавленных задач: ${customTasks}`);
     menuDropdown.style.display = 'none';
 });
 
@@ -427,7 +500,10 @@ telegramSupport.addEventListener('click', (e) => {
 
 faqBtn.addEventListener('click', (e) => {
     e.preventDefault();
-    tg.showAlert('❓ FAQ:\n\n✕ - удалить элемент\n➕ - добавить свой');
+    tg.showAlert('❓ FAQ:\n\n' +
+                 '📌 Стандартные задачи (4 шт) - нельзя удалить\n' +
+                 '➕ Добавленные - можно удалить\n' +
+                 '✕ - удалить свои задачи');
     menuDropdown.style.display = 'none';
 });
 
