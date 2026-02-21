@@ -26,7 +26,7 @@ const STORAGE_KEYS = {
     FRIENDS: 'friends',
     FRIEND_REQUESTS: 'friend_requests',
     SENT_REQUESTS: 'sent_requests',
-    INCOMING_REQUESTS: 'incoming_requests',
+    USER_STATS: 'user_stats',
     TEAM_GOAL: 'team_goal',
     TEAM_PROGRESS: 'team_progress'
 };
@@ -551,7 +551,6 @@ let currentCustomTasks = [];
 let friends = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIENDS)) || [];
 let friendRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIEND_REQUESTS)) || [];
 let sentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.SENT_REQUESTS)) || [];
-let incomingRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.INCOMING_REQUESTS)) || [];
 let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
 let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
 
@@ -579,36 +578,31 @@ function updateUserProfile() {
     
     if (userNameEl) userNameEl.textContent = userName;
     if (userStatsEl) {
-        // Для нового пользователя показываем 0 с бейджем NEW
-        if (totalWorkouts === 0) {
-            userStatsEl.innerHTML = `0 ${t('workouts_')} • 0 ${t('km')} <span class="new-user-badge">${t('newUser')}</span>`;
-        } else {
-            userStatsEl.textContent = `${totalWorkouts} ${t('workouts_')} • ${totalDistance.toFixed(1)} ${t('km')}`;
-        }
+        userStatsEl.textContent = `${totalWorkouts} ${t('workouts_')} • ${totalDistance.toFixed(1)} ${t('km')}`;
     }
 }
 
-function loadIncomingRequests() {
-    // Загружаем входящие заявки из localStorage
-    const savedIncoming = localStorage.getItem(STORAGE_KEYS.INCOMING_REQUESTS);
-    if (savedIncoming) {
-        incomingRequests = JSON.parse(savedIncoming);
-    }
-    
-    // Добавляем входящие заявки в friendRequests
-    incomingRequests.forEach(request => {
-        // Проверяем, нет ли уже такой заявки
-        const exists = friendRequests.some(r => r.id === request.id);
-        if (!exists) {
-            friendRequests.push(request);
-        }
-    });
-    
-    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+function saveUserStats() {
+    // Сохраняем свою статистику для друзей
+    const userStats = {
+        workouts: totalWorkouts,
+        distance: totalDistance,
+        time: totalTime,
+        calories: totalCalories,
+        lastUpdate: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEYS.USER_STATS, JSON.stringify(userStats));
 }
 
-function saveIncomingRequests() {
-    localStorage.setItem(STORAGE_KEYS.INCOMING_REQUESTS, JSON.stringify(incomingRequests));
+function loadFriendStats(friendUsername) {
+    // В реальном приложении здесь был бы запрос к серверу
+    // Для демо просто возвращаем случайную статистику
+    return {
+        workouts: Math.floor(Math.random() * 20),
+        distance: Math.random() * 50,
+        time: Math.floor(Math.random() * 300),
+        calories: Math.floor(Math.random() * 2000)
+    };
 }
 
 function renderFriendRequests() {
@@ -633,6 +627,7 @@ function renderFriendRequests() {
             <div class="friend-request-info">
                 <span class="friend-request-name">${request.fromUserName || request.name}</span>
                 <span class="friend-request-username">${request.fromUserUsername || request.username}</span>
+                <span class="friend-request-stats">📊 ${request.fromUserWorkouts || 0} тренировок • ${(request.fromUserDistance || 0).toFixed(1)} км</span>
             </div>
             <div class="friend-request-actions">
                 <button class="friend-request-accept" data-index="${index}">${t('accept')}</button>
@@ -711,16 +706,11 @@ function renderFriends() {
         const friendItem = document.createElement('div');
         friendItem.className = 'friend-item';
         
-        // Для новых друзей с 0 км показываем специальный стиль
-        const statsText = friend.distance === 0 
-            ? `<span class="zero-stats">${t('zeroStats')}</span>` 
-            : `${friend.workouts} ${t('workouts_')} • ${friend.distance.toFixed(1)} ${t('km')}`;
-        
         friendItem.innerHTML = `
             <div class="friend-avatar">${friend.avatar || '👤'}</div>
             <div class="friend-info">
                 <span class="friend-name">${friend.name}</span>
-                <span class="friend-stats">${statsText}</span>
+                <span class="friend-stats">${friend.workouts} ${t('workouts_')} • ${friend.distance.toFixed(1)} ${t('km')}</span>
             </div>
             <span class="friend-status ${isOnline ? 'online' : 'offline'}">${isOnline ? t('online') : t('offline')}</span>
             <button class="friend-remove" data-index="${index}">✕</button>
@@ -736,9 +726,9 @@ function renderFriends() {
     });
 }
 
-// ========== ФУНКЦИИ ДЛЯ ОТПРАВКИ И ПРИЕМА ЗАЯВОК ==========
+// ========== ОСНОВНЫЕ ФУНКЦИИ ДЛЯ ДРУЗЕЙ ==========
 
-// Отправить заявку в друзья (с подтверждением)
+// Отправить заявку в друзья
 function sendFriendRequest() {
     const input = document.getElementById('friend-username');
     const username = input?.value.trim();
@@ -780,7 +770,10 @@ function sendFriendRequest() {
         return;
     }
     
-    // Создаем новую заявку
+    // Сохраняем свою статистику
+    saveUserStats();
+    
+    // Создаем новую заявку с ТВОЕЙ статистикой
     const newRequest = {
         id: Date.now(),
         name: cleanUsername,
@@ -789,6 +782,10 @@ function sendFriendRequest() {
         fromUserId: userId,
         fromUserName: userName,
         fromUserUsername: userUsername,
+        fromUserWorkouts: totalWorkouts,
+        fromUserDistance: totalDistance,
+        fromUserTime: totalTime,
+        fromUserCalories: totalCalories,
         date: new Date().toISOString()
     };
     
@@ -796,38 +793,37 @@ function sendFriendRequest() {
     sentRequests.push(newRequest);
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
     
-    // Сохраняем заявку во входящие для друга
-    // В реальном приложении это было бы на сервере
-    // Для демо мы сохраняем в отдельный ключ
+    // Сохраняем заявку для друга (в реальном приложении это было бы на сервере)
     const friendRequestKey = `friend_request_${cleanUsername}`;
     const existingRequests = JSON.parse(localStorage.getItem(friendRequestKey)) || [];
     existingRequests.push(newRequest);
     localStorage.setItem(friendRequestKey, JSON.stringify(existingRequests));
     
-    // Также сохраняем в общие входящие
-    incomingRequests.push(newRequest);
-    saveIncomingRequests();
+    // Для теста добавляем заявку сразу себе (чтобы увидеть)
+    friendRequests.push(newRequest);
+    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
     
     // Очищаем поле ввода
     input.value = '';
     
     // Обновляем отображение
     renderSentRequests();
+    renderFriendRequests();
     
     // Показываем уведомление
     tg.showAlert(t('requestSentSuccess', cleanUsername));
     
-    // Предлагаем написать пользователю в Telegram
+    // Показываем уведомление о новой заявке
     tg.showPopup({
-        title: '📨 Отправить сообщение?',
-        message: `Написать ${cleanUsername} в Telegram, чтобы он знал о заявке?`,
+        title: t('newRequest'),
+        message: `🔔 Новая заявка от ${userName} (@${userUsername}) для ${cleanUsername}`,
         buttons: [
-            { id: 'send', type: 'default', text: t('writeToTelegram') },
-            { type: 'cancel', text: 'Закрыть' }
+            { id: 'view', type: 'default', text: '👥 Перейти к заявкам' },
+            { type: 'close', text: 'Закрыть' }
         ]
     }, (buttonId) => {
-        if (buttonId === 'send') {
-            tg.openTelegramLink(`https://t.me/${cleanUsername}`);
+        if (buttonId === 'view') {
+            switchPage(2);
         }
     });
 }
@@ -857,34 +853,41 @@ function addFriendDirect() {
         return;
     }
     
-    // Проверяем, нет ли входящей заявки от этого пользователя
-    const incomingRequestIndex = friendRequests.findIndex(r => r.fromUserUsername === cleanUsername);
-    if (incomingRequestIndex !== -1) {
-        // Удаляем заявку
-        friendRequests.splice(incomingRequestIndex, 1);
-        localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
-    }
+    // Сохраняем свою статистику
+    saveUserStats();
     
-    // Проверяем, нет ли исходящей заявки
-    const outgoingRequestIndex = sentRequests.findIndex(r => r.username === cleanUsername);
-    if (outgoingRequestIndex !== -1) {
-        sentRequests.splice(outgoingRequestIndex, 1);
-        localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
-    }
+    // Загружаем статистику друга (в реальном приложении с сервера)
+    const friendStats = loadFriendStats(cleanUsername);
     
-    // Создаем нового друга
+    // Создаем нового друга с его статистикой
     const newFriend = {
         id: Date.now(),
         name: cleanUsername,
         username: cleanUsername,
         avatar: '👤',
-        workouts: 0,
-        distance: 0,
+        workouts: friendStats.workouts,
+        distance: friendStats.distance,
+        time: friendStats.time,
+        calories: friendStats.calories,
         addedDate: new Date().toISOString()
     };
     
     friends.push(newFriend);
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+    
+    // Проверяем, нет ли заявок от этого пользователя
+    const incomingIndex = friendRequests.findIndex(r => r.fromUserUsername === cleanUsername);
+    if (incomingIndex !== -1) {
+        friendRequests.splice(incomingIndex, 1);
+        localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+    }
+    
+    // Проверяем, нет ли исходящих заявок
+    const outgoingIndex = sentRequests.findIndex(r => r.username === cleanUsername);
+    if (outgoingIndex !== -1) {
+        sentRequests.splice(outgoingIndex, 1);
+        localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    }
     
     // Очищаем поле ввода
     input.value = '';
@@ -902,14 +905,16 @@ function addFriendDirect() {
 function acceptFriendRequest(index) {
     const request = friendRequests[index];
     
-    // Создаем нового друга с 0 км (как новый пользователь)
+    // Создаем нового друга со статистикой из заявки
     const newFriend = {
         id: request.id,
         name: request.fromUserName || request.name,
         username: request.fromUserUsername || request.username,
         avatar: request.avatar || '👤',
-        workouts: 0,
-        distance: 0,
+        workouts: request.fromUserWorkouts || 0,
+        distance: request.fromUserDistance || 0,
+        time: request.fromUserTime || 0,
+        calories: request.fromUserCalories || 0,
         addedDate: new Date().toISOString()
     };
     
@@ -917,13 +922,6 @@ function acceptFriendRequest(index) {
     
     // Удаляем заявку
     friendRequests.splice(index, 1);
-    
-    // Удаляем из входящих
-    const incomingIndex = incomingRequests.findIndex(r => r.id === request.id);
-    if (incomingIndex !== -1) {
-        incomingRequests.splice(incomingIndex, 1);
-        saveIncomingRequests();
-    }
     
     // Сохраняем
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
@@ -943,14 +941,6 @@ function declineFriendRequest(index) {
     
     // Удаляем заявку
     friendRequests.splice(index, 1);
-    
-    // Удаляем из входящих
-    const incomingIndex = incomingRequests.findIndex(r => r.id === request.id);
-    if (incomingIndex !== -1) {
-        incomingRequests.splice(incomingIndex, 1);
-        saveIncomingRequests();
-    }
-    
     localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
     
     renderFriendRequests();
@@ -984,10 +974,8 @@ function removeFriend(index) {
     tg.showAlert(t('friendRemoved', friend.name));
 }
 
-// Проверить входящие заявки для текущего пользователя
+// Проверить входящие заявки
 function checkIncomingRequests() {
-    // В реальном приложении здесь был бы запрос к серверу
-    // Для демо проверяем localStorage
     const requestKey = `friend_request_${userUsername}`;
     const requests = JSON.parse(localStorage.getItem(requestKey)) || [];
     
@@ -1001,14 +989,14 @@ function checkIncomingRequests() {
                 // Показываем уведомление
                 tg.showPopup({
                     title: t('newRequest'),
-                    message: `${request.fromUserName} (@${request.fromUserUsername}) хочет добавить вас в друзья`,
+                    message: `${request.fromUserName} (@${request.fromUserUsername}) хочет добавить вас в друзья\n\n📊 Статистика: ${request.fromUserWorkouts} тренировок, ${request.fromUserDistance.toFixed(1)} км`,
                     buttons: [
                         { id: 'view', type: 'default', text: '👥 Перейти к заявкам' },
                         { type: 'close', text: 'Закрыть' }
                     ]
                 }, (buttonId) => {
                     if (buttonId === 'view') {
-                        switchPage(2); // Переходим на вкладку друзей
+                        switchPage(2);
                     }
                 });
             }
@@ -1255,6 +1243,9 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
     localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    
+    // Сохраняем свою статистику
+    saveUserStats();
     
     // Обновляем командный прогресс
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
@@ -2060,12 +2051,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (langRu) langRu.classList.toggle('active', savedLang === 'ru');
     if (langEn) langEn.classList.toggle('active', savedLang === 'en');
     
-    // Загружаем входящие заявки
-    loadIncomingRequests();
-    
-    // Проверяем новые заявки
-    checkIncomingRequests();
-    
     // Инициализация
     updateDate();
     updateStats();
@@ -2296,7 +2281,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 friends = [];
                 friendRequests = [];
                 sentRequests = [];
-                incomingRequests = [];
                 localStorage.clear();
                 updateUI();
                 updateStats();
@@ -2412,37 +2396,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Следим за скроллом
-    const slidesContainer = document.getElementById('slidesContainer');
-    if (slidesContainer) {
-        slidesContainer.addEventListener('scroll', function(e) {
-            const container = e.target;
-            const pageIndex = Math.round(container.scrollLeft / container.clientWidth);
-            const navButtons = document.querySelectorAll('.nav-btn');
-            
-            if (pageIndex >= 0 && pageIndex < navButtons.length) {
-                navButtons.forEach((btn, index) => {
-                    btn.classList.toggle('active', index === pageIndex);
-                });
-                
-                currentSlide = pageIndex;
-                
-                if (pageIndex === 1) {
-                    updateStats();
-                    updateRecommendation();
-                }
-                if (pageIndex === 2) {
-                    updateUserProfile();
-                    renderFriendRequests();
-                    renderSentRequests();
-                    renderFriends();
-                    updateTeamProgress();
-                }
-                if (pageIndex === 3) renderCustomCreator();
-                if (pageIndex === 4) renderDiary();
-            }
-        });
-    }
+    // Проверяем входящие заявки
+    checkIncomingRequests();
     
     // Периодическая проверка новых заявок (каждые 30 секунд)
     setInterval(function() {
