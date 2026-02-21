@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Шапка с меню -->
+        <!-- Шапка -->
         <div class="site-header">
             <div class="logo">
                 <span class="logo-white">FRONTEND</span>
@@ -22,7 +22,7 @@
             </button>
         </div>
 
-        <!-- Выпадающее меню -->
+        <!-- Меню -->
         <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
             <div class="menu-section">
                 <div class="menu-title">🏃 МАРАФОН</div>
@@ -57,7 +57,7 @@
 
         <!-- Контейнер для слайдов -->
         <div class="slides-container" id="slidesContainer">
-            <!-- СЛАЙД 1: БЕГ -->
+            <!-- СЛАЙД 1: БЕГ (тренировка дня) -->
             <div class="slide active" id="slide1">
                 <!-- Стартовый экран -->
                 <div id="start-screen" class="start-screen">
@@ -141,7 +141,17 @@
                         </div>
                     </div>
 
-                    <div class="history-card">
+                    <div class="weekly-card">
+                        <h3>📅 ПРОГРЕСС</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill mind-fill" id="week-progress" style="width: 0%;"></div>
+                        </div>
+                        <div class="week-numbers">
+                            <span id="week-current">0</span> / <span id="week-goal">30</span> дней
+                        </div>
+                    </div>
+
+                    <div class="recent-card">
                         <h3>📋 ИСТОРИЯ ТРЕНИРОВОК</h3>
                         <div class="history-list" id="history-list"></div>
                     </div>
@@ -205,7 +215,7 @@
                         <div class="about-info">
                             <p>Версия: 2.0.0</p>
                             <p>Автор: @frontendchikk</p>
-                            <p>Беговой марафон - тренировки каждый день</p>
+                            <p>Беговой марафон - 30 разных тренировок</p>
                         </div>
                     </div>
                 </div>
