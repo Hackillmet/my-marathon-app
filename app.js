@@ -1,6 +1,11 @@
 let tg = window.Telegram.WebApp;
 tg.expand();
 
+// Получаем ID пользователя из Telegram
+const userId = tg.initDataUnsafe?.user?.id || 'local_user';
+const userName = tg.initDataUnsafe?.user?.first_name || 'Пользователь';
+const userUsername = tg.initDataUnsafe?.user?.username || 'user';
+
 // ========== КЛЮЧИ ДЛЯ ХРАНЕНИЯ ==========
 const STORAGE_KEYS = {
     CURRENT_DAY: 'current_day',
@@ -17,8 +22,355 @@ const STORAGE_KEYS = {
     TOTAL_CALORIES: 'total_calories',
     DIARY_ENTRIES: 'diary_entries',
     THEME: 'theme',
-    LANGUAGE: 'language'
+    LANGUAGE: 'language',
+    FRIENDS: 'friends',
+    TEAM_GOAL: 'team_goal',
+    TEAM_PROGRESS: 'team_progress'
 };
+
+// ========== ПЕРЕВОДЫ ==========
+const translations = {
+    ru: {
+        // Общие
+        ready: "Готов к тренировке?",
+        startBtn: "🏃 Начать бег",
+        completeBtn: "✅ Завершить день",
+        progress: "Прогресс",
+        
+        // Время
+        waitUntil4am: "⏰ Жди 4 утра",
+        waitHours: (h, m) => `⏳ Следующий день через ${h}ч ${m}м`,
+        canStart: "✅ Можно начинать",
+        dayExpired: "⏰ День истек",
+        until23: "⏳ До 23:00",
+        timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
+        dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется через 24 часа.",
+        
+        // Тренировка
+        mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
+        addedTasks: "➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ",
+        easy: "Легкая",
+        medium: "Средняя",
+        hard: "Сложная",
+        my: "Моя",
+        
+        // Завершение
+        congrats: "🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!",
+        youRan: "Ты пробежал(а):",
+        home: "🏠 На главную",
+        
+        // Статистика
+        stats: "📊 РАСШИРЕННАЯ СТАТИСТИКА",
+        workouts: "Тренировок",
+        totalKm: "Всего км",
+        totalTime: "Всего времени",
+        totalCalories: "Всего калорий",
+        avg: "Средняя",
+        best: "Лучшая",
+        avgPace: "Средний темп",
+        caloriesPerWorkout: "Ср. калорий",
+        progress_: "ПРОГРЕСС ЗА МЕСЯЦ",
+        days: "дней",
+        history: "ИСТОРИЯ ТРЕНИРОВОК",
+        noWorkouts: "Пока нет тренировок",
+        
+        // Детали тренировки
+        distance: "км",
+        minutes: "мин",
+        kcal: "ккал",
+        pace: "мин/км",
+        
+        // Сравнение
+        vsLastMonth: "vs прошлый месяц",
+        better: "лучше",
+        worse: "хуже",
+        same: "так же",
+        
+        // AI рекомендации
+        aiRecommendations: "🤖 AI-РЕКОМЕНДАЦИИ",
+        refreshRecommendation: "🔄 Обновить рекомендацию",
+        
+        // Социальные функции
+        friends: "👥 ДРУЗЬЯ",
+        myProfile: "МОЙ ПРОФИЛЬ",
+        workouts_: "тренировок",
+        km: "км",
+        shareProfile: "📤 Поделиться",
+        addFriend: "➕ ДОБАВИТЬ ДРУГА",
+        friendPlaceholder: "Telegram username (например: @username)",
+        addBtn: "Добавить",
+        myFriends: "👥 МОИ ДРУЗЬЯ",
+        noFriends: "У вас пока нет друзей",
+        online: "🟢 В сети",
+        offline: "⚪ Офлайн",
+        teamChallenge: "🏆 КОМАНДНЫЙ ЗАЧЕТ",
+        teamGoal: "км",
+        
+        // Создание заданий
+        createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
+        goal: "ЦЕЛЬ НА СЕГОДНЯ",
+        goalPlaceholder: "Сколько км хочешь пробежать?",
+        addTask: "ДОБАВИТЬ ЗАДАНИЕ",
+        taskPlaceholder: "Например: Разминка 10 минут",
+        addTaskBtn: "+ Добавить",
+        sendBtn: "📌 Отправить на главную",
+        noTasks: "➕ Добавь задания для тренировки",
+        
+        // Дневник
+        diary: "📔 ДНЕВНИК",
+        newEntry: "Новая запись",
+        save: "Сохранить",
+        cancel: "Отмена",
+        noEntries: "📝 Пока нет записей",
+        entryPlaceholder: "Как прошла тренировка?",
+        
+        // Настройки
+        settings: "⚙️ НАСТРОЙКИ",
+        theme: "ТЕМА",
+        dark: "🌑 Темная",
+        light: "☀️ Светлая",
+        language: "ЯЗЫК",
+        about: "О ПРИЛОЖЕНИИ",
+        version: "Версия:",
+        author: "Автор:",
+        description: "Беговой марафон с социальными функциями",
+        
+        // Меню
+        marathon: "🏃 МАРАФОН",
+        reset: "🔄 Сбросить марафон",
+        statsMenu: "📊 Статистика",
+        help: "🆘 ПОМОЩЬ",
+        support: "💬 Поддержка",
+        contact: "Связаться:",
+        faq: "❓ FAQ",
+        contacts: "📞 КОНТАКТЫ",
+        authorLabel: "👤 Автор:",
+        
+        // Сообщения
+        confirmReset: "Сбросить весь марафон? Весь прогресс будет потерян.",
+        enterTask: "Введите название задания",
+        tasksAdded: (count) => `✅ Задания добавлены! Добавлено заданий: ${count}. Они появились в разделе "Добавленные" на главном экране.`,
+        waitMessage: (h, m) => `⏳ Подожди ${h}ч ${m}м`,
+        onlyFrom4am: "⏰ Новый день можно начать только с 4 утра!",
+        onlyUntil23: "⏰ Завершить день можно только до 23:00!",
+        completeSteps: "⚠️ Сначала выполни все шаги тренировки!",
+        faqText: "❓ FAQ:\n\n• Начать день можно с 4 утра\n• Завершить день до 23:00\n• После завершения - 24ч таймер\n• Есть готовые тренировки на 30 дней\n• Можно создавать свои задания\n• Свои задания появляются в разделе \"Добавленные\"\n• Статистика сохраняется\n• AI дает персональные рекомендации\n• Можно добавлять друзей и соревноваться"
+    },
+    en: {
+        // Common
+        ready: "Ready for workout?",
+        startBtn: "🏃 Start Run",
+        completeBtn: "✅ Complete Day",
+        progress: "Progress",
+        
+        // Time
+        waitUntil4am: "⏰ Wait 4 AM",
+        waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
+        canStart: "✅ You can start",
+        dayExpired: "⏰ Day expired",
+        until23: "⏳ Until 11 PM",
+        timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
+        dayExpiredMsg: "⏰ Workout time expired! New day starts in 24 hours.",
+        
+        // Workout
+        mainWorkout: "MAIN WORKOUT",
+        addedTasks: "➕ ADDED TASKS",
+        easy: "Easy",
+        medium: "Medium",
+        hard: "Hard",
+        my: "My",
+        
+        // Completion
+        congrats: "🎉 WORKOUT COMPLETED!",
+        youRan: "You ran:",
+        home: "🏠 Home",
+        
+        // Statistics
+        stats: "📊 EXTENDED STATISTICS",
+        workouts: "Workouts",
+        totalKm: "Total km",
+        totalTime: "Total time",
+        totalCalories: "Total calories",
+        avg: "Average",
+        best: "Best",
+        avgPace: "Avg pace",
+        caloriesPerWorkout: "Avg cal",
+        progress_: "MONTHLY PROGRESS",
+        days: "days",
+        history: "WORKOUT HISTORY",
+        noWorkouts: "No workouts yet",
+        
+        // Workout details
+        distance: "km",
+        minutes: "min",
+        kcal: "kcal",
+        pace: "min/km",
+        
+        // Comparison
+        vsLastMonth: "vs last month",
+        better: "better",
+        worse: "worse",
+        same: "same",
+        
+        // AI recommendations
+        aiRecommendations: "🤖 AI RECOMMENDATIONS",
+        refreshRecommendation: "🔄 Refresh recommendation",
+        
+        // Social features
+        friends: "👥 FRIENDS",
+        myProfile: "MY PROFILE",
+        workouts_: "workouts",
+        km: "km",
+        shareProfile: "📤 Share",
+        addFriend: "➕ ADD FRIEND",
+        friendPlaceholder: "Telegram username (e.g., @username)",
+        addBtn: "Add",
+        myFriends: "👥 MY FRIENDS",
+        noFriends: "You have no friends yet",
+        online: "🟢 Online",
+        offline: "⚪ Offline",
+        teamChallenge: "🏆 TEAM CHALLENGE",
+        teamGoal: "km",
+        
+        // Create tasks
+        createTitle: "🎯 CREATE TASKS",
+        goal: "TODAY'S GOAL",
+        goalPlaceholder: "How many km do you want to run?",
+        addTask: "ADD TASK",
+        taskPlaceholder: "Example: Warm-up 10 minutes",
+        addTaskBtn: "+ Add",
+        sendBtn: "📌 Send to main",
+        noTasks: "➕ Add tasks for workout",
+        
+        // Diary
+        diary: "📔 DIARY",
+        newEntry: "New entry",
+        save: "Save",
+        cancel: "Cancel",
+        noEntries: "📝 No entries yet",
+        entryPlaceholder: "How was your workout?",
+        
+        // Settings
+        settings: "⚙️ SETTINGS",
+        theme: "THEME",
+        dark: "🌑 Dark",
+        light: "☀️ Light",
+        language: "LANGUAGE",
+        about: "ABOUT",
+        version: "Version:",
+        author: "Author:",
+        description: "Running marathon with social features",
+        
+        // Menu
+        marathon: "🏃 MARATHON",
+        reset: "🔄 Reset marathon",
+        statsMenu: "📊 Statistics",
+        help: "🆘 HELP",
+        support: "💬 Support",
+        contact: "Contact:",
+        faq: "❓ FAQ",
+        contacts: "📞 CONTACTS",
+        authorLabel: "👤 Author:",
+        
+        // Messages
+        confirmReset: "Reset entire marathon? All progress will be lost.",
+        enterTask: "Enter task name",
+        tasksAdded: (count) => `✅ Tasks added! Added: ${count} tasks. They appear in the "Added Tasks" section on the main screen.`,
+        waitMessage: (h, m) => `⏳ Wait ${h}h ${m}m`,
+        onlyFrom4am: "⏰ New day can only start at 4 AM!",
+        onlyUntil23: "⏰ You can only complete day before 11 PM!",
+        completeSteps: "⚠️ Complete all workout steps first!",
+        faqText: "❓ FAQ:\n\n• Start day from 4 AM\n• Complete day before 11 PM\n• 24h timer after completion\n• Ready workouts for 30 days\n• Create your own tasks\n• Your tasks appear in \"Added Tasks\" section\n• Statistics are saved\n• AI gives personal recommendations\n• Add friends and compete"
+    }
+};
+
+// ========== БАЗОВЫЕ ТРЕНИРОВКИ (30 ДНЕЙ) ==========
+const BASE_WORKOUTS = {
+    1: {
+        name: "🔥 Day 1: Easy Start",
+        name_ru: "🔥 День 1: Легкий старт",
+        difficulty: "easy",
+        steps: [
+            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
+            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут в легком темпе", distance: 2.0, time: 15, calories: 150 },
+            { id: 3, text: "🦵 Leg swings", text_ru: "🦵 Спец беговые: махи ногами", distance: 0, time: 5, calories: 20 },
+            { id: 4, text: "⚡ 4x200m acceleration", text_ru: "⚡ Ускорение 4х200 метров", distance: 0.8, time: 8, calories: 80 }
+        ],
+        totalDistance: 2.8,
+        totalTime: 38,
+        totalCalories: 280
+    },
+    2: {
+        name: "⚡ Day 2: Intervals",
+        name_ru: "⚡ День 2: Интервалы",
+        difficulty: "medium",
+        steps: [
+            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
+            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 200 },
+            { id: 3, text: "🦵 Jumping", text_ru: "🦵 Спец беговые: прыжки", distance: 0, time: 8, calories: 40 },
+            { id: 4, text: "⚡ 6x200m acceleration", text_ru: "⚡ Ускорение 6х200 метров", distance: 1.2, time: 12, calories: 120 }
+        ],
+        totalDistance: 4.2,
+        totalTime: 55,
+        totalCalories: 405
+    },
+    3: {
+        name: "🏔️ Day 3: Strength",
+        name_ru: "🏔️ День 3: Силовая",
+        difficulty: "hard",
+        steps: [
+            { id: 1, text: "🏋️ Warm-up 20 min", text_ru: "🏋️ Разминка 20 минут", distance: 0, time: 20, calories: 60 },
+            { id: 2, text: "🏃 Run 25 min", text_ru: "🏃 Бег 25 минут", distance: 4.0, time: 25, calories: 250 },
+            { id: 3, text: "🦵 Multiple jumps", text_ru: "🦵 Спец беговые: многоскоки", distance: 0, time: 10, calories: 50 },
+            { id: 4, text: "⚡ 8x200m acceleration", text_ru: "⚡ Ускорение 8х200 метров", distance: 1.6, time: 16, calories: 160 }
+        ],
+        totalDistance: 5.6,
+        totalTime: 71,
+        totalCalories: 520
+    },
+    4: {
+        name: "🌅 Day 4: Recovery",
+        name_ru: "🌅 День 4: Восстановление",
+        difficulty: "easy",
+        steps: [
+            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
+            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут легкий", distance: 2.0, time: 15, calories: 130 },
+            { id: 3, text: "🦵 Stretching", text_ru: "🦵 Спец беговые: растяжка", distance: 0, time: 10, calories: 25 },
+            { id: 4, text: "⚡ 4x100m acceleration", text_ru: "⚡ Ускорение 4х100 метров", distance: 0.4, time: 5, calories: 40 }
+        ],
+        totalDistance: 2.4,
+        totalTime: 40,
+        totalCalories: 225
+    },
+    5: {
+        name: "🔥 Day 5: Speed",
+        name_ru: "🔥 День 5: Скорость",
+        difficulty: "hard",
+        steps: [
+            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
+            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 210 },
+            { id: 3, text: "🦵 High knees", text_ru: "🦵 Спец беговые: семенящий", distance: 0, time: 8, calories: 35 },
+            { id: 4, text: "⚡ 10x100m acceleration", text_ru: "⚡ Ускорение 10х100 метров", distance: 1.0, time: 12, calories: 110 }
+        ],
+        totalDistance: 4.0,
+        totalTime: 55,
+        totalCalories: 400
+    }
+};
+
+// Добавляем тренировки с 6 по 30
+for (let i = 6; i <= 30; i++) {
+    const sourceDay = ((i - 1) % 5) + 1;
+    BASE_WORKOUTS[i] = {
+        ...BASE_WORKOUTS[sourceDay],
+        name: BASE_WORKOUTS[sourceDay].name.replace(`Day ${sourceDay}`, `Day ${i}`),
+        name_ru: BASE_WORKOUTS[sourceDay].name_ru.replace(`День ${sourceDay}`, `День ${i}`),
+        steps: BASE_WORKOUTS[sourceDay].steps.map(step => ({
+            ...step,
+            id: step.id + (i * 10)
+        }))
+    };
+}
 
 // ========== AI-РЕКОМЕНДАЦИИ ==========
 const recommendations = {
@@ -120,318 +472,6 @@ const recommendations = {
     }
 };
 
-// ========== ПЕРЕВОДЫ ==========
-const translations = {
-    ru: {
-        // Общие
-        ready: "Готов к тренировке?",
-        startBtn: "🏃 Начать бег",
-        completeBtn: "✅ Завершить день",
-        progress: "Прогресс",
-        
-        // Время
-        waitUntil4am: "⏰ Жди 4 утра",
-        waitHours: (h, m) => `⏳ Следующий день через ${h}ч ${m}м`,
-        canStart: "✅ Можно начинать",
-        dayExpired: "⏰ День истек",
-        until23: "⏳ До 23:00",
-        timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
-        dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется через 24 часа.",
-        
-        // Тренировка
-        mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
-        addedTasks: "➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ",
-        easy: "Легкая",
-        medium: "Средняя",
-        hard: "Сложная",
-        my: "Моя",
-        
-        // Завершение
-        congrats: "🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!",
-        youRan: "Ты пробежал(а):",
-        home: "🏠 На главную",
-        
-        // Статистика
-        stats: "📊 РАСШИРЕННАЯ СТАТИСТИКА",
-        workouts: "Тренировок",
-        totalKm: "Всего км",
-        totalTime: "Всего времени",
-        totalCalories: "Всего калорий",
-        avg: "Средняя",
-        best: "Лучшая",
-        avgPace: "Средний темп",
-        caloriesPerWorkout: "Ср. калорий",
-        progress_: "ПРОГРЕСС ЗА МЕСЯЦ",
-        days: "дней",
-        history: "ИСТОРИЯ ТРЕНИРОВОК",
-        noWorkouts: "Пока нет тренировок",
-        
-        // Детали тренировки
-        distance: "км",
-        minutes: "мин",
-        kcal: "ккал",
-        pace: "мин/км",
-        
-        // Сравнение
-        vsLastMonth: "vs прошлый месяц",
-        better: "лучше",
-        worse: "хуже",
-        same: "так же",
-        
-        // AI рекомендации
-        aiRecommendations: "🤖 AI-РЕКОМЕНДАЦИИ",
-        refreshRecommendation: "🔄 Обновить рекомендацию",
-        
-        // Создание заданий
-        createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
-        goal: "ЦЕЛЬ НА СЕГОДНЯ",
-        goalPlaceholder: "Сколько км хочешь пробежать?",
-        addTask: "ДОБАВИТЬ ЗАДАНИЕ",
-        taskPlaceholder: "Например: Разминка 10 минут",
-        addBtn: "+ Добавить",
-        sendBtn: "📌 Отправить на главную",
-        noTasks: "➕ Добавь задания для тренировки",
-        
-        // Дневник
-        diary: "📔 ДНЕВНИК",
-        newEntry: "Новая запись",
-        save: "Сохранить",
-        cancel: "Отмена",
-        noEntries: "📝 Пока нет записей",
-        entryPlaceholder: "Как прошла тренировка?",
-        
-        // Настройки
-        settings: "⚙️ НАСТРОЙКИ",
-        theme: "ТЕМА",
-        dark: "🌑 Темная",
-        light: "☀️ Светлая",
-        language: "ЯЗЫК",
-        about: "О ПРИЛОЖЕНИИ",
-        version: "Версия:",
-        author: "Автор:",
-        description: "Беговой марафон с AI-рекомендациями",
-        
-        // Меню
-        marathon: "🏃 МАРАФОН",
-        reset: "🔄 Сбросить марафон",
-        statsMenu: "📊 Статистика",
-        help: "🆘 ПОМОЩЬ",
-        support: "💬 Поддержка",
-        contact: "Связаться:",
-        faq: "❓ FAQ",
-        contacts: "📞 КОНТАКТЫ",
-        authorLabel: "👤 Автор:",
-        
-        // Сообщения
-        confirmReset: "Сбросить весь марафон? Весь прогресс будет потерян.",
-        enterTask: "Введите название задания",
-        tasksAdded: (count) => `✅ Задания добавлены! Добавлено заданий: ${count}. Они появились в разделе "Добавленные" на главном экране.`,
-        waitMessage: (h, m) => `⏳ Подожди ${h}ч ${m}м`,
-        onlyFrom4am: "⏰ Новый день можно начать только с 4 утра!",
-        onlyUntil23: "⏰ Завершить день можно только до 23:00!",
-        completeSteps: "⚠️ Сначала выполни все шаги тренировки!",
-        faqText: "❓ FAQ:\n\n• Начать день можно с 4 утра\n• Завершить день до 23:00\n• После завершения - 24ч таймер\n• Есть готовые тренировки на 30 дней\n• Можно создавать свои задания\n• Свои задания появляются в разделе \"Добавленные\"\n• Статистика сохраняется\n• AI дает персональные рекомендации"
-    },
-    en: {
-        // Common
-        ready: "Ready for workout?",
-        startBtn: "🏃 Start Run",
-        completeBtn: "✅ Complete Day",
-        progress: "Progress",
-        
-        // Time
-        waitUntil4am: "⏰ Wait 4 AM",
-        waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
-        canStart: "✅ You can start",
-        dayExpired: "⏰ Day expired",
-        until23: "⏳ Until 11 PM",
-        timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
-        dayExpiredMsg: "⏰ Workout time expired! New day starts in 24 hours.",
-        
-        // Workout
-        mainWorkout: "MAIN WORKOUT",
-        addedTasks: "➕ ADDED TASKS",
-        easy: "Easy",
-        medium: "Medium",
-        hard: "Hard",
-        my: "My",
-        
-        // Completion
-        congrats: "🎉 WORKOUT COMPLETED!",
-        youRan: "You ran:",
-        home: "🏠 Home",
-        
-        // Statistics
-        stats: "📊 EXTENDED STATISTICS",
-        workouts: "Workouts",
-        totalKm: "Total km",
-        totalTime: "Total time",
-        totalCalories: "Total calories",
-        avg: "Average",
-        best: "Best",
-        avgPace: "Avg pace",
-        caloriesPerWorkout: "Avg cal",
-        progress_: "MONTHLY PROGRESS",
-        days: "days",
-        history: "WORKOUT HISTORY",
-        noWorkouts: "No workouts yet",
-        
-        // Workout details
-        distance: "km",
-        minutes: "min",
-        kcal: "kcal",
-        pace: "min/km",
-        
-        // Comparison
-        vsLastMonth: "vs last month",
-        better: "better",
-        worse: "worse",
-        same: "same",
-        
-        // AI recommendations
-        aiRecommendations: "🤖 AI RECOMMENDATIONS",
-        refreshRecommendation: "🔄 Refresh recommendation",
-        
-        // Create tasks
-        createTitle: "🎯 CREATE TASKS",
-        goal: "TODAY'S GOAL",
-        goalPlaceholder: "How many km do you want to run?",
-        addTask: "ADD TASK",
-        taskPlaceholder: "Example: Warm-up 10 minutes",
-        addBtn: "+ Add",
-        sendBtn: "📌 Send to main",
-        noTasks: "➕ Add tasks for workout",
-        
-        // Diary
-        diary: "📔 DIARY",
-        newEntry: "New entry",
-        save: "Save",
-        cancel: "Cancel",
-        noEntries: "📝 No entries yet",
-        entryPlaceholder: "How was your workout?",
-        
-        // Settings
-        settings: "⚙️ SETTINGS",
-        theme: "THEME",
-        dark: "🌑 Dark",
-        light: "☀️ Light",
-        language: "LANGUAGE",
-        about: "ABOUT",
-        version: "Version:",
-        author: "Author:",
-        description: "Running marathon with AI recommendations",
-        
-        // Menu
-        marathon: "🏃 MARATHON",
-        reset: "🔄 Reset marathon",
-        statsMenu: "📊 Statistics",
-        help: "🆘 HELP",
-        support: "💬 Support",
-        contact: "Contact:",
-        faq: "❓ FAQ",
-        contacts: "📞 CONTACTS",
-        authorLabel: "👤 Author:",
-        
-        // Messages
-        confirmReset: "Reset entire marathon? All progress will be lost.",
-        enterTask: "Enter task name",
-        tasksAdded: (count) => `✅ Tasks added! Added: ${count} tasks. They appear in the "Added Tasks" section on the main screen.`,
-        waitMessage: (h, m) => `⏳ Wait ${h}h ${m}m`,
-        onlyFrom4am: "⏰ New day can only start at 4 AM!",
-        onlyUntil23: "⏰ You can only complete day before 11 PM!",
-        completeSteps: "⚠️ Complete all workout steps first!",
-        faqText: "❓ FAQ:\n\n• Start day from 4 AM\n• Complete day before 11 PM\n• 24h timer after completion\n• Ready workouts for 30 days\n• Create your own tasks\n• Your tasks appear in \"Added Tasks\" section\n• Statistics are saved\n• AI gives personal recommendations"
-    }
-};
-
-// ========== БАЗОВЫЕ ТРЕНИРОВКИ (30 ДНЕЙ) ==========
-const BASE_WORKOUTS = {
-    1: {
-        name: "🔥 Day 1: Easy Start",
-        name_ru: "🔥 День 1: Легкий старт",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
-            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут в легком темпе", distance: 2.0, time: 15, calories: 150 },
-            { id: 3, text: "🦵 Leg swings", text_ru: "🦵 Спец беговые: махи ногами", distance: 0, time: 5, calories: 20 },
-            { id: 4, text: "⚡ 4x200m acceleration", text_ru: "⚡ Ускорение 4х200 метров", distance: 0.8, time: 8, calories: 80 }
-        ],
-        totalDistance: 2.8,
-        totalTime: 38,
-        totalCalories: 280
-    },
-    2: {
-        name: "⚡ Day 2: Intervals",
-        name_ru: "⚡ День 2: Интервалы",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
-            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 200 },
-            { id: 3, text: "🦵 Jumping", text_ru: "🦵 Спец беговые: прыжки", distance: 0, time: 8, calories: 40 },
-            { id: 4, text: "⚡ 6x200m acceleration", text_ru: "⚡ Ускорение 6х200 метров", distance: 1.2, time: 12, calories: 120 }
-        ],
-        totalDistance: 4.2,
-        totalTime: 55,
-        totalCalories: 405
-    },
-    3: {
-        name: "🏔️ Day 3: Strength",
-        name_ru: "🏔️ День 3: Силовая",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Warm-up 20 min", text_ru: "🏋️ Разминка 20 минут", distance: 0, time: 20, calories: 60 },
-            { id: 2, text: "🏃 Run 25 min", text_ru: "🏃 Бег 25 минут", distance: 4.0, time: 25, calories: 250 },
-            { id: 3, text: "🦵 Multiple jumps", text_ru: "🦵 Спец беговые: многоскоки", distance: 0, time: 10, calories: 50 },
-            { id: 4, text: "⚡ 8x200m acceleration", text_ru: "⚡ Ускорение 8х200 метров", distance: 1.6, time: 16, calories: 160 }
-        ],
-        totalDistance: 5.6,
-        totalTime: 71,
-        totalCalories: 520
-    },
-    4: {
-        name: "🌅 Day 4: Recovery",
-        name_ru: "🌅 День 4: Восстановление",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
-            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут легкий", distance: 2.0, time: 15, calories: 130 },
-            { id: 3, text: "🦵 Stretching", text_ru: "🦵 Спец беговые: растяжка", distance: 0, time: 10, calories: 25 },
-            { id: 4, text: "⚡ 4x100m acceleration", text_ru: "⚡ Ускорение 4х100 метров", distance: 0.4, time: 5, calories: 40 }
-        ],
-        totalDistance: 2.4,
-        totalTime: 40,
-        totalCalories: 225
-    },
-    5: {
-        name: "🔥 Day 5: Speed",
-        name_ru: "🔥 День 5: Скорость",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
-            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 210 },
-            { id: 3, text: "🦵 High knees", text_ru: "🦵 Спец беговые: семенящий", distance: 0, time: 8, calories: 35 },
-            { id: 4, text: "⚡ 10x100m acceleration", text_ru: "⚡ Ускорение 10х100 метров", distance: 1.0, time: 12, calories: 110 }
-        ],
-        totalDistance: 4.0,
-        totalTime: 55,
-        totalCalories: 400
-    }
-};
-
-// Добавляем тренировки с 6 по 30
-for (let i = 6; i <= 30; i++) {
-    const sourceDay = ((i - 1) % 5) + 1;
-    BASE_WORKOUTS[i] = {
-        ...BASE_WORKOUTS[sourceDay],
-        name: BASE_WORKOUTS[sourceDay].name.replace(`Day ${sourceDay}`, `Day ${i}`),
-        name_ru: BASE_WORKOUTS[sourceDay].name_ru.replace(`День ${sourceDay}`, `День ${i}`),
-        steps: BASE_WORKOUTS[sourceDay].steps.map(step => ({
-            ...step,
-            id: step.id + (i * 10)
-        }))
-    };
-}
-
 // ========== СОСТОЯНИЕ ==========
 let currentDay = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_DAY)) || 1;
 let dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true' || false;
@@ -456,6 +496,11 @@ let diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) 
 // Текущие данные для создания тренировки
 let currentCustomTasks = [];
 
+// Друзья
+let friends = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIENDS)) || [];
+let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
+let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
+
 // Язык
 let currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
 
@@ -473,238 +518,145 @@ function t(key, ...args) {
     return text;
 }
 
-// ========== ОБНОВЛЕНИЕ ВСЕГО ТЕКСТА ==========
-function updateAllText() {
-    console.log('Обновление языка на:', currentLanguage);
+// ========== ФУНКЦИИ ДЛЯ ДРУЗЕЙ ==========
+function updateUserProfile() {
+    const userNameEl = document.getElementById('user-name');
+    const userStatsEl = document.getElementById('user-stats');
     
-    // Стартовый экран
-    const startMessage = document.getElementById('start-message');
-    if (startMessage) startMessage.textContent = t('ready');
+    if (userNameEl) userNameEl.textContent = userName;
+    if (userStatsEl) userStatsEl.textContent = `${totalWorkouts} ${t('workouts_')} • ${totalDistance.toFixed(1)} ${t('km')}`;
+}
+
+function renderFriends() {
+    const friendsList = document.getElementById('friends-list');
+    if (!friendsList) return;
     
-    const startBtn = document.getElementById('start-day-btn');
-    if (startBtn && !dayStarted && !dayCompletedTime) {
-        startBtn.textContent = t('startBtn');
+    friendsList.innerHTML = '';
+    
+    if (friends.length === 0) {
+        friendsList.innerHTML = `<div class="empty-friends">${t('noFriends')}</div>`;
+        return;
     }
     
-    const completeBtn = document.getElementById('complete-day-btn');
-    if (completeBtn && !completeBtn.disabled) {
-        completeBtn.textContent = t('completeBtn');
-    }
-    
-    // Заголовки
-    const balanceTitle = document.querySelector('.balance-title');
-    if (balanceTitle) {
-        const daySpan = balanceTitle.querySelector('span');
-        if (daySpan) {
-            balanceTitle.innerHTML = `🏃 ${t('mainWorkout')} `;
-            balanceTitle.appendChild(daySpan);
-        }
-    }
-    
-    const additionalHeader = document.querySelector('.additional-header h3');
-    if (additionalHeader) {
-        additionalHeader.textContent = t('addedTasks');
-    }
-    
-    // Экран завершения
-    const congratsH2 = document.querySelector('#congrats h2');
-    if (congratsH2) congratsH2.textContent = t('congrats');
-    
-    const congratsP = document.querySelector('#congrats p');
-    if (congratsP) congratsP.textContent = t('youRan');
-    
-    const continueBtn = document.getElementById('continue-btn');
-    if (continueBtn) continueBtn.textContent = t('home');
-    
-    // Статистика
-    const statsTitle = document.querySelector('.stats-title');
-    if (statsTitle) statsTitle.textContent = t('stats');
-    
-    const statLabels = document.querySelectorAll('.stat-card .stat-label');
-    if (statLabels[0]) statLabels[0].textContent = t('workouts');
-    if (statLabels[1]) statLabels[1].textContent = t('totalKm');
-    if (statLabels[2]) statLabels[2].textContent = t('totalTime');
-    if (statLabels[3]) statLabels[3].textContent = t('totalCalories');
-    if (statLabels[4]) statLabels[4].textContent = t('avg');
-    if (statLabels[5]) statLabels[5].textContent = t('best');
-    if (statLabels[6]) statLabels[6].textContent = t('avgPace');
-    if (statLabels[7]) statLabels[7].textContent = t('caloriesPerWorkout');
-    
-    const weeklyCardH3 = document.querySelector('.weekly-card h3');
-    if (weeklyCardH3) weeklyCardH3.textContent = t('progress_');
-    
-    const recentCardH3 = document.querySelector('.recent-card h3');
-    if (recentCardH3) recentCardH3.textContent = t('history');
-    
-    // AI рекомендации
-    const recommendationsTitle = document.querySelector('.recommendations-card h3');
-    if (recommendationsTitle) recommendationsTitle.textContent = t('aiRecommendations');
-    
-    const refreshBtn = document.getElementById('refresh-recommendation');
-    if (refreshBtn) refreshBtn.textContent = t('refreshRecommendation');
-    
-    // Создание заданий
-    const customTitle = document.querySelector('.custom-title');
-    if (customTitle) customTitle.textContent = t('createTitle');
-    
-    const goalCardH3 = document.querySelector('.goal-card h3');
-    if (goalCardH3) goalCardH3.textContent = t('goal');
-    
-    const goalInput = document.getElementById('goal-distance');
-    if (goalInput) goalInput.placeholder = t('goalPlaceholder');
-    
-    const tasksCreatorH3 = document.querySelector('.tasks-creator h3');
-    if (tasksCreatorH3) tasksCreatorH3.textContent = t('addTask');
-    
-    const taskTextInput = document.getElementById('new-task-text');
-    if (taskTextInput) taskTextInput.placeholder = t('taskPlaceholder');
-    
-    const addTaskBtn = document.getElementById('add-task-btn');
-    if (addTaskBtn) addTaskBtn.textContent = t('addBtn');
-    
-    const createPlanBtn = document.getElementById('create-plan-btn');
-    if (createPlanBtn) createPlanBtn.textContent = t('sendBtn');
-    
-    // Дневник
-    const diaryTitle = document.querySelector('.diary-title');
-    if (diaryTitle) diaryTitle.textContent = t('diary');
-    
-    const addEntryBtn = document.getElementById('add-entry-btn');
-    if (addEntryBtn) addEntryBtn.innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
-    
-    const saveEntryBtn = document.getElementById('save-entry-btn');
-    if (saveEntryBtn) saveEntryBtn.textContent = t('save');
-    
-    const cancelEntryBtn = document.getElementById('cancel-entry-btn');
-    if (cancelEntryBtn) cancelEntryBtn.textContent = t('cancel');
-    
-    const entryText = document.getElementById('entry-text');
-    if (entryText) entryText.placeholder = t('entryPlaceholder');
-    
-    // Настройки
-    const settingsTitle = document.querySelector('.settings-title');
-    if (settingsTitle) settingsTitle.textContent = t('settings');
-    
-    const settingsGroups = document.querySelectorAll('.settings-group h3');
-    if (settingsGroups[0]) settingsGroups[0].textContent = t('theme');
-    if (settingsGroups[1]) settingsGroups[1].textContent = t('language');
-    if (settingsGroups[2]) settingsGroups[2].textContent = t('about');
-    
-    const themeDark = document.getElementById('theme-dark');
-    const themeLight = document.getElementById('theme-light');
-    if (themeDark) themeDark.innerHTML = `<span class="theme-preview dark-preview"></span><span>${t('dark')}</span>`;
-    if (themeLight) themeLight.innerHTML = `<span class="theme-preview light-preview"></span><span>${t('light')}</span>`;
-    
-    const aboutInfo = document.querySelector('.about-info');
-    if (aboutInfo) {
-        aboutInfo.innerHTML = `
-            <p>${t('version')} 5.0.0</p>
-            <p>${t('author')} @frontendchikk</p>
-            <p>${t('description')}</p>
+    friends.forEach((friend, index) => {
+        const isOnline = Math.random() > 0.5; // В реальном приложении тут будет проверка онлайн статуса
+        
+        const friendItem = document.createElement('div');
+        friendItem.className = 'friend-item';
+        friendItem.innerHTML = `
+            <div class="friend-avatar">${friend.avatar || '👤'}</div>
+            <div class="friend-info">
+                <span class="friend-name">${friend.name}</span>
+                <span class="friend-stats">${friend.workouts} ${t('workouts_')} • ${friend.distance.toFixed(1)} ${t('km')}</span>
+            </div>
+            <span class="friend-status ${isOnline ? 'online' : 'offline'}">${isOnline ? t('online') : t('offline')}</span>
+            <button class="friend-remove" data-index="${index}">✕</button>
         `;
+        friendsList.appendChild(friendItem);
+    });
+    
+    document.querySelectorAll('.friend-remove').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            friends.splice(index, 1);
+            localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+            renderFriends();
+            updateTeamProgress();
+        });
+    });
+}
+
+function addFriend() {
+    const input = document.getElementById('friend-username');
+    const username = input?.value.trim();
+    
+    if (!username) {
+        tg.showAlert('Введите username друга');
+        return;
     }
     
-    // Меню
-    const menuTitles = document.querySelectorAll('.menu-title');
-    if (menuTitles[0]) menuTitles[0].textContent = t('marathon');
-    if (menuTitles[1]) menuTitles[1].textContent = t('help');
-    if (menuTitles[2]) menuTitles[2].textContent = t('contacts');
+    // В реальном приложении тут будет запрос к API
+    const newFriend = {
+        id: Date.now(),
+        name: username,
+        avatar: '👤',
+        workouts: Math.floor(Math.random() * 20),
+        distance: Math.random() * 50
+    };
     
-    const resetMenuItem = document.getElementById('reset-marathon');
-    if (resetMenuItem) resetMenuItem.innerHTML = t('reset');
+    friends.push(newFriend);
+    localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
     
-    const statsMenuItem = document.getElementById('stats-menu');
-    if (statsMenuItem) statsMenuItem.innerHTML = `📊 ${t('statsMenu')}`;
+    input.value = '';
+    renderFriends();
+    updateTeamProgress();
     
-    const supportMenuItem = document.getElementById('support');
-    if (supportMenuItem) supportMenuItem.innerHTML = t('support');
+    tg.showAlert(`✅ Друг ${username} добавлен!`);
+}
+
+function updateTeamProgress() {
+    const teamCurrent = document.getElementById('team-current');
+    const teamProgressFill = document.getElementById('team-progress');
+    const teamMembers = document.getElementById('team-members');
     
-    const telegramMenuItem = document.getElementById('telegram-support');
-    if (telegramMenuItem) telegramMenuItem.innerHTML = `📱 ${t('contact')} @frontendchikk`;
+    if (teamCurrent) teamCurrent.textContent = teamProgress.toFixed(1);
+    if (teamProgressFill) teamProgressFill.style.width = `${(teamProgress / teamGoal) * 100}%`;
     
-    const faqMenuItem = document.getElementById('faq');
-    if (faqMenuItem) faqMenuItem.innerHTML = t('faq');
-    
-    const contactItem = document.querySelector('.contact-item');
-    if (contactItem) {
-        contactItem.innerHTML = `<span>${t('authorLabel')}</span><span class="contact-highlight">@frontendchikk</span>`;
+    if (teamMembers) {
+        teamMembers.innerHTML = '';
+        
+        // Добавляем себя
+        const selfMember = document.createElement('div');
+        selfMember.className = 'team-member';
+        selfMember.innerHTML = `
+            <div class="team-member-avatar">👤</div>
+            <div class="team-member-info">
+                <span class="team-member-name">${userName}</span>
+                <span class="team-member-distance">${totalDistance.toFixed(1)} ${t('km')}</span>
+            </div>
+        `;
+        teamMembers.appendChild(selfMember);
+        
+        // Добавляем друзей
+        friends.forEach(friend => {
+            const member = document.createElement('div');
+            member.className = 'team-member';
+            member.innerHTML = `
+                <div class="team-member-avatar">${friend.avatar || '👤'}</div>
+                <div class="team-member-info">
+                    <span class="team-member-name">${friend.name}</span>
+                    <span class="team-member-distance">${friend.distance.toFixed(1)} ${t('km')}</span>
+                </div>
+            `;
+            teamMembers.appendChild(member);
+        });
     }
-    
-    // Обновляем тренировку, если она отображается
-    if (dayStarted) {
-        renderWorkout();
-    }
-    
-    // Обновляем рекомендацию
-    updateRecommendation();
 }
 
-// ========== ФУНКЦИИ ВРЕМЕНИ ==========
-function getCurrentHour() {
-    return new Date().getHours();
-}
-
-function canStartDay() {
-    const hour = getCurrentHour();
-    return hour >= 4 && hour < 23;
-}
-
-function canCompleteDay() {
-    const hour = getCurrentHour();
-    return hour < 23;
-}
-
-function canStartNewDay() {
-    if (!dayCompletedTime) return true;
+function shareProfile() {
+    const profileText = `🏃 Мой прогресс в беговом марафоне:\n\n` +
+                       `📊 Тренировок: ${totalWorkouts}\n` +
+                       `📏 Всего км: ${totalDistance.toFixed(1)}\n` +
+                       `⏱️ Всего времени: ${Math.floor(totalTime / 60)}ч ${totalTime % 60}м\n` +
+                       `🔥 Лучший результат: ${Math.max(...workoutHistory.map(w => w.distance), 0).toFixed(1)} км\n\n` +
+                       `Присоединяйся! @${userUsername}`;
     
-    const now = Date.now();
-    const completed = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completed) / (1000 * 60 * 60);
-    
-    return hoursPassed >= 24;
+    tg.showPopup({
+        title: '📤 Поделиться прогрессом',
+        message: profileText,
+        buttons: [
+            { id: 'copy', type: 'default', text: '📋 Копировать' },
+            { type: 'cancel' }
+        ]
+    }, (buttonId) => {
+        if (buttonId === 'copy') {
+            navigator.clipboard?.writeText(profileText);
+            tg.showAlert('✅ Скопировано!');
+        }
+    });
 }
 
-function getTimeRemaining() {
-    if (!dayCompletedTime) return null;
-    
-    const now = Date.now();
-    const completed = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completed) / (1000 * 60 * 60);
-    
-    if (hoursPassed >= 24) return null;
-    
-    const remaining = 24 - hoursPassed;
-    const hours = Math.floor(remaining);
-    const minutes = Math.ceil((remaining - hours) * 60);
-    
-    return { hours, minutes };
-}
-
-function isDayExpired() {
-    if (!dayStartTime) return false;
-    const now = Date.now();
-    const start = parseInt(dayStartTime);
-    return (now - start) / (1000 * 60 * 60) >= 24;
-}
-
-// ========== СОХРАНЕНИЕ ==========
-function saveState() {
-    localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
-    localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
-    localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime || '');
-    localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime || '');
-    localStorage.setItem(STORAGE_KEYS.COMPLETED_STEPS, JSON.stringify(completedSteps));
-    localStorage.setItem(STORAGE_KEYS.ADDITIONAL_TASKS, JSON.stringify(additionalTasks));
-    localStorage.setItem(STORAGE_KEYS.ADDITIONAL_COMPLETED, JSON.stringify(additionalCompleted));
-    localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
-    localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
-    localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
-    localStorage.setItem(STORAGE_KEYS.TOTAL_TIME, totalTime);
-    localStorage.setItem(STORAGE_KEYS.TOTAL_CALORIES, totalCalories);
-    localStorage.setItem(STORAGE_KEYS.LANGUAGE, currentLanguage);
-}
-
-// ========== AI-РЕКОМЕНДАЦИИ ==========
+// ========== ФУНКЦИИ ДЛЯ AI-РЕКОМЕНДАЦИЙ ==========
 function calculateStreak() {
     if (workoutHistory.length === 0) return 0;
     
@@ -802,6 +754,76 @@ function updateRecommendation() {
         <div class="recommendation-icon">${rec.icon}</div>
         <div class="recommendation-text">${rec.text}</div>
     `;
+}
+
+// ========== ФУНКЦИИ ВРЕМЕНИ ==========
+function getCurrentHour() {
+    return new Date().getHours();
+}
+
+function canStartDay() {
+    const hour = getCurrentHour();
+    return hour >= 4 && hour < 23;
+}
+
+function canCompleteDay() {
+    const hour = getCurrentHour();
+    return hour < 23;
+}
+
+function canStartNewDay() {
+    if (!dayCompletedTime) return true;
+    
+    const now = Date.now();
+    const completed = parseInt(dayCompletedTime);
+    const hoursPassed = (now - completed) / (1000 * 60 * 60);
+    
+    return hoursPassed >= 24;
+}
+
+function getTimeRemaining() {
+    if (!dayCompletedTime) return null;
+    
+    const now = Date.now();
+    const completed = parseInt(dayCompletedTime);
+    const hoursPassed = (now - completed) / (1000 * 60 * 60);
+    
+    if (hoursPassed >= 24) return null;
+    
+    const remaining = 24 - hoursPassed;
+    const hours = Math.floor(remaining);
+    const minutes = Math.ceil((remaining - hours) * 60);
+    
+    return { hours, minutes };
+}
+
+function isDayExpired() {
+    if (!dayStartTime) return false;
+    const now = Date.now();
+    const start = parseInt(dayStartTime);
+    return (now - start) / (1000 * 60 * 60) >= 24;
+}
+
+// ========== СОХРАНЕНИЕ ==========
+function saveState() {
+    localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
+    localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
+    localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime || '');
+    localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime || '');
+    localStorage.setItem(STORAGE_KEYS.COMPLETED_STEPS, JSON.stringify(completedSteps));
+    localStorage.setItem(STORAGE_KEYS.ADDITIONAL_TASKS, JSON.stringify(additionalTasks));
+    localStorage.setItem(STORAGE_KEYS.ADDITIONAL_COMPLETED, JSON.stringify(additionalCompleted));
+    localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
+    localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
+    localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
+    localStorage.setItem(STORAGE_KEYS.TOTAL_TIME, totalTime);
+    localStorage.setItem(STORAGE_KEYS.TOTAL_CALORIES, totalCalories);
+    localStorage.setItem(STORAGE_KEYS.LANGUAGE, currentLanguage);
+    localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+    
+    // Обновляем командный прогресс
+    teamProgress = totalDistance + friends.reduce((sum, f) => sum + f.distance, 0);
+    localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
 // ========== СТАТИСТИКА ==========
@@ -920,7 +942,7 @@ function updateStats() {
     }
 }
 
-// ========== ФУНКЦИИ ДЛЯ СОЗДАНИЯ ТРЕНИРОВКИ ==========
+// ========== ФУНКЦИИ ДЛЯ СОЗДАНИЯ ЗАДАНИЙ ==========
 function renderCustomCreator() {
     const container = document.getElementById('custom-tasks-list');
     if (!container) return;
@@ -1288,6 +1310,199 @@ function updateDate() {
     }
 }
 
+// ========== ОБНОВЛЕНИЕ ВСЕГО ТЕКСТА ==========
+function updateAllText() {
+    console.log('Обновление языка на:', currentLanguage);
+    
+    // Стартовый экран
+    const startMessage = document.getElementById('start-message');
+    if (startMessage) startMessage.textContent = t('ready');
+    
+    const startBtn = document.getElementById('start-day-btn');
+    if (startBtn && !dayStarted && !dayCompletedTime) {
+        startBtn.textContent = t('startBtn');
+    }
+    
+    const completeBtn = document.getElementById('complete-day-btn');
+    if (completeBtn && !completeBtn.disabled) {
+        completeBtn.textContent = t('completeBtn');
+    }
+    
+    // Заголовки
+    const balanceTitle = document.querySelector('.balance-title');
+    if (balanceTitle) {
+        const daySpan = balanceTitle.querySelector('span');
+        if (daySpan) {
+            balanceTitle.innerHTML = `🏃 ${t('mainWorkout')} `;
+            balanceTitle.appendChild(daySpan);
+        }
+    }
+    
+    const additionalHeader = document.querySelector('.additional-header h3');
+    if (additionalHeader) {
+        additionalHeader.textContent = t('addedTasks');
+    }
+    
+    // Экран завершения
+    const congratsH2 = document.querySelector('#congrats h2');
+    if (congratsH2) congratsH2.textContent = t('congrats');
+    
+    const congratsP = document.querySelector('#congrats p');
+    if (congratsP) congratsP.textContent = t('youRan');
+    
+    const continueBtn = document.getElementById('continue-btn');
+    if (continueBtn) continueBtn.textContent = t('home');
+    
+    // Статистика
+    const statsTitle = document.querySelector('.stats-title');
+    if (statsTitle) statsTitle.textContent = t('stats');
+    
+    const statLabels = document.querySelectorAll('.stat-card .stat-label');
+    if (statLabels[0]) statLabels[0].textContent = t('workouts');
+    if (statLabels[1]) statLabels[1].textContent = t('totalKm');
+    if (statLabels[2]) statLabels[2].textContent = t('totalTime');
+    if (statLabels[3]) statLabels[3].textContent = t('totalCalories');
+    if (statLabels[4]) statLabels[4].textContent = t('avg');
+    if (statLabels[5]) statLabels[5].textContent = t('best');
+    if (statLabels[6]) statLabels[6].textContent = t('avgPace');
+    if (statLabels[7]) statLabels[7].textContent = t('caloriesPerWorkout');
+    
+    const weeklyCardH3 = document.querySelector('.weekly-card h3');
+    if (weeklyCardH3) weeklyCardH3.textContent = t('progress_');
+    
+    const recentCardH3 = document.querySelector('.recent-card h3');
+    if (recentCardH3) recentCardH3.textContent = t('history');
+    
+    // AI рекомендации
+    const recommendationsTitle = document.querySelector('.recommendations-card h3');
+    if (recommendationsTitle) recommendationsTitle.textContent = t('aiRecommendations');
+    
+    const refreshBtn = document.getElementById('refresh-recommendation');
+    if (refreshBtn) refreshBtn.textContent = t('refreshRecommendation');
+    
+    // Социальные функции
+    const friendsTitle = document.querySelector('.friends-title');
+    if (friendsTitle) friendsTitle.textContent = t('friends');
+    
+    const addFriendCardH3 = document.querySelector('.add-friend-card h3');
+    if (addFriendCardH3) addFriendCardH3.textContent = t('addFriend');
+    
+    const friendInput = document.getElementById('friend-username');
+    if (friendInput) friendInput.placeholder = t('friendPlaceholder');
+    
+    const addFriendBtn = document.getElementById('add-friend-btn');
+    if (addFriendBtn) addFriendBtn.textContent = t('addBtn');
+    
+    const friendsListCardH3 = document.querySelector('.friends-list-card h3');
+    if (friendsListCardH3) friendsListCardH3.textContent = t('myFriends');
+    
+    const teamChallengeH3 = document.querySelector('.team-challenge-card h3');
+    if (teamChallengeH3) teamChallengeH3.textContent = t('teamChallenge');
+    
+    const shareProfileBtn = document.getElementById('share-profile');
+    if (shareProfileBtn) shareProfileBtn.textContent = t('shareProfile');
+    
+    // Создание заданий
+    const customTitle = document.querySelector('.custom-title');
+    if (customTitle) customTitle.textContent = t('createTitle');
+    
+    const goalCardH3 = document.querySelector('.goal-card h3');
+    if (goalCardH3) goalCardH3.textContent = t('goal');
+    
+    const goalInput = document.getElementById('goal-distance');
+    if (goalInput) goalInput.placeholder = t('goalPlaceholder');
+    
+    const tasksCreatorH3 = document.querySelector('.tasks-creator h3');
+    if (tasksCreatorH3) tasksCreatorH3.textContent = t('addTask');
+    
+    const taskTextInput = document.getElementById('new-task-text');
+    if (taskTextInput) taskTextInput.placeholder = t('taskPlaceholder');
+    
+    const addTaskBtn = document.getElementById('add-task-btn');
+    if (addTaskBtn) addTaskBtn.textContent = t('addTaskBtn');
+    
+    const createPlanBtn = document.getElementById('create-plan-btn');
+    if (createPlanBtn) createPlanBtn.textContent = t('sendBtn');
+    
+    // Дневник
+    const diaryTitle = document.querySelector('.diary-title');
+    if (diaryTitle) diaryTitle.textContent = t('diary');
+    
+    const addEntryBtn = document.getElementById('add-entry-btn');
+    if (addEntryBtn) addEntryBtn.innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
+    
+    const saveEntryBtn = document.getElementById('save-entry-btn');
+    if (saveEntryBtn) saveEntryBtn.textContent = t('save');
+    
+    const cancelEntryBtn = document.getElementById('cancel-entry-btn');
+    if (cancelEntryBtn) cancelEntryBtn.textContent = t('cancel');
+    
+    const entryText = document.getElementById('entry-text');
+    if (entryText) entryText.placeholder = t('entryPlaceholder');
+    
+    // Настройки
+    const settingsTitle = document.querySelector('.settings-title');
+    if (settingsTitle) settingsTitle.textContent = t('settings');
+    
+    const settingsGroups = document.querySelectorAll('.settings-group h3');
+    if (settingsGroups[0]) settingsGroups[0].textContent = t('theme');
+    if (settingsGroups[1]) settingsGroups[1].textContent = t('language');
+    if (settingsGroups[2]) settingsGroups[2].textContent = t('about');
+    
+    const themeDark = document.getElementById('theme-dark');
+    const themeLight = document.getElementById('theme-light');
+    if (themeDark) themeDark.innerHTML = `<span class="theme-preview dark-preview"></span><span>${t('dark')}</span>`;
+    if (themeLight) themeLight.innerHTML = `<span class="theme-preview light-preview"></span><span>${t('light')}</span>`;
+    
+    const aboutInfo = document.querySelector('.about-info');
+    if (aboutInfo) {
+        aboutInfo.innerHTML = `
+            <p>${t('version')} 6.0.0</p>
+            <p>${t('author')} @frontendchikk</p>
+            <p>${t('description')}</p>
+        `;
+    }
+    
+    // Меню
+    const menuTitles = document.querySelectorAll('.menu-title');
+    if (menuTitles[0]) menuTitles[0].textContent = t('marathon');
+    if (menuTitles[1]) menuTitles[1].textContent = t('help');
+    if (menuTitles[2]) menuTitles[2].textContent = t('contacts');
+    
+    const resetMenuItem = document.getElementById('reset-marathon');
+    if (resetMenuItem) resetMenuItem.innerHTML = t('reset');
+    
+    const statsMenuItem = document.getElementById('stats-menu');
+    if (statsMenuItem) statsMenuItem.innerHTML = `📊 ${t('statsMenu')}`;
+    
+    const supportMenuItem = document.getElementById('support');
+    if (supportMenuItem) supportMenuItem.innerHTML = t('support');
+    
+    const telegramMenuItem = document.getElementById('telegram-support');
+    if (telegramMenuItem) telegramMenuItem.innerHTML = `📱 ${t('contact')} @frontendchikk`;
+    
+    const faqMenuItem = document.getElementById('faq');
+    if (faqMenuItem) faqMenuItem.innerHTML = t('faq');
+    
+    const contactItem = document.querySelector('.contact-item');
+    if (contactItem) {
+        contactItem.innerHTML = `<span>${t('authorLabel')}</span><span class="contact-highlight">@frontendchikk</span>`;
+    }
+    
+    // Обновляем тренировку, если она отображается
+    if (dayStarted) {
+        renderWorkout();
+    }
+    
+    // Обновляем рекомендацию
+    updateRecommendation();
+    
+    // Обновляем профиль и друзей
+    updateUserProfile();
+    renderFriends();
+    updateTeamProgress();
+}
+
 // ========== НАВИГАЦИЯ ==========
 let currentSlide = 0;
 window.switchPage = function(pageIndex) {
@@ -1313,9 +1528,14 @@ window.switchPage = function(pageIndex) {
         updateRecommendation();
     }
     if (pageIndex === 2) {
+        updateUserProfile();
+        renderFriends();
+        updateTeamProgress();
+    }
+    if (pageIndex === 3) {
         renderCustomCreator();
     }
-    if (pageIndex === 3) renderDiary();
+    if (pageIndex === 4) renderDiary();
 };
 
 // ========== ТЕМЫ ==========
@@ -1359,8 +1579,12 @@ window.setLanguage = function(lang) {
         updateStats();
         updateRecommendation();
     } else if (currentSlide === 2) {
-        renderCustomCreator();
+        updateUserProfile();
+        renderFriends();
+        updateTeamProgress();
     } else if (currentSlide === 3) {
+        renderCustomCreator();
+    } else if (currentSlide === 4) {
         renderDiary();
     }
 };
@@ -1453,7 +1677,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
-            // Дополнительные задания (условно считаем по 5 мин и 30 ккал на каждое)
+            // Дополнительные задания
             additionalTasks.forEach((task, index) => {
                 if (additionalCompleted[index]) {
                     actualDistance += task.distance || 0;
@@ -1509,6 +1733,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (congratsScreen) congratsScreen.style.display = 'none';
             updateUI();
         });
+    }
+    
+    // Социальные функции
+    const shareProfileBtn = document.getElementById('share-profile');
+    if (shareProfileBtn) {
+        shareProfileBtn.addEventListener('click', shareProfile);
+    }
+    
+    const addFriendBtn = document.getElementById('add-friend-btn');
+    if (addFriendBtn) {
+        addFriendBtn.addEventListener('click', addFriend);
     }
     
     // Создание заданий
@@ -1594,11 +1829,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 totalTime = 0;
                 totalCalories = 0;
                 diaryEntries = [];
+                friends = [];
                 localStorage.clear();
                 updateUI();
                 updateStats();
                 renderDiary();
                 renderCustomCreator();
+                updateUserProfile();
+                renderFriends();
+                updateTeamProgress();
                 
                 const menu = document.getElementById('menu-dropdown');
                 const menuBtn = document.getElementById('menu-btn');
@@ -1723,8 +1962,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateStats();
                     updateRecommendation();
                 }
-                if (pageIndex === 2) renderCustomCreator();
-                if (pageIndex === 3) renderDiary();
+                if (pageIndex === 2) {
+                    updateUserProfile();
+                    renderFriends();
+                    updateTeamProgress();
+                }
+                if (pageIndex === 3) renderCustomCreator();
+                if (pageIndex === 4) renderDiary();
             }
         });
     }
