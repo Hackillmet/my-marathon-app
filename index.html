@@ -22,29 +22,29 @@
             </button>
         </div>
 
-        <!-- Меню навигации -->
+        <!-- Меню -->
         <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
             <div class="menu-section">
-                <div class="menu-title" data-i18n="menu.marathon">📋 МАРАФОН</div>
-                <a href="#" class="menu-item" id="reset-day" data-i18n="menu.resetDay">🔄 Сбросить день</a>
-                <a href="#" class="menu-item" id="new-marathon" data-i18n="menu.newMarathon">✨ Новый марафон</a>
-                <a href="#" class="menu-item" id="stats" data-i18n="menu.stats">📊 Моя статистика</a>
+                <div class="menu-title">📋 МАРАФОН</div>
+                <a href="#" class="menu-item" id="reset-day">🔄 Сбросить день</a>
+                <a href="#" class="menu-item" id="new-marathon">✨ Новый марафон</a>
+                <a href="#" class="menu-item" id="stats">📊 Моя статистика</a>
             </div>
             
             <div class="menu-section">
-                <div class="menu-title" data-i18n="menu.help">🆘 ПОМОЩЬ</div>
-                <a href="#" class="menu-item" id="support" data-i18n="menu.support">💬 Поддержка</a>
+                <div class="menu-title">🆘 ПОМОЩЬ</div>
+                <a href="#" class="menu-item" id="support">💬 Поддержка</a>
                 <a href="#" class="menu-item" id="telegram-support">
-                    📱 <span data-i18n="menu.contact">Связаться:</span> @frontendchikk
+                    📱 Связаться: @frontendchikk
                 </a>
-                <a href="#" class="menu-item" id="faq" data-i18n="menu.faq">❓ FAQ</a>
+                <a href="#" class="menu-item" id="faq">❓ FAQ</a>
             </div>
             
             <div class="menu-section">
-                <div class="menu-title" data-i18n="menu.contacts">📞 КОНТАКТЫ</div>
+                <div class="menu-title">📞 КОНТАКТЫ</div>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <span data-i18n="menu.author">👤 Автор:</span>
+                        <span>👤 Автор:</span>
                         <span class="contact-highlight">@frontendchikk</span>
                     </div>
                 </div>
@@ -56,22 +56,16 @@
             <span id="current-date"></span>
         </div>
 
-        <!-- Индикаторы страниц (точки) -->
-        <div class="page-indicators">
-            <span class="indicator active" data-page="0" onclick="switchPage(0)"></span>
-            <span class="indicator" data-page="1" onclick="switchPage(1)"></span>
-        </div>
-
         <!-- Контейнер для слайдов -->
         <div class="slides-container" id="slidesContainer">
-            <!-- СЛАЙД 1: Баланс -->
+            <!-- СЛАЙД 1: Главный экран (Баланс) -->
             <div class="slide active" id="slide1">
                 <!-- Стартовый экран -->
                 <div id="start-screen" class="start-screen">
                     <div class="start-content">
-                        <h2><span data-i18n="day">День</span> <span id="start-day-number">1</span></h2>
-                        <p data-i18n="startMessage">Готов начать свой путь к балансу?</p>
-                        <button class="start-day-btn" id="start-day-btn" data-i18n="startDayBtn">
+                        <h2>День <span id="start-day-number">1</span></h2>
+                        <p>Готов начать свой путь к балансу?</p>
+                        <button class="start-day-btn" id="start-day-btn">
                             🚀 Начать день
                         </button>
                     </div>
@@ -81,12 +75,12 @@
                 <div id="marathon-screen" style="display: none;">
                     <!-- Баланс -->
                     <div class="balance-section">
-                        <h3 class="balance-title" data-i18n="balance.system">⚖️ БАЛАНС СИСТЕМЫ</h3>
+                        <h3 class="balance-title">⚖️ БАЛАНС СИСТЕМЫ</h3>
                         <div class="balance-bars">
                             <div class="balance-item">
                                 <div class="balance-label">
                                     <span class="balance-icon">🧠</span>
-                                    <span data-i18n="balance.mind">Разум</span>
+                                    <span>Разум</span>
                                     <span class="balance-percent" id="mind-percent">0%</span>
                                 </div>
                                 <div class="progress-bar">
@@ -97,7 +91,7 @@
                             <div class="balance-item">
                                 <div class="balance-label">
                                     <span class="balance-icon">💚</span>
-                                    <span data-i18n="balance.spirit">Дух</span>
+                                    <span>Дух</span>
                                     <span class="balance-percent" id="spirit-percent">0%</span>
                                 </div>
                                 <div class="progress-bar">
@@ -110,49 +104,37 @@
                     <!-- Привычки -->
                     <div class="habits-section">
                         <div class="section-header">
-                            <h3 data-i18n="habits.title">🌱 ПРИВЫЧКИ</h3>
+                            <h3>🌱 ПРИВЫЧКИ</h3>
                             <button class="add-btn" id="add-habit-btn">+</button>
                         </div>
                         
                         <div class="add-input" id="add-habit-input" style="display: none;">
-                            <input type="text" id="habit-text" data-i18n-placeholder="habits.placeholder" placeholder="➕ Добавить свою привычку...">
-                            <button class="btn-small" id="save-habit-btn" data-i18n="habits.addBtn">Добавить</button>
+                            <input type="text" id="habit-text" placeholder="➕ Добавить свою привычку...">
+                            <button class="btn-small" id="save-habit-btn">Добавить</button>
                         </div>
                         
                         <div class="habits-list" id="habits-list"></div>
-                        <div class="habit-note">
-                            ☝️ <span data-i18n="habits.note">Привычки влияют на</span> <span style="color: var(--text-primary);" data-i18n="balance.mind">РАЗУМ</span>
-                        </div>
+                        <div class="habit-note">☝️ Привычки влияют на РАЗУМ</div>
                     </div>
 
                     <!-- Задачи -->
                     <div class="tasks-section">
-                        <h3 data-i18n="tasks.title">📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
-                        <div class="tasks-list" id="tasks-list"></div>
-                        <div class="task-note">
-                            ☝️ <span data-i18n="tasks.note">Задачи влияют на</span> <span style="color: var(--text-primary);" data-i18n="balance.spirit">ДУХ</span>
+                        <div class="section-header">
+                            <h3>📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
+                            <button class="add-btn" id="add-task-btn">+</button>
                         </div>
+                        
+                        <div class="add-input" id="add-task-input" style="display: none;">
+                            <input type="text" id="task-text" placeholder="➕ Добавить свою задачу...">
+                            <button class="btn-small" id="save-task-btn">Добавить</button>
+                        </div>
+                        
+                        <div class="tasks-list" id="tasks-list"></div>
+                        <div class="task-note">☝️ Задачи влияют на ДУХ</div>
                     </div>
-                    <!-- В секции привычек после add-habit-input добавь: -->
-
-<!-- Добавление задачи (новое) -->
-<div class="add-task-section">
-    <div class="section-header">
-        <h3>📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
-        <button class="add-btn" id="add-task-btn">+</button>
-    </div>
-    
-    <div class="add-input" id="add-task-input" style="display: none;">
-        <input type="text" id="task-text" placeholder="➕ Добавить свою задачу...">
-        <button class="btn-small" id="save-task-btn">Добавить</button>
-    </div>
-    
-    <div class="tasks-list" id="tasks-list"></div>
-    <div class="task-note">☝️ Задачи влияют на <span style="color: #cccccc;">ДУХ</span></div>
-</div>
 
                     <!-- Кнопка завершения -->
-                    <button class="complete-day-btn" id="complete-day-btn" disabled data-i18n="completeBtn">
+                    <button class="complete-day-btn" id="complete-day-btn" disabled>
                         ✅ Завершить день
                     </button>
                 </div>
@@ -161,26 +143,26 @@
             <!-- СЛАЙД 2: Настройки -->
             <div class="slide" id="slide2">
                 <div class="settings-section">
-                    <h2 class="settings-title" data-i18n="settings.title">⚙️ НАСТРОЙКИ</h2>
+                    <h2 class="settings-title">⚙️ НАСТРОЙКИ</h2>
                     
                     <!-- Тема -->
                     <div class="settings-group">
-                        <h3 data-i18n="settings.theme">🎨 Тема оформления</h3>
+                        <h3>🎨 Тема оформления</h3>
                         <div class="theme-buttons">
                             <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')">
                                 <span class="theme-preview dark-preview"></span>
-                                <span data-i18n="settings.dark">🌑 Темная</span>
+                                <span>🌑 Темная</span>
                             </button>
                             <button class="theme-btn" id="theme-light" onclick="setTheme('light')">
                                 <span class="theme-preview light-preview"></span>
-                                <span data-i18n="settings.light">☀️ Светлая</span>
+                                <span>☀️ Светлая</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Язык -->
                     <div class="settings-group">
-                        <h3 data-i18n="settings.language">🌍 Язык</h3>
+                        <h3>🌍 Язык</h3>
                         <div class="language-buttons">
                             <button class="lang-btn" id="lang-ru" onclick="setLanguage('ru')">
                                 🇷🇺 Русский
@@ -193,14 +175,36 @@
 
                     <!-- Информация -->
                     <div class="settings-group">
-                        <h3 data-i18n="settings.about">ℹ️ О приложении</h3>
+                        <h3>ℹ️ О приложении</h3>
                         <div class="about-info">
-                            <p><span data-i18n="settings.version">Версия:</span> 2.0.0</p>
-                            <p><span data-i18n="settings.author">Автор:</span> @frontendchikk</p>
-                            <p><span data-i18n="settings.description">Марафон баланса - развивай разум и дух каждый день</span></p>
+                            <p>Версия: 2.0.0</p>
+                            <p>Автор: @frontendchikk</p>
+                            <p>Марафон баланса - развивай разум и дух каждый день</p>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+        <div class="bottom-nav">
+            <button class="nav-btn" id="nav-home" onclick="switchPage(0)">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-text">Главная</span>
+            </button>
+            <button class="nav-btn" id="nav-settings" onclick="switchPage(1)">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Настройки</span>
+            </button>
+        </div>
+
+        <!-- Сообщение о завершении дня -->
+        <div class="congrats" id="congrats" style="display: none;">
+            <h2>🎉 ДЕНЬ ЗАВЕРШЕН!</h2>
+            <p>Твой баланс:</p>
+            <div class="final-balance">
+                <div>🧠 Разум: <span id="final-mind">0</span>%</div>
+                <div>💚 Дух: <span id="final-spirit">0</span>%</div>
             </div>
         </div>
     </div>
