@@ -130,7 +130,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 2: СТАТИСТИКА + AI-РЕКОМЕНДАЦИИ -->
+            <!-- СЛАЙД 2: СТАТИСТИКА -->
             <div class="slide" id="slide2">
                 <div class="stats-section">
                     <h2 class="stats-title">📊 РАСШИРЕННАЯ СТАТИСТИКА</h2>
@@ -182,7 +182,7 @@
 
                     <!-- AI-РЕКОМЕНДАЦИИ -->
                     <div class="recommendations-card" id="recommendations-card">
-                        <h3>🎯 AI-РЕКОМЕНДАЦИИ</h3>
+                        <h3>🤖 AI-РЕКОМЕНДАЦИИ</h3>
                         <div class="recommendation-content" id="recommendation-content">
                             <!-- Здесь будут появляться рекомендации -->
                         </div>
@@ -202,8 +202,64 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: СОЗДАТЬ ЗАДАНИЯ -->
+            <!-- СЛАЙД 3: ДРУЗЬЯ (НОВЫЙ) -->
             <div class="slide" id="slide3">
+                <div class="friends-section">
+                    <h2 class="friends-title">👥 ДРУЗЬЯ</h2>
+                    
+                    <!-- Профиль пользователя -->
+                    <div class="user-profile-card">
+                        <div class="user-avatar">
+                            <span class="user-avatar-icon">👤</span>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="user-name">Пользователь</span>
+                            <span class="user-stats" id="user-stats">0 тренировок • 0 км</span>
+                        </div>
+                        <button class="share-profile-btn" id="share-profile">
+                            📤 Поделиться
+                        </button>
+                    </div>
+
+                    <!-- Добавление друга -->
+                    <div class="add-friend-card">
+                        <h3>➕ ДОБАВИТЬ ДРУГА</h3>
+                        <div class="add-friend-form">
+                            <input type="text" id="friend-username" placeholder="Telegram username (например: @username)">
+                            <button class="add-friend-btn" id="add-friend-btn">Добавить</button>
+                        </div>
+                    </div>
+
+                    <!-- Список друзей -->
+                    <div class="friends-list-card">
+                        <h3>👥 МОИ ДРУЗЬЯ</h3>
+                        <div class="friends-list" id="friends-list">
+                            <!-- Список друзей будет загружаться сюда -->
+                        </div>
+                    </div>
+
+                    <!-- Командный зачет -->
+                    <div class="team-challenge-card">
+                        <h3>🏆 КОМАНДНЫЙ ЗАЧЕТ</h3>
+                        <div class="team-stats">
+                            <div class="team-progress">
+                                <div class="team-progress-bar">
+                                    <div class="team-progress-fill" id="team-progress" style="width: 0%;"></div>
+                                </div>
+                                <div class="team-numbers">
+                                    <span id="team-current">0</span> / <span id="team-goal">100</span> км
+                                </div>
+                            </div>
+                            <div class="team-members" id="team-members">
+                                <!-- Участники команды -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СЛАЙД 4: СОЗДАТЬ ЗАДАНИЯ -->
+            <div class="slide" id="slide4">
                 <div class="custom-workout-section">
                     <h2 class="custom-title">🎯 СОЗДАТЬ ЗАДАНИЯ</h2>
                     
@@ -241,8 +297,8 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 4: ДНЕВНИК -->
-            <div class="slide" id="slide4">
+            <!-- СЛАЙД 5: ДНЕВНИК -->
+            <div class="slide" id="slide5">
                 <div class="diary-section">
                     <h2 class="diary-title">📔 ДНЕВНИК</h2>
                     
@@ -262,8 +318,8 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 5: НАСТРОЙКИ -->
-            <div class="slide" id="slide5">
+            <!-- СЛАЙД 6: НАСТРОЙКИ -->
+            <div class="slide" id="slide6">
                 <div class="settings-section">
                     <h2 class="settings-title">⚙️ НАСТРОЙКИ</h2>
                     
@@ -296,16 +352,16 @@
                     <div class="settings-group">
                         <h3>ℹ️ О ПРИЛОЖЕНИИ</h3>
                         <div class="about-info">
-                            <p>Версия: 5.0.0</p>
+                            <p>Версия: 6.0.0</p>
                             <p>Автор: @frontendchikk</p>
-                            <p>Беговой марафон с AI-рекомендациями</p>
+                            <p>Беговой марафон с социальными функциями</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Нижняя навигация -->
+        <!-- Нижняя навигация (6 кнопок) -->
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-run" onclick="switchPage(0)">
                 <span class="nav-icon">🏃</span>
@@ -315,15 +371,19 @@
                 <span class="nav-icon">📊</span>
                 <span class="nav-text">Статистика</span>
             </button>
-            <button class="nav-btn" id="nav-create" onclick="switchPage(2)">
+            <button class="nav-btn" id="nav-friends" onclick="switchPage(2)">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Друзья</span>
+            </button>
+            <button class="nav-btn" id="nav-create" onclick="switchPage(3)">
                 <span class="nav-icon">🎯</span>
                 <span class="nav-text">Создать</span>
             </button>
-            <button class="nav-btn" id="nav-diary" onclick="switchPage(3)">
+            <button class="nav-btn" id="nav-diary" onclick="switchPage(4)">
                 <span class="nav-icon">📔</span>
                 <span class="nav-text">Дневник</span>
             </button>
-            <button class="nav-btn" id="nav-settings" onclick="switchPage(4)">
+            <button class="nav-btn" id="nav-settings" onclick="switchPage(5)">
                 <span class="nav-icon">⚙️</span>
                 <span class="nav-text">Настройки</span>
             </button>
