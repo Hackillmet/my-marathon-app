@@ -74,7 +74,7 @@
                 <!-- Экран тренировки -->
                 <div id="marathon-screen" style="display: none;">
                     <div class="balance-section">
-                        <h3 class="balance-title">🏃 БЕГ <span id="current-day">1</span></h3>
+                        <h3 class="balance-title">🏃 ОСНОВНАЯ ТРЕНИРОВКА <span id="current-day">1</span></h3>
                         <div class="balance-bars">
                             <div class="balance-item">
                                 <div class="balance-label">
@@ -130,10 +130,10 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 2: СТАТИСТИКА -->
+            <!-- СЛАЙД 2: СТАТИСТИКА (ОБНОВЛЕННАЯ) -->
             <div class="slide" id="slide2">
                 <div class="stats-section">
-                    <h2 class="stats-title">📊 СТАТИСТИКА</h2>
+                    <h2 class="stats-title">📊 РАСШИРЕННАЯ СТАТИСТИКА</h2>
                     
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -141,27 +141,47 @@
                             <span class="stat-label">Тренировок</span>
                         </div>
                         <div class="stat-card">
-                            <span class="stat-value" id="total-distance">0</span>
+                            <span class="stat-value" id="total-distance">0 км</span>
                             <span class="stat-label">Всего км</span>
                         </div>
                         <div class="stat-card">
-                            <span class="stat-value" id="avg-distance">0</span>
+                            <span class="stat-value" id="total-time">0 мин</span>
+                            <span class="stat-label">Всего времени</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="total-calories">0</span>
+                            <span class="stat-label">Всего калорий</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="avg-distance">0 км</span>
                             <span class="stat-label">Средняя</span>
                         </div>
                         <div class="stat-card">
-                            <span class="stat-value" id="best-distance">0</span>
+                            <span class="stat-value" id="best-distance">0 км</span>
                             <span class="stat-label">Лучшая</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="avg-pace">0</span>
+                            <span class="stat-label">Средний темп</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="avg-calories">0</span>
+                            <span class="stat-label">Ср. калорий</span>
                         </div>
                     </div>
 
                     <div class="weekly-card">
-                        <h3>📅 ПРОГРЕСС</h3>
+                        <h3>📅 ПРОГРЕСС ЗА МЕСЯЦ</h3>
                         <div class="progress-bar">
                             <div class="progress-fill mind-fill" id="week-progress" style="width: 0%;"></div>
                         </div>
                         <div class="week-numbers">
                             <span id="week-current">0</span> / <span id="week-goal">30</span> дней
                         </div>
+                    </div>
+
+                    <div class="comparison-card" id="month-comparison">
+                        📊 vs прошлый месяц: —
                     </div>
 
                     <div class="recent-card">
@@ -171,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: СОЗДАТЬ ТРЕНИРОВКУ -->
+            <!-- СЛАЙД 3: СОЗДАТЬ ЗАДАНИЯ -->
             <div class="slide" id="slide3">
                 <div class="custom-workout-section">
                     <h2 class="custom-title">🎯 СОЗДАТЬ ЗАДАНИЯ</h2>
@@ -203,7 +223,7 @@
                         </div>
                     </div>
                     
-                    <!-- Кнопка создания -->
+                    <!-- Кнопка отправки -->
                     <button class="create-plan-btn" id="create-plan-btn" disabled>
                         📌 Отправить на главную
                     </button>
@@ -265,7 +285,7 @@
                     <div class="settings-group">
                         <h3>ℹ️ О ПРИЛОЖЕНИИ</h3>
                         <div class="about-info">
-                            <p>Версия: 3.0.0</p>
+                            <p>Версия: 4.0.0</p>
                             <p>Автор: @frontendchikk</p>
                             <p>Беговой марафон - создавай свои задания</p>
                         </div>
