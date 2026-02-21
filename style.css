@@ -1,5 +1,6 @@
-/* Черный минималистичный дизайн с оптимизацией для мобильных */
+/* CSS переменные для тем */
 :root {
+    /* Темная тема (по умолчанию) */
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
     --bg-card: #111111;
@@ -9,17 +10,26 @@
     --text-secondary: #888888;
     --blue: #0066ff;
     --blue-hover: #0052cc;
-    /* Упрощенные transitions для мобильных */
-    --transition: all 0.2s ease-out;
+    --transition: all 0.3s ease;
+}
+
+/* Светлая тема */
+:root[data-theme="light"] {
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --border-color: #dddddd;
+    --accent: #e0e0e0;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --blue: #0066ff;
+    --blue-hover: #0052cc;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* Отключаем ненужные эффекты на телефоне */
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
 }
 
 body {
@@ -27,39 +37,16 @@ body {
     min-height: 100vh;
     background: var(--bg-primary);
     color: var(--text-primary);
-    /* Включаем аппаратное ускорение */
-    -webkit-transform: translateZ(0);
-    -moz-transform: translateZ(0);
-    -ms-transform: translateZ(0);
-    -o-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -ms-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-perspective: 1000;
-    -moz-perspective: 1000;
-    -ms-perspective: 1000;
-    perspective: 1000;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 12px; /* Уменьшил отступы для мобильных */
-    animation: fadeIn 0.3s ease; /* Ускорил анимацию */
+    padding: 12px;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-/* Новая шапка как на сайте */
+/* Шапка */
 .site-header {
     display: flex;
     justify-content: space-between;
@@ -70,21 +57,20 @@ body {
 }
 
 .logo {
-    font-size: 18px; /* Чуть меньше для мобильных */
+    font-size: 18px;
     font-weight: 700;
     letter-spacing: 0.5px;
-    /* Убираем hover на мобильных */
 }
 
 .logo-white {
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .logo-blue {
-    color: #0066ff;
+    color: var(--blue);
 }
 
-/* Кнопка меню (бургер) */
+/* Кнопка меню */
 .menu-btn {
     width: 28px;
     height: 28px;
@@ -95,15 +81,13 @@ body {
     border: none;
     cursor: pointer;
     padding: 4px 0;
-    /* Убираем transition для плавности */
 }
 
 .menu-btn span {
     width: 100%;
     height: 2px;
-    background: #ffffff;
+    background: var(--text-primary);
     border-radius: 2px;
-    /* Упрощенная анимация */
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -119,7 +103,7 @@ body {
     transform: rotate(-45deg) translate(4px, -4px);
 }
 
-/* Выпадающее меню - упрощенная анимация */
+/* Меню */
 .menu-dropdown {
     position: absolute;
     top: 65px;
@@ -131,22 +115,7 @@ body {
     min-width: 260px;
     z-index: 1000;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-    /* Простая анимация */
     animation: simplePop 0.2s ease;
-    transform-origin: top right;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-@keyframes simplePop {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 
 .menu-section {
@@ -170,13 +139,11 @@ body {
     font-size: 14px;
     border-radius: 8px;
     margin-bottom: 2px;
-    /* Убираем сложные эффекты */
-    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.1);
 }
 
 .menu-item:active {
     background: var(--accent);
-    color: #0066ff;
+    color: var(--blue);
 }
 
 .contact-info {
@@ -193,16 +160,12 @@ body {
     font-size: 13px;
 }
 
-.contact-item:not(:last-child) {
-    border-bottom: 1px solid var(--border-color);
-}
-
 .contact-highlight {
-    color: #0066ff;
+    color: var(--blue);
     font-weight: 500;
 }
 
-/* Дата под шапкой */
+/* Дата */
 .date-header {
     text-align: right;
     margin-bottom: 12px;
@@ -211,25 +174,158 @@ body {
     padding: 4px 0;
 }
 
-/* Стартовый экран - упрощенная анимация */
+/* Индикаторы страниц */
+.page-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-secondary);
+    opacity: 0.3;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.indicator.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--blue);
+    opacity: 1;
+}
+
+/* Контейнер слайдов */
+.slides-container {
+    display: flex;
+    overflow-x: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+
+.slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    transition: transform 0.3s ease;
+}
+
+/* Секция настроек */
+.settings-section {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.settings-title {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 24px;
+    font-size: 24px;
+}
+
+.settings-group {
+    margin-bottom: 30px;
+}
+
+.settings-group h3 {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Кнопки темы */
+.theme-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.theme-btn {
+    flex: 1;
+    padding: 12px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.theme-btn.active {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: white;
+}
+
+.theme-preview {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.dark-preview {
+    background: #000000;
+    border: 2px solid #ffffff;
+}
+
+.light-preview {
+    background: #ffffff;
+    border: 2px solid #333333;
+}
+
+/* Кнопки языка */
+.language-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.lang-btn {
+    flex: 1;
+    padding: 12px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lang-btn.active {
+    border-color: var(--blue);
+    background: var(--blue);
+    color: white;
+}
+
+/* Информация о приложении */
+.about-info {
+    background: var(--bg-primary);
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.about-info p {
+    margin: 8px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* Стартовый экран */
 .start-screen {
     background: var(--bg-card);
     border-radius: 16px;
     padding: 30px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
-    animation: simpleScale 0.3s ease;
-}
-
-@keyframes simpleScale {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 
 .start-content h2 {
@@ -237,7 +333,6 @@ body {
     color: var(--text-primary);
     margin-bottom: 8px;
     font-weight: 300;
-    /* Убираем float анимацию на мобильных */
 }
 
 .start-content p {
@@ -246,7 +341,7 @@ body {
     margin-bottom: 24px;
 }
 
-/* Баланс система */
+/* Баланс */
 .balance-section {
     background: var(--bg-card);
     border-radius: 16px;
@@ -277,10 +372,6 @@ body {
     color: var(--text-secondary);
 }
 
-.balance-icon {
-    font-size: 16px;
-}
-
 .balance-percent {
     margin-left: auto;
     color: var(--text-primary);
@@ -296,15 +387,15 @@ body {
 
 .progress-fill {
     height: 100%;
-    transition: width 0.2s linear; /* Более простая анимация */
+    transition: width 0.2s linear;
 }
 
 .mind-fill {
-    background: #ffffff;
+    background: var(--blue);
 }
 
 .spirit-fill {
-    background: #808080;
+    background: var(--text-secondary);
 }
 
 /* Секции */
@@ -339,17 +430,12 @@ body {
     font-size: 20px;
     border-radius: 8px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border: 1px solid var(--border-color);
-    /* Упрощаем */
-    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.2);
 }
 
 .add-btn:active {
     background: var(--accent);
-    color: #0066ff;
+    color: var(--blue);
 }
 
 .add-input {
@@ -367,11 +453,10 @@ body {
     font-size: 14px;
     outline: none;
     color: var(--text-primary);
-    /* Убираем transition для инпутов */
 }
 
 .add-input input:focus {
-    border-color: #0066ff;
+    border-color: var(--blue);
 }
 
 /* Элементы списков */
@@ -383,7 +468,6 @@ body {
     border-radius: 8px;
     margin-bottom: 8px;
     border: 1px solid var(--border-color);
-    /* Убираем сложные эффекты */
 }
 
 .habit-checkbox, .task-checkbox {
@@ -391,9 +475,7 @@ body {
     height: 20px;
     margin-right: 12px;
     cursor: pointer;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    accent-color: #0066ff;
+    accent-color: var(--blue);
 }
 
 .habit-text, .task-text {
@@ -415,7 +497,6 @@ body {
     cursor: pointer;
     padding: 4px 8px;
     opacity: 0.7;
-    /* Убираем transform */
 }
 
 .delete-btn:active {
@@ -430,7 +511,7 @@ body {
     text-align: right;
 }
 
-/* Кнопки - оптимизированы для тапа */
+/* Кнопки */
 .start-day-btn {
     background: var(--text-primary);
     color: var(--bg-primary);
@@ -443,12 +524,11 @@ body {
     width: 100%;
     max-width: 280px;
     margin: 0 auto;
-    /* Убираем сложные эффекты */
-    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
 .start-day-btn:active {
-    background: #0066ff;
+    background: var(--blue);
     color: white;
     transform: scale(0.98);
 }
@@ -464,11 +544,11 @@ body {
     font-weight: 500;
     cursor: pointer;
     margin-top: 8px;
-    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
 .complete-day-btn:active:not(:disabled) {
-    background: #0066ff;
+    background: var(--blue);
     color: white;
     transform: scale(0.98);
 }
@@ -486,23 +566,21 @@ body {
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
-    -webkit-tap-highlight-color: rgba(0, 102, 255, 0.3);
 }
 
 .btn-small:active {
-    background: #0066ff;
-    border-color: #0066ff;
+    background: var(--blue);
+    border-color: var(--blue);
     color: white;
 }
 
-/* Экран завершения - упрощенная анимация */
+/* Экран завершения */
 .congrats {
     background: var(--bg-card);
     border-radius: 16px;
     padding: 30px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
-    animation: simplePop 0.3s ease;
 }
 
 .congrats h2 {
@@ -510,11 +588,6 @@ body {
     color: var(--text-primary);
     margin-bottom: 8px;
     font-weight: 300;
-}
-
-.congrats p {
-    color: var(--text-secondary);
-    margin-bottom: 16px;
 }
 
 .final-balance {
@@ -532,41 +605,14 @@ body {
     color: var(--text-primary);
 }
 
-/* Медиа-запрос для очень маленьких экранов */
-@media (max-width: 380px) {
-    .container {
-        padding: 8px;
+/* Анимации */
+@keyframes simplePop {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
     }
-    
-    .logo {
-        font-size: 16px;
-    }
-    
-    .start-content h2 {
-        font-size: 32px;
-    }
-    
-    .menu-dropdown {
-        min-width: 240px;
-        right: 8px;
-    }
-}
-
-/* Отключаем hover эффекты на мобильных */
-@media (hover: none) and (pointer: coarse) {
-    .menu-item:hover,
-    .add-btn:hover,
-    .btn-small:hover,
-    .start-day-btn:hover,
-    .complete-day-btn:hover {
-        /* Отключаем hover на мобильных */
-        transform: none;
-        background: inherit;
-    }
-    
-    /* Оставляем только active состояния */
-    .menu-item:active {
-        background: var(--accent);
-        color: #0066ff;
+    to {
+        opacity: 1;
+        transform: scale(1);
     }
 }
