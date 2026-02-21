@@ -282,7 +282,7 @@ function createCustomWorkout() {
         });
     });
     
-    // Добавляем соответствующие completed
+    // Обновляем массив completed под новые задания
     additionalCompleted = new Array(additionalTasks.length).fill(false);
     
     tg.showPopup({
@@ -303,6 +303,11 @@ function createCustomWorkout() {
     
     saveState();
     renderCustomCreator();
+    
+    // Если сейчас на главном экране, обновляем его
+    if (currentSlide === 0) {
+        renderWorkout();
+    }
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
@@ -413,6 +418,8 @@ function renderWorkout() {
     // Дополнительные задания
     const additionalSection = document.getElementById('additional-tasks-section');
     const additionalContainer = document.getElementById('additional-steps');
+    
+    console.log('Additional tasks:', additionalTasks); // Для отладки
     
     if (additionalTasks.length > 0) {
         if (additionalSection) additionalSection.style.display = 'block';
