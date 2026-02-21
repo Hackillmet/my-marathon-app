@@ -75,7 +75,7 @@ const DAILY_WORKOUTS = {
     }
 };
 
-// Продолжение для следующих дней (циклически повторяем)
+// Продолжение для следующих дней
 for (let i = 6; i <= 30; i++) {
     const sourceDay = ((i - 1) % 5) + 1;
     DAILY_WORKOUTS[i] = {
@@ -104,7 +104,6 @@ const translations = {
         dayExpiredMsg: "⏰ Время вышло! Новый день с 4 утра.",
         completedMessage: (day, km) => `🎉 День ${day} завершен!\nПробежал(а): ${km} км`,
         
-        // Меню
         marathon: "🏃 МАРАФОН",
         resetMarathon: "🔄 Сбросить марафон",
         stats: "📊 Моя статистика",
@@ -132,7 +131,6 @@ const translations = {
         dayExpiredMsg: "⏰ Time is up! New day at 4 AM.",
         completedMessage: (day, km) => `🎉 Day ${day} completed!\nRan: ${km} km`,
         
-        // Menu
         marathon: "🏃 MARATHON",
         resetMarathon: "🔄 Reset Marathon",
         stats: "📊 My Stats",
@@ -223,11 +221,8 @@ function loadData() {
     const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE);
     if (savedLang) {
         currentLanguage = savedLang;
-        document.getElementById('lang-ru')?.classList.toggle('active', savedLang === 'ru');
-        document.getElementById('lang-en')?.classList.toggle('active', savedLang === 'en');
     }
     
-    // Загружаем текущую тренировку
     if (dayStarted) {
         const steps = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_STEPS));
         if (steps) {
@@ -247,6 +242,8 @@ function saveData() {
     localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime);
     localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime);
     localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(runningHistory));
+    localStorage.setItem(STORAGE_KEYS.THEME, currentTheme);
+    localStorage.setItem(STORAGE_KEYS.LANGUAGE, currentLanguage);
     
     if (currentWorkout && dayStarted) {
         localStorage.setItem(STORAGE_KEYS.WORKOUT_STEPS, JSON.stringify(currentWorkout.steps));
@@ -254,6 +251,17 @@ function saveData() {
         localStorage.setItem(STORAGE_KEYS.WORKOUT_DIFFICULTY, currentWorkout.difficulty);
         localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, currentWorkout.totalDistance);
     }
+}
+
+// ========== ТЕМА И ЯЗЫК ==========
+function setTheme(theme) {
+    currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+}
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+    updateAllText();
 }
 
 // ========== ОТРИСОВКА ==========
@@ -308,7 +316,6 @@ function updateUI() {
 
 function renderWorkout() {
     if (!currentWorkout) {
-        // Создаем тренировку для этого дня
         const template = DAILY_WORKOUTS[currentDay] || DAILY_WORKOUTS[((currentDay - 1) % 5) + 1];
         currentWorkout = {
             name: template.name,
@@ -361,7 +368,6 @@ function updateProgress() {
     document.getElementById('workout-fill').style.width = `${progress}%`;
     document.getElementById('workout-percent').textContent = `${Math.round(progress)}%`;
     
-    // Все ли шаги выполнены?
     const allCompleted = currentWorkout.steps.every(s => s.completed);
     const canComplete = canCompleteByTime();
     const expired = isDayExpired();
@@ -423,86 +429,6 @@ function updateDeadlineInfo() {
     }
 }
 
-// ========== ОБРАБОТЧИКИ ==========
-document.getElementById('start-day-btn').addEventListener('click', () => {
-    if (!canStartNewDay()) {
-        const remaining = getTimeRemaining();
-        tg.showAlert(t('waitHours', remaining.hours, remaining.minutes));
-        return;
-    }
-    
-    if (!canStartByTime()) {
-        tg.showAlert('⏰ Новый день можно начать только с 4 утра!');
-        return;
-    }
-    
-    dayStarted = true;
-    dayStartTime = new Date().getTime().toString();
-    dayCompletedTime = null;
-    currentWorkout = null; // Создастся заново при рендере
-    saveData();
-    updateUI();
-});
-
-document.getElementById('complete-day-btn').addEventListener('click', () => {
-    if (!canCompleteByTime()) {
-        tg.showAlert('⏰ Завершить день можно только до 23:00!');
-        return;
-    }
-    
-    if (isDayExpired()) {
-        tg.showAlert(t('dayExpiredMsg'));
-        return;
-    }
-    
-    // Считаем пройденную дистанцию
-    let totalKm = 0;
-    currentWorkout.steps.forEach(step => {
-        if (step.completed) totalKm += step.distance || 0;
-    });
-    
-    // Сохраняем в историю
-    runningHistory.push({
-        day: currentDay,
-        distance: totalKm,
-        date: new Date().toISOString(),
-        workout: currentWorkout.name
-    });
-    
-    document.getElementById('final-distance').textContent = totalKm.toFixed(1);
-    
-    dayCompletedTime = new Date().getTime().toString();
-    dayStarted = false;
-    dayStartTime = null;
-    currentDay++;
-    
-    saveData();
-    
-    document.getElementById('start-screen').style.display = 'none';
-    document.getElementById('marathon-screen').style.display = 'none';
-    document.getElementById('congrats').style.display = 'block';
-    
-    tg.showAlert(t('completedMessage', currentDay - 1, totalKm.toFixed(1)));
-});
-
-document.getElementById('continue-btn').addEventListener('click', () => {
-    document.getElementById('congrats').style.display = 'none';
-    updateUI();
-});
-
-// ========== ТЕМА И ЯЗЫК ==========
-function setTheme(theme) {
-    currentTheme = theme;
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem(STORAGE_KEYS.THEME, theme);
-}
-
-function setLanguage(lang) {
-    currentLanguage = lang;
-    localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
-    updateAllText();
-}
-
 function updateAllText() {
     document.getElementById('start-message').textContent = t('startMessage');
     
@@ -524,93 +450,164 @@ function updateAllText() {
     updateUI();
 }
 
-// ========== МЕНЮ ==========
-document.getElementById('menu-btn').addEventListener('click', () => {
-    const menu = document.getElementById('menu-dropdown');
-    const btn = document.getElementById('menu-btn');
-    if (menu.style.display === 'none') {
-        menu.style.display = 'block';
-        btn.classList.add('active');
-    } else {
-        menu.style.display = 'none';
-        btn.classList.remove('active');
-    }
-});
-
-document.addEventListener('click', (e) => {
-    const menu = document.getElementById('menu-dropdown');
-    const btn = document.getElementById('menu-btn');
-    if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        menu.style.display = 'none';
-        btn.classList.remove('active');
-    }
-});
-
-document.getElementById('reset-marathon').addEventListener('click', (e) => {
-    e.preventDefault();
-    if (confirm(t('confirmReset'))) {
-        currentDay = 1;
-        dayStarted = false;
-        dayStartTime = null;
-        dayCompletedTime = null;
-        currentWorkout = null;
-        runningHistory = [];
-        saveData();
-        updateUI();
-        document.getElementById('menu-dropdown').style.display = 'none';
-        document.getElementById('menu-btn').classList.remove('active');
-    }
-});
-
-document.getElementById('stats').addEventListener('click', (e) => {
-    e.preventDefault();
-    const totalKm = runningHistory.reduce((sum, r) => sum + r.distance, 0);
-    const avgKm = runningHistory.length > 0 ? (totalKm / runningHistory.length).toFixed(1) : 0;
-    tg.showAlert(t('statsMessage', currentDay - 1, totalKm.toFixed(1), avgKm));
-    document.getElementById('menu-dropdown').style.display = 'none';
-    document.getElementById('menu-btn').classList.remove('active');
-});
-
-document.getElementById('support').addEventListener('click', (e) => {
-    e.preventDefault();
-    tg.showAlert('💬 Поддержка: @frontendchikk');
-    document.getElementById('menu-dropdown').style.display = 'none';
-    document.getElementById('menu-btn').classList.remove('active');
-});
-
-document.getElementById('telegram-support').addEventListener('click', (e) => {
-    e.preventDefault();
-    tg.openTelegramLink('https://t.me/frontendchikk');
-    document.getElementById('menu-dropdown').style.display = 'none';
-    document.getElementById('menu-btn').classList.remove('active');
-});
-
-// Дата
 function updateDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     document.getElementById('current-date').textContent = now.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', options);
 }
 
-// Интервал
-setInterval(() => {
-    if (dayStarted) {
-        updateProgress();
-        updateDeadlineInfo();
-    } else {
-        updateTimeInfo();
-    }
+// ========== ОБРАБОТЧИКИ ==========
+document.addEventListener('DOMContentLoaded', () => {
+    loadData();
+    setTheme(currentTheme);
     updateDate();
-}, 60000);
-
-// Инициализация
-loadData();
-setTheme(currentTheme);
-updateDate();
-updateAllText();
-updateUI();
-
-tg.ready();
+    updateAllText();
+    updateUI();
+    
+    // Старт дня
+    document.getElementById('start-day-btn').addEventListener('click', () => {
+        if (!canStartNewDay()) {
+            const remaining = getTimeRemaining();
+            tg.showAlert(t('waitHours', remaining.hours, remaining.minutes));
+            return;
+        }
+        
+        if (!canStartByTime()) {
+            tg.showAlert('⏰ Новый день можно начать только с 4 утра!');
+            return;
+        }
+        
+        dayStarted = true;
+        dayStartTime = new Date().getTime().toString();
+        dayCompletedTime = null;
+        currentWorkout = null;
+        saveData();
+        updateUI();
+    });
+    
+    // Завершение дня
+    document.getElementById('complete-day-btn').addEventListener('click', () => {
+        if (!canCompleteByTime()) {
+            tg.showAlert('⏰ Завершить день можно только до 23:00!');
+            return;
+        }
+        
+        if (isDayExpired()) {
+            tg.showAlert(t('dayExpiredMsg'));
+            return;
+        }
+        
+        let totalKm = 0;
+        currentWorkout.steps.forEach(step => {
+            if (step.completed) totalKm += step.distance || 0;
+        });
+        
+        runningHistory.push({
+            day: currentDay,
+            distance: totalKm,
+            date: new Date().toISOString(),
+            workout: currentWorkout.name
+        });
+        
+        document.getElementById('final-distance').textContent = totalKm.toFixed(1);
+        
+        dayCompletedTime = new Date().getTime().toString();
+        dayStarted = false;
+        dayStartTime = null;
+        currentDay++;
+        
+        saveData();
+        
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('marathon-screen').style.display = 'none';
+        document.getElementById('congrats').style.display = 'block';
+        
+        tg.showAlert(t('completedMessage', currentDay - 1, totalKm.toFixed(1)));
+    });
+    
+    // Продолжить
+    document.getElementById('continue-btn').addEventListener('click', () => {
+        document.getElementById('congrats').style.display = 'none';
+        updateUI();
+    });
+    
+    // Меню
+    document.getElementById('menu-btn').addEventListener('click', () => {
+        const menu = document.getElementById('menu-dropdown');
+        const btn = document.getElementById('menu-btn');
+        if (menu.style.display === 'none') {
+            menu.style.display = 'block';
+            btn.classList.add('active');
+        } else {
+            menu.style.display = 'none';
+            btn.classList.remove('active');
+        }
+    });
+    
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('menu-dropdown');
+        const btn = document.getElementById('menu-btn');
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+            menu.style.display = 'none';
+            btn.classList.remove('active');
+        }
+    });
+    
+    // Сброс
+    document.getElementById('reset-marathon').addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm(t('confirmReset'))) {
+            currentDay = 1;
+            dayStarted = false;
+            dayStartTime = null;
+            dayCompletedTime = null;
+            currentWorkout = null;
+            runningHistory = [];
+            saveData();
+            updateUI();
+            document.getElementById('menu-dropdown').style.display = 'none';
+            document.getElementById('menu-btn').classList.remove('active');
+        }
+    });
+    
+    // Статистика
+    document.getElementById('stats').addEventListener('click', (e) => {
+        e.preventDefault();
+        const totalKm = runningHistory.reduce((sum, r) => sum + r.distance, 0);
+        const avgKm = runningHistory.length > 0 ? (totalKm / runningHistory.length).toFixed(1) : 0;
+        tg.showAlert(t('statsMessage', currentDay - 1, totalKm.toFixed(1), avgKm));
+        document.getElementById('menu-dropdown').style.display = 'none';
+        document.getElementById('menu-btn').classList.remove('active');
+    });
+    
+    // Поддержка
+    document.getElementById('support').addEventListener('click', (e) => {
+        e.preventDefault();
+        tg.showAlert('💬 Поддержка: @frontendchikk');
+        document.getElementById('menu-dropdown').style.display = 'none';
+        document.getElementById('menu-btn').classList.remove('active');
+    });
+    
+    document.getElementById('telegram-support').addEventListener('click', (e) => {
+        e.preventDefault();
+        tg.openTelegramLink('https://t.me/frontendchikk');
+        document.getElementById('menu-dropdown').style.display = 'none';
+        document.getElementById('menu-btn').classList.remove('active');
+    });
+    
+    // Интервал
+    setInterval(() => {
+        if (dayStarted) {
+            updateProgress();
+            updateDeadlineInfo();
+        } else {
+            updateTimeInfo();
+        }
+        updateDate();
+    }, 60000);
+    
+    tg.ready();
+});
 
 // Глобальные функции
 window.setTheme = setTheme;
