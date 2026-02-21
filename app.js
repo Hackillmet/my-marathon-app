@@ -15,6 +15,7 @@ const STORAGE_KEYS = {
     WORKOUT_DIFFICULTY: `run_difficulty_${userId}`,
     TOTAL_DISTANCE: `run_total_${userId}`,
     HISTORY: `run_history_${userId}`,
+    DIARY_ENTRIES: `diary_entries_${userId}`,
     THEME: `theme_${userId}`,
     LANGUAGE: `language_${userId}`
 };
@@ -104,9 +105,9 @@ const translations = {
         dayExpiredMsg: "⏰ Время вышло! Новый день с 4 утра.",
         completedMessage: (day, km) => `🎉 День ${day} завершен!\nПробежал(а): ${km} км`,
         
+        // Меню
         marathon: "🏃 МАРАФОН",
         resetMarathon: "🔄 Сбросить марафон",
-        stats: "📊 Моя статистика",
         help: "🆘 ПОМОЩЬ",
         support: "💬 Поддержка",
         contact: "Связаться:",
@@ -114,8 +115,22 @@ const translations = {
         author: "👤 Автор:",
         
         confirmReset: "Сбросить весь марафон? Весь прогресс будет потерян.",
-        statsMessage: (day, totalKm, avgKm) => 
-            `📊 Статистика:\nДень: ${day}\nВсего км: ${totalKm}\nСреднее: ${avgKm} км`
+        
+        // Дневник
+        newEntry: "Новая запись",
+        save: "Сохранить",
+        cancel: "Отмена",
+        noEntries: "📝 Пока нет записей",
+        entryPlaceholder: "Как прошла тренировка?",
+        
+        // Настройки
+        themeTitle: "ТЕМА",
+        dark: "🌑 Темная",
+        light: "☀️ Светлая",
+        languageTitle: "ЯЗЫК",
+        aboutTitle: "О ПРИЛОЖЕНИИ",
+        version: "Версия:",
+        authorLabel: "Автор:"
     },
     en: {
         startMessage: "Ready for workout?",
@@ -131,9 +146,9 @@ const translations = {
         dayExpiredMsg: "⏰ Time is up! New day at 4 AM.",
         completedMessage: (day, km) => `🎉 Day ${day} completed!\nRan: ${km} km`,
         
+        // Menu
         marathon: "🏃 MARATHON",
         resetMarathon: "🔄 Reset Marathon",
-        stats: "📊 My Stats",
         help: "🆘 HELP",
         support: "💬 Support",
         contact: "Contact:",
@@ -141,8 +156,22 @@ const translations = {
         author: "👤 Author:",
         
         confirmReset: "Reset entire marathon? All progress will be lost.",
-        statsMessage: (day, totalKm, avgKm) => 
-            `📊 Statistics:\nDay: ${day}\nTotal km: ${totalKm}\nAverage: ${avgKm} km`
+        
+        // Diary
+        newEntry: "New entry",
+        save: "Save",
+        cancel: "Cancel",
+        noEntries: "📝 No entries yet",
+        entryPlaceholder: "How was your workout?",
+        
+        // Settings
+        themeTitle: "THEME",
+        dark: "🌑 Dark",
+        light: "☀️ Light",
+        languageTitle: "LANGUAGE",
+        aboutTitle: "ABOUT",
+        version: "Version:",
+        authorLabel: "Author:"
     }
 };
 
@@ -155,6 +184,8 @@ let currentWorkout = null;
 let currentLanguage = 'ru';
 let currentTheme = 'dark';
 let runningHistory = [];
+let diaryEntries = [];
+let currentSlide = 0;
 
 // Функция перевода
 function t(key, ...args) {
@@ -214,6 +245,7 @@ function loadData() {
     dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
     dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
     runningHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.HISTORY)) || [];
+    diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) || [];
     
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
     if (savedTheme) setTheme(savedTheme);
@@ -242,6 +274,7 @@ function saveData() {
     localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime);
     localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime);
     localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(runningHistory));
+    localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
     localStorage.setItem(STORAGE_KEYS.THEME, currentTheme);
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, currentLanguage);
     
@@ -257,22 +290,53 @@ function saveData() {
 function setTheme(theme) {
     currentTheme = theme;
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem(STORAGE_KEYS.THEME, theme);
+    
+    document.getElementById('theme-dark')?.classList.toggle('active', theme === 'dark');
+    document.getElementById('theme-light')?.classList.toggle('active', theme === 'light');
 }
 
 function setLanguage(lang) {
     currentLanguage = lang;
+    localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
+    
+    document.getElementById('lang-ru')?.classList.toggle('active', lang === 'ru');
+    document.getElementById('lang-en')?.classList.toggle('active', lang === 'en');
+    
     updateAllText();
+    updateStats();
 }
 
-// ========== ОТРИСОВКА ==========
-function updateUI() {
-    console.log('updateUI called', { dayStarted, currentDay });
+// ========== НАВИГАЦИЯ ==========
+function switchPage(pageIndex) {
+    const slides = document.querySelectorAll('.slide');
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const container = document.getElementById('slidesContainer');
     
+    if (pageIndex < 0 || pageIndex >= slides.length) return;
+    
+    container.scrollTo({
+        left: pageIndex * container.clientWidth,
+        behavior: 'smooth'
+    });
+    
+    navButtons.forEach((btn, index) => {
+        btn.classList.toggle('active', index === pageIndex);
+    });
+    
+    currentSlide = pageIndex;
+    
+    // Обновляем контент при переключении
+    if (pageIndex === 1) updateStats();
+    if (pageIndex === 2) renderDiary();
+}
+
+// ========== БЕГ (СЛАЙД 1) ==========
+function updateUI() {
     document.getElementById('start-day-number').textContent = currentDay;
     document.getElementById('current-day').textContent = currentDay;
     
     if (!dayStarted) {
-        // Показываем стартовый экран
         document.getElementById('start-screen').style.display = 'block';
         document.getElementById('marathon-screen').style.display = 'none';
         document.getElementById('congrats').style.display = 'none';
@@ -298,8 +362,6 @@ function updateUI() {
         updateTimeInfo();
         
     } else {
-        // Показываем экран тренировки
-        console.log('Showing marathon screen');
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('marathon-screen').style.display = 'block';
         document.getElementById('congrats').style.display = 'none';
@@ -434,6 +496,92 @@ function updateDeadlineInfo() {
     }
 }
 
+// ========== СТАТИСТИКА (СЛАЙД 2) ==========
+function updateStats() {
+    const totalWorkouts = runningHistory.length;
+    const totalDistance = runningHistory.reduce((sum, run) => sum + run.distance, 0);
+    const avgDistance = totalWorkouts > 0 ? (totalDistance / totalWorkouts).toFixed(1) : 0;
+    const bestDistance = runningHistory.length > 0 
+        ? Math.max(...runningHistory.map(r => r.distance)) 
+        : 0;
+    
+    document.getElementById('total-workouts').textContent = totalWorkouts;
+    document.getElementById('total-distance').textContent = totalDistance.toFixed(1);
+    document.getElementById('avg-distance').textContent = avgDistance;
+    document.getElementById('best-distance').textContent = bestDistance.toFixed(1);
+    
+    const historyList = document.getElementById('history-list');
+    if (historyList) {
+        historyList.innerHTML = '';
+        
+        if (runningHistory.length === 0) {
+            historyList.innerHTML = '<div class="empty-history">Пока нет тренировок</div>';
+        } else {
+            const recent = runningHistory.slice(-10).reverse();
+            recent.forEach(run => {
+                const date = new Date(run.date);
+                const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
+                    day: 'numeric',
+                    month: 'short'
+                });
+                
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <span class="history-date">${formattedDate}</span>
+                    <span class="history-workout">${run.workout || 'Тренировка'}</span>
+                    <span class="history-stats">${run.distance} км</span>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+    }
+}
+
+// ========== ДНЕВНИК (СЛАЙД 3) ==========
+function renderDiary() {
+    const entriesList = document.getElementById('entries-list');
+    if (!entriesList) return;
+    
+    entriesList.innerHTML = '';
+    
+    if (diaryEntries.length === 0) {
+        entriesList.innerHTML = `<div class="empty-entries">${t('noEntries')}</div>`;
+        return;
+    }
+    
+    [...diaryEntries].reverse().forEach(entry => {
+        const entryDiv = document.createElement('div');
+        entryDiv.className = 'entry-item';
+        
+        const date = new Date(entry.date);
+        const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        
+        entryDiv.innerHTML = `
+            <div class="entry-header">
+                <span class="entry-date">${formattedDate}</span>
+                <button class="entry-delete" data-id="${entry.id}">✕</button>
+            </div>
+            <div class="entry-content">${entry.text}</div>
+        `;
+        entriesList.appendChild(entryDiv);
+    });
+    
+    document.querySelectorAll('.entry-delete').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const id = parseInt(this.dataset.id);
+            diaryEntries = diaryEntries.filter(e => e.id !== id);
+            saveData();
+            renderDiary();
+        });
+    });
+}
+
+// ========== ОБНОВЛЕНИЕ ТЕКСТА ==========
 function updateAllText() {
     document.getElementById('start-message').textContent = t('startMessage');
     
@@ -443,7 +591,6 @@ function updateAllText() {
     if (menuTitles[2]) menuTitles[2].textContent = t('contacts');
     
     document.getElementById('reset-marathon').innerHTML = t('resetMarathon');
-    document.getElementById('stats').innerHTML = t('stats');
     document.getElementById('support').innerHTML = t('support');
     document.getElementById('telegram-support').innerHTML = `📱 ${t('contact')} @frontendchikk`;
     
@@ -451,6 +598,30 @@ function updateAllText() {
     if (contactItem) {
         contactItem.innerHTML = `<span>${t('author')}</span><span class="contact-highlight">@frontendchikk</span>`;
     }
+    
+    // Настройки
+    const settingsGroups = document.querySelectorAll('.settings-group h3');
+    if (settingsGroups[0]) settingsGroups[0].textContent = t('themeTitle');
+    if (settingsGroups[1]) settingsGroups[1].textContent = t('languageTitle');
+    if (settingsGroups[2]) settingsGroups[2].textContent = t('aboutTitle');
+    
+    document.getElementById('theme-dark').innerHTML = '<span class="theme-preview dark-preview"></span><span>' + t('dark') + '</span>';
+    document.getElementById('theme-light').innerHTML = '<span class="theme-preview light-preview"></span><span>' + t('light') + '</span>';
+    
+    const aboutInfo = document.querySelector('.about-info');
+    if (aboutInfo) {
+        aboutInfo.innerHTML = `
+            <p>${t('version')} 2.0.0</p>
+            <p>${t('authorLabel')} @frontendchikk</p>
+            <p>Беговой марафон - тренировки каждый день</p>
+        `;
+    }
+    
+    // Дневник
+    document.getElementById('add-entry-btn').innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
+    document.getElementById('save-entry-btn').textContent = t('save');
+    document.getElementById('cancel-entry-btn').textContent = t('cancel');
+    document.getElementById('entry-text').placeholder = t('entryPlaceholder');
     
     updateUI();
 }
@@ -463,17 +634,15 @@ function updateDate() {
 
 // ========== ОБРАБОТЧИКИ ==========
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded');
     loadData();
     setTheme(currentTheme);
     updateDate();
     updateAllText();
-    updateUI();
+    updateStats();
+    renderDiary();
     
     // Старт дня
     document.getElementById('start-day-btn').addEventListener('click', () => {
-        console.log('Start day clicked');
-        
         if (!canStartNewDay()) {
             const remaining = getTimeRemaining();
             tg.showAlert(t('waitHours', remaining.hours, remaining.minutes));
@@ -485,13 +654,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Запускаем день
         dayStarted = true;
         dayStartTime = new Date().getTime().toString();
         dayCompletedTime = null;
         currentWorkout = null;
-        
-        console.log('Day started, saving...');
         saveData();
         updateUI();
     });
@@ -540,6 +706,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('continue-btn').addEventListener('click', () => {
         document.getElementById('congrats').style.display = 'none';
         updateUI();
+        updateStats();
     });
     
     // Меню
@@ -564,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Сброс
+    // Сброс марафона
     document.getElementById('reset-marathon').addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm(t('confirmReset'))) {
@@ -574,21 +741,14 @@ document.addEventListener('DOMContentLoaded', () => {
             dayCompletedTime = null;
             currentWorkout = null;
             runningHistory = [];
+            diaryEntries = [];
             saveData();
             updateUI();
+            updateStats();
+            renderDiary();
             document.getElementById('menu-dropdown').style.display = 'none';
             document.getElementById('menu-btn').classList.remove('active');
         }
-    });
-    
-    // Статистика
-    document.getElementById('stats').addEventListener('click', (e) => {
-        e.preventDefault();
-        const totalKm = runningHistory.reduce((sum, r) => sum + r.distance, 0);
-        const avgKm = runningHistory.length > 0 ? (totalKm / runningHistory.length).toFixed(1) : 0;
-        tg.showAlert(t('statsMessage', currentDay - 1, totalKm.toFixed(1), avgKm));
-        document.getElementById('menu-dropdown').style.display = 'none';
-        document.getElementById('menu-btn').classList.remove('active');
     });
     
     // Поддержка
@@ -606,6 +766,52 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('menu-btn').classList.remove('active');
     });
     
+    // Дневник
+    document.getElementById('add-entry-btn').addEventListener('click', () => {
+        document.getElementById('add-entry-form').style.display = 'block';
+        document.getElementById('add-entry-btn').style.display = 'none';
+    });
+    
+    document.getElementById('save-entry-btn').addEventListener('click', () => {
+        const text = document.getElementById('entry-text').value.trim();
+        if (text) {
+            diaryEntries.push({
+                id: Date.now(),
+                text: text,
+                date: new Date().toISOString()
+            });
+            saveData();
+            renderDiary();
+            
+            document.getElementById('entry-text').value = '';
+            document.getElementById('add-entry-form').style.display = 'none';
+            document.getElementById('add-entry-btn').style.display = 'flex';
+        }
+    });
+    
+    document.getElementById('cancel-entry-btn').addEventListener('click', () => {
+        document.getElementById('entry-text').value = '';
+        document.getElementById('add-entry-form').style.display = 'none';
+        document.getElementById('add-entry-btn').style.display = 'flex';
+    });
+    
+    // Следим за скроллом
+    document.getElementById('slidesContainer').addEventListener('scroll', (e) => {
+        const container = e.target;
+        const pageIndex = Math.round(container.scrollLeft / container.clientWidth);
+        const navButtons = document.querySelectorAll('.nav-btn');
+        
+        if (pageIndex !== currentSlide && pageIndex >= 0 && pageIndex < navButtons.length) {
+            currentSlide = pageIndex;
+            navButtons.forEach((btn, index) => {
+                btn.classList.toggle('active', index === pageIndex);
+            });
+            
+            if (pageIndex === 1) updateStats();
+            if (pageIndex === 2) renderDiary();
+        }
+    });
+    
     // Интервал
     setInterval(() => {
         if (dayStarted) {
@@ -621,5 +827,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Глобальные функции
+window.switchPage = switchPage;
 window.setTheme = setTheme;
 window.setLanguage = setLanguage;
