@@ -8,9 +8,9 @@ const STORAGE_KEYS = {
     DAY_START_TIME: 'day_start_time',
     DAY_COMPLETED_TIME: 'day_completed_time',
     COMPLETED_STEPS: 'completed_steps',
-    WORKOUT_HISTORY: 'workout_history',
-    CUSTOM_WORKOUTS: 'custom_workouts',
     ADDITIONAL_TASKS: 'additional_tasks',
+    ADDITIONAL_COMPLETED: 'additional_completed',
+    WORKOUT_HISTORY: 'workout_history',
     TOTAL_DISTANCE: 'total_distance',
     TOTAL_WORKOUTS: 'total_workouts',
     DIARY_ENTRIES: 'diary_entries',
@@ -96,10 +96,12 @@ let dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
 let dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
 let completedSteps = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_STEPS)) || [];
 
+// Дополнительные задания
+let additionalTasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADDITIONAL_TASKS)) || [];
+let additionalCompleted = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADDITIONAL_COMPLETED)) || [];
+
 // Статистика
 let workoutHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_HISTORY)) || [];
-let customWorkouts = JSON.parse(localStorage.getItem(STORAGE_KEYS.CUSTOM_WORKOUTS)) || [];
-let additionalTasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADDITIONAL_TASKS)) || [];
 let totalDistance = parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE)) || 0;
 let totalWorkouts = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_WORKOUTS)) || 0;
 
@@ -164,9 +166,9 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime || '');
     localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime || '');
     localStorage.setItem(STORAGE_KEYS.COMPLETED_STEPS, JSON.stringify(completedSteps));
-    localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
-    localStorage.setItem(STORAGE_KEYS.CUSTOM_WORKOUTS, JSON.stringify(customWorkouts));
     localStorage.setItem(STORAGE_KEYS.ADDITIONAL_TASKS, JSON.stringify(additionalTasks));
+    localStorage.setItem(STORAGE_KEYS.ADDITIONAL_COMPLETED, JSON.stringify(additionalCompleted));
+    localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
     localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
     localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
 }
@@ -274,35 +276,21 @@ function createCustomWorkout() {
     const goalInput = document.getElementById('goal-distance');
     const goal = parseFloat(goalInput.value);
     
-    // Создаем новую тренировку
-    const newWorkout = {
-        id: Date.now(),
-        day: currentDay,
-        name: `🎯 Моя тренировка`,
-        steps: currentCustomTasks.map((task, index) => ({
-            id: index + 1,
+    // Добавляем задания в дополнительные
+    currentCustomTasks.forEach(task => {
+        additionalTasks.push({
+            id: Date.now() + Math.random(),
             text: task.text,
-            completed: false,
-            distance: task.distance
-        })),
-        totalDistance: goal,
-        createdAt: new Date().toISOString()
-    };
+            distance: task.distance || 0
+        });
+    });
     
-    // Добавляем в список созданных тренировок
-    customWorkouts.push(newWorkout);
-    
-    // Добавляем задания как дополнительные на главный экран
-    additionalTasks = additionalTasks.concat(currentCustomTasks.map(task => ({
-        id: Date.now() + Math.random(),
-        text: task.text,
-        completed: false,
-        distance: task.distance
-    })));
+    // Добавляем соответствующие completed
+    additionalCompleted = new Array(additionalTasks.length).fill(false);
     
     tg.showPopup({
-        title: '✅ Тренировка создана!',
-        message: `Задания добавлены на главный экран. Всего добавлено: ${currentCustomTasks.length}`,
+        title: '✅ Задания добавлены!',
+        message: `Добавлено заданий: ${currentCustomTasks.length}. Они появились в разделе "Добавленные" на главном экране.`,
         buttons: [{ type: 'close' }]
     });
     
@@ -316,38 +304,6 @@ function createCustomWorkout() {
     
     saveState();
     renderCustomCreator();
-    
-    // Если сейчас на главном экране, обновляем его
-    if (currentSlide === 0) {
-        renderWorkout();
-    }
-}
-
-// ========== ПОЛУЧЕНИЕ ТРЕНИРОВКИ ДНЯ ==========
-function getTodaysWorkout() {
-    const baseWorkout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
-    
-    // Если есть дополнительные задания, добавляем их к основной тренировке
-    if (additionalTasks.length > 0) {
-        const allSteps = [
-            ...baseWorkout.steps,
-            ...additionalTasks.map((task, index) => ({
-                id: 100 + index,
-                text: task.text,
-                distance: task.distance || 0,
-                completed: task.completed || false
-            }))
-        ];
-        
-        return {
-            ...baseWorkout,
-            name: baseWorkout.name + " + доп. задания",
-            steps: allSteps,
-            totalDistance: baseWorkout.totalDistance + additionalTasks.reduce((sum, t) => sum + (t.distance || 0), 0)
-        };
-    }
-    
-    return baseWorkout;
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
@@ -367,6 +323,7 @@ function updateUI() {
             dayStartTime = null;
             dayCompletedTime = now.toString();
             completedSteps = [];
+            additionalCompleted = [];
             saveState();
             tg.showAlert('⏰ Время тренировки истекло! Новый день начнется через 24 часа.');
         }
@@ -423,7 +380,7 @@ function updateUI() {
 }
 
 function renderWorkout() {
-    const workout = getTodaysWorkout();
+    const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
     
     const workoutName = document.getElementById('workout-name');
     const workoutDifficulty = document.getElementById('workout-difficulty');
@@ -442,26 +399,63 @@ function renderWorkout() {
     
     stepsContainer.innerHTML = '';
     
-    // Инициализируем completedSteps, если нужно
-    if (completedSteps.length !== workout.steps.length) {
-        completedSteps = new Array(workout.steps.length).fill(false);
+    // Основные шаги
+    const mainSteps = workout.steps.map(step => ({
+        ...step,
+        isMain: true
+    }));
+    
+    // Дополнительные шаги
+    const extraSteps = additionalTasks.map((task, index) => ({
+        id: 1000 + index,
+        text: task.text,
+        distance: task.distance || 0,
+        isMain: false,
+        completed: additionalCompleted[index] || false
+    }));
+    
+    const allSteps = [...mainSteps, ...extraSteps];
+    
+    // Обновляем completedSteps для основных
+    if (completedSteps.length !== mainSteps.length) {
+        completedSteps = new Array(mainSteps.length).fill(false);
     }
     
-    workout.steps.forEach((step, index) => {
+    // Рендерим основные шаги
+    allSteps.forEach((step, index) => {
+        const isCompleted = step.isMain ? completedSteps[index] : (additionalCompleted[index - mainSteps.length] || false);
+        
         const stepDiv = document.createElement('div');
-        stepDiv.className = `workout-step ${completedSteps[index] ? 'step-completed' : ''}`;
+        stepDiv.className = `workout-step ${isCompleted ? 'step-completed' : ''} ${!step.isMain ? 'extra-step' : ''}`;
         stepDiv.innerHTML = `
-            <input type="checkbox" class="workout-checkbox" data-index="${index}" ${completedSteps[index] ? 'checked' : ''}>
+            <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="${step.isMain ? 'main' : 'extra'}" ${isCompleted ? 'checked' : ''}>
             <span class="step-text">${step.text}</span>
             ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
         `;
         stepsContainer.appendChild(stepDiv);
     });
     
+    // Если есть дополнительные, показываем раздел
+    if (extraSteps.length > 0) {
+        const divider = document.createElement('div');
+        divider.className = 'extra-divider';
+        divider.innerHTML = '<span>➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ</span>';
+        stepsContainer.insertBefore(divider, stepsContainer.children[mainSteps.length]);
+    }
+    
     document.querySelectorAll('.workout-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
-            completedSteps[index] = this.checked;
+            const type = this.dataset.type;
+            const mainStepsCount = mainSteps.length;
+            
+            if (type === 'main') {
+                completedSteps[index] = this.checked;
+            } else {
+                const extraIndex = index - mainStepsCount;
+                additionalCompleted[extraIndex] = this.checked;
+            }
+            
             saveState();
             updateProgress();
             
@@ -478,9 +472,16 @@ function renderWorkout() {
 }
 
 function updateProgress() {
-    const completed = completedSteps.filter(v => v).length;
-    const total = completedSteps.length;
-    const progress = total > 0 ? (completed / total) * 100 : 0;
+    const mainCompleted = completedSteps.filter(v => v).length;
+    const mainTotal = completedSteps.length;
+    
+    const extraCompleted = additionalCompleted.filter(v => v).length;
+    const extraTotal = additionalCompleted.length;
+    
+    const totalCompleted = mainCompleted + extraCompleted;
+    const total = mainTotal + extraTotal;
+    
+    const progress = total > 0 ? (totalCompleted / total) * 100 : 0;
     
     const workoutFill = document.getElementById('workout-fill');
     const workoutPercent = document.getElementById('workout-percent');
@@ -489,7 +490,7 @@ function updateProgress() {
     if (workoutFill) workoutFill.style.width = progress + '%';
     if (workoutPercent) workoutPercent.textContent = Math.round(progress) + '%';
     
-    const allCompleted = completed === total;
+    const allCompleted = totalCompleted === total;
     
     if (allCompleted && canCompleteDay()) {
         if (completeBtn) completeBtn.disabled = false;
@@ -647,8 +648,9 @@ document.addEventListener('DOMContentLoaded', function() {
             dayStartTime = Date.now().toString();
             dayCompletedTime = null;
             
-            const workout = getTodaysWorkout();
+            const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
             completedSteps = new Array(workout.steps.length).fill(false);
+            additionalCompleted = new Array(additionalTasks.length).fill(false);
             
             saveState();
             updateUI();
@@ -664,12 +666,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            if (!completedSteps.every(v => v)) {
-                tg.showAlert('⚠️ Сначала выполни все шаги тренировки!');
-                return;
-            }
+            const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
             
-            const workout = getTodaysWorkout();
+            // Считаем дистанцию (основные + дополнительные)
             let actualDistance = 0;
             
             workout.steps.forEach((step, index) => {
@@ -678,12 +677,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             
+            additionalTasks.forEach((task, index) => {
+                if (additionalCompleted[index]) {
+                    actualDistance += task.distance || 0;
+                }
+            });
+            
             // Сохраняем в историю
             workoutHistory.push({
                 day: currentDay,
                 distance: actualDistance,
                 date: new Date().toISOString(),
-                name: workout.name
+                name: workout.name + (additionalTasks.length > 0 ? ' + доп.' : '')
             });
             
             totalDistance += actualDistance;
@@ -691,6 +696,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Очищаем дополнительные задания после завершения дня
             additionalTasks = [];
+            additionalCompleted = [];
             
             const finalDistance = document.getElementById('final-distance');
             if (finalDistance) finalDistance.textContent = actualDistance.toFixed(1);
@@ -797,9 +803,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 dayStartTime = null;
                 dayCompletedTime = null;
                 completedSteps = [];
-                workoutHistory = [];
-                customWorkouts = [];
                 additionalTasks = [];
+                additionalCompleted = [];
+                workoutHistory = [];
                 totalDistance = 0;
                 totalWorkouts = 0;
                 diaryEntries = [];
@@ -857,7 +863,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (faqBtn) {
         faqBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            tg.showAlert('❓ FAQ:\n\n• Начать день можно с 4 утра\n• Завершить день до 23:00\n• После завершения - 24ч таймер\n• Есть готовые тренировки на 30 дней\n• Можно создавать свои задания\n• Свои задания добавляются к основной тренировке\n• Статистика сохраняется');
+            tg.showAlert('❓ FAQ:\n\n• Начать день можно с 4 утра\n• Завершить день до 23:00\n• После завершения - 24ч таймер\n• Есть готовые тренировки на 30 дней\n• Можно создавать свои задания\n• Свои задания появляются в разделе "Добавленные"\n• Статистика сохраняется');
             const menu = document.getElementById('menu-dropdown');
             const menuBtn = document.getElementById('menu-btn');
             if (menu) menu.style.display = 'none';
