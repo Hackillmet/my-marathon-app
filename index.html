@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Марафон Баланса</title>
+    <title>Спорт Дисциплина</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
@@ -12,8 +12,8 @@
         <!-- Шапка -->
         <div class="site-header">
             <div class="logo">
-                <span class="logo-white">FRONTEND</span>
-                <span class="logo-blue">CHIK</span>
+                <span class="logo-white">SPORT</span>
+                <span class="logo-blue">DISCIPLINE</span>
             </div>
             <button class="menu-btn" id="menu-btn">
                 <span></span>
@@ -25,10 +25,9 @@
         <!-- Меню -->
         <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
             <div class="menu-section">
-                <div class="menu-title">📋 МАРАФОН</div>
-                <a href="#" class="menu-item" id="reset-day">🔄 Сбросить день</a>
-                <a href="#" class="menu-item" id="new-marathon">✨ Новый марафон</a>
-                <a href="#" class="menu-item" id="stats">📊 Моя статистика</a>
+                <div class="menu-title">📊 СТАТИСТИКА</div>
+                <a href="#" class="menu-item" id="reset-stats">🔄 Сбросить статистику</a>
+                <a href="#" class="menu-item" id="export-data">📤 Экспорт данных</a>
             </div>
             
             <div class="menu-section">
@@ -58,144 +57,60 @@
 
         <!-- Контейнер для слайдов -->
         <div class="slides-container" id="slidesContainer">
-            <!-- СЛАЙД 1: Главный экран (Баланс) -->
+            <!-- СЛАЙД 1: Статистика (НОВЫЙ) -->
             <div class="slide active" id="slide1">
-                <!-- Стартовый экран -->
-                <div id="start-screen" class="start-screen">
-                    <div class="start-content">
-                        <h2>День <span id="start-day-number">1</span></h2>
-                        <p id="start-message">Готов начать свой путь к балансу?</p>
-                        <button class="start-day-btn" id="start-day-btn">
-                            🚀 Начать день
-                        </button>
-                        <div class="time-info" id="time-info"></div>
-                    </div>
-                </div>
-
-                <!-- Экран марафона -->
-                <div id="marathon-screen" style="display: none;">
-                    <!-- Баланс -->
-                    <div class="balance-section">
-                        <h3 class="balance-title">⚖️ БАЛАНС СИСТЕМЫ</h3>
-                        <div class="balance-bars">
-                            <div class="balance-item">
-                                <div class="balance-label">
-                                    <span class="balance-icon">🧠</span>
-                                    <span>Разум</span>
-                                    <span class="balance-percent" id="mind-percent">0%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill mind-fill" id="mind-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="balance-item">
-                                <div class="balance-label">
-                                    <span class="balance-icon">💚</span>
-                                    <span>Дух</span>
-                                    <span class="balance-percent" id="spirit-percent">0%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill spirit-fill" id="spirit-fill" style="width: 0%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Привычки -->
-                    <div class="habits-section">
-                        <div class="section-header">
-                            <h3>🌱 ПРИВЫЧКИ</h3>
-                            <button class="add-btn" id="add-habit-btn">+</button>
-                        </div>
-                        
-                        <div class="add-input" id="add-habit-input" style="display: none;">
-                            <input type="text" id="habit-text" placeholder="➕ Добавить свою привычку...">
-                            <button class="btn-small" id="save-habit-btn">Добавить</button>
-                        </div>
-                        
-                        <div class="habits-list" id="habits-list"></div>
-                        <div class="habit-note">
-                            <span>📌 Стандартные (4 шт)</span>
-                            <span>➕ Добавленные</span>
-                        </div>
-                    </div>
-
-                    <!-- Задачи -->
-                    <div class="tasks-section">
-                        <div class="section-header">
-                            <h3>📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
-                            <button class="add-btn" id="add-task-btn">+</button>
-                        </div>
-                        
-                        <div class="add-input" id="add-task-input" style="display: none;">
-                            <input type="text" id="task-text" placeholder="➕ Добавить свою задачу...">
-                            <button class="btn-small" id="save-task-btn">Добавить</button>
-                        </div>
-                        
-                        <div class="tasks-list" id="tasks-list"></div>
-                        <div class="task-note">
-                            <span>📌 Стандартные (4 шт)</span>
-                            <span>➕ Добавленные</span>
-                        </div>
-                    </div>
-
-                    <!-- Кнопка завершения -->
-                    <button class="complete-day-btn" id="complete-day-btn" disabled>
-                        ✅ Завершить день
-                    </button>
-                    <div class="deadline-info" id="deadline-info"></div>
-                </div>
-            </div>
-
-            <!-- СЛАЙД 2: Настройки -->
-            <div class="slide" id="slide2">
-                <div class="settings-section">
-                    <h2 class="settings-title">⚙️ НАСТРОЙКИ</h2>
+                <div class="stats-section">
+                    <h2 class="stats-title">📊 ОБЩАЯ СТАТИСТИКА</h2>
                     
-                    <!-- Тема -->
-                    <div class="settings-group">
-                        <h3>🎨 Тема оформления</h3>
-                        <div class="theme-buttons">
-                            <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')">
-                                <span class="theme-preview dark-preview"></span>
-                                <span>🌑 Темная</span>
-                            </button>
-                            <button class="theme-btn" id="theme-light" onclick="setTheme('light')">
-                                <span class="theme-preview light-preview"></span>
-                                <span>☀️ Светлая</span>
-                            </button>
+                    <!-- Основные показатели -->
+                    <div class="main-stats">
+                        <div class="stat-card large">
+                            <span class="stat-value" id="total-workouts">0</span>
+                            <span class="stat-label">Всего тренировок</span>
+                        </div>
+                        <div class="stat-card large">
+                            <span class="stat-value" id="total-distance">0</span>
+                            <span class="stat-label">Всего км</span>
                         </div>
                     </div>
 
-                    <!-- Язык -->
-                    <div class="settings-group">
-                        <h3>🌍 Язык</h3>
-                        <div class="language-buttons">
-                            <button class="lang-btn" id="lang-ru" onclick="setLanguage('ru')">
-                                🇷🇺 Русский
-                            </button>
-                            <button class="lang-btn" id="lang-en" onclick="setLanguage('en')">
-                                🇬🇧 English
-                            </button>
+                    <!-- Дополнительная статистика -->
+                    <div class="secondary-stats">
+                        <div class="stat-card">
+                            <span class="stat-value" id="avg-distance">0</span>
+                            <span class="stat-label">Средняя км</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="best-distance">0</span>
+                            <span class="stat-label">Лучшая</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="current-streak">0</span>
+                            <span class="stat-label">Дней подряд</span>
                         </div>
                     </div>
 
-                    <!-- Информация -->
-                    <div class="settings-group">
-                        <h3>ℹ️ О приложении</h3>
-                        <div class="about-info">
-                            <p>Версия: 3.0.0</p>
-                            <p>Автор: @frontendchikk</p>
-                            <p>Марафон баланса - развивай разум и дух каждый день</p>
-                            <p>⏰ Режим: 4:00 - 23:00</p>
+                    <!-- Прогресс за неделю -->
+                    <div class="weekly-progress">
+                        <h3>📅 Эта неделя</h3>
+                        <div class="progress-bar">
+                            <div class="progress-fill mind-fill" id="week-progress" style="width: 0%;"></div>
                         </div>
+                        <div class="week-stats">
+                            <span id="week-current">0</span> / <span id="week-goal">20</span> км
+                        </div>
+                    </div>
+
+                    <!-- Последние тренировки (кратко) -->
+                    <div class="recent-workouts">
+                        <h3>⏳ Последние</h3>
+                        <div class="recent-list" id="recent-list"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: Бег (НОВЫЙ) -->
-            <div class="slide" id="slide3">
+            <!-- СЛАЙД 2: Бег -->
+            <div class="slide" id="slide2">
                 <div class="running-section">
                     <h2 class="running-title">🏃 БЕГ</h2>
                     
@@ -227,10 +142,10 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 4: Дневник -->
-            <div class="slide" id="slide4">
+            <!-- СЛАЙД 3: Дневник -->
+            <div class="slide" id="slide3">
                 <div class="diary-section">
-                    <h2 class="diary-title">📔 ДНЕВНИК</h2>
+                    <h2 class="diary-title">📔 ДНЕВНИК ТРЕНИРОВОК</h2>
                     
                     <!-- Кнопка добавления записи -->
                     <button class="add-entry-btn" id="add-entry-btn">
@@ -240,7 +155,7 @@
                     
                     <!-- Форма добавления записи (скрыта) -->
                     <div class="add-entry-form" id="add-entry-form" style="display: none;">
-                        <textarea id="entry-text" placeholder="Что сегодня произошло? Поделись своими мыслями..." rows="4"></textarea>
+                        <textarea id="entry-text" placeholder="Как прошла тренировка? Поделись впечатлениями..." rows="4"></textarea>
                         <div class="form-buttons">
                             <button class="btn-small" id="save-entry-btn">Сохранить</button>
                             <button class="btn-small cancel-btn" id="cancel-entry-btn">Отмена</button>
@@ -251,37 +166,80 @@
                     <div class="entries-list" id="entries-list"></div>
                 </div>
             </div>
+
+            <!-- СЛАЙД 4: Настройки -->
+            <div class="slide" id="slide4">
+                <div class="settings-section">
+                    <h2 class="settings-title">⚙️ НАСТРОЙКИ</h2>
+                    
+                    <!-- Тема -->
+                    <div class="settings-group">
+                        <h3>🎨 Тема оформления</h3>
+                        <div class="theme-buttons">
+                            <button class="theme-btn" id="theme-dark" onclick="setTheme('dark')">
+                                <span class="theme-preview dark-preview"></span>
+                                <span>🌑 Темная</span>
+                            </button>
+                            <button class="theme-btn" id="theme-light" onclick="setTheme('light')">
+                                <span class="theme-preview light-preview"></span>
+                                <span>☀️ Светлая</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Язык -->
+                    <div class="settings-group">
+                        <h3>🌍 Язык</h3>
+                        <div class="language-buttons">
+                            <button class="lang-btn" id="lang-ru" onclick="setLanguage('ru')">
+                                🇷🇺 Русский
+                            </button>
+                            <button class="lang-btn" id="lang-en" onclick="setLanguage('en')">
+                                🇬🇧 English
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Цели -->
+                    <div class="settings-group">
+                        <h3>🎯 Цели</h3>
+                        <div class="goal-setting">
+                            <label>Недельная цель (км)</label>
+                            <input type="number" id="weekly-goal" value="20" min="1" max="100">
+                        </div>
+                    </div>
+
+                    <!-- Информация -->
+                    <div class="settings-group">
+                        <h3>ℹ️ О приложении</h3>
+                        <div class="about-info">
+                            <p>Версия: 2.0.0</p>
+                            <p>Автор: @frontendchikk</p>
+                            <p>Спортивная дисциплина - трекинг тренировок</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- НИЖНЯЯ НАВИГАЦИЯ (4 кнопки) -->
         <div class="bottom-nav">
-            <button class="nav-btn active" id="nav-home" onclick="switchPage(0)">
-                <span class="nav-icon">🏠</span>
-                <span class="nav-text">Главная</span>
+            <button class="nav-btn active" id="nav-stats" onclick="switchPage(0)">
+                <span class="nav-icon">📊</span>
+                <span class="nav-text">Статистика</span>
             </button>
-            <button class="nav-btn" id="nav-settings" onclick="switchPage(1)">
-                <span class="nav-icon">⚙️</span>
-                <span class="nav-text">Настройки</span>
-            </button>
-            <button class="nav-btn" id="nav-run" onclick="switchPage(2)">
+            <button class="nav-btn" id="nav-run" onclick="switchPage(1)">
                 <span class="nav-icon">🏃</span>
                 <span class="nav-text">Бег</span>
             </button>
-            <button class="nav-btn" id="nav-diary" onclick="switchPage(3)">
+            <button class="nav-btn" id="nav-diary" onclick="switchPage(2)">
                 <span class="nav-icon">📔</span>
                 <span class="nav-text">Дневник</span>
             </button>
-        </div>
-
-        <!-- Сообщение о завершении дня -->
-        <div class="congrats" id="congrats" style="display: none;">
-            <h2>🎉 ДЕНЬ ЗАВЕРШЕН!</h2>
-            <p>Твой баланс:</p>
-            <div class="final-balance">
-                <div>🧠 Разум: <span id="final-mind">0</span>%</div>
-                <div>💚 Дух: <span id="final-spirit">0</span>%</div>
-            </div>
-            <button class="start-day-btn" id="continue-btn" style="margin-top: 20px;">🏠 На главную</button>
+            <button class="nav-btn" id="nav-settings" onclick="switchPage(3)">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-text">Настройки</span>
+            </button>
         </div>
     </div>
 
