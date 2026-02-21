@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- Шапка -->
+        <!-- Шапка с меню -->
         <div class="site-header">
             <div class="logo">
                 <span class="logo-white">FRONTEND</span>
@@ -22,11 +22,12 @@
             </button>
         </div>
 
-        <!-- Меню -->
+        <!-- Выпадающее меню -->
         <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
             <div class="menu-section">
                 <div class="menu-title">🏃 МАРАФОН</div>
                 <a href="#" class="menu-item" id="reset-marathon">🔄 Сбросить марафон</a>
+                <a href="#" class="menu-item" id="stats-menu">📊 Статистика</a>
             </div>
             
             <div class="menu-section">
@@ -35,6 +36,7 @@
                 <a href="#" class="menu-item" id="telegram-support">
                     📱 Связаться: @frontendchikk
                 </a>
+                <a href="#" class="menu-item" id="faq">❓ FAQ</a>
             </div>
             
             <div class="menu-section">
@@ -55,9 +57,9 @@
 
         <!-- Контейнер для слайдов -->
         <div class="slides-container" id="slidesContainer">
-            <!-- СЛАЙД 1: БЕГ (тренировка дня) -->
+            <!-- СЛАЙД 1: БЕГ -->
             <div class="slide active" id="slide1">
-                <!-- Стартовый экран (когда день не начат) -->
+                <!-- Стартовый экран -->
                 <div id="start-screen" class="start-screen">
                     <div class="start-content">
                         <h2>Бег <span id="start-day-number">1</span></h2>
@@ -69,7 +71,7 @@
                     </div>
                 </div>
 
-                <!-- Экран тренировки (когда день начат) -->
+                <!-- Экран тренировки -->
                 <div id="marathon-screen" style="display: none;">
                     <div class="balance-section">
                         <h3 class="balance-title">🏃 БЕГ <span id="current-day">1</span></h3>
@@ -87,7 +89,7 @@
                         </div>
                     </div>
 
-                    <div class="workout-card" id="workout-card">
+                    <div class="workout-card">
                         <div class="workout-header">
                             <span class="workout-name" id="workout-name">Легкая пробежка</span>
                             <span class="workout-difficulty" id="workout-difficulty">Легкая</span>
@@ -102,7 +104,7 @@
                     <div class="deadline-info" id="deadline-info"></div>
                 </div>
 
-                <!-- Экран завершения дня -->
+                <!-- Экран завершения -->
                 <div class="congrats" id="congrats" style="display: none;">
                     <h2>🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!</h2>
                     <p>Ты пробежал(а):</p>
