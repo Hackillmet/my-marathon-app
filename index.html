@@ -54,7 +54,7 @@
             <span id="current-date"></span>
         </div>
 
-        <!-- Стартовый экран (как у тебя был) -->
+        <!-- Стартовый экран -->
         <div id="start-screen" class="start-screen">
             <div class="start-content">
                 <h2>Бег <span id="start-day-number">1</span></h2>
@@ -87,15 +87,13 @@
 
             <!-- Тренировка дня -->
             <div class="workout-card" id="workout-card">
-                <!-- Название тренировки -->
                 <div class="workout-header">
                     <span class="workout-name" id="workout-name">Легкая пробежка</span>
                     <span class="workout-difficulty" id="workout-difficulty">Легкая</span>
                 </div>
                 
-                <!-- Шаги тренировки -->
                 <div class="workout-steps" id="workout-steps">
-                    <!-- Загрузятся через JS -->
+                    <!-- Шаги загрузятся через JS -->
                 </div>
             </div>
 
@@ -106,14 +104,14 @@
             <div class="deadline-info" id="deadline-info"></div>
         </div>
 
-        <!-- Экран завершения дня -->
+        <!-- Экран завершения -->
         <div class="congrats" id="congrats" style="display: none;">
             <h2>🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!</h2>
             <p>Ты пробежал(а):</p>
             <div class="final-balance">
                 <div>🏃 <span id="final-distance">0</span> км</div>
             </div>
-            <button class="start-day-btn" id="continue-btn" style="margin-top: 20px;">
+            <button class="start-day-btn" id="continue-btn">
                 🏠 На главную
             </button>
         </div>
