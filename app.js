@@ -83,308 +83,23 @@ const DAILY_WORKOUTS = {
             { id: 4, text: "⚡ Ускорение 10х100 метров", completed: false, distance: 1 }
         ],
         totalDistance: 4
-    },
-    6: {
-        id: 6,
-        name: "🏃‍♂️ День 6: Кросс",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 30 минут по пересеченной", completed: false, distance: 4.5 },
-            { id: 3, text: "🦵 Спец беговые: приставные", completed: false, distance: 0 },
-            { id: 4, text: "⚡ Ускорение 5х300 метров", completed: false, distance: 1.5 }
-        ],
-        totalDistance: 6
-    },
-    7: {
-        id: 7,
-        name: "⚡ День 7: Пирамида",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут", completed: false, distance: 3 },
-            { id: 3, text: "🦵 Спец беговые: бег с высоким", completed: false, distance: 0 },
-            { id: 4, text: "⚡ Пирамида: 200-400-600-400-200", completed: false, distance: 1.8 }
-        ],
-        totalDistance: 4.8
-    },
-    8: {
-        id: 8,
-        name: "🌅 День 8: Техника",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут с ускорениями", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: все виды", completed: false, distance: 0 },
-            { id: 4, text: "⚡ Ускорение 8х100 метров", completed: false, distance: 0.8 }
-        ],
-        totalDistance: 3.3
-    },
-    9: {
-        id: 9,
-        name: "🏔️ День 9: Длинная",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 40 минут", completed: false, distance: 6 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ Ускорение 6х300 метров", completed: false, distance: 1.8 }
-        ],
-        totalDistance: 7.8
-    },
-    10: {
-        id: 10,
-        name: "🔥 День 10: Спринт",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: ускорения", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 12х100 метров с отдыхом", completed: false, distance: 1.2 }
-        ],
-        totalDistance: 3.7
-    },
-    11: {
-        id: 11,
-        name: "🏃‍♂️ День 11: Темповая",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 25 минут в темпе", completed: false, distance: 4 },
-            { id: 3, text: "🦵 Спец беговые: махи", completed: false, distance: 0 },
-            { id: 4, text: "⚡ Ускорение 5х400 метров", completed: false, distance: 2 }
-        ],
-        totalDistance: 6
-    },
-    12: {
-        id: 12,
-        name: "⚡ День 12: Переменная",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут переменный", completed: false, distance: 3 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 4х600 метров", completed: false, distance: 2.4 }
-        ],
-        totalDistance: 5.4
-    },
-    13: {
-        id: 13,
-        name: "🌅 День 13: Расслабление",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 10 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут легкий", completed: false, distance: 2 },
-            { id: 3, text: "🦵 Спец беговые: растяжка", completed: false, distance: 0 },
-            { id: 4, text: "⚡ Ускорение 4х150 метров", completed: false, distance: 0.6 }
-        ],
-        totalDistance: 2.6
-    },
-    14: {
-        id: 14,
-        name: "🏔️ День 14: Холмы",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут в горку", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 10х100 метров в горку", completed: false, distance: 1 }
-        ],
-        totalDistance: 3.5
-    },
-    15: {
-        id: 15,
-        name: "🔥 День 15: Рекорд",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 30 минут", completed: false, distance: 5 },
-            { id: 3, text: "🦵 Спец беговые: все виды", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 8х200 метров быстро", completed: false, distance: 1.6 }
-        ],
-        totalDistance: 6.6
-    },
-    16: {
-        id: 16,
-        name: "🏃‍♂️ День 16: Выносливость",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 35 минут", completed: false, distance: 5 },
-            { id: 3, text: "🦵 Спец беговые: махи", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 5х300 метров", completed: false, distance: 1.5 }
-        ],
-        totalDistance: 6.5
-    },
-    17: {
-        id: 17,
-        name: "⚡ День 17: Скорость",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: семенящий", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 15х100 метров", completed: false, distance: 1.5 }
-        ],
-        totalDistance: 4
-    },
-    18: {
-        id: 18,
-        name: "🌅 День 18: Технический",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2 },
-            { id: 3, text: "🦵 Спец беговые: приставные", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 6х150 метров", completed: false, distance: 0.9 }
-        ],
-        totalDistance: 2.9
-    },
-    19: {
-        id: 19,
-        name: "🏔️ День 19: Сила",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут", completed: false, distance: 3 },
-            { id: 3, text: "🦵 Спец беговые: многоскоки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 8х300 метров", completed: false, distance: 2.4 }
-        ],
-        totalDistance: 5.4
-    },
-    20: {
-        id: 20,
-        name: "🔥 День 20: Финал",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 30 минут", completed: false, distance: 5 },
-            { id: 3, text: "🦵 Спец беговые: все виды", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 10х200 метров", completed: false, distance: 2 }
-        ],
-        totalDistance: 7
-    },
-    21: {
-        id: 21,
-        name: "🏃‍♂️ День 21: Кросс",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 25 минут кросс", completed: false, distance: 3.5 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 4х400 метров", completed: false, distance: 1.6 }
-        ],
-        totalDistance: 5.1
-    },
-    22: {
-        id: 22,
-        name: "⚡ День 22: Интервалы",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: махи", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 10х200 метров", completed: false, distance: 2 }
-        ],
-        totalDistance: 4.5
-    },
-    23: {
-        id: 23,
-        name: "🌅 День 23: Легкий",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 10 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2 },
-            { id: 3, text: "🦵 Спец беговые: растяжка", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 4х200 метров", completed: false, distance: 0.8 }
-        ],
-        totalDistance: 2.8
-    },
-    24: {
-        id: 24,
-        name: "🏔️ День 24: Горки",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут в горку", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 8х100 метров в горку", completed: false, distance: 0.8 }
-        ],
-        totalDistance: 3.3
-    },
-    25: {
-        id: 25,
-        name: "🔥 День 25: Спринт",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: семенящий", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 12х100 метров", completed: false, distance: 1.2 }
-        ],
-        totalDistance: 3.7
-    },
-    26: {
-        id: 26,
-        name: "🏃‍♂️ День 26: Темп",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 25 минут", completed: false, distance: 4 },
-            { id: 3, text: "🦵 Спец беговые: махи", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 5х400 метров", completed: false, distance: 2 }
-        ],
-        totalDistance: 6
-    },
-    27: {
-        id: 27,
-        name: "⚡ День 27: Переменная",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут", completed: false, distance: 3 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 6х300 метров", completed: false, distance: 1.8 }
-        ],
-        totalDistance: 4.8
-    },
-    28: {
-        id: 28,
-        name: "🌅 День 28: Восстановление",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 10 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", completed: false, distance: 2 },
-            { id: 3, text: "🦵 Спец беговые: растяжка", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 4х150 метров", completed: false, distance: 0.6 }
-        ],
-        totalDistance: 2.6
-    },
-    29: {
-        id: 29,
-        name: "🏔️ День 29: Длинная",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 40 минут", completed: false, distance: 6 },
-            { id: 3, text: "🦵 Спец беговые: все виды", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 4х600 метров", completed: false, distance: 2.4 }
-        ],
-        totalDistance: 8.4
-    },
-    30: {
-        id: 30,
-        name: "🔥 День 30: Чемпион",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 25 минут", completed: false, distance: 0 },
-            { id: 2, text: "🏃 Бег 30 минут", completed: false, distance: 5 },
-            { id: 3, text: "🦵 Спец беговые: все виды", completed: false, distance: 0 },
-            { id: 4, text: "⚡ 10х400 метров", completed: false, distance: 4 }
-        ],
-        totalDistance: 9
     }
 };
+
+// Продолжение для следующих дней (до 30)
+for (let i = 6; i <= 30; i++) {
+    const sourceDay = ((i - 1) % 5) + 1;
+    DAILY_WORKOUTS[i] = {
+        ...DAILY_WORKOUTS[sourceDay],
+        id: i,
+        name: DAILY_WORKOUTS[sourceDay].name.replace(`День ${sourceDay}`, `День ${i}`),
+        steps: DAILY_WORKOUTS[sourceDay].steps.map(step => ({
+            ...step,
+            id: step.id + (i * 10),
+            completed: false
+        }))
+    };
+}
 
 // ПЕРЕВОДЫ
 const translations = {
@@ -403,7 +118,6 @@ const translations = {
         workoutCompletedMsg: "🎉 Тренировка завершена! Теперь можно завершить день.",
         completedMessage: (day, km) => `🎉 День ${day} завершен!\nПробежал(а): ${km} км`,
         
-        // Меню
         marathon: "🏃 МАРАФОН",
         resetMarathon: "🔄 Сбросить марафон",
         stats: "📊 Статистика",
@@ -417,14 +131,12 @@ const translations = {
         confirmReset: "Сбросить весь марафон? Весь прогресс будет потерян.",
         faqText: "❓ Часто задаваемые вопросы:\n\n• Каждый день новая тренировка\n• Начать бег можно с 4 утра\n• Завершить день до 23:00\n• После завершения дня - 24ч таймер\n• Статистика сохраняется",
         
-        // Дневник
         newEntry: "Новая запись",
         save: "Сохранить",
         cancel: "Отмена",
         noEntries: "📝 Пока нет записей",
         entryPlaceholder: "Как прошла тренировка?",
         
-        // Настройки
         themeTitle: "ТЕМА",
         dark: "🌑 Темная",
         light: "☀️ Светлая",
@@ -448,7 +160,6 @@ const translations = {
         workoutCompletedMsg: "🎉 Workout completed! Now you can complete the day.",
         completedMessage: (day, km) => `🎉 Day ${day} completed!\nRan: ${km} km`,
         
-        // Menu
         marathon: "🏃 MARATHON",
         resetMarathon: "🔄 Reset Marathon",
         stats: "📊 Statistics",
@@ -462,14 +173,12 @@ const translations = {
         confirmReset: "Reset entire marathon? All progress will be lost.",
         faqText: "❓ Frequently Asked Questions:\n\n• New workout every day\n• Start running from 4 AM\n• Complete day before 11 PM\n• 24h timer after completion\n• Statistics are saved",
         
-        // Diary
         newEntry: "New entry",
         save: "Save",
         cancel: "Cancel",
         noEntries: "📝 No entries yet",
         entryPlaceholder: "How was your workout?",
         
-        // Settings
         themeTitle: "THEME",
         dark: "🌑 Dark",
         light: "☀️ Light",
@@ -575,7 +284,6 @@ function loadData() {
                 totalDistance: parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE))
             };
         } else {
-            // Создаем тренировку для текущего дня
             const template = DAILY_WORKOUTS[currentDay] || DAILY_WORKOUTS[((currentDay - 1) % 30) + 1];
             currentWorkout = {
                 id: currentDay,
@@ -648,12 +356,11 @@ function switchPage(pageIndex) {
     
     currentSlide = pageIndex;
     
-    // Обновляем контент при переключении
     if (pageIndex === 1) updateStats();
     if (pageIndex === 2) renderDiary();
 }
 
-// ========== БЕГ (СЛАЙД 1) ==========
+// ========== БЕГ ==========
 function updateUI() {
     document.getElementById('start-day-number').textContent = currentDay;
     document.getElementById('current-day').textContent = currentDay;
@@ -760,14 +467,11 @@ function updateProgress() {
     document.getElementById('workout-fill').style.width = `${progress}%`;
     document.getElementById('workout-percent').textContent = `${Math.round(progress)}%`;
     
-    // Проверяем, завершена ли тренировка (все шаги отмечены)
     const allStepsCompleted = currentWorkout.steps.every(s => s.completed);
     
     if (allStepsCompleted && !workoutCompleted) {
-        // Тренировка только что завершена
         workoutCompleted = true;
         
-        // Считаем дистанцию
         let distance = 0;
         currentWorkout.steps.forEach(step => {
             if (step.completed) distance += step.distance || 0;
@@ -776,7 +480,6 @@ function updateProgress() {
         
         saveData();
         
-        // Показываем сообщение
         tg.showPopup({
             title: '🎉 Отлично!',
             message: t('workoutCompletedMsg'),
@@ -784,7 +487,6 @@ function updateProgress() {
         });
     }
     
-    // Обновляем состояние кнопки завершения дня
     const canComplete = canCompleteByTime();
     const expired = isDayExpired();
     
@@ -797,7 +499,6 @@ function updateProgress() {
         btn.disabled = true;
         btn.textContent = t('until23');
     } else {
-        // Кнопка активна только если тренировка завершена
         btn.disabled = !workoutCompleted;
         btn.textContent = t('completeDayBtn');
     }
@@ -846,7 +547,7 @@ function updateDeadlineInfo() {
     }
 }
 
-// ========== СТАТИСТИКА (СЛАЙД 2) ==========
+// ========== СТАТИСТИКА ==========
 function updateStats() {
     const totalWorkouts = runningHistory.length;
     const totalDistance = runningHistory.reduce((sum, run) => sum + run.distance, 0);
@@ -859,6 +560,11 @@ function updateStats() {
     document.getElementById('total-distance').textContent = totalDistance.toFixed(1);
     document.getElementById('avg-distance').textContent = avgDistance;
     document.getElementById('best-distance').textContent = bestDistance.toFixed(1);
+    
+    document.getElementById('week-current').textContent = currentDay - 1;
+    document.getElementById('week-goal').textContent = '30';
+    const weekProgress = ((currentDay - 1) / 30) * 100;
+    document.getElementById('week-progress').style.width = `${weekProgress}%`;
     
     const historyList = document.getElementById('history-list');
     if (historyList) {
@@ -888,7 +594,7 @@ function updateStats() {
     }
 }
 
-// ========== ДНЕВНИК (СЛАЙД 3) ==========
+// ========== ДНЕВНИК ==========
 function renderDiary() {
     const entriesList = document.getElementById('entries-list');
     if (!entriesList) return;
@@ -951,7 +657,6 @@ function updateAllText() {
         contactItem.innerHTML = `<span>${t('author')}</span><span class="contact-highlight">@frontendchikk</span>`;
     }
     
-    // Настройки
     const settingsGroups = document.querySelectorAll('.settings-group h3');
     if (settingsGroups[0]) settingsGroups[0].textContent = t('themeTitle');
     if (settingsGroups[1]) settingsGroups[1].textContent = t('languageTitle');
@@ -969,7 +674,6 @@ function updateAllText() {
         `;
     }
     
-    // Дневник
     document.getElementById('add-entry-btn').innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
     document.getElementById('save-entry-btn').textContent = t('save');
     document.getElementById('cancel-entry-btn').textContent = t('cancel');
@@ -993,7 +697,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStats();
     renderDiary();
     
-    // Старт дня
     document.getElementById('start-day-btn').addEventListener('click', () => {
         if (!canStartNewDay()) {
             const remaining = getTimeRemaining();
@@ -1012,7 +715,6 @@ document.addEventListener('DOMContentLoaded', () => {
         workoutCompleted = false;
         currentWorkoutDistance = 0;
         
-        // Создаем тренировку для этого дня
         const template = DAILY_WORKOUTS[currentDay] || DAILY_WORKOUTS[((currentDay - 1) % 30) + 1];
         currentWorkout = {
             id: currentDay,
@@ -1026,7 +728,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUI();
     });
     
-    // Завершение дня
     document.getElementById('complete-day-btn').addEventListener('click', () => {
         if (!canCompleteByTime()) {
             tg.showAlert('⏰ Завершить день можно только до 23:00!');
@@ -1043,7 +744,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // Сохраняем в историю
         runningHistory.push({
             day: currentDay,
             distance: currentWorkoutDistance,
@@ -1068,17 +768,14 @@ document.addEventListener('DOMContentLoaded', () => {
         
         tg.showAlert(t('completedMessage', currentDay - 1, currentWorkoutDistance.toFixed(1)));
         
-        // Обновляем статистику
         updateStats();
     });
     
-    // Продолжить
     document.getElementById('continue-btn').addEventListener('click', () => {
         document.getElementById('congrats').style.display = 'none';
         updateUI();
     });
     
-    // Меню
     document.getElementById('menu-btn').addEventListener('click', () => {
         const menu = document.getElementById('menu-dropdown');
         const btn = document.getElementById('menu-btn');
@@ -1100,7 +797,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Пункты меню
     document.getElementById('reset-marathon').addEventListener('click', (e) => {
         e.preventDefault();
         if (confirm(t('confirmReset'))) {
@@ -1124,7 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     document.getElementById('stats-menu').addEventListener('click', (e) => {
         e.preventDefault();
-        switchPage(1); // Переключаем на слайд статистики
+        switchPage(1);
         document.getElementById('menu-dropdown').style.display = 'none';
         document.getElementById('menu-btn').classList.remove('active');
     });
@@ -1150,7 +846,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('menu-btn').classList.remove('active');
     });
     
-    // Дневник
     document.getElementById('add-entry-btn').addEventListener('click', () => {
         document.getElementById('add-entry-form').style.display = 'block';
         document.getElementById('add-entry-btn').style.display = 'none';
@@ -1179,7 +874,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('add-entry-btn').style.display = 'flex';
     });
     
-    // Следим за скроллом
     document.getElementById('slidesContainer').addEventListener('scroll', (e) => {
         const container = e.target;
         const pageIndex = Math.round(container.scrollLeft / container.clientWidth);
@@ -1196,7 +890,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Интервал
     setInterval(() => {
         if (dayStarted) {
             updateProgress();
