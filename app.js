@@ -13,6 +13,8 @@ const STORAGE_KEYS = {
     WORKOUT_HISTORY: 'workout_history',
     TOTAL_DISTANCE: 'total_distance',
     TOTAL_WORKOUTS: 'total_workouts',
+    TOTAL_TIME: 'total_time',
+    TOTAL_CALORIES: 'total_calories',
     DIARY_ENTRIES: 'diary_entries',
     THEME: 'theme',
     LANGUAGE: 'language'
@@ -51,15 +53,31 @@ const translations = {
         home: "🏠 На главную",
         
         // Статистика
-        stats: "📊 СТАТИСТИКА",
+        stats: "📊 РАСШИРЕННАЯ СТАТИСТИКА",
         workouts: "Тренировок",
         totalKm: "Всего км",
+        totalTime: "Всего времени",
+        totalCalories: "Всего калорий",
         avg: "Средняя",
         best: "Лучшая",
-        progress_: "ПРОГРЕСС",
+        avgPace: "Средний темп",
+        caloriesPerWorkout: "Ср. калорий",
+        progress_: "ПРОГРЕСС ЗА МЕСЯЦ",
         days: "дней",
         history: "ИСТОРИЯ ТРЕНИРОВОК",
         noWorkouts: "Пока нет тренировок",
+        
+        // Детали тренировки
+        distance: "км",
+        minutes: "мин",
+        kcal: "ккал",
+        pace: "мин/км",
+        
+        // Сравнение
+        vsLastMonth: "vs прошлый месяц",
+        better: "лучше",
+        worse: "хуже",
+        same: "так же",
         
         // Создание заданий
         createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
@@ -142,15 +160,31 @@ const translations = {
         home: "🏠 Home",
         
         // Statistics
-        stats: "📊 STATISTICS",
+        stats: "📊 EXTENDED STATISTICS",
         workouts: "Workouts",
         totalKm: "Total km",
+        totalTime: "Total time",
+        totalCalories: "Total calories",
         avg: "Average",
         best: "Best",
-        progress_: "PROGRESS",
+        avgPace: "Avg pace",
+        caloriesPerWorkout: "Avg cal",
+        progress_: "MONTHLY PROGRESS",
         days: "days",
         history: "WORKOUT HISTORY",
         noWorkouts: "No workouts yet",
+        
+        // Workout details
+        distance: "km",
+        minutes: "min",
+        kcal: "kcal",
+        pace: "min/km",
+        
+        // Comparison
+        vsLastMonth: "vs last month",
+        better: "better",
+        worse: "worse",
+        same: "same",
         
         // Create tasks
         createTitle: "🎯 CREATE TASKS",
@@ -211,60 +245,70 @@ const BASE_WORKOUTS = {
         name_ru: "🔥 День 1: Легкий старт",
         difficulty: "easy",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0 },
-            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут в легком темпе", distance: 2.0 },
-            { id: 3, text: "🦵 Leg swings", text_ru: "🦵 Спец беговые: махи ногами", distance: 0 },
-            { id: 4, text: "⚡ 4x200m acceleration", text_ru: "⚡ Ускорение 4х200 метров", distance: 0.8 }
+            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
+            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут в легком темпе", distance: 2.0, time: 15, calories: 150 },
+            { id: 3, text: "🦵 Leg swings", text_ru: "🦵 Спец беговые: махи ногами", distance: 0, time: 5, calories: 20 },
+            { id: 4, text: "⚡ 4x200m acceleration", text_ru: "⚡ Ускорение 4х200 метров", distance: 0.8, time: 8, calories: 80 }
         ],
-        totalDistance: 2.8
+        totalDistance: 2.8,
+        totalTime: 38,
+        totalCalories: 280
     },
     2: {
         name: "⚡ Day 2: Intervals",
         name_ru: "⚡ День 2: Интервалы",
         difficulty: "medium",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0 },
-            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0 },
-            { id: 3, text: "🦵 Jumping", text_ru: "🦵 Спец беговые: прыжки", distance: 0 },
-            { id: 4, text: "⚡ 6x200m acceleration", text_ru: "⚡ Ускорение 6х200 метров", distance: 1.2 }
+            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
+            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 200 },
+            { id: 3, text: "🦵 Jumping", text_ru: "🦵 Спец беговые: прыжки", distance: 0, time: 8, calories: 40 },
+            { id: 4, text: "⚡ 6x200m acceleration", text_ru: "⚡ Ускорение 6х200 метров", distance: 1.2, time: 12, calories: 120 }
         ],
-        totalDistance: 4.2
+        totalDistance: 4.2,
+        totalTime: 55,
+        totalCalories: 405
     },
     3: {
         name: "🏔️ Day 3: Strength",
         name_ru: "🏔️ День 3: Силовая",
         difficulty: "hard",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 20 min", text_ru: "🏋️ Разминка 20 минут", distance: 0 },
-            { id: 2, text: "🏃 Run 25 min", text_ru: "🏃 Бег 25 минут", distance: 4.0 },
-            { id: 3, text: "🦵 Multiple jumps", text_ru: "🦵 Спец беговые: многоскоки", distance: 0 },
-            { id: 4, text: "⚡ 8x200m acceleration", text_ru: "⚡ Ускорение 8х200 метров", distance: 1.6 }
+            { id: 1, text: "🏋️ Warm-up 20 min", text_ru: "🏋️ Разминка 20 минут", distance: 0, time: 20, calories: 60 },
+            { id: 2, text: "🏃 Run 25 min", text_ru: "🏃 Бег 25 минут", distance: 4.0, time: 25, calories: 250 },
+            { id: 3, text: "🦵 Multiple jumps", text_ru: "🦵 Спец беговые: многоскоки", distance: 0, time: 10, calories: 50 },
+            { id: 4, text: "⚡ 8x200m acceleration", text_ru: "⚡ Ускорение 8х200 метров", distance: 1.6, time: 16, calories: 160 }
         ],
-        totalDistance: 5.6
+        totalDistance: 5.6,
+        totalTime: 71,
+        totalCalories: 520
     },
     4: {
         name: "🌅 Day 4: Recovery",
         name_ru: "🌅 День 4: Восстановление",
         difficulty: "easy",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0 },
-            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут легкий", distance: 2.0 },
-            { id: 3, text: "🦵 Stretching", text_ru: "🦵 Спец беговые: растяжка", distance: 0 },
-            { id: 4, text: "⚡ 4x100m acceleration", text_ru: "⚡ Ускорение 4х100 метров", distance: 0.4 }
+            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
+            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут легкий", distance: 2.0, time: 15, calories: 130 },
+            { id: 3, text: "🦵 Stretching", text_ru: "🦵 Спец беговые: растяжка", distance: 0, time: 10, calories: 25 },
+            { id: 4, text: "⚡ 4x100m acceleration", text_ru: "⚡ Ускорение 4х100 метров", distance: 0.4, time: 5, calories: 40 }
         ],
-        totalDistance: 2.4
+        totalDistance: 2.4,
+        totalTime: 40,
+        totalCalories: 225
     },
     5: {
         name: "🔥 Day 5: Speed",
         name_ru: "🔥 День 5: Скорость",
         difficulty: "hard",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0 },
-            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0 },
-            { id: 3, text: "🦵 High knees", text_ru: "🦵 Спец беговые: семенящий", distance: 0 },
-            { id: 4, text: "⚡ 10x100m acceleration", text_ru: "⚡ Ускорение 10х100 метров", distance: 1.0 }
+            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
+            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 210 },
+            { id: 3, text: "🦵 High knees", text_ru: "🦵 Спец беговые: семенящий", distance: 0, time: 8, calories: 35 },
+            { id: 4, text: "⚡ 10x100m acceleration", text_ru: "⚡ Ускорение 10х100 метров", distance: 1.0, time: 12, calories: 110 }
         ],
-        totalDistance: 4.0
+        totalDistance: 4.0,
+        totalTime: 55,
+        totalCalories: 400
     }
 };
 
@@ -297,6 +341,8 @@ let additionalCompleted = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADDITIONA
 let workoutHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_HISTORY)) || [];
 let totalDistance = parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE)) || 0;
 let totalWorkouts = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_WORKOUTS)) || 0;
+let totalTime = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_TIME)) || 0;
+let totalCalories = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_CALORIES)) || 0;
 
 // Дневник
 let diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) || [];
@@ -365,8 +411,12 @@ function updateAllText() {
     const statLabels = document.querySelectorAll('.stat-card .stat-label');
     if (statLabels[0]) statLabels[0].textContent = t('workouts');
     if (statLabels[1]) statLabels[1].textContent = t('totalKm');
-    if (statLabels[2]) statLabels[2].textContent = t('avg');
-    if (statLabels[3]) statLabels[3].textContent = t('best');
+    if (statLabels[2]) statLabels[2].textContent = t('totalTime');
+    if (statLabels[3]) statLabels[3].textContent = t('totalCalories');
+    if (statLabels[4]) statLabels[4].textContent = t('avg');
+    if (statLabels[5]) statLabels[5].textContent = t('best');
+    if (statLabels[6]) statLabels[6].textContent = t('avgPace');
+    if (statLabels[7]) statLabels[7].textContent = t('caloriesPerWorkout');
     
     const weeklyCardH3 = document.querySelector('.weekly-card h3');
     if (weeklyCardH3) weeklyCardH3.textContent = t('progress_');
@@ -426,7 +476,7 @@ function updateAllText() {
     const aboutInfo = document.querySelector('.about-info');
     if (aboutInfo) {
         aboutInfo.innerHTML = `
-            <p>${t('version')} 3.0.0</p>
+            <p>${t('version')} 4.0.0</p>
             <p>${t('author')} @frontendchikk</p>
             <p>${t('description')}</p>
         `;
@@ -524,6 +574,8 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
     localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
     localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
+    localStorage.setItem(STORAGE_KEYS.TOTAL_TIME, totalTime);
+    localStorage.setItem(STORAGE_KEYS.TOTAL_CALORIES, totalCalories);
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, currentLanguage);
 }
 
@@ -531,25 +583,78 @@ function saveState() {
 function updateStats() {
     const totalWorkoutsEl = document.getElementById('total-workouts');
     const totalDistanceEl = document.getElementById('total-distance');
+    const totalTimeEl = document.getElementById('total-time');
+    const totalCaloriesEl = document.getElementById('total-calories');
     const avgDistanceEl = document.getElementById('avg-distance');
     const bestDistanceEl = document.getElementById('best-distance');
+    const avgPaceEl = document.getElementById('avg-pace');
+    const avgCaloriesEl = document.getElementById('avg-calories');
     const weekCurrentEl = document.getElementById('week-current');
     const weekProgressEl = document.getElementById('week-progress');
+    const comparisonEl = document.getElementById('month-comparison');
     
     if (totalWorkoutsEl) totalWorkoutsEl.textContent = totalWorkouts;
-    if (totalDistanceEl) totalDistanceEl.textContent = totalDistance.toFixed(1);
+    if (totalDistanceEl) totalDistanceEl.textContent = totalDistance.toFixed(1) + ' ' + t('distance');
+    if (totalTimeEl) {
+        const hours = Math.floor(totalTime / 60);
+        const minutes = totalTime % 60;
+        totalTimeEl.textContent = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes} ${t('minutes')}`;
+    }
+    if (totalCaloriesEl) totalCaloriesEl.textContent = totalCalories + ' ' + t('kcal');
     
     const avgDistance = totalWorkouts > 0 ? (totalDistance / totalWorkouts).toFixed(1) : 0;
-    if (avgDistanceEl) avgDistanceEl.textContent = avgDistance;
+    if (avgDistanceEl) avgDistanceEl.textContent = avgDistance + ' ' + t('distance');
     
     const bestDistance = workoutHistory.length > 0 
         ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1)
         : 0;
-    if (bestDistanceEl) bestDistanceEl.textContent = bestDistance;
+    if (bestDistanceEl) bestDistanceEl.textContent = bestDistance + ' ' + t('distance');
+    
+    // Средний темп (мин/км)
+    let avgPace = 0;
+    if (totalDistance > 0) {
+        avgPace = (totalTime / totalDistance).toFixed(1);
+    }
+    if (avgPaceEl) avgPaceEl.textContent = avgPace + ' ' + t('pace');
+    
+    // Средние калории за тренировку
+    const avgCalories = totalWorkouts > 0 ? Math.round(totalCalories / totalWorkouts) : 0;
+    if (avgCaloriesEl) avgCaloriesEl.textContent = avgCalories + ' ' + t('kcal');
     
     if (weekCurrentEl) weekCurrentEl.textContent = currentDay - 1;
     const weekProgress = ((currentDay - 1) / 30) * 100;
     if (weekProgressEl) weekProgressEl.style.width = `${weekProgress}%`;
+    
+    // Сравнение с прошлым месяцем
+    if (comparisonEl) {
+        const now = new Date();
+        const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+        const firstDayOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+        
+        const thisMonth = workoutHistory.filter(w => new Date(w.date) >= firstDayOfMonth);
+        const lastMonth = workoutHistory.filter(w => {
+            const date = new Date(w.date);
+            return date >= firstDayOfLastMonth && date < firstDayOfMonth;
+        });
+        
+        const thisMonthDistance = thisMonth.reduce((sum, w) => sum + w.distance, 0);
+        const lastMonthDistance = lastMonth.reduce((sum, w) => sum + w.distance, 0);
+        
+        let comparisonText = '';
+        if (lastMonthDistance === 0) {
+            comparisonText = `📊 ${t('vsLastMonth')}: —`;
+        } else {
+            const diff = ((thisMonthDistance - lastMonthDistance) / lastMonthDistance * 100).toFixed(0);
+            if (diff > 0) {
+                comparisonText = `📈 ${t('vsLastMonth')}: +${diff}% ${t('better')}`;
+            } else if (diff < 0) {
+                comparisonText = `📉 ${t('vsLastMonth')}: ${diff}% ${t('worse')}`;
+            } else {
+                comparisonText = `📊 ${t('vsLastMonth')}: ${t('same')}`;
+            }
+        }
+        comparisonEl.textContent = comparisonText;
+    }
     
     const historyList = document.getElementById('history-list');
     if (historyList) {
@@ -566,12 +671,23 @@ function updateStats() {
                     month: 'short'
                 });
                 
+                const pace = (workout.time / workout.distance).toFixed(1);
+                
                 const item = document.createElement('div');
                 item.className = 'history-item';
                 item.innerHTML = `
-                    <span class="history-date">${formattedDate}</span>
-                    <span class="history-workout">${workout.name || `Day ${workout.day}`}</span>
-                    <span class="history-stats">${workout.distance} км</span>
+                    <div style="display: flex; flex-direction: column; gap: 4px; width: 100%;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="history-date">${formattedDate}</span>
+                            <span class="history-workout">${workout.name || `Day ${workout.day}`}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary);">
+                            <span>${workout.distance} ${t('distance')}</span>
+                            <span>${workout.time} ${t('minutes')}</span>
+                            <span>${workout.calories} ${t('kcal')}</span>
+                            <span>${pace} ${t('pace')}</span>
+                        </div>
+                    </div>
                 `;
                 historyList.appendChild(item);
             });
@@ -1086,18 +1202,26 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
             
-            // Считаем дистанцию
+            // Считаем дистанцию, время и калории
             let actualDistance = 0;
+            let actualTime = 0;
+            let actualCalories = 0;
             
+            // Основные шаги
             workout.steps.forEach((step, index) => {
                 if (completedSteps[index]) {
                     actualDistance += step.distance || 0;
+                    actualTime += step.time || 0;
+                    actualCalories += step.calories || 0;
                 }
             });
             
+            // Дополнительные задания (условно считаем по 5 мин и 30 ккал на каждое)
             additionalTasks.forEach((task, index) => {
                 if (additionalCompleted[index]) {
                     actualDistance += task.distance || 0;
+                    actualTime += 5; // 5 минут на доп задание
+                    actualCalories += 30; // 30 ккал на доп задание
                 }
             });
             
@@ -1105,12 +1229,16 @@ document.addEventListener('DOMContentLoaded', function() {
             workoutHistory.push({
                 day: currentDay,
                 distance: actualDistance,
+                time: actualTime,
+                calories: actualCalories,
                 date: new Date().toISOString(),
                 name: (currentLanguage === 'ru' ? workout.name_ru : workout.name) + (additionalTasks.length > 0 ? ' + доп.' : '')
             });
             
             totalDistance += actualDistance;
             totalWorkouts++;
+            totalTime += actualTime;
+            totalCalories += actualCalories;
             
             // Очищаем дополнительные задания после завершения дня
             additionalTasks = [];
@@ -1226,6 +1354,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 workoutHistory = [];
                 totalDistance = 0;
                 totalWorkouts = 0;
+                totalTime = 0;
+                totalCalories = 0;
                 diaryEntries = [];
                 localStorage.clear();
                 updateUI();
