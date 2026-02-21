@@ -10,6 +10,7 @@ const STORAGE_KEYS = {
     COMPLETED_STEPS: 'completed_steps',
     WORKOUT_HISTORY: 'workout_history',
     CUSTOM_WORKOUTS: 'custom_workouts',
+    ACTIVE_CUSTOM_WORKOUT: 'active_custom_workout',
     TOTAL_DISTANCE: 'total_distance',
     TOTAL_WORKOUTS: 'total_workouts',
     DIARY_ENTRIES: 'diary_entries',
@@ -72,67 +73,12 @@ const BASE_WORKOUTS = {
             { id: 4, text: "⚡ Ускорение 10х100 метров", distance: 1.0 }
         ],
         totalDistance: 4.0
-    },
-    6: {
-        name: "🏃‍♂️ День 6: Кросс",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", distance: 0 },
-            { id: 2, text: "🏃 Бег 30 минут по пересеченной", distance: 4.5 },
-            { id: 3, text: "🦵 Спец беговые: приставные", distance: 0 },
-            { id: 4, text: "⚡ Ускорение 5х300 метров", distance: 1.5 }
-        ],
-        totalDistance: 6.0
-    },
-    7: {
-        name: "⚡ День 7: Пирамида",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", distance: 0 },
-            { id: 2, text: "🏃 Бег 20 минут", distance: 3.0 },
-            { id: 3, text: "🦵 Спец беговые: бег с высоким", distance: 0 },
-            { id: 4, text: "⚡ Пирамида: 200-400-600-400-200", distance: 1.8 }
-        ],
-        totalDistance: 4.8
-    },
-    8: {
-        name: "🌅 День 8: Техника",
-        difficulty: "easy",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут с ускорениями", distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: все виды", distance: 0 },
-            { id: 4, text: "⚡ Ускорение 8х100 метров", distance: 0.8 }
-        ],
-        totalDistance: 3.3
-    },
-    9: {
-        name: "🏔️ День 9: Длинная",
-        difficulty: "hard",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 15 минут", distance: 0 },
-            { id: 2, text: "🏃 Бег 40 минут", distance: 6.0 },
-            { id: 3, text: "🦵 Спец беговые: прыжки", distance: 0 },
-            { id: 4, text: "⚡ Ускорение 6х300 метров", distance: 1.8 }
-        ],
-        totalDistance: 7.8
-    },
-    10: {
-        name: "🔥 День 10: Спринт",
-        difficulty: "medium",
-        steps: [
-            { id: 1, text: "🏋️ Разминка 20 минут", distance: 0 },
-            { id: 2, text: "🏃 Бег 15 минут", distance: 2.5 },
-            { id: 3, text: "🦵 Спец беговые: ускорения", distance: 0 },
-            { id: 4, text: "⚡ 12х100 метров с отдыхом", distance: 1.2 }
-        ],
-        totalDistance: 3.7
     }
 };
 
-// Добавляем тренировки с 11 по 30
-for (let i = 11; i <= 30; i++) {
-    const sourceDay = ((i - 1) % 10) + 1;
+// Добавляем тренировки с 6 по 30
+for (let i = 6; i <= 30; i++) {
+    const sourceDay = ((i - 1) % 5) + 1;
     BASE_WORKOUTS[i] = {
         ...BASE_WORKOUTS[sourceDay],
         name: BASE_WORKOUTS[sourceDay].name.replace(`День ${sourceDay}`, `День ${i}`),
@@ -153,6 +99,7 @@ let completedSteps = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_STEP
 // Статистика
 let workoutHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_HISTORY)) || [];
 let customWorkouts = JSON.parse(localStorage.getItem(STORAGE_KEYS.CUSTOM_WORKOUTS)) || [];
+let activeCustomWorkout = JSON.parse(localStorage.getItem(STORAGE_KEYS.ACTIVE_CUSTOM_WORKOUT)) || null;
 let totalDistance = parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE)) || 0;
 let totalWorkouts = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_WORKOUTS)) || 0;
 
@@ -219,6 +166,7 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.COMPLETED_STEPS, JSON.stringify(completedSteps));
     localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
     localStorage.setItem(STORAGE_KEYS.CUSTOM_WORKOUTS, JSON.stringify(customWorkouts));
+    localStorage.setItem(STORAGE_KEYS.ACTIVE_CUSTOM_WORKOUT, JSON.stringify(activeCustomWorkout));
     localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
     localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
 }
@@ -276,6 +224,30 @@ function updateStats() {
 }
 
 // ========== ФУНКЦИИ ДЛЯ СОЗДАНИЯ ТРЕНИРОВКИ ==========
+function renderCustomCreator() {
+    const container = document.getElementById('custom-tasks-list');
+    const createBtn = document.getElementById('create-plan-btn');
+    const goalCard = document.querySelector('.goal-card');
+    const tasksCreator = document.querySelector('.tasks-creator');
+    
+    if (!container) return;
+    
+    // Если есть активная тренировка, показываем её вместо формы создания
+    if (activeCustomWorkout) {
+        if (goalCard) goalCard.style.display = 'none';
+        if (tasksCreator) tasksCreator.style.display = 'none';
+        if (createBtn) createBtn.style.display = 'none';
+        
+        renderActiveCustomWorkout();
+    } else {
+        if (goalCard) goalCard.style.display = 'block';
+        if (tasksCreator) tasksCreator.style.display = 'block';
+        if (createBtn) createBtn.style.display = 'block';
+        
+        renderCustomTasks();
+    }
+}
+
 function renderCustomTasks() {
     const container = document.getElementById('custom-tasks-list');
     if (!container) return;
@@ -310,6 +282,61 @@ function renderCustomTasks() {
     });
     
     updateCreateButtonState();
+}
+
+function renderActiveCustomWorkout() {
+    const container = document.getElementById('custom-tasks-list');
+    if (!container || !activeCustomWorkout) return;
+    
+    container.innerHTML = '';
+    
+    const workout = activeCustomWorkout;
+    let completedCount = 0;
+    
+    workout.steps.forEach((step, index) => {
+        if (step.completed) completedCount++;
+        
+        const stepDiv = document.createElement('div');
+        stepDiv.className = `workout-step ${step.completed ? 'step-completed' : ''}`;
+        stepDiv.innerHTML = `
+            <input type="checkbox" class="workout-checkbox" data-index="${index}" ${step.completed ? 'checked' : ''}>
+            <span class="step-text">${step.text}</span>
+            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
+        `;
+        container.appendChild(stepDiv);
+    });
+    
+    // Добавляем прогресс-бар для активной тренировки
+    const progressBar = document.createElement('div');
+    progressBar.className = 'custom-workout-progress';
+    const progress = (completedCount / workout.steps.length) * 100;
+    progressBar.innerHTML = `
+        <div class="progress-bar" style="margin: 20px 0;">
+            <div class="progress-fill mind-fill" style="width: ${progress}%;"></div>
+        </div>
+        <div style="text-align: center; margin-bottom: 20px;">
+            Прогресс: ${Math.round(progress)}%
+        </div>
+    `;
+    container.appendChild(progressBar);
+    
+    // Кнопка завершения тренировки
+    const completeBtn = document.createElement('button');
+    completeBtn.className = 'complete-workout-btn';
+    completeBtn.textContent = '✅ Завершить тренировку';
+    completeBtn.disabled = completedCount !== workout.steps.length;
+    completeBtn.addEventListener('click', completeCustomWorkout);
+    container.appendChild(completeBtn);
+    
+    // Добавляем обработчики для чекбоксов
+    document.querySelectorAll('#custom-tasks-list .workout-checkbox').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            activeCustomWorkout.steps[index].completed = this.checked;
+            saveState();
+            renderActiveCustomWorkout();
+        });
+    });
 }
 
 function updateCreateButtonState() {
@@ -356,11 +383,10 @@ function saveCustomWorkout() {
     const goalInput = document.getElementById('goal-distance');
     const goal = parseFloat(goalInput.value);
     
-    const newWorkout = {
+    activeCustomWorkout = {
         id: Date.now(),
         day: currentDay,
         name: `🎯 Моя тренировка (День ${currentDay})`,
-        difficulty: "custom",
         steps: currentCustomTasks.map((task, index) => ({
             id: index + 1,
             text: task.text,
@@ -371,12 +397,9 @@ function saveCustomWorkout() {
         createdAt: new Date().toISOString()
     };
     
-    customWorkouts.push(newWorkout);
-    saveState();
-    
     tg.showPopup({
         title: '✅ Тренировка создана!',
-        message: `План на сегодня готов. Ты создал ${currentCustomTasks.length} заданий на ${goal} км.`,
+        message: `Тренировка готова. Отмечай выполнение прямо здесь!`,
         buttons: [{ type: 'close' }]
     });
     
@@ -387,18 +410,55 @@ function saveCustomWorkout() {
     const taskDistance = document.getElementById('new-task-distance');
     if (taskText) taskText.value = '';
     if (taskDistance) taskDistance.value = 0;
-    renderCustomTasks();
+    
+    saveState();
+    renderCustomCreator();
+}
+
+function completeCustomWorkout() {
+    if (!activeCustomWorkout) return;
+    
+    // Проверяем, все ли шаги выполнены
+    if (!activeCustomWorkout.steps.every(s => s.completed)) {
+        tg.showAlert('⚠️ Сначала выполни все шаги!');
+        return;
+    }
+    
+    // Считаем дистанцию
+    let actualDistance = 0;
+    activeCustomWorkout.steps.forEach(step => {
+        actualDistance += step.distance || 0;
+    });
+    
+    // Сохраняем в историю
+    workoutHistory.push({
+        day: currentDay,
+        distance: actualDistance,
+        date: new Date().toISOString(),
+        name: activeCustomWorkout.name
+    });
+    
+    totalDistance += actualDistance;
+    totalWorkouts++;
+    
+    // Очищаем активную тренировку
+    activeCustomWorkout = null;
+    
+    saveState();
+    updateStats();
+    
+    tg.showPopup({
+        title: '🎉 Отлично!',
+        message: `Тренировка завершена! Ты пробежал ${actualDistance.toFixed(1)} км.`,
+        buttons: [{ type: 'close' }]
+    });
+    
+    renderCustomCreator();
 }
 
 // ========== ПОЛУЧЕНИЕ ТРЕНИРОВКИ ДНЯ ==========
 function getTodaysWorkout() {
-    // Сначала ищем пользовательскую тренировку
-    const customForToday = customWorkouts.find(w => w.day === currentDay);
-    if (customForToday) {
-        return customForToday;
-    }
-    
-    // Если нет пользовательской, берем из базы
+    // Для главного слайда используем базовые тренировки
     return BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
 }
 
@@ -483,15 +543,10 @@ function renderWorkout() {
     if (workoutName) workoutName.textContent = workout.name;
     
     if (workoutDifficulty) {
-        if (workout.difficulty === 'custom') {
-            workoutDifficulty.textContent = 'Моя';
-            workoutDifficulty.className = 'workout-difficulty difficulty-medium';
-        } else {
-            workoutDifficulty.textContent = 
-                workout.difficulty === 'easy' ? 'Легкая' :
-                workout.difficulty === 'medium' ? 'Средняя' : 'Сложная';
-            workoutDifficulty.className = `workout-difficulty difficulty-${workout.difficulty}`;
-        }
+        workoutDifficulty.textContent = 
+            workout.difficulty === 'easy' ? 'Легкая' :
+            workout.difficulty === 'medium' ? 'Средняя' : 'Сложная';
+        workoutDifficulty.className = `workout-difficulty difficulty-${workout.difficulty}`;
     }
     
     const stepsContainer = document.getElementById('workout-steps');
@@ -645,7 +700,7 @@ window.switchPage = function(pageIndex) {
     
     if (pageIndex === 1) updateStats();
     if (pageIndex === 2) {
-        renderCustomTasks();
+        renderCustomCreator();
     }
     if (pageIndex === 3) renderDiary();
 };
@@ -858,6 +913,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 completedSteps = [];
                 workoutHistory = [];
                 customWorkouts = [];
+                activeCustomWorkout = null;
                 totalDistance = 0;
                 totalWorkouts = 0;
                 diaryEntries = [];
@@ -865,7 +921,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateUI();
                 updateStats();
                 renderDiary();
-                renderCustomTasks();
+                renderCustomCreator();
                 
                 const menu = document.getElementById('menu-dropdown');
                 const menuBtn = document.getElementById('menu-btn');
@@ -985,7 +1041,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
                 
                 if (pageIndex === 1) updateStats();
-                if (pageIndex === 2) renderCustomTasks();
+                if (pageIndex === 2) renderCustomCreator();
                 if (pageIndex === 3) renderDiary();
             }
         });
