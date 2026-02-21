@@ -343,7 +343,7 @@ body {
     background: var(--bg-primary);
     border-radius: 16px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border: 2px solid var(--blue);
 }
 
@@ -519,6 +519,56 @@ body {
     font-weight: bold;
     display: inline-block;
     margin: 16px 0;
+}
+
+/* ===== СТИЛИ ДЛЯ ДОБАВЛЕННЫХ ЗАДАНИЙ ===== */
+.additional-header {
+    margin: 20px 0 10px 0;
+    padding: 0 5px;
+}
+
+.additional-header h3 {
+    color: var(--blue);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    padding-left: 10px;
+}
+
+.additional-header h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 14px;
+    background: var(--blue);
+    border-radius: 3px;
+}
+
+.additional-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.additional-steps .workout-step {
+    background: var(--bg-card);
+    border: 1px solid var(--blue);
+    border-left: 4px solid var(--blue);
+}
+
+.additional-steps .workout-step.step-completed {
+    background: rgba(0, 204, 136, 0.1);
+    border-color: var(--success);
+    border-left-color: var(--success);
+}
+
+.extra-step {
+    border-left: 4px solid var(--blue) !important;
 }
 
 /* СТАТИСТИКА */
