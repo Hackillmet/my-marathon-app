@@ -266,10 +266,13 @@ function setLanguage(lang) {
 
 // ========== ОТРИСОВКА ==========
 function updateUI() {
+    console.log('updateUI called', { dayStarted, currentDay });
+    
     document.getElementById('start-day-number').textContent = currentDay;
     document.getElementById('current-day').textContent = currentDay;
     
     if (!dayStarted) {
+        // Показываем стартовый экран
         document.getElementById('start-screen').style.display = 'block';
         document.getElementById('marathon-screen').style.display = 'none';
         document.getElementById('congrats').style.display = 'none';
@@ -295,6 +298,8 @@ function updateUI() {
         updateTimeInfo();
         
     } else {
+        // Показываем экран тренировки
+        console.log('Showing marathon screen');
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('marathon-screen').style.display = 'block';
         document.getElementById('congrats').style.display = 'none';
@@ -458,6 +463,7 @@ function updateDate() {
 
 // ========== ОБРАБОТЧИКИ ==========
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded');
     loadData();
     setTheme(currentTheme);
     updateDate();
@@ -466,6 +472,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Старт дня
     document.getElementById('start-day-btn').addEventListener('click', () => {
+        console.log('Start day clicked');
+        
         if (!canStartNewDay()) {
             const remaining = getTimeRemaining();
             tg.showAlert(t('waitHours', remaining.hours, remaining.minutes));
@@ -477,10 +485,13 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
+        // Запускаем день
         dayStarted = true;
         dayStartTime = new Date().getTime().toString();
         dayCompletedTime = null;
         currentWorkout = null;
+        
+        console.log('Day started, saving...');
         saveData();
         updateUI();
     });
