@@ -565,14 +565,42 @@ body {
     color: var(--text-secondary);
 }
 
-.history-card {
+.weekly-card {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.weekly-card h3 {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.week-numbers {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.week-numbers span:first-child {
+    color: var(--blue);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.recent-card {
     background: var(--bg-primary);
     border-radius: 12px;
     padding: 16px;
     border: 1px solid var(--border-color);
 }
 
-.history-card h3 {
+.recent-card h3 {
     color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 16px;
