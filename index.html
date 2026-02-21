@@ -194,8 +194,41 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: Дневник -->
+            <!-- СЛАЙД 3: Бег (НОВЫЙ) -->
             <div class="slide" id="slide3">
+                <div class="running-section">
+                    <h2 class="running-title">🏃 БЕГ</h2>
+                    
+                    <!-- Статистика бега -->
+                    <div class="running-stats">
+                        <div class="stat-card">
+                            <span class="stat-value" id="total-runs">0</span>
+                            <span class="stat-label">Тренировок</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value" id="total-km">0</span>
+                            <span class="stat-label">Всего км</span>
+                        </div>
+                    </div>
+
+                    <!-- Контейнер для тренировки -->
+                    <div id="workout-container">
+                        <!-- Кнопка начала тренировки -->
+                        <button class="start-workout-btn" id="start-workout-btn">
+                            🏃 Начать бегать
+                        </button>
+                    </div>
+
+                    <!-- История тренировок -->
+                    <div class="workout-history">
+                        <h3>📋 История тренировок</h3>
+                        <div class="history-list" id="history-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- СЛАЙД 4: Дневник -->
+            <div class="slide" id="slide4">
                 <div class="diary-section">
                     <h2 class="diary-title">📔 ДНЕВНИК</h2>
                     
@@ -220,7 +253,7 @@
             </div>
         </div>
 
-        <!-- НИЖНЯЯ НАВИГАЦИЯ (3 кнопки) -->
+        <!-- НИЖНЯЯ НАВИГАЦИЯ (4 кнопки) -->
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-home" onclick="switchPage(0)">
                 <span class="nav-icon">🏠</span>
@@ -230,7 +263,11 @@
                 <span class="nav-icon">⚙️</span>
                 <span class="nav-text">Настройки</span>
             </button>
-            <button class="nav-btn" id="nav-diary" onclick="switchPage(2)">
+            <button class="nav-btn" id="nav-run" onclick="switchPage(2)">
+                <span class="nav-icon">🏃</span>
+                <span class="nav-text">Бег</span>
+            </button>
+            <button class="nav-btn" id="nav-diary" onclick="switchPage(3)">
                 <span class="nav-icon">📔</span>
                 <span class="nav-text">Дневник</span>
             </button>
