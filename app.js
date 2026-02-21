@@ -273,9 +273,6 @@ function updateCreateButtonState() {
 }
 
 function createCustomWorkout() {
-    const goalInput = document.getElementById('goal-distance');
-    const goal = parseFloat(goalInput.value);
-    
     // Добавляем задания в дополнительные
     currentCustomTasks.forEach(task => {
         additionalTasks.push({
@@ -296,9 +293,11 @@ function createCustomWorkout() {
     
     // Очищаем форму
     currentCustomTasks = [];
-    goalInput.value = 5;
+    const goalInput = document.getElementById('goal-distance');
     const taskText = document.getElementById('new-task-text');
     const taskDistance = document.getElementById('new-task-distance');
+    
+    if (goalInput) goalInput.value = 5;
     if (taskText) taskText.value = '';
     if (taskDistance) taskDistance.value = 0;
     
@@ -400,60 +399,51 @@ function renderWorkout() {
     stepsContainer.innerHTML = '';
     
     // Основные шаги
-    const mainSteps = workout.steps.map(step => ({
-        ...step,
-        isMain: true
-    }));
-    
-    // Дополнительные шаги
-    const extraSteps = additionalTasks.map((task, index) => ({
-        id: 1000 + index,
-        text: task.text,
-        distance: task.distance || 0,
-        isMain: false,
-        completed: additionalCompleted[index] || false
-    }));
-    
-    const allSteps = [...mainSteps, ...extraSteps];
-    
-    // Обновляем completedSteps для основных
-    if (completedSteps.length !== mainSteps.length) {
-        completedSteps = new Array(mainSteps.length).fill(false);
-    }
-    
-    // Рендерим основные шаги
-    allSteps.forEach((step, index) => {
-        const isCompleted = step.isMain ? completedSteps[index] : (additionalCompleted[index - mainSteps.length] || false);
-        
+    workout.steps.forEach((step, index) => {
         const stepDiv = document.createElement('div');
-        stepDiv.className = `workout-step ${isCompleted ? 'step-completed' : ''} ${!step.isMain ? 'extra-step' : ''}`;
+        stepDiv.className = `workout-step ${completedSteps[index] ? 'step-completed' : ''}`;
         stepDiv.innerHTML = `
-            <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="${step.isMain ? 'main' : 'extra'}" ${isCompleted ? 'checked' : ''}>
+            <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="main" ${completedSteps[index] ? 'checked' : ''}>
             <span class="step-text">${step.text}</span>
             ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
         `;
         stepsContainer.appendChild(stepDiv);
     });
     
-    // Если есть дополнительные, показываем раздел
-    if (extraSteps.length > 0) {
-        const divider = document.createElement('div');
-        divider.className = 'extra-divider';
-        divider.innerHTML = '<span>➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ</span>';
-        stepsContainer.insertBefore(divider, stepsContainer.children[mainSteps.length]);
+    // Дополнительные задания
+    const additionalSection = document.getElementById('additional-tasks-section');
+    const additionalContainer = document.getElementById('additional-steps');
+    
+    if (additionalTasks.length > 0) {
+        if (additionalSection) additionalSection.style.display = 'block';
+        if (additionalContainer) {
+            additionalContainer.innerHTML = '';
+            
+            additionalTasks.forEach((task, index) => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = `workout-step ${additionalCompleted[index] ? 'step-completed' : ''} extra-step`;
+                stepDiv.innerHTML = `
+                    <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="extra" ${additionalCompleted[index] ? 'checked' : ''}>
+                    <span class="step-text">${task.text}</span>
+                    ${task.distance > 0 ? `<span class="step-distance">+${task.distance} км</span>` : ''}
+                `;
+                additionalContainer.appendChild(stepDiv);
+            });
+        }
+    } else {
+        if (additionalSection) additionalSection.style.display = 'none';
     }
     
+    // Обработчики для чекбоксов
     document.querySelectorAll('.workout-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
             const type = this.dataset.type;
-            const mainStepsCount = mainSteps.length;
             
             if (type === 'main') {
                 completedSteps[index] = this.checked;
             } else {
-                const extraIndex = index - mainStepsCount;
-                additionalCompleted[extraIndex] = this.checked;
+                additionalCompleted[index] = this.checked;
             }
             
             saveState();
@@ -668,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
             
-            // Считаем дистанцию (основные + дополнительные)
+            // Считаем дистанцию
             let actualDistance = 0;
             
             workout.steps.forEach((step, index) => {
