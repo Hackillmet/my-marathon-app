@@ -1,4 +1,85 @@
-/* CSS переменные для тем */
+/* ===== AI-РЕКОМЕНДАЦИИ ===== */
+.recommendations-card {
+    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    color: white;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.recommendations-card h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recommendations-card h3::before {
+    content: '🤖';
+    font-size: 20px;
+}
+
+.recommendation-content {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    min-height: 80px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.recommendation-icon {
+    font-size: 28px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.recommendation-text {
+    flex: 1;
+}
+
+.refresh-recommendation {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.refresh-recommendation:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0.98);
+}
+
+.refresh-recommendation::before {
+    content: '🔄';
+    font-size: 16px;
+}
+
+/* Адаптация для светлой темы */
+[data-theme="light"] .recommendations-card {
+    color: white;
+}
+
+/* Остальные стили (сохраняем все предыдущие) */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
@@ -571,7 +652,7 @@ body {
     border-left: 4px solid var(--blue) !important;
 }
 
-/* ===== РАСШИРЕННАЯ СТАТИСТИКА ===== */
+/* ===== СТАТИСТИКА ===== */
 .stats-section {
     background: var(--bg-card);
     border-radius: 16px;
@@ -654,11 +735,6 @@ body {
     color: var(--text-secondary);
 }
 
-.comparison-card span {
-    color: var(--blue);
-    font-weight: 600;
-}
-
 .recent-card {
     background: var(--bg-primary);
     border-radius: 12px;
@@ -684,7 +760,6 @@ body {
     background: var(--bg-card);
     border-radius: 8px;
     border: 1px solid var(--border-color);
-    margin-bottom: 8px;
 }
 
 .history-item div {
@@ -712,7 +787,87 @@ body {
     border: 1px dashed var(--border-color);
 }
 
-/* ===== СТИЛИ ДЛЯ СОЗДАНИЯ ТРЕНИРОВКИ ===== */
+/* ===== AI-РЕКОМЕНДАЦИИ ===== */
+.recommendations-card {
+    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+    color: white;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.recommendations-card h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    opacity: 0.9;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.recommendations-card h3::before {
+    content: '🤖';
+    font-size: 20px;
+}
+
+.recommendation-content {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    min-height: 80px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.recommendation-icon {
+    font-size: 28px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.recommendation-text {
+    flex: 1;
+}
+
+.refresh-recommendation {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 30px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.refresh-recommendation:active {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(0.98);
+}
+
+.refresh-recommendation::before {
+    content: '🔄';
+    font-size: 16px;
+}
+
+[data-theme="light"] .recommendations-card {
+    color: white;
+}
+
+/* ===== СОЗДАНИЕ ЗАДАНИЙ ===== */
 .custom-workout-section {
     background: var(--bg-card);
     border-radius: 16px;
