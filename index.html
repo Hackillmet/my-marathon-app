@@ -133,6 +133,23 @@
                             ☝️ <span data-i18n="tasks.note">Задачи влияют на</span> <span style="color: var(--text-primary);" data-i18n="balance.spirit">ДУХ</span>
                         </div>
                     </div>
+                    <!-- В секции привычек после add-habit-input добавь: -->
+
+<!-- Добавление задачи (новое) -->
+<div class="add-task-section">
+    <div class="section-header">
+        <h3>📋 ЗАДАЧИ НА СЕГОДНЯ</h3>
+        <button class="add-btn" id="add-task-btn">+</button>
+    </div>
+    
+    <div class="add-input" id="add-task-input" style="display: none;">
+        <input type="text" id="task-text" placeholder="➕ Добавить свою задачу...">
+        <button class="btn-small" id="save-task-btn">Добавить</button>
+    </div>
+    
+    <div class="tasks-list" id="tasks-list"></div>
+    <div class="task-note">☝️ Задачи влияют на <span style="color: #cccccc;">ДУХ</span></div>
+</div>
 
                     <!-- Кнопка завершения -->
                     <button class="complete-day-btn" id="complete-day-btn" disabled data-i18n="completeBtn">
