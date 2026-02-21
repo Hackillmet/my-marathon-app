@@ -24,6 +24,8 @@ const STORAGE_KEYS = {
     THEME: 'theme',
     LANGUAGE: 'language',
     FRIENDS: 'friends',
+    FRIEND_REQUESTS: 'friend_requests',
+    SENT_REQUESTS: 'sent_requests',
     TEAM_GOAL: 'team_goal',
     TEAM_PROGRESS: 'team_progress'
 };
@@ -98,13 +100,33 @@ const translations = {
         shareProfile: "📤 Поделиться",
         addFriend: "➕ ДОБАВИТЬ ДРУГА",
         friendPlaceholder: "Telegram username (например: @username)",
-        addBtn: "Добавить",
+        sendRequest: "Отправить заявку",
+        requests: "📨 ВХОДЯЩИЕ ЗАЯВКИ",
+        sentRequests: "📤 ИСХОДЯЩИЕ ЗАЯВКИ",
         myFriends: "👥 МОИ ДРУЗЬЯ",
         noFriends: "У вас пока нет друзей",
         online: "🟢 В сети",
         offline: "⚪ Офлайн",
+        pending: "⏳ Ожидает ответа",
+        accept: "✅ Принять",
+        decline: "❌ Отклонить",
+        cancel: "✕ Отменить",
         teamChallenge: "🏆 КОМАНДНЫЙ ЗАЧЕТ",
         teamGoal: "км",
+        newUser: "NEW",
+        zeroStats: "0 км (новичок)",
+        hint: "Пользователь получит уведомление и сможет принять заявку",
+        
+        // Сообщения
+        enterUsername: "Введите username друга",
+        cantAddSelf: "Нельзя добавить самого себя",
+        requestSent: "Заявка уже отправлена",
+        alreadyFriend: "Этот пользователь уже у вас в друзьях",
+        requestSentSuccess: (name) => `✅ Заявка отправлена пользователю ${name}`,
+        requestAccepted: (name) => `✅ Вы приняли заявку от ${name}`,
+        requestDeclined: (name) => `❌ Заявка от ${name} отклонена`,
+        requestCancelled: (name) => `✕ Заявка ${name} отменена`,
+        friendRemoved: (name) => `✕ Друг ${name} удален`,
         
         // Создание заданий
         createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
@@ -133,7 +155,7 @@ const translations = {
         about: "О ПРИЛОЖЕНИИ",
         version: "Версия:",
         author: "Автор:",
-        description: "Беговой марафон с социальными функциями",
+        description: "Беговой марафон с системой друзей",
         
         // Меню
         marathon: "🏃 МАРАФОН",
@@ -224,13 +246,33 @@ const translations = {
         shareProfile: "📤 Share",
         addFriend: "➕ ADD FRIEND",
         friendPlaceholder: "Telegram username (e.g., @username)",
-        addBtn: "Add",
+        sendRequest: "Send request",
+        requests: "📨 INCOMING REQUESTS",
+        sentRequests: "📤 OUTGOING REQUESTS",
         myFriends: "👥 MY FRIENDS",
         noFriends: "You have no friends yet",
         online: "🟢 Online",
         offline: "⚪ Offline",
+        pending: "⏳ Pending",
+        accept: "✅ Accept",
+        decline: "❌ Decline",
+        cancel: "✕ Cancel",
         teamChallenge: "🏆 TEAM CHALLENGE",
         teamGoal: "km",
+        newUser: "NEW",
+        zeroStats: "0 km (newbie)",
+        hint: "The user will receive a notification and can accept the request",
+        
+        // Messages
+        enterUsername: "Enter friend's username",
+        cantAddSelf: "Cannot add yourself",
+        requestSent: "Request already sent",
+        alreadyFriend: "This user is already your friend",
+        requestSentSuccess: (name) => `✅ Request sent to ${name}`,
+        requestAccepted: (name) => `✅ You accepted request from ${name}`,
+        requestDeclined: (name) => `❌ Request from ${name} declined`,
+        requestCancelled: (name) => `✕ Request to ${name} cancelled`,
+        friendRemoved: (name) => `✕ Friend ${name} removed`,
         
         // Create tasks
         createTitle: "🎯 CREATE TASKS",
@@ -259,7 +301,7 @@ const translations = {
         about: "ABOUT",
         version: "Version:",
         author: "Author:",
-        description: "Running marathon with social features",
+        description: "Running marathon with friends system",
         
         // Menu
         marathon: "🏃 MARATHON",
@@ -496,8 +538,10 @@ let diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) 
 // Текущие данные для создания тренировки
 let currentCustomTasks = [];
 
-// Друзья
+// Друзья и заявки
 let friends = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIENDS)) || [];
+let friendRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIEND_REQUESTS)) || [];
+let sentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.SENT_REQUESTS)) || [];
 let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
 let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
 
@@ -524,7 +568,97 @@ function updateUserProfile() {
     const userStatsEl = document.getElementById('user-stats');
     
     if (userNameEl) userNameEl.textContent = userName;
-    if (userStatsEl) userStatsEl.textContent = `${totalWorkouts} ${t('workouts_')} • ${totalDistance.toFixed(1)} ${t('km')}`;
+    if (userStatsEl) {
+        // Для нового пользователя показываем 0 с бейджем NEW
+        if (totalWorkouts === 0) {
+            userStatsEl.innerHTML = `0 ${t('workouts_')} • 0 ${t('km')} <span class="new-user-badge">${t('newUser')}</span>`;
+        } else {
+            userStatsEl.textContent = `${totalWorkouts} ${t('workouts_')} • ${totalDistance.toFixed(1)} ${t('km')}`;
+        }
+    }
+}
+
+function renderFriendRequests() {
+    const requestsCard = document.getElementById('friend-requests-card');
+    const requestsList = document.getElementById('friend-requests-list');
+    
+    if (!requestsList) return;
+    
+    if (friendRequests.length === 0) {
+        if (requestsCard) requestsCard.style.display = 'none';
+        return;
+    }
+    
+    if (requestsCard) requestsCard.style.display = 'block';
+    requestsList.innerHTML = '';
+    
+    friendRequests.forEach((request, index) => {
+        const requestItem = document.createElement('div');
+        requestItem.className = 'friend-request-item';
+        requestItem.innerHTML = `
+            <div class="friend-request-avatar">${request.avatar || '👤'}</div>
+            <div class="friend-request-info">
+                <span class="friend-request-name">${request.name}</span>
+                <span class="friend-request-username">${request.username}</span>
+            </div>
+            <div class="friend-request-actions">
+                <button class="friend-request-accept" data-index="${index}">${t('accept')}</button>
+                <button class="friend-request-decline" data-index="${index}">${t('decline')}</button>
+            </div>
+        `;
+        requestsList.appendChild(requestItem);
+    });
+    
+    // Обработчики для принятия/отклонения заявок
+    document.querySelectorAll('.friend-request-accept').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            acceptFriendRequest(index);
+        });
+    });
+    
+    document.querySelectorAll('.friend-request-decline').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            declineFriendRequest(index);
+        });
+    });
+}
+
+function renderSentRequests() {
+    const sentCard = document.getElementById('friend-requests-sent-card');
+    const sentList = document.getElementById('friend-requests-sent-list');
+    
+    if (!sentList) return;
+    
+    if (sentRequests.length === 0) {
+        if (sentCard) sentCard.style.display = 'none';
+        return;
+    }
+    
+    if (sentCard) sentCard.style.display = 'block';
+    sentList.innerHTML = '';
+    
+    sentRequests.forEach((request, index) => {
+        const requestItem = document.createElement('div');
+        requestItem.className = 'friend-request-sent-item';
+        requestItem.innerHTML = `
+            <div class="friend-request-sent-avatar">${request.avatar || '👤'}</div>
+            <div class="friend-request-sent-info">
+                <span class="friend-request-sent-name">${request.name}</span>
+                <span class="friend-request-sent-status">${t('pending')}</span>
+            </div>
+            <button class="friend-request-cancel" data-index="${index}">✕</button>
+        `;
+        sentList.appendChild(requestItem);
+    });
+    
+    document.querySelectorAll('.friend-request-cancel').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            cancelFriendRequest(index);
+        });
+    });
 }
 
 function renderFriends() {
@@ -543,11 +677,17 @@ function renderFriends() {
         
         const friendItem = document.createElement('div');
         friendItem.className = 'friend-item';
+        
+        // Для новых друзей с 0 км показываем специальный стиль
+        const statsText = friend.distance === 0 
+            ? `<span class="zero-stats">${t('zeroStats')}</span>` 
+            : `${friend.workouts} ${t('workouts_')} • ${friend.distance.toFixed(1)} ${t('km')}`;
+        
         friendItem.innerHTML = `
             <div class="friend-avatar">${friend.avatar || '👤'}</div>
             <div class="friend-info">
                 <span class="friend-name">${friend.name}</span>
-                <span class="friend-stats">${friend.workouts} ${t('workouts_')} • ${friend.distance.toFixed(1)} ${t('km')}</span>
+                <span class="friend-stats">${statsText}</span>
             </div>
             <span class="friend-status ${isOnline ? 'online' : 'offline'}">${isOnline ? t('online') : t('offline')}</span>
             <button class="friend-remove" data-index="${index}">✕</button>
@@ -558,10 +698,7 @@ function renderFriends() {
     document.querySelectorAll('.friend-remove').forEach(btn => {
         btn.addEventListener('click', function() {
             const index = parseInt(this.dataset.index);
-            friends.splice(index, 1);
-            localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
-            renderFriends();
-            updateTeamProgress();
+            removeFriend(index);
         });
     });
 }
@@ -571,33 +708,133 @@ function addFriend() {
     const username = input?.value.trim();
     
     if (!username) {
-        tg.showAlert('Введите username друга');
+        tg.showAlert(t('enterUsername'));
         return;
     }
     
-    // В реальном приложении тут будет запрос к API
-    const newFriend = {
+    // Проверяем, не добавляем ли мы сами себя
+    if (username === `@${userUsername}` || username === userUsername) {
+        tg.showAlert(t('cantAddSelf'));
+        return;
+    }
+    
+    // Проверяем, не отправляли ли уже заявку
+    const alreadySent = sentRequests.some(r => r.username === username);
+    if (alreadySent) {
+        tg.showAlert(t('requestSent'));
+        return;
+    }
+    
+    // Проверяем, не является ли уже другом
+    const alreadyFriend = friends.some(f => f.username === username);
+    if (alreadyFriend) {
+        tg.showAlert(t('alreadyFriend'));
+        return;
+    }
+    
+    // Проверяем, нет ли входящей заявки от этого пользователя
+    const incomingRequest = friendRequests.findIndex(r => r.username === username);
+    if (incomingRequest !== -1) {
+        // Автоматически принимаем заявку
+        acceptFriendRequest(incomingRequest);
+        input.value = '';
+        return;
+    }
+    
+    // В реальном приложении тут будет запрос к серверу
+    // Сейчас просто имитируем отправку заявки
+    
+    const newRequest = {
         id: Date.now(),
         name: username,
+        username: username,
         avatar: '👤',
-        workouts: Math.floor(Math.random() * 20),
-        distance: Math.random() * 50
+        date: new Date().toISOString()
+    };
+    
+    sentRequests.push(newRequest);
+    localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    
+    input.value = '';
+    renderSentRequests();
+    
+    tg.showAlert(t('requestSentSuccess', username));
+}
+
+function acceptFriendRequest(index) {
+    const request = friendRequests[index];
+    
+    // Создаем нового друга с 0 км (как новый пользователь)
+    const newFriend = {
+        id: request.id,
+        name: request.name,
+        username: request.username,
+        avatar: request.avatar || '👤',
+        workouts: 0,
+        distance: 0,
+        addedDate: new Date().toISOString()
     };
     
     friends.push(newFriend);
-    localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
     
-    input.value = '';
+    // Удаляем заявку
+    friendRequests.splice(index, 1);
+    
+    // Сохраняем
+    localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+    
+    // Обновляем отображение
+    renderFriendRequests();
     renderFriends();
     updateTeamProgress();
     
-    tg.showAlert(`✅ Друг ${username} добавлен!`);
+    tg.showAlert(t('requestAccepted', request.name));
+}
+
+function declineFriendRequest(index) {
+    const request = friendRequests[index];
+    
+    // Удаляем заявку
+    friendRequests.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+    
+    renderFriendRequests();
+    
+    tg.showAlert(t('requestDeclined', request.name));
+}
+
+function cancelFriendRequest(index) {
+    const request = sentRequests[index];
+    
+    // Удаляем отправленную заявку
+    sentRequests.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    
+    renderSentRequests();
+    
+    tg.showAlert(t('requestCancelled', request.name));
+}
+
+function removeFriend(index) {
+    const friend = friends[index];
+    
+    friends.splice(index, 1);
+    localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+    
+    renderFriends();
+    updateTeamProgress();
+    
+    tg.showAlert(t('friendRemoved', friend.name));
 }
 
 function updateTeamProgress() {
     const teamCurrent = document.getElementById('team-current');
     const teamProgressFill = document.getElementById('team-progress');
     const teamMembers = document.getElementById('team-members');
+    
+    // Считаем общий прогресс команды
+    teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     
     if (teamCurrent) teamCurrent.textContent = teamProgress.toFixed(1);
     if (teamProgressFill) teamProgressFill.style.width = `${(teamProgress / teamGoal) * 100}%`;
@@ -611,7 +848,7 @@ function updateTeamProgress() {
         selfMember.innerHTML = `
             <div class="team-member-avatar">👤</div>
             <div class="team-member-info">
-                <span class="team-member-name">${userName}</span>
+                <span class="team-member-name">${userName} (вы)</span>
                 <span class="team-member-distance">${totalDistance.toFixed(1)} ${t('km')}</span>
             </div>
         `;
@@ -625,12 +862,14 @@ function updateTeamProgress() {
                 <div class="team-member-avatar">${friend.avatar || '👤'}</div>
                 <div class="team-member-info">
                     <span class="team-member-name">${friend.name}</span>
-                    <span class="team-member-distance">${friend.distance.toFixed(1)} ${t('km')}</span>
+                    <span class="team-member-distance">${(friend.distance || 0).toFixed(1)} ${t('km')}</span>
                 </div>
             `;
             teamMembers.appendChild(member);
         });
     }
+    
+    localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
 function shareProfile() {
@@ -639,6 +878,8 @@ function shareProfile() {
                        `📏 Всего км: ${totalDistance.toFixed(1)}\n` +
                        `⏱️ Всего времени: ${Math.floor(totalTime / 60)}ч ${totalTime % 60}м\n` +
                        `🔥 Лучший результат: ${Math.max(...workoutHistory.map(w => w.distance), 0).toFixed(1)} км\n\n` +
+                       `👥 Друзей: ${friends.length}\n` +
+                       `🏆 Командный прогресс: ${teamProgress.toFixed(1)}/${teamGoal} км\n\n` +
                        `Присоединяйся! @${userUsername}`;
     
     tg.showPopup({
@@ -820,9 +1061,11 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.TOTAL_CALORIES, totalCalories);
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, currentLanguage);
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
+    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
+    localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
     
     // Обновляем командный прогресс
-    teamProgress = totalDistance + friends.reduce((sum, f) => sum + f.distance, 0);
+    teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
@@ -1391,7 +1634,13 @@ function updateAllText() {
     if (friendInput) friendInput.placeholder = t('friendPlaceholder');
     
     const addFriendBtn = document.getElementById('add-friend-btn');
-    if (addFriendBtn) addFriendBtn.textContent = t('addBtn');
+    if (addFriendBtn) addFriendBtn.textContent = t('sendRequest');
+    
+    const friendRequestsCardH3 = document.querySelector('.friend-requests-card h3');
+    if (friendRequestsCardH3) friendRequestsCardH3.textContent = t('requests');
+    
+    const friendRequestsSentCardH3 = document.querySelector('.friend-requests-sent-card h3');
+    if (friendRequestsSentCardH3) friendRequestsSentCardH3.textContent = t('sentRequests');
     
     const friendsListCardH3 = document.querySelector('.friends-list-card h3');
     if (friendsListCardH3) friendsListCardH3.textContent = t('myFriends');
@@ -1401,6 +1650,9 @@ function updateAllText() {
     
     const shareProfileBtn = document.getElementById('share-profile');
     if (shareProfileBtn) shareProfileBtn.textContent = t('shareProfile');
+    
+    const addFriendHint = document.querySelector('.add-friend-hint');
+    if (addFriendHint) addFriendHint.textContent = t('hint');
     
     // Создание заданий
     const customTitle = document.querySelector('.custom-title');
@@ -1457,7 +1709,7 @@ function updateAllText() {
     const aboutInfo = document.querySelector('.about-info');
     if (aboutInfo) {
         aboutInfo.innerHTML = `
-            <p>${t('version')} 6.0.0</p>
+            <p>${t('version')} 7.0.0</p>
             <p>${t('author')} @frontendchikk</p>
             <p>${t('description')}</p>
         `;
@@ -1499,6 +1751,8 @@ function updateAllText() {
     
     // Обновляем профиль и друзей
     updateUserProfile();
+    renderFriendRequests();
+    renderSentRequests();
     renderFriends();
     updateTeamProgress();
 }
@@ -1529,6 +1783,8 @@ window.switchPage = function(pageIndex) {
     }
     if (pageIndex === 2) {
         updateUserProfile();
+        renderFriendRequests();
+        renderSentRequests();
         renderFriends();
         updateTeamProgress();
     }
@@ -1580,6 +1836,8 @@ window.setLanguage = function(lang) {
         updateRecommendation();
     } else if (currentSlide === 2) {
         updateUserProfile();
+        renderFriendRequests();
+        renderSentRequests();
         renderFriends();
         updateTeamProgress();
     } else if (currentSlide === 3) {
@@ -1830,12 +2088,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 totalCalories = 0;
                 diaryEntries = [];
                 friends = [];
+                friendRequests = [];
+                sentRequests = [];
                 localStorage.clear();
                 updateUI();
                 updateStats();
                 renderDiary();
                 renderCustomCreator();
                 updateUserProfile();
+                renderFriendRequests();
+                renderSentRequests();
                 renderFriends();
                 updateTeamProgress();
                 
@@ -1964,6 +2226,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 if (pageIndex === 2) {
                     updateUserProfile();
+                    renderFriendRequests();
+                    renderSentRequests();
                     renderFriends();
                     updateTeamProgress();
                 }
