@@ -17,6 +17,79 @@ const STORAGE_KEYS = {
     DAY_START_TIME: `day_start_time_${userId}`
 };
 
+// ===== ДАННЫЕ ДЛЯ БЕГА =====
+const RUNNING_KEYS = {
+    HISTORY: `running_history_${userId}`,
+    ACTIVE_WORKOUT: `active_workout_${userId}`
+};
+
+// Тренировки для бега
+const RUNNING_WORKOUTS = [
+    {
+        id: 1,
+        name: "🌅 Легкая пробежка",
+        difficulty: "easy",
+        steps: [
+            { id: 1, text: "Разминка: суставная гимнастика", completed: false, distance: 0 },
+            { id: 2, text: "Бег в легком темпе", completed: false, distance: 2 },
+            { id: 3, text: "Растяжка после бега", completed: false, distance: 0 }
+        ],
+        totalDistance: 2
+    },
+    {
+        id: 2,
+        name: "⚡ Интервальная тренировка",
+        difficulty: "medium",
+        steps: [
+            { id: 1, text: "Разминка 5 минут", completed: false, distance: 0 },
+            { id: 2, text: "5 x 400 м (быстро) / 200 м (медленно)", completed: false, distance: 3 },
+            { id: 3, text: "Заминка 10 минут", completed: false, distance: 1 },
+            { id: 4, text: "Растяжка", completed: false, distance: 0 }
+        ],
+        totalDistance: 4
+    },
+    {
+        id: 3,
+        name: "🏔️ Длинная пробежка",
+        difficulty: "hard",
+        steps: [
+            { id: 1, text: "Разминка 5 минут", completed: false, distance: 0 },
+            { id: 2, text: "Бег 5 км в спокойном темпе", completed: false, distance: 5 },
+            { id: 3, text: "Растяжка 10 минут", completed: false, distance: 0 }
+        ],
+        totalDistance: 5
+    },
+    {
+        id: 4,
+        name: "🏃‍♂️ Бег с ускорениями",
+        difficulty: "medium",
+        steps: [
+            { id: 1, text: "Разминка", completed: false, distance: 0 },
+            { id: 2, text: "10 x 100 м ускорения", completed: false, distance: 2.5 },
+            { id: 3, text: "Бег трусцой 1 км", completed: false, distance: 1 },
+            { id: 4, text: "Растяжка", completed: false, distance: 0 }
+        ],
+        totalDistance: 3.5
+    },
+    {
+        id: 5,
+        name: "🌄 Восстановительная",
+        difficulty: "easy",
+        steps: [
+            { id: 1, text: "Разминка", completed: false, distance: 0 },
+            { id: 2, text: "Бег 2 км в очень легком темпе", completed: false, distance: 2 },
+            { id: 3, text: "Растяжка 15 минут", completed: false, distance: 0 }
+        ],
+        totalDistance: 2
+    }
+];
+
+// Загружаем историю бега
+let runningHistory = JSON.parse(localStorage.getItem(RUNNING_KEYS.HISTORY)) || [];
+
+// Активная тренировка
+let activeWorkout = null;
+
 // СТАНДАРТНЫЕ привычки (всегда должны быть)
 const DEFAULT_HABITS = [
     { id: 1, text: "💧 Выпить стакан воды", completed: false },
@@ -43,6 +116,7 @@ const translations = {
         completeBtn: "✅ Завершить день",
         home: "Главная",
         settings: "Настройки",
+        run: "Бег",
         diary: "Дневник",
         
         // Баланс
@@ -69,6 +143,18 @@ const translations = {
         dayExpired: "⏰ День истек",
         until23: "⏳ До 23:00",
         timeLeft: (h, m) => `⏳ Осталось времени: ${h}ч ${m}м`,
+        
+        // Бег
+        runningTitle: "🏃 БЕГ",
+        totalRuns: "Тренировок",
+        totalKm: "Всего км",
+        startRun: "🏃 Начать бегать",
+        workoutHistory: "📋 История тренировок",
+        emptyHistory: "Пока нет тренировок",
+        completeWorkout: "✅ Завершить тренировку",
+        cancelWorkout: "❌ Отменить",
+        workoutCompleted: "🎉 Тренировка завершена!",
+        workoutCompletedText: (name, km) => `Ты пробежал ${km} км!`,
         
         // Дневник
         newEntry: "Новая запись",
@@ -122,7 +208,7 @@ const translations = {
             `📊 Статистика:\nДень: ${day}\nСтандартных привычек: 4\nДобавленных привычек: ${customHabits}\nСтандартных задач: 4\nДобавленных задач: ${customTasks}\nЗаписей в дневнике: ${entries}`,
         
         // FAQ
-        faqText: "❓ FAQ:\n\n📌 Стандартные - нельзя удалить\n➕ Добавленные - можно удалить\n⏰ Режим: 4:00 - 23:00\n📔 Дневник для записей"
+        faqText: "❓ FAQ:\n\n📌 Стандартные - нельзя удалить\n➕ Добавленные - можно удалить\n⏰ Режим: 4:00 - 23:00\n📔 Дневник для записей\n🏃 Бег с мини-тренировками"
     },
     en: {
         // General
@@ -132,6 +218,7 @@ const translations = {
         completeBtn: "✅ Complete Day",
         home: "Home",
         settings: "Settings",
+        run: "Run",
         diary: "Diary",
         
         // Balance
@@ -158,6 +245,18 @@ const translations = {
         dayExpired: "⏰ Day expired",
         until23: "⏳ Until 11 PM",
         timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
+        
+        // Running
+        runningTitle: "🏃 RUNNING",
+        totalRuns: "Workouts",
+        totalKm: "Total km",
+        startRun: "🏃 Start Running",
+        workoutHistory: "📋 Workout History",
+        emptyHistory: "No workouts yet",
+        completeWorkout: "✅ Complete Workout",
+        cancelWorkout: "❌ Cancel",
+        workoutCompleted: "🎉 Workout Completed!",
+        workoutCompletedText: (name, km) => `You ran ${km} km!`,
         
         // Diary
         newEntry: "New entry",
@@ -211,7 +310,7 @@ const translations = {
             `📊 Statistics:\nDay: ${day}\nStandard habits: 4\nAdded habits: ${customHabits}\nStandard tasks: 4\nAdded tasks: ${customTasks}\nDiary entries: ${entries}`,
         
         // FAQ
-        faqText: "❓ FAQ:\n\n📌 Standard - cannot delete\n➕ Added - can delete\n⏰ Mode: 4 AM - 11 PM\n📔 Diary for notes"
+        faqText: "❓ FAQ:\n\n📌 Standard - cannot delete\n➕ Added - can delete\n⏰ Mode: 4 AM - 11 PM\n📔 Diary for notes\n🏃 Running with mini-workouts"
     }
 };
 
@@ -264,7 +363,8 @@ function updateAllText() {
     // Обновляем навигацию
     document.querySelectorAll('.nav-text')[0].textContent = t('home');
     document.querySelectorAll('.nav-text')[1].textContent = t('settings');
-    document.querySelectorAll('.nav-text')[2].textContent = t('diary');
+    document.querySelectorAll('.nav-text')[2].textContent = t('run');
+    document.querySelectorAll('.nav-text')[3].textContent = t('diary');
     
     // Обновляем заголовки секций
     const balanceTitle = document.querySelector('.balance-title');
@@ -302,13 +402,18 @@ function updateAllText() {
     }
     
     // Обновляем настройки
-    document.querySelector('.settings-title').textContent = t('settingsTitle');
-    document.querySelectorAll('.settings-group h3')[0].textContent = t('themeTitle');
-    document.querySelectorAll('.settings-group h3')[1].textContent = t('languageTitle');
-    document.querySelectorAll('.settings-group h3')[2].textContent = t('aboutTitle');
+    const settingsTitle = document.querySelector('.settings-title');
+    if (settingsTitle) settingsTitle.textContent = t('settingsTitle');
     
-    document.getElementById('theme-dark').innerHTML = '<span class="theme-preview dark-preview"></span><span>' + t('dark') + '</span>';
-    document.getElementById('theme-light').innerHTML = '<span class="theme-preview light-preview"></span><span>' + t('light') + '</span>';
+    const settingsGroups = document.querySelectorAll('.settings-group h3');
+    if (settingsGroups[0]) settingsGroups[0].textContent = t('themeTitle');
+    if (settingsGroups[1]) settingsGroups[1].textContent = t('languageTitle');
+    if (settingsGroups[2]) settingsGroups[2].textContent = t('aboutTitle');
+    
+    const themeDark = document.getElementById('theme-dark');
+    const themeLight = document.getElementById('theme-light');
+    if (themeDark) themeDark.innerHTML = '<span class="theme-preview dark-preview"></span><span>' + t('dark') + '</span>';
+    if (themeLight) themeLight.innerHTML = '<span class="theme-preview light-preview"></span><span>' + t('light') + '</span>';
     
     // Обновляем информацию о приложении
     const aboutInfo = document.querySelector('.about-info');
@@ -321,26 +426,52 @@ function updateAllText() {
         `;
     }
     
+    // Обновляем бег
+    const runningTitle = document.querySelector('.running-title');
+    if (runningTitle) runningTitle.textContent = t('runningTitle');
+    
+    const startWorkoutBtn = document.getElementById('start-workout-btn');
+    if (startWorkoutBtn) startWorkoutBtn.innerHTML = t('startRun');
+    
+    const workoutHistoryTitle = document.querySelector('.workout-history h3');
+    if (workoutHistoryTitle) workoutHistoryTitle.textContent = t('workoutHistory');
+    
     // Обновляем дневник
-    document.querySelector('.diary-title').textContent = t('diary');
-    document.getElementById('add-entry-btn').innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
-    document.getElementById('save-entry-btn').textContent = t('save');
-    document.getElementById('cancel-entry-btn').textContent = t('cancel');
-    document.getElementById('entry-text').placeholder = t('entryPlaceholder');
+    const diaryTitle = document.querySelector('.diary-title');
+    if (diaryTitle) diaryTitle.textContent = t('diary');
+    
+    const addEntryBtn = document.getElementById('add-entry-btn');
+    if (addEntryBtn) addEntryBtn.innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
+    
+    const saveEntryBtn = document.getElementById('save-entry-btn');
+    const cancelEntryBtn = document.getElementById('cancel-entry-btn');
+    if (saveEntryBtn) saveEntryBtn.textContent = t('save');
+    if (cancelEntryBtn) cancelEntryBtn.textContent = t('cancel');
+    
+    const entryTextarea = document.getElementById('entry-text');
+    if (entryTextarea) entryTextarea.placeholder = t('entryPlaceholder');
     
     // Обновляем экран завершения
-    document.querySelector('#congrats h2').textContent = t('congratsTitle');
-    document.querySelector('#congrats p').textContent = t('yourBalance');
-    document.getElementById('continue-btn').textContent = t('homeBtn');
+    const congratsH2 = document.querySelector('#congrats h2');
+    const congratsP = document.querySelector('#congrats p');
+    const continueBtn = document.getElementById('continue-btn');
+    
+    if (congratsH2) congratsH2.textContent = t('congratsTitle');
+    if (congratsP) congratsP.textContent = t('yourBalance');
+    if (continueBtn) continueBtn.textContent = t('homeBtn');
     
     // Обновляем стартовый экран
-    document.getElementById('start-message').textContent = t('startMessage');
+    const startMessage = document.getElementById('start-message');
+    if (startMessage) startMessage.textContent = t('startMessage');
     
     // Обновляем дату
     updateDate();
     
     // Обновляем UI с учетом времени
     updateUI();
+    
+    // Обновляем бег
+    renderRunningSection();
 }
 
 // DOM элементы
@@ -385,6 +516,13 @@ const entryText = document.getElementById('entry-text');
 const saveEntryBtn = document.getElementById('save-entry-btn');
 const cancelEntryBtn = document.getElementById('cancel-entry-btn');
 const entriesList = document.getElementById('entries-list');
+
+// Элементы бега
+const workoutContainer = document.getElementById('workout-container');
+const startWorkoutBtn = document.getElementById('start-workout-btn');
+const totalRunsEl = document.getElementById('total-runs');
+const totalKmEl = document.getElementById('total-km');
+const historyList = document.getElementById('history-list');
 
 // ========== ФУНКЦИИ ВРЕМЕНИ ==========
 
@@ -479,6 +617,261 @@ function updateDeadlineInfo() {
     }
 }
 
+// ========== ФУНКЦИИ ДЛЯ БЕГА ==========
+
+// Сохраняем историю бега
+function saveRunningHistory() {
+    localStorage.setItem(RUNNING_KEYS.HISTORY, JSON.stringify(runningHistory));
+}
+
+// Сохраняем активную тренировку
+function saveActiveWorkout() {
+    if (activeWorkout) {
+        localStorage.setItem(RUNNING_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
+    } else {
+        localStorage.removeItem(RUNNING_KEYS.ACTIVE_WORKOUT);
+    }
+}
+
+// Загружаем активную тренировку
+function loadActiveWorkout() {
+    const saved = localStorage.getItem(RUNNING_KEYS.ACTIVE_WORKOUT);
+    if (saved) {
+        activeWorkout = JSON.parse(saved);
+    }
+}
+
+// Обновляем статистику бега
+function updateRunningStats() {
+    if (totalRunsEl) {
+        totalRunsEl.textContent = runningHistory.length;
+    }
+    
+    if (totalKmEl) {
+        const totalKm = runningHistory.reduce((sum, run) => sum + run.distance, 0);
+        totalKmEl.textContent = totalKm.toFixed(1);
+    }
+}
+
+// Рендерим историю тренировок
+function renderRunningHistory() {
+    if (!historyList) return;
+    
+    historyList.innerHTML = '';
+    
+    if (runningHistory.length === 0) {
+        historyList.innerHTML = `<div class="empty-history">${t('emptyHistory')}</div>`;
+        return;
+    }
+    
+    // Показываем последние 5 тренировок
+    const recentHistory = runningHistory.slice(-5).reverse();
+    
+    recentHistory.forEach(run => {
+        const date = new Date(run.date);
+        const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
+            day: 'numeric',
+            month: 'short'
+        });
+        
+        const historyItem = document.createElement('div');
+        historyItem.className = 'history-item';
+        historyItem.innerHTML = `
+            <span class="history-date">${formattedDate}</span>
+            <span class="history-workout">${run.name}</span>
+            <span class="history-stats">${run.distance} км</span>
+        `;
+        historyList.appendChild(historyItem);
+    });
+}
+
+// Начать тренировку
+function startWorkout() {
+    // Выбираем случайную тренировку
+    const randomIndex = Math.floor(Math.random() * RUNNING_WORKOUTS.length);
+    const workout = JSON.parse(JSON.stringify(RUNNING_WORKOUTS[randomIndex])); // Копируем
+    
+    // Сбрасываем completed для всех шагов
+    workout.steps.forEach(step => {
+        step.completed = false;
+    });
+    
+    workout.startTime = new Date().toISOString();
+    
+    activeWorkout = workout;
+    saveActiveWorkout();
+    
+    renderRunningSection();
+}
+
+// Отменить тренировку
+function cancelWorkout() {
+    activeWorkout = null;
+    saveActiveWorkout();
+    renderRunningSection();
+}
+
+// Завершить тренировку
+function completeWorkout() {
+    if (!activeWorkout) return;
+    
+    // Считаем пройденную дистанцию (только выполненные шаги)
+    let completedDistance = 0;
+    activeWorkout.steps.forEach(step => {
+        if (step.completed) {
+            completedDistance += step.distance || 0;
+        }
+    });
+    
+    // Создаем запись в истории
+    const historyEntry = {
+        id: Date.now(),
+        name: activeWorkout.name,
+        distance: completedDistance,
+        date: new Date().toISOString(),
+        completedSteps: activeWorkout.steps.filter(s => s.completed).length,
+        totalSteps: activeWorkout.steps.length
+    };
+    
+    runningHistory.push(historyEntry);
+    saveRunningHistory();
+    
+    // Очищаем активную тренировку
+    activeWorkout = null;
+    saveActiveWorkout();
+    
+    // Обновляем статистику
+    updateRunningStats();
+    renderRunningSection();
+    
+    // Показываем поздравление
+    tg.showPopup({
+        title: t('workoutCompleted'),
+        message: t('workoutCompletedText', activeWorkout?.name, completedDistance.toFixed(1)),
+        buttons: [{ type: 'close' }]
+    });
+}
+
+// Обновить шаг тренировки
+function updateWorkoutStep(stepId, completed) {
+    if (!activeWorkout) return;
+    
+    const step = activeWorkout.steps.find(s => s.id === stepId);
+    if (step) {
+        step.completed = completed;
+        saveActiveWorkout();
+        renderRunningSection();
+        
+        // Проверяем, все ли шаги выполнены
+        const allCompleted = activeWorkout.steps.every(s => s.completed);
+        if (allCompleted) {
+            tg.showPopup({
+                title: '🎉 Отлично!',
+                message: 'Все шаги тренировки выполнены! Завершить?',
+                buttons: [
+                    { id: 'complete', type: 'default', text: t('completeWorkout') },
+                    { type: 'cancel' }
+                ]
+            }, (buttonId) => {
+                if (buttonId === 'complete') {
+                    completeWorkout();
+                }
+            });
+        }
+    }
+}
+
+// Рендерим секцию бега
+function renderRunningSection() {
+    updateRunningStats();
+    renderRunningHistory();
+    
+    if (!workoutContainer) return;
+    
+    if (activeWorkout) {
+        // Показываем активную тренировку
+        const difficultyClass = 
+            activeWorkout.difficulty === 'easy' ? 'difficulty-easy' :
+            activeWorkout.difficulty === 'medium' ? 'difficulty-medium' :
+            'difficulty-hard';
+        
+        const completedSteps = activeWorkout.steps.filter(s => s.completed).length;
+        const totalSteps = activeWorkout.steps.length;
+        const progress = (completedSteps / totalSteps) * 100;
+        
+        let stepsHtml = '';
+        activeWorkout.steps.forEach(step => {
+            stepsHtml += `
+                <div class="workout-step ${step.completed ? 'step-completed' : ''}">
+                    <input type="checkbox" class="workout-checkbox" 
+                           data-step-id="${step.id}" ${step.completed ? 'checked' : ''}>
+                    <span class="step-text">${step.text}</span>
+                    ${step.distance > 0 ? `<span class="step-distance">${step.distance} км</span>` : ''}
+                </div>
+            `;
+        });
+        
+        workoutContainer.innerHTML = `
+            <div class="workout-card">
+                <div class="workout-header">
+                    <span class="workout-name">${activeWorkout.name}</span>
+                    <span class="workout-difficulty ${difficultyClass}">
+                        ${activeWorkout.difficulty === 'easy' ? 'Легкая' : 
+                          activeWorkout.difficulty === 'medium' ? 'Средняя' : 'Сложная'}
+                    </span>
+                </div>
+                
+                <div class="workout-stats">
+                    <div class="workout-stat">
+                        <span class="workout-stat-value">${completedSteps}/${totalSteps}</span>
+                        <span class="workout-stat-label">Шаги</span>
+                    </div>
+                    <div class="workout-stat">
+                        <span class="workout-stat-value">${progress}%</span>
+                        <span class="workout-stat-label">Прогресс</span>
+                    </div>
+                </div>
+                
+                <div class="progress-bar" style="margin-bottom: 20px;">
+                    <div class="progress-fill mind-fill" style="width: ${progress}%;"></div>
+                </div>
+                
+                <div class="workout-steps">
+                    ${stepsHtml}
+                </div>
+                
+                <button class="complete-workout-btn" id="complete-workout-btn">
+                    ${t('completeWorkout')}
+                </button>
+                <button class="cancel-workout-btn" id="cancel-workout-btn">
+                    ${t('cancelWorkout')}
+                </button>
+            </div>
+        `;
+        
+        // Добавляем обработчики для чекбоксов
+        document.querySelectorAll('.workout-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const stepId = parseInt(this.dataset.stepId);
+                updateWorkoutStep(stepId, this.checked);
+            });
+        });
+        
+        document.getElementById('complete-workout-btn')?.addEventListener('click', completeWorkout);
+        document.getElementById('cancel-workout-btn')?.addEventListener('click', cancelWorkout);
+        
+    } else {
+        // Показываем кнопку начала тренировки
+        workoutContainer.innerHTML = `
+            <button class="start-workout-btn" id="start-workout-btn">
+                🏃 ${t('startRun')}
+            </button>
+        `;
+        
+        document.getElementById('start-workout-btn')?.addEventListener('click', startWorkout);
+    }
+}
+
 // ========== ЗАГРУЗКА И СОХРАНЕНИЕ ==========
 
 function loadData() {
@@ -526,6 +919,10 @@ function loadData() {
     const savedEntries = localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES);
     diaryEntries = savedEntries ? JSON.parse(savedEntries) : [];
     
+    // Загружаем данные для бега
+    runningHistory = JSON.parse(localStorage.getItem(RUNNING_KEYS.HISTORY)) || [];
+    loadActiveWorkout();
+    
     sortItems();
 }
 
@@ -571,6 +968,7 @@ function setLanguage(lang) {
     updateAllText();
     updateDate();
     updateUI();
+    renderRunningSection();
 }
 
 // ========== НАВИГАЦИЯ ==========
@@ -590,6 +988,11 @@ function switchPage(pageIndex) {
     });
     
     currentSlide = pageIndex;
+    
+    // Если перешли на слайд бега, обновляем его
+    if (pageIndex === 2) {
+        renderRunningSection();
+    }
 }
 
 // ========== ДАТА ==========
@@ -1061,6 +1464,11 @@ document.getElementById('slidesContainer').addEventListener('scroll', (e) => {
         document.querySelectorAll('.nav-btn').forEach((btn, index) => {
             btn.classList.toggle('active', index === pageIndex);
         });
+        
+        // Если перешли на слайд бега, обновляем его
+        if (pageIndex === 2) {
+            renderRunningSection();
+        }
     }
 });
 
@@ -1083,5 +1491,6 @@ updateDate();
 loadData();
 updateAllText();
 updateUI();
+renderRunningSection();
 
 tg.ready();
