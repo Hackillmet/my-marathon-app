@@ -827,7 +827,7 @@ function renderRunningSection() {
                         <span class="workout-stat-label">Шаги</span>
                     </div>
                     <div class="workout-stat">
-                        <span class="workout-stat-value">${progress}%</span>
+                        <span class="workout-stat-value">${Math.round(progress)}%</span>
                         <span class="workout-stat-label">Прогресс</span>
                     </div>
                 </div>
@@ -971,27 +971,44 @@ function setLanguage(lang) {
     renderRunningSection();
 }
 
-// ========== НАВИГАЦИЯ ==========
-
+// ========== НАВИГАЦИЯ (ИСПРАВЛЕННАЯ) ==========
 function switchPage(pageIndex) {
     const slides = document.querySelectorAll('.slide');
     const navButtons = document.querySelectorAll('.nav-btn');
     const container = document.getElementById('slidesContainer');
     
+    // Проверяем, что индекс в пределах (0-3)
+    if (pageIndex < 0 || pageIndex >= slides.length) return;
+    
+    // Прокручиваем к нужному слайду
     container.scrollTo({
         left: pageIndex * container.clientWidth,
         behavior: 'smooth'
     });
     
+    // Обновляем активные кнопки
     navButtons.forEach((btn, index) => {
-        btn.classList.toggle('active', index === pageIndex);
+        if (index === pageIndex) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
     });
     
     currentSlide = pageIndex;
     
-    // Если перешли на слайд бега, обновляем его
-    if (pageIndex === 2) {
+    // Обновляем контент в зависимости от слайда
+    if (pageIndex === 0) {
+        // Главная - обновляем UI
+        updateUI();
+    } else if (pageIndex === 1) {
+        // Настройки - ничего не делаем, они статичны
+    } else if (pageIndex === 2) {
+        // Бег - рендерим секцию бега
         renderRunningSection();
+    } else if (pageIndex === 3) {
+        // Дневник - рендерим дневник
+        renderDiary();
     }
 }
 
@@ -1014,31 +1031,34 @@ function updateBalance() {
     const completedTasks = tasks.filter(t => t.completed).length;
     const spiritProgress = (completedTasks / totalTasks) * 100;
     
-    mindFill.style.width = `${mindProgress}%`;
-    spiritFill.style.width = `${spiritProgress}%`;
+    if (mindFill) mindFill.style.width = `${mindProgress}%`;
+    if (spiritFill) spiritFill.style.width = `${spiritProgress}%`;
     
-    mindPercent.textContent = `${Math.round(mindProgress)}%`;
-    spiritPercent.textContent = `${Math.round(spiritProgress)}%`;
+    if (mindPercent) mindPercent.textContent = `${Math.round(mindProgress)}%`;
+    if (spiritPercent) spiritPercent.textContent = `${Math.round(spiritProgress)}%`;
     
     const allTasksCompleted = tasks.every(t => t.completed);
     const canComplete = canCompleteDayByTime();
     const dayExpired = isDayExpired();
     
-    if (dayExpired) {
-        completeDayBtn.disabled = true;
-        completeDayBtn.textContent = t('dayExpired');
-    } else if (!canComplete) {
-        completeDayBtn.disabled = true;
-        completeDayBtn.textContent = t('until23');
-    } else {
-        completeDayBtn.disabled = !allTasksCompleted;
-        completeDayBtn.textContent = t('completeBtn');
+    if (completeDayBtn) {
+        if (dayExpired) {
+            completeDayBtn.disabled = true;
+            completeDayBtn.textContent = t('dayExpired');
+        } else if (!canComplete) {
+            completeDayBtn.disabled = true;
+            completeDayBtn.textContent = t('until23');
+        } else {
+            completeDayBtn.disabled = !allTasksCompleted;
+            completeDayBtn.textContent = t('completeBtn');
+        }
     }
 }
 
 // ========== ОТРИСОВКА ==========
 
 function renderHabits() {
+    if (!habitsList) return;
     habitsList.innerHTML = '';
     
     habits.forEach((habit, index) => {
@@ -1085,6 +1105,7 @@ function renderHabits() {
 }
 
 function renderTasks() {
+    if (!tasksList) return;
     tasksList.innerHTML = '';
     
     tasks.forEach((task, index) => {
@@ -1175,35 +1196,37 @@ function renderDiary() {
 // ========== UI ОБНОВЛЕНИЕ ==========
 
 function updateUI() {
-    startDayNumber.textContent = currentDay;
+    if (startDayNumber) startDayNumber.textContent = currentDay;
     
     if (!dayStarted) {
-        startScreen.style.display = 'block';
-        marathonScreen.style.display = 'none';
-        congratsDiv.style.display = 'none';
+        if (startScreen) startScreen.style.display = 'block';
+        if (marathonScreen) marathonScreen.style.display = 'none';
+        if (congratsDiv) congratsDiv.style.display = 'none';
         
         const canStart = canStartNewDay();
         const canStartByTime = canStartDayByTime();
         
-        if (dayCompletedTime && !canStart) {
-            startDayBtn.disabled = true;
-            const remaining = getTimeRemaining();
-            if (remaining) {
-                startDayBtn.textContent = t('waitHours', remaining.hours, remaining.minutes);
+        if (startDayBtn) {
+            if (dayCompletedTime && !canStart) {
+                startDayBtn.disabled = true;
+                const remaining = getTimeRemaining();
+                if (remaining) {
+                    startDayBtn.textContent = t('waitHours', remaining.hours, remaining.minutes);
+                }
+            } else if (!canStartByTime) {
+                startDayBtn.disabled = true;
+                startDayBtn.textContent = t('waitUntil4am');
+            } else {
+                startDayBtn.disabled = false;
+                startDayBtn.textContent = t('startDayBtn');
             }
-        } else if (!canStartByTime) {
-            startDayBtn.disabled = true;
-            startDayBtn.textContent = t('waitUntil4am');
-        } else {
-            startDayBtn.disabled = false;
-            startDayBtn.textContent = t('startDayBtn');
         }
         
         updateTimeInfo();
     } else {
-        startScreen.style.display = 'none';
-        marathonScreen.style.display = 'block';
-        congratsDiv.style.display = 'none';
+        if (startScreen) startScreen.style.display = 'none';
+        if (marathonScreen) marathonScreen.style.display = 'block';
+        if (congratsDiv) congratsDiv.style.display = 'none';
         
         if (isDayExpired()) {
             dayStarted = false;
@@ -1225,252 +1248,317 @@ function updateUI() {
 
 // ========== ОБРАБОТЧИКИ ==========
 
-startDayBtn.addEventListener('click', () => {
-    if (!canStartNewDay()) {
-        const remaining = getTimeRemaining();
-        tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
-        return;
-    }
-    
-    if (!canStartDayByTime()) {
-        tg.showAlert(t('onlyFrom4am'));
-        return;
-    }
-    
-    dayStarted = true;
-    dayStartTime = new Date().getTime().toString();
-    dayCompletedTime = null;
-    saveData();
-    updateUI();
-});
+if (startDayBtn) {
+    startDayBtn.addEventListener('click', () => {
+        if (!canStartNewDay()) {
+            const remaining = getTimeRemaining();
+            tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
+            return;
+        }
+        
+        if (!canStartDayByTime()) {
+            tg.showAlert(t('onlyFrom4am'));
+            return;
+        }
+        
+        dayStarted = true;
+        dayStartTime = new Date().getTime().toString();
+        dayCompletedTime = null;
+        saveData();
+        updateUI();
+    });
+}
 
-completeDayBtn.addEventListener('click', () => {
-    if (!canCompleteDayByTime()) {
-        tg.showAlert(t('onlyUntil23'));
-        return;
-    }
-    
-    if (isDayExpired()) {
-        tg.showAlert(t('dayExpiredMsg'));
-        return;
-    }
-    
-    const totalHabits = habits.length || 1;
-    const completedHabits = habits.filter(h => h.completed).length;
-    const mindProgress = Math.round((completedHabits / totalHabits) * 100);
-    
-    const totalTasks = tasks.length || 1;
-    const completedTasks = tasks.filter(t => t.completed).length;
-    const spiritProgress = Math.round((completedTasks / totalTasks) * 100);
-    
-    document.getElementById('final-mind').textContent = mindProgress;
-    document.getElementById('final-spirit').textContent = spiritProgress;
-    
-    dayCompletedTime = new Date().getTime().toString();
-    dayStarted = false;
-    dayStartTime = null;
-    
-    saveData();
-    
-    startScreen.style.display = 'none';
-    marathonScreen.style.display = 'none';
-    congratsDiv.style.display = 'block';
-    
-    tg.showAlert(t('completedMessage', currentDay, mindProgress, spiritProgress));
-});
+if (completeDayBtn) {
+    completeDayBtn.addEventListener('click', () => {
+        if (!canCompleteDayByTime()) {
+            tg.showAlert(t('onlyUntil23'));
+            return;
+        }
+        
+        if (isDayExpired()) {
+            tg.showAlert(t('dayExpiredMsg'));
+            return;
+        }
+        
+        const totalHabits = habits.length || 1;
+        const completedHabits = habits.filter(h => h.completed).length;
+        const mindProgress = Math.round((completedHabits / totalHabits) * 100);
+        
+        const totalTasks = tasks.length || 1;
+        const completedTasks = tasks.filter(t => t.completed).length;
+        const spiritProgress = Math.round((completedTasks / totalTasks) * 100);
+        
+        const finalMind = document.getElementById('final-mind');
+        const finalSpirit = document.getElementById('final-spirit');
+        if (finalMind) finalMind.textContent = mindProgress;
+        if (finalSpirit) finalSpirit.textContent = spiritProgress;
+        
+        dayCompletedTime = new Date().getTime().toString();
+        dayStarted = false;
+        dayStartTime = null;
+        
+        saveData();
+        
+        if (startScreen) startScreen.style.display = 'none';
+        if (marathonScreen) marathonScreen.style.display = 'none';
+        if (congratsDiv) congratsDiv.style.display = 'block';
+        
+        tg.showAlert(t('completedMessage', currentDay, mindProgress, spiritProgress));
+    });
+}
 
 // Добавление привычки
-addHabitBtn.addEventListener('click', () => {
-    addHabitInput.style.display = 'flex';
-    addHabitBtn.style.display = 'none';
-});
+if (addHabitBtn) {
+    addHabitBtn.addEventListener('click', () => {
+        if (addHabitInput) addHabitInput.style.display = 'flex';
+        if (addHabitBtn) addHabitBtn.style.display = 'none';
+    });
+}
 
-saveHabitBtn.addEventListener('click', () => {
-    const text = habitText.value.trim();
-    if (text) {
-        const newId = Math.max(...habits.map(h => h.id), 4) + 1;
-        habits.push({
-            id: newId,
-            text: text,
-            completed: false
-        });
-        saveData();
-        renderHabits();
-        updateBalance();
-        
-        habitText.value = '';
-        addHabitInput.style.display = 'none';
-        addHabitBtn.style.display = 'flex';
-    }
-});
+if (saveHabitBtn) {
+    saveHabitBtn.addEventListener('click', () => {
+        const text = habitText.value.trim();
+        if (text) {
+            const newId = Math.max(...habits.map(h => h.id), 4) + 1;
+            habits.push({
+                id: newId,
+                text: text,
+                completed: false
+            });
+            saveData();
+            renderHabits();
+            updateBalance();
+            
+            if (habitText) habitText.value = '';
+            if (addHabitInput) addHabitInput.style.display = 'none';
+            if (addHabitBtn) addHabitBtn.style.display = 'flex';
+        }
+    });
+}
 
 // Добавление задачи
-addTaskBtn.addEventListener('click', () => {
-    addTaskInput.style.display = 'flex';
-    addTaskBtn.style.display = 'none';
-});
+if (addTaskBtn) {
+    addTaskBtn.addEventListener('click', () => {
+        if (addTaskInput) addTaskInput.style.display = 'flex';
+        if (addTaskBtn) addTaskBtn.style.display = 'none';
+    });
+}
 
-saveTaskBtn.addEventListener('click', () => {
-    const text = taskText.value.trim();
-    if (text) {
-        const newId = Math.max(...tasks.map(t => t.id), 4) + 1;
-        tasks.push({
-            id: newId,
-            text: text,
-            completed: false
-        });
-        saveData();
-        renderTasks();
-        updateBalance();
-        
-        taskText.value = '';
-        addTaskInput.style.display = 'none';
-        addTaskBtn.style.display = 'flex';
-    }
-});
+if (saveTaskBtn) {
+    saveTaskBtn.addEventListener('click', () => {
+        const text = taskText.value.trim();
+        if (text) {
+            const newId = Math.max(...tasks.map(t => t.id), 4) + 1;
+            tasks.push({
+                id: newId,
+                text: text,
+                completed: false
+            });
+            saveData();
+            renderTasks();
+            updateBalance();
+            
+            if (taskText) taskText.value = '';
+            if (addTaskInput) addTaskInput.style.display = 'none';
+            if (addTaskBtn) addTaskBtn.style.display = 'flex';
+        }
+    });
+}
 
 // Дневник
-addEntryBtn.addEventListener('click', () => {
-    addEntryForm.style.display = 'block';
-    addEntryBtn.style.display = 'none';
-});
+if (addEntryBtn) {
+    addEntryBtn.addEventListener('click', () => {
+        if (addEntryForm) addEntryForm.style.display = 'block';
+        if (addEntryBtn) addEntryBtn.style.display = 'none';
+    });
+}
 
-saveEntryBtn.addEventListener('click', () => {
-    const text = entryText.value.trim();
-    if (text) {
-        const newEntry = {
-            id: Date.now(),
-            text: text,
-            date: new Date().toISOString()
-        };
-        diaryEntries.unshift(newEntry);
-        saveData();
-        renderDiary();
-        
-        entryText.value = '';
-        addEntryForm.style.display = 'none';
-        addEntryBtn.style.display = 'flex';
-    }
-});
+if (saveEntryBtn) {
+    saveEntryBtn.addEventListener('click', () => {
+        const text = entryText.value.trim();
+        if (text) {
+            const newEntry = {
+                id: Date.now(),
+                text: text,
+                date: new Date().toISOString()
+            };
+            diaryEntries.unshift(newEntry);
+            saveData();
+            renderDiary();
+            
+            if (entryText) entryText.value = '';
+            if (addEntryForm) addEntryForm.style.display = 'none';
+            if (addEntryBtn) addEntryBtn.style.display = 'flex';
+        }
+    });
+}
 
-cancelEntryBtn.addEventListener('click', () => {
-    entryText.value = '';
-    addEntryForm.style.display = 'none';
-    addEntryBtn.style.display = 'flex';
-});
+if (cancelEntryBtn) {
+    cancelEntryBtn.addEventListener('click', () => {
+        if (entryText) entryText.value = '';
+        if (addEntryForm) addEntryForm.style.display = 'none';
+        if (addEntryBtn) addEntryBtn.style.display = 'flex';
+    });
+}
 
 // Enter
-habitText.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        saveHabitBtn.click();
-    }
-});
+if (habitText) {
+    habitText.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            if (saveHabitBtn) saveHabitBtn.click();
+        }
+    });
+}
 
-taskText.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        saveTaskBtn.click();
-    }
-});
+if (taskText) {
+    taskText.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            if (saveTaskBtn) saveTaskBtn.click();
+        }
+    });
+}
 
 // Меню
-menuBtn.addEventListener('click', () => {
-    if (menuDropdown.style.display === 'none') {
-        menuDropdown.style.display = 'block';
-        menuBtn.classList.add('active');
-    } else {
-        menuDropdown.style.display = 'none';
-        menuBtn.classList.remove('active');
-    }
-});
+if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+        if (menuDropdown) {
+            if (menuDropdown.style.display === 'none') {
+                menuDropdown.style.display = 'block';
+                menuBtn.classList.add('active');
+            } else {
+                menuDropdown.style.display = 'none';
+                menuBtn.classList.remove('active');
+            }
+        }
+    });
+}
 
-document.addEventListener('click', (e) => {
-    if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
-        menuDropdown.style.display = 'none';
-        menuBtn.classList.remove('active');
-    }
-});
+if (menuDropdown) {
+    document.addEventListener('click', (e) => {
+        if (menuBtn && !menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+            menuDropdown.style.display = 'none';
+            if (menuBtn) menuBtn.classList.remove('active');
+        }
+    });
+}
 
 // Функции меню
-resetDayBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (confirm(t('confirmReset'))) {
-        dayStarted = false;
-        dayStartTime = null;
-        dayCompletedTime = null;
-        habits.forEach(h => h.completed = false);
-        tasks.forEach(t => t.completed = false);
-        saveData();
-        updateUI();
-        menuDropdown.style.display = 'none';
-    }
-});
+if (resetDayBtn) {
+    resetDayBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm(t('confirmReset'))) {
+            dayStarted = false;
+            dayStartTime = null;
+            dayCompletedTime = null;
+            habits.forEach(h => h.completed = false);
+            tasks.forEach(t => t.completed = false);
+            saveData();
+            updateUI();
+            if (menuDropdown) menuDropdown.style.display = 'none';
+            if (menuBtn) menuBtn.classList.remove('active');
+        }
+    });
+}
 
-newMarathonBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (confirm(t('confirmNew'))) {
-        currentDay = 1;
-        dayStarted = false;
-        dayStartTime = null;
-        dayCompletedTime = null;
-        habits = DEFAULT_HABITS.map(h => ({...h}));
-        tasks = DEFAULT_TASKS.map(t => ({...t}));
-        diaryEntries = [];
-        saveData();
-        updateUI();
-        menuDropdown.style.display = 'none';
-    }
-});
+if (newMarathonBtn) {
+    newMarathonBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (confirm(t('confirmNew'))) {
+            currentDay = 1;
+            dayStarted = false;
+            dayStartTime = null;
+            dayCompletedTime = null;
+            habits = DEFAULT_HABITS.map(h => ({...h}));
+            tasks = DEFAULT_TASKS.map(t => ({...t}));
+            diaryEntries = [];
+            saveData();
+            updateUI();
+            if (menuDropdown) menuDropdown.style.display = 'none';
+            if (menuBtn) menuBtn.classList.remove('active');
+        }
+    });
+}
 
-statsBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const customHabits = habits.filter(h => h.id > 4).length;
-    const customTasks = tasks.filter(t => t.id > 4).length;
-    
-    tg.showAlert(t('statsMessage', currentDay, customHabits, customTasks, diaryEntries.length));
-    menuDropdown.style.display = 'none';
-});
+if (statsBtn) {
+    statsBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const customHabits = habits.filter(h => h.id > 4).length;
+        const customTasks = tasks.filter(t => t.id > 4).length;
+        
+        tg.showAlert(t('statsMessage', currentDay, customHabits, customTasks, diaryEntries.length));
+        if (menuDropdown) menuDropdown.style.display = 'none';
+        if (menuBtn) menuBtn.classList.remove('active');
+    });
+}
 
-supportBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    tg.showAlert('💬 Поддержка: @frontendchikk');
-    menuDropdown.style.display = 'none';
-});
+if (supportBtn) {
+    supportBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        tg.showAlert('💬 Поддержка: @frontendchikk');
+        if (menuDropdown) menuDropdown.style.display = 'none';
+        if (menuBtn) menuBtn.classList.remove('active');
+    });
+}
 
-telegramSupport.addEventListener('click', (e) => {
-    e.preventDefault();
-    tg.openTelegramLink('https://t.me/frontendchikk');
-    menuDropdown.style.display = 'none';
-});
+if (telegramSupport) {
+    telegramSupport.addEventListener('click', (e) => {
+        e.preventDefault();
+        tg.openTelegramLink('https://t.me/frontendchikk');
+        if (menuDropdown) menuDropdown.style.display = 'none';
+        if (menuBtn) menuBtn.classList.remove('active');
+    });
+}
 
-faqBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    tg.showAlert(t('faqText'));
-    menuDropdown.style.display = 'none';
-});
+if (faqBtn) {
+    faqBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        tg.showAlert(t('faqText'));
+        if (menuDropdown) menuDropdown.style.display = 'none';
+        if (menuBtn) menuBtn.classList.remove('active');
+    });
+}
 
 // Кнопка продолжения
-continueBtn.addEventListener('click', () => {
-    congratsDiv.style.display = 'none';
-    updateUI();
-});
+if (continueBtn) {
+    continueBtn.addEventListener('click', () => {
+        if (congratsDiv) congratsDiv.style.display = 'none';
+        updateUI();
+    });
+}
 
-// Следим за скроллом
-document.getElementById('slidesContainer').addEventListener('scroll', (e) => {
-    const container = e.target;
-    const pageIndex = Math.round(container.scrollLeft / container.clientWidth);
-    
-    if (pageIndex !== currentSlide) {
-        currentSlide = pageIndex;
-        document.querySelectorAll('.nav-btn').forEach((btn, index) => {
-            btn.classList.toggle('active', index === pageIndex);
-        });
+// Следим за скроллом (исправлено)
+const slidesContainer = document.getElementById('slidesContainer');
+if (slidesContainer) {
+    slidesContainer.addEventListener('scroll', (e) => {
+        const container = e.target;
+        const pageIndex = Math.round(container.scrollLeft / container.clientWidth);
+        const navButtons = document.querySelectorAll('.nav-btn');
         
-        // Если перешли на слайд бега, обновляем его
-        if (pageIndex === 2) {
-            renderRunningSection();
+        if (pageIndex !== currentSlide && pageIndex >= 0 && pageIndex < navButtons.length) {
+            currentSlide = pageIndex;
+            
+            navButtons.forEach((btn, index) => {
+                if (index === pageIndex) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Обновляем контент в зависимости от слайда
+            if (pageIndex === 0) {
+                updateUI();
+            } else if (pageIndex === 1) {
+                // Настройки - ничего не делаем
+            } else if (pageIndex === 2) {
+                renderRunningSection();
+            } else if (pageIndex === 3) {
+                renderDiary();
+            }
         }
-    }
-});
+    });
+}
 
 // Проверка времени каждую минуту
 setInterval(() => {
