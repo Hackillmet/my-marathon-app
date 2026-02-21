@@ -6,60 +6,125 @@ const STORAGE_KEYS = {
     CURRENT_DAY: 'current_day',
     DAY_COMPLETED_TIME: 'day_completed_time',
     DAY_START_TIME: 'day_start_time',
-    COMPLETED_STEPS: 'completed_steps'
+    COMPLETED_STEPS: 'completed_steps',
+    WORKOUT_HISTORY: 'workout_history',
+    TOTAL_DISTANCE: 'total_distance',
+    TOTAL_WORKOUTS: 'total_workouts',
+    DIARY_ENTRIES: 'diary_entries',
+    THEME: 'theme'
 };
 
 // ========== ТРЕНИРОВКИ ==========
 const WORKOUTS = [
     {
         name: "🔥 День 1: Легкий старт",
+        difficulty: "easy",
         steps: [
-            "🏋️ Разминка 10 минут",
-            "🏃 Бег 15 минут в легком темпе",
-            "🦵 Спец беговые: махи ногами",
-            "⚡ Ускорение 4х200 метров"
+            { text: "🏋️ Разминка 10 минут", distance: 0 },
+            { text: "🏃 Бег 15 минут в легком темпе", distance: 2.0 },
+            { text: "🦵 Спец беговые: махи ногами", distance: 0 },
+            { text: "⚡ Ускорение 4х200 метров", distance: 0.8 }
         ],
-        distance: 2.8
+        totalDistance: 2.8
     },
     {
         name: "⚡ День 2: Интервалы",
+        difficulty: "medium",
         steps: [
-            "🏋️ Разминка 15 минут",
-            "🏃 Бег 20 минут",
-            "🦵 Спец беговые: прыжки",
-            "⚡ Ускорение 6х200 метров"
+            { text: "🏋️ Разминка 15 минут", distance: 0 },
+            { text: "🏃 Бег 20 минут", distance: 3.0 },
+            { text: "🦵 Спец беговые: прыжки", distance: 0 },
+            { text: "⚡ Ускорение 6х200 метров", distance: 1.2 }
         ],
-        distance: 4.2
+        totalDistance: 4.2
     },
     {
         name: "🏔️ День 3: Силовая",
+        difficulty: "hard",
         steps: [
-            "🏋️ Разминка 20 минут",
-            "🏃 Бег 25 минут",
-            "🦵 Спец беговые: многоскоки",
-            "⚡ Ускорение 8х200 метров"
+            { text: "🏋️ Разминка 20 минут", distance: 0 },
+            { text: "🏃 Бег 25 минут", distance: 4.0 },
+            { text: "🦵 Спец беговые: многоскоки", distance: 0 },
+            { text: "⚡ Ускорение 8х200 метров", distance: 1.6 }
         ],
-        distance: 5.6
+        totalDistance: 5.6
     },
     {
         name: "🌅 День 4: Восстановление",
+        difficulty: "easy",
         steps: [
-            "🏋️ Разминка 10 минут",
-            "🏃 Бег 15 минут легкий",
-            "🦵 Спец беговые: растяжка",
-            "⚡ Ускорение 4х100 метров"
+            { text: "🏋️ Разминка 10 минут", distance: 0 },
+            { text: "🏃 Бег 15 минут легкий", distance: 2.0 },
+            { text: "🦵 Спец беговые: растяжка", distance: 0 },
+            { text: "⚡ Ускорение 4х100 метров", distance: 0.4 }
         ],
-        distance: 2.4
+        totalDistance: 2.4
     },
     {
         name: "🔥 День 5: Скорость",
+        difficulty: "hard",
         steps: [
-            "🏋️ Разминка 15 минут",
-            "🏃 Бег 20 минут",
-            "🦵 Спец беговые: семенящий",
-            "⚡ Ускорение 10х100 метров"
+            { text: "🏋️ Разминка 15 минут", distance: 0 },
+            { text: "🏃 Бег 20 минут", distance: 3.0 },
+            { text: "🦵 Спец беговые: семенящий", distance: 0 },
+            { text: "⚡ Ускорение 10х100 метров", distance: 1.0 }
         ],
-        distance: 4.0
+        totalDistance: 4.0
+    },
+    {
+        name: "🏃‍♂️ День 6: Кросс",
+        difficulty: "medium",
+        steps: [
+            { text: "🏋️ Разминка 15 минут", distance: 0 },
+            { text: "🏃 Бег 30 минут по пересеченной", distance: 4.5 },
+            { text: "🦵 Спец беговые: приставные", distance: 0 },
+            { text: "⚡ Ускорение 5х300 метров", distance: 1.5 }
+        ],
+        totalDistance: 6.0
+    },
+    {
+        name: "⚡ День 7: Пирамида",
+        difficulty: "hard",
+        steps: [
+            { text: "🏋️ Разминка 15 минут", distance: 0 },
+            { text: "🏃 Бег 20 минут", distance: 3.0 },
+            { text: "🦵 Спец беговые: бег с высоким", distance: 0 },
+            { text: "⚡ Пирамида: 200-400-600-400-200", distance: 1.8 }
+        ],
+        totalDistance: 4.8
+    },
+    {
+        name: "🌅 День 8: Техника",
+        difficulty: "easy",
+        steps: [
+            { text: "🏋️ Разминка 20 минут", distance: 0 },
+            { text: "🏃 Бег 15 минут с ускорениями", distance: 2.5 },
+            { text: "🦵 Спец беговые: все виды", distance: 0 },
+            { text: "⚡ Ускорение 8х100 метров", distance: 0.8 }
+        ],
+        totalDistance: 3.3
+    },
+    {
+        name: "🏔️ День 9: Длинная",
+        difficulty: "hard",
+        steps: [
+            { text: "🏋️ Разминка 15 минут", distance: 0 },
+            { text: "🏃 Бег 40 минут", distance: 6.0 },
+            { text: "🦵 Спец беговые: прыжки", distance: 0 },
+            { text: "⚡ Ускорение 6х300 метров", distance: 1.8 }
+        ],
+        totalDistance: 7.8
+    },
+    {
+        name: "🔥 День 10: Спринт",
+        difficulty: "medium",
+        steps: [
+            { text: "🏋️ Разминка 20 минут", distance: 0 },
+            { text: "🏃 Бег 15 минут", distance: 2.5 },
+            { text: "🦵 Спец беговые: ускорения", distance: 0 },
+            { text: "⚡ 12х100 метров", distance: 1.2 }
+        ],
+        totalDistance: 3.7
     }
 ];
 
@@ -69,6 +134,14 @@ let dayStarted = false;
 let dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
 let dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
 let completedSteps = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_STEPS)) || [false, false, false, false];
+
+// Статистика
+let workoutHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_HISTORY)) || [];
+let totalDistance = parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE)) || 0;
+let totalWorkouts = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_WORKOUTS)) || 0;
+
+// Дневник
+let diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) || [];
 
 // ========== ФУНКЦИИ ВРЕМЕНИ ==========
 function getCurrentHour() {
@@ -117,6 +190,62 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.DAY_START_TIME, dayStartTime);
     localStorage.setItem(STORAGE_KEYS.DAY_COMPLETED_TIME, dayCompletedTime);
     localStorage.setItem(STORAGE_KEYS.COMPLETED_STEPS, JSON.stringify(completedSteps));
+    localStorage.setItem(STORAGE_KEYS.WORKOUT_HISTORY, JSON.stringify(workoutHistory));
+    localStorage.setItem(STORAGE_KEYS.TOTAL_DISTANCE, totalDistance);
+    localStorage.setItem(STORAGE_KEYS.TOTAL_WORKOUTS, totalWorkouts);
+    localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
+}
+
+// ========== СТАТИСТИКА ==========
+function updateStats() {
+    // Общая статистика
+    document.getElementById('total-workouts').textContent = totalWorkouts;
+    document.getElementById('total-distance').textContent = totalDistance.toFixed(1);
+    
+    // Средняя дистанция
+    const avgDistance = totalWorkouts > 0 ? (totalDistance / totalWorkouts).toFixed(1) : 0;
+    document.getElementById('avg-distance').textContent = avgDistance;
+    
+    // Лучшая дистанция
+    const bestDistance = workoutHistory.length > 0 
+        ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1)
+        : 0;
+    document.getElementById('best-distance').textContent = bestDistance;
+    
+    // Прогресс (дни)
+    document.getElementById('week-current').textContent = currentDay - 1;
+    document.getElementById('week-goal').textContent = '30';
+    const weekProgress = ((currentDay - 1) / 30) * 100;
+    document.getElementById('week-progress').style.width = `${weekProgress}%`;
+    
+    // История тренировок
+    const historyList = document.getElementById('history-list');
+    if (historyList) {
+        historyList.innerHTML = '';
+        
+        if (workoutHistory.length === 0) {
+            historyList.innerHTML = '<div class="empty-history">Пока нет тренировок</div>';
+        } else {
+            // Показываем последние 10 тренировок
+            const recent = [...workoutHistory].reverse().slice(0, 10);
+            recent.forEach(workout => {
+                const date = new Date(workout.date);
+                const formattedDate = date.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'short'
+                });
+                
+                const item = document.createElement('div');
+                item.className = 'history-item';
+                item.innerHTML = `
+                    <span class="history-date">${formattedDate}</span>
+                    <span class="history-workout">День ${workout.day}</span>
+                    <span class="history-stats">${workout.distance} км</span>
+                `;
+                historyList.appendChild(item);
+            });
+        }
+    }
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ==========
@@ -194,25 +323,24 @@ function renderWorkout() {
     
     document.getElementById('workout-name').textContent = workout.name;
     
-    // Сложность (чередуем)
-    const difficulties = ['easy', 'medium', 'hard', 'easy', 'hard'];
-    const difficulty = difficulties[workoutIndex % difficulties.length];
+    // Сложность
     const difficultyEl = document.getElementById('workout-difficulty');
     difficultyEl.textContent = 
-        difficulty === 'easy' ? 'Легкая' :
-        difficulty === 'medium' ? 'Средняя' : 'Сложная';
-    difficultyEl.className = `workout-difficulty difficulty-${difficulty}`;
+        workout.difficulty === 'easy' ? 'Легкая' :
+        workout.difficulty === 'medium' ? 'Средняя' : 'Сложная';
+    difficultyEl.className = `workout-difficulty difficulty-${workout.difficulty}`;
     
     // Отрисовываем шаги
     const stepsContainer = document.getElementById('workout-steps');
     stepsContainer.innerHTML = '';
     
-    workout.steps.forEach((stepText, index) => {
+    workout.steps.forEach((step, index) => {
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step ${completedSteps[index] ? 'step-completed' : ''}`;
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" ${completedSteps[index] ? 'checked' : ''}>
-            <span class="step-text">${stepText}</span>
+            <span class="step-text">${step.text}</span>
+            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
         `;
         stepsContainer.appendChild(stepDiv);
     });
@@ -278,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Инициализация
     updateUI();
+    updateStats();
     
     // ===== КНОПКА "НАЧАТЬ БЕГ" =====
     const startBtn = document.getElementById('start-day-btn');
@@ -326,14 +455,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Считаем дистанцию
+            // Получаем тренировку и считаем дистанцию
             const workoutIndex = (currentDay - 1) % WORKOUTS.length;
-            const distance = WORKOUTS[workoutIndex].distance;
+            const workout = WORKOUTS[workoutIndex];
+            
+            // Считаем реальную дистанцию (только беговые шаги)
+            let actualDistance = 0;
+            workout.steps.forEach((step, index) => {
+                if (completedSteps[index]) {
+                    actualDistance += step.distance || 0;
+                }
+            });
+            
+            // Сохраняем в историю
+            workoutHistory.push({
+                day: currentDay,
+                distance: actualDistance,
+                date: new Date().toISOString(),
+                workoutName: workout.name
+            });
+            
+            // Обновляем общую статистику
+            totalDistance += actualDistance;
+            totalWorkouts++;
             
             // Показываем экран завершения
             document.getElementById('marathon-screen').style.display = 'none';
             document.getElementById('congrats').style.display = 'block';
-            document.getElementById('final-distance').textContent = distance.toFixed(1);
+            document.getElementById('final-distance').textContent = actualDistance.toFixed(1);
             
             // Завершаем день
             dayStarted = false;
@@ -342,6 +491,9 @@ document.addEventListener('DOMContentLoaded', function() {
             currentDay++;
             completedSteps = [false, false, false, false];
             saveState();
+            
+            // Обновляем статистику
+            updateStats();
         });
     }
     
@@ -389,8 +541,14 @@ document.addEventListener('DOMContentLoaded', function() {
             dayStartTime = null;
             dayCompletedTime = null;
             completedSteps = [false, false, false, false];
+            workoutHistory = [];
+            totalDistance = 0;
+            totalWorkouts = 0;
+            diaryEntries = [];
             localStorage.clear();
             updateUI();
+            updateStats();
+            renderDiary();
             document.getElementById('menu-dropdown').style.display = 'none';
             document.getElementById('menu-btn').classList.remove('active');
         }
@@ -420,24 +578,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('faq')?.addEventListener('click', function(e) {
         e.preventDefault();
-        tg.showAlert('❓ FAQ:\n\n• Начать день можно с 4 утра\n• Завершить день до 23:00\n• После завершения - 24ч таймер\n• Каждый день новая тренировка');
+        tg.showAlert('❓ FAQ:\n\n• Начать день можно с 4 утра\n• Завершить день до 23:00\n• После завершения - 24ч таймер\n• Каждый день новая тренировка\n• Статистика сохраняется');
         document.getElementById('menu-dropdown').style.display = 'none';
         document.getElementById('menu-btn').classList.remove('active');
     });
     
-    // ===== СТАТИСТИКА =====
-    window.updateStats = function() {
-        // Здесь можно добавить статистику из истории
-        document.getElementById('total-workouts').textContent = currentDay - 1;
-        document.getElementById('total-distance').textContent = ((currentDay - 1) * 3.5).toFixed(1);
-        document.getElementById('avg-distance').textContent = '3.5';
-        document.getElementById('best-distance').textContent = '5.6';
-        document.getElementById('week-current').textContent = currentDay - 1;
-    };
-    
     // ===== ДНЕВНИК =====
-    let diaryEntries = JSON.parse(localStorage.getItem('diary_entries')) || [];
-    
     function renderDiary() {
         const entriesList = document.getElementById('entries-list');
         if (!entriesList) return;
@@ -474,7 +620,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.addEventListener('click', function() {
                 const id = parseInt(this.dataset.id);
                 diaryEntries = diaryEntries.filter(e => e.id !== id);
-                localStorage.setItem('diary_entries', JSON.stringify(diaryEntries));
+                localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
                 renderDiary();
             });
         });
@@ -493,7 +639,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: text,
                 date: new Date().toISOString()
             });
-            localStorage.setItem('diary_entries', JSON.stringify(diaryEntries));
+            localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
             renderDiary();
             
             document.getElementById('entry-text').value = '';
@@ -532,14 +678,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===== ТЕМЫ =====
     window.setTheme = function(theme) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
+        localStorage.setItem(STORAGE_KEYS.THEME, theme);
         
         document.getElementById('theme-dark')?.classList.toggle('active', theme === 'dark');
         document.getElementById('theme-light')?.classList.toggle('active', theme === 'light');
     };
     
     // Загружаем сохраненную тему
-    const savedTheme = localStorage.getItem('theme') || 'dark';
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'dark';
     setTheme(savedTheme);
     
     // ===== ДАТА =====
