@@ -364,8 +364,6 @@ function t(key, ...args) {
 
 // ========== ОБНОВЛЕНИЕ ВСЕГО ТЕКСТА ==========
 function updateAllText() {
-    // Дата (обновляется отдельно)
-    
     // Стартовый экран
     document.getElementById('start-message').textContent = t('ready');
     
