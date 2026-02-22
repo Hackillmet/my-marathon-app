@@ -36,7 +36,6 @@ const STORAGE_KEYS = {
     INVITE_CODE: 'invite_code',
     INVITED_FRIENDS: 'invited_friends',
     BONUS_POINTS: 'bonus_points',
-    // Новые ключи для силовых
     STRENGTH_HISTORY: 'strength_history',
     STRENGTH_TOTAL_PULLUPS: 'strength_total_pullups',
     STRENGTH_TOTAL_PUSHUPS: 'strength_total_pushups',
@@ -137,9 +136,7 @@ const translations = {
         requestSentSuccess: (name) => `✅ Заявка отправлена ${name}`,
         requestAccepted: (name) => `✅ Вы приняли заявку от ${name}`,
         requestDeclined: (name) => `❌ Заявка от ${name} отклонена`,
-        requestCancelled: (name) => `✕ Заявка ${name} отменена`,
         friendRemoved: (name) => `✕ Друг ${name} удален`,
-        friendAdded: (name) => `✅ Пользователь ${name} добавлен!`,
         writeToTelegram: "💬 Написать",
         newRequest: "🔔 Новая заявка",
         
@@ -152,6 +149,9 @@ const translations = {
         invitedCount: "приглашено",
         joinedCount: "присоединились",
         bonusEarned: "бонусов",
+        sendInvite: "📤 Отправить приглашение",
+        enterFriendUsername: "Введите username друга для приглашения",
+        inviteSuccess: (name) => `✅ Приглашение отправлено пользователю @${name}`,
         
         // Таблица лидеров
         leaderboard: "🏆 ТАБЛИЦА ЛИДЕРОВ",
@@ -198,8 +198,9 @@ const translations = {
         completeWorkout: "✅ Завершить тренировку",
         workoutCompleted: "🎉 Тренировка завершена!",
         deleteWorkout: "✕",
+        noTasks: "➕ Добавьте задания",
         
-        // Силовые тренировки (НОВЫЕ)
+        // Силовые тренировки
         strengthTitle: "💪 СИЛОВАЯ ТРЕНИРОВКА",
         pullups: "ПОДТЯГИВАНИЯ",
         pushups: "ОТЖИМАНИЯ",
@@ -207,9 +208,9 @@ const translations = {
         pullupsSub: "Pull-ups",
         pushupsSub: "Push-ups",
         mixedSub: "Mixed",
-        goal: "Цель на сегодня:",
-        addSet: "➕ Добавить подход",
-        addRound: "➕ Добавить круг",
+        goal_: "Цель на сегодня:",
+        addSet: "Добавить подход",
+        addRound: "Добавить круг",
         set: "Подход",
         reps: "Количество:",
         completed: "Выполнено",
@@ -219,11 +220,7 @@ const translations = {
         summaryCalories: "Калории",
         completeStrength: "✅ Завершить силовую тренировку",
         strengthCompleted: "🎉 Силовая тренировка завершена!",
-        strengthStats: "Статистика силы",
-        totalPullups: "Всего подтягиваний",
-        totalPushups: "Всего отжиманий",
-        strengthDays: "Силовых дней",
-        bestPullups: "Лучшие подт.",
+        maxRounds: "Максимум 5 кругов",
         
         // Меню
         marathon: "🏃 МАРАФОН",
@@ -354,6 +351,9 @@ const translations = {
         invitedCount: "invited",
         joinedCount: "joined",
         bonusEarned: "bonus",
+        sendInvite: "📤 Send invite",
+        enterFriendUsername: "Enter friend's username to invite",
+        inviteSuccess: (name) => `✅ Invitation sent to @${name}`,
         
         // Leaderboard
         leaderboard: "🏆 LEADERBOARD",
@@ -400,8 +400,9 @@ const translations = {
         completeWorkout: "✅ Complete Workout",
         workoutCompleted: "🎉 Workout completed!",
         deleteWorkout: "✕",
+        noTasks: "➕ Add tasks",
         
-        // Strength workouts (NEW)
+        // Strength workouts
         strengthTitle: "💪 STRENGTH TRAINING",
         pullups: "PULL-UPS",
         pushups: "PUSH-UPS",
@@ -409,9 +410,9 @@ const translations = {
         pullupsSub: "Pull-ups",
         pushupsSub: "Push-ups",
         mixedSub: "Mixed",
-        goal: "Today's goal:",
-        addSet: "➕ Add set",
-        addRound: "➕ Add round",
+        goal_: "Today's goal:",
+        addSet: "Add set",
+        addRound: "Add round",
         set: "Set",
         reps: "Reps:",
         completed: "Completed",
@@ -421,11 +422,7 @@ const translations = {
         summaryCalories: "Calories",
         completeStrength: "✅ Complete strength workout",
         strengthCompleted: "🎉 Strength workout completed!",
-        strengthStats: "Strength statistics",
-        totalPullups: "Total pull-ups",
-        totalPushups: "Total push-ups",
-        strengthDays: "Strength days",
-        bestPullups: "Best pull-ups",
+        maxRounds: "Maximum 5 rounds",
         
         // Menu
         marathon: "🏃 MARATHON",
@@ -646,14 +643,14 @@ const recommendations = {
         ru: [
             { icon: "💪", text: "Для роста мышц делай 3-4 подхода по 8-12 повторений." },
             { icon: "🏋️", text: "Не забывай про отдых между подходами: 60-90 секунд." },
-            { icon: "📈", text: "Увеличивай вес/количество повторений каждую неделю." },
+            { icon: "📈", text: "Увеличивай количество повторений каждую неделю." },
             { icon: "🧘", text: "Растяжка после тренировки ускорит восстановление." },
             { icon: "🥩", text: "Белок после тренировки поможет мышцам восстановиться." }
         ],
         en: [
             { icon: "💪", text: "For muscle growth, do 3-4 sets of 8-12 reps." },
             { icon: "🏋️", text: "Don't forget rest between sets: 60-90 seconds." },
-            { icon: "📈", text: "Increase weight/reps every week." },
+            { icon: "📈", text: "Increase reps every week." },
             { icon: "🧘", text: "Stretching after workout speeds up recovery." },
             { icon: "🥩", text: "Protein after workout helps muscle recovery." }
         ]
@@ -731,9 +728,9 @@ let strengthToday = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_TODAY)
     mixed: {
         completed: false,
         rounds: [
-            { pullups: 10, pushups: 20, completed: false },
-            { pullups: 8, pushups: 15, completed: false },
-            { pullups: 5, pushups: 10, completed: false }
+            { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+            { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+            { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
         ]
     }
 };
@@ -879,572 +876,6 @@ function saveState() {
     
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
-}
-
-// ========== ФУНКЦИИ ДЛЯ СИЛОВЫХ УПРАЖНЕНИЙ ==========
-
-// Переключение типа тренировки
-function switchStrengthType(type) {
-    currentStrengthType = type;
-    
-    // Обновляем активные кнопки
-    document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    document.getElementById(`type-${type}`).classList.add('active');
-    
-    // Показываем нужную карточку
-    document.getElementById('pullups-card').style.display = type === 'pullups' ? 'block' : 'none';
-    document.getElementById('pushups-card').style.display = type === 'pushups' ? 'block' : 'none';
-    document.getElementById('mixed-card').style.display = type === 'mixed' ? 'block' : 'none';
-    
-    // Обновляем интерфейс
-    if (type === 'pullups') {
-        renderPullupsSets();
-        updatePullupsGoal();
-    } else if (type === 'pushups') {
-        renderPushupsSets();
-        updatePushupsGoal();
-    } else if (type === 'mixed') {
-        renderMixedSets();
-    }
-    
-    updateStrengthProgress();
-}
-
-// Рендеринг сетов для подтягиваний
-function renderPullupsSets() {
-    const container = document.getElementById('pullups-sets');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    if (!strengthToday.pullups.sets || strengthToday.pullups.sets.length === 0) {
-        strengthToday.pullups.sets = [{ reps: 10, completed: false }];
-    }
-    
-    strengthToday.pullups.sets.forEach((set, index) => {
-        const setCard = document.createElement('div');
-        setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
-        setCard.innerHTML = `
-            <div class="set-header">
-                <span class="set-number">${t('set')} ${index + 1}</span>
-                ${strengthToday.pullups.sets.length > 1 ? `<button class="set-remove" data-index="${index}">✕</button>` : ''}
-            </div>
-            <div class="set-inputs">
-                <div class="set-reps">
-                    <label>${t('reps')}</label>
-                    <input type="number" class="set-reps-input" data-index="${index}" value="${set.reps}" min="1" max="50" ${set.completed ? 'disabled' : ''}>
-                </div>
-                <label class="set-complete">
-                    <input type="checkbox" class="set-complete-check" data-index="${index}" ${set.completed ? 'checked' : ''}>
-                    <span>${t('completed')}</span>
-                </label>
-            </div>
-        `;
-        container.appendChild(setCard);
-    });
-    
-    // Добавляем обработчики
-    document.querySelectorAll('#pullups-sets .set-remove').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const index = parseInt(this.dataset.index);
-            strengthToday.pullups.sets.splice(index, 1);
-            renderPullupsSets();
-            updatePullupsStats();
-            saveState();
-        });
-    });
-    
-    document.querySelectorAll('#pullups-sets .set-reps-input').forEach(input => {
-        input.addEventListener('change', function() {
-            const index = parseInt(this.dataset.index);
-            const value = parseInt(this.value) || 0;
-            strengthToday.pullups.sets[index].reps = value;
-            updatePullupsStats();
-            saveState();
-        });
-    });
-    
-    document.querySelectorAll('#pullups-sets .set-complete-check').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const index = parseInt(this.dataset.index);
-            strengthToday.pullups.sets[index].completed = this.checked;
-            
-            const setCard = this.closest('.set-card');
-            if (this.checked) {
-                setCard.classList.add('completed');
-            } else {
-                setCard.classList.remove('completed');
-            }
-            
-            updatePullupsStats();
-            saveState();
-        });
-    });
-    
-    updatePullupsStats();
-}
-
-// Рендеринг сетов для отжиманий
-function renderPushupsSets() {
-    const container = document.getElementById('pushups-sets');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    if (!strengthToday.pushups.sets || strengthToday.pushups.sets.length === 0) {
-        strengthToday.pushups.sets = [{ reps: 15, completed: false }];
-    }
-    
-    strengthToday.pushups.sets.forEach((set, index) => {
-        const setCard = document.createElement('div');
-        setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
-        setCard.innerHTML = `
-            <div class="set-header">
-                <span class="set-number">${t('set')} ${index + 1}</span>
-                ${strengthToday.pushups.sets.length > 1 ? `<button class="set-remove" data-index="${index}">✕</button>` : ''}
-            </div>
-            <div class="set-inputs">
-                <div class="set-reps">
-                    <label>${t('reps')}</label>
-                    <input type="number" class="set-reps-input" data-index="${index}" value="${set.reps}" min="1" max="100" ${set.completed ? 'disabled' : ''}>
-                </div>
-                <label class="set-complete">
-                    <input type="checkbox" class="set-complete-check" data-index="${index}" ${set.completed ? 'checked' : ''}>
-                    <span>${t('completed')}</span>
-                </label>
-            </div>
-        `;
-        container.appendChild(setCard);
-    });
-    
-    // Добавляем обработчики
-    document.querySelectorAll('#pushups-sets .set-remove').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const index = parseInt(this.dataset.index);
-            strengthToday.pushups.sets.splice(index, 1);
-            renderPushupsSets();
-            updatePushupsStats();
-            saveState();
-        });
-    });
-    
-    document.querySelectorAll('#pushups-sets .set-reps-input').forEach(input => {
-        input.addEventListener('change', function() {
-            const index = parseInt(this.dataset.index);
-            const value = parseInt(this.value) || 0;
-            strengthToday.pushups.sets[index].reps = value;
-            updatePushupsStats();
-            saveState();
-        });
-    });
-    
-    document.querySelectorAll('#pushups-sets .set-complete-check').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const index = parseInt(this.dataset.index);
-            strengthToday.pushups.sets[index].completed = this.checked;
-            
-            const setCard = this.closest('.set-card');
-            if (this.checked) {
-                setCard.classList.add('completed');
-            } else {
-                setCard.classList.remove('completed');
-            }
-            
-            updatePushupsStats();
-            saveState();
-        });
-    });
-    
-    updatePushupsStats();
-}
-
-// Рендеринг комплексной тренировки
-function renderMixedSets() {
-    const mixedWorkout = document.querySelector('.mixed-workout');
-    if (!mixedWorkout) return;
-    
-    // Очищаем контейнер, но оставляем кнопку добавления
-    const addButton = document.getElementById('add-mixed-set');
-    mixedWorkout.innerHTML = '';
-    
-    strengthToday.mixed.rounds.forEach((round, index) => {
-        const roundDiv = document.createElement('div');
-        roundDiv.className = `mixed-exercise ${round.completed ? 'completed' : ''}`;
-        roundDiv.innerHTML = `
-            <div class="mixed-header">
-                <span class="mixed-name">🔥 ${t('round')} ${index + 1}</span>
-                <span class="mixed-check">✓</span>
-            </div>
-            <div class="mixed-items">
-                <div class="mixed-item ${round.pullupsCompleted ? 'completed' : ''}">
-                    <span class="item-name">${t('pullups')}</span>
-                    <input type="number" class="item-input" data-round="${index}" data-exercise="pullups" value="${round.pullups}" min="1" max="30" ${round.completed ? 'disabled' : ''}>
-                    <span class="item-unit">раз</span>
-                    <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pullups" ${round.pullupsCompleted ? 'checked' : ''}>
-                </div>
-                <div class="mixed-item ${round.pushupsCompleted ? 'completed' : ''}">
-                    <span class="item-name">${t('pushups')}</span>
-                    <input type="number" class="item-input" data-round="${index}" data-exercise="pushups" value="${round.pushups}" min="1" max="50" ${round.completed ? 'disabled' : ''}>
-                    <span class="item-unit">раз</span>
-                    <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pushups" ${round.pushupsCompleted ? 'checked' : ''}>
-                </div>
-            </div>
-        `;
-        mixedWorkout.appendChild(roundDiv);
-    });
-    
-    // Добавляем кнопку обратно
-    mixedWorkout.appendChild(addButton);
-    
-    // Добавляем обработчики
-    document.querySelectorAll('.mixed-item .item-input').forEach(input => {
-        input.addEventListener('change', function() {
-            const round = parseInt(this.dataset.round);
-            const exercise = this.dataset.exercise;
-            const value = parseInt(this.value) || 0;
-            
-            if (exercise === 'pullups') {
-                strengthToday.mixed.rounds[round].pullups = value;
-            } else {
-                strengthToday.mixed.rounds[round].pushups = value;
-            }
-            
-            updateMixedStats();
-            saveState();
-        });
-    });
-    
-    document.querySelectorAll('.mixed-item .item-check').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            const round = parseInt(this.dataset.round);
-            const exercise = this.dataset.exercise;
-            const mixedItem = this.closest('.mixed-item');
-            
-            if (exercise === 'pullups') {
-                strengthToday.mixed.rounds[round].pullupsCompleted = this.checked;
-            } else {
-                strengthToday.mixed.rounds[round].pushupsCompleted = this.checked;
-            }
-            
-            if (this.checked) {
-                mixedItem.classList.add('completed');
-            } else {
-                mixedItem.classList.remove('completed');
-            }
-            
-            // Проверяем, завершен ли весь круг
-            const roundData = strengthToday.mixed.rounds[round];
-            const allCompleted = roundData.pullupsCompleted && roundData.pushupsCompleted;
-            roundData.completed = allCompleted;
-            
-            const roundDiv = this.closest('.mixed-exercise');
-            if (allCompleted) {
-                roundDiv.classList.add('completed');
-            } else {
-                roundDiv.classList.remove('completed');
-            }
-            
-            updateMixedStats();
-            saveState();
-        });
-    });
-    
-    updateMixedStats();
-}
-
-// Добавление нового подхода
-function addSet(type) {
-    if (type === 'pullups') {
-        strengthToday.pullups.sets.push({ reps: 8, completed: false });
-        renderPullupsSets();
-    } else if (type === 'pushups') {
-        strengthToday.pushups.sets.push({ reps: 12, completed: false });
-        renderPushupsSets();
-    }
-    saveState();
-}
-
-// Добавление нового круга в комплекс
-function addMixedSet() {
-    if (strengthToday.mixed.rounds.length >= 5) {
-        tg.showAlert('Максимум 5 кругов');
-        return;
-    }
-    
-    strengthToday.mixed.rounds.push({
-        pullups: 5,
-        pushups: 10,
-        pullupsCompleted: false,
-        pushupsCompleted: false,
-        completed: false
-    });
-    
-    renderMixedSets();
-    saveState();
-}
-
-// Обновление цели для подтягиваний
-function updatePullupsGoal() {
-    const slider = document.getElementById('pullups-goal-slider');
-    const valueSpan = document.getElementById('pullups-goal-value');
-    const goalSpan = document.getElementById('pullups-goal');
-    
-    if (slider && valueSpan && goalSpan) {
-        slider.value = strengthToday.pullups.goal;
-        valueSpan.textContent = strengthToday.pullups.goal;
-        goalSpan.textContent = strengthToday.pullups.goal;
-        
-        slider.addEventListener('input', function() {
-            const value = this.value;
-            valueSpan.textContent = value;
-            goalSpan.textContent = value;
-            strengthToday.pullups.goal = parseInt(value);
-            updatePullupsStats();
-            saveState();
-        });
-    }
-}
-
-// Обновление цели для отжиманий
-function updatePushupsGoal() {
-    const slider = document.getElementById('pushups-goal-slider');
-    const valueSpan = document.getElementById('pushups-goal-value');
-    const goalSpan = document.getElementById('pushups-goal');
-    
-    if (slider && valueSpan && goalSpan) {
-        slider.value = strengthToday.pushups.goal;
-        valueSpan.textContent = strengthToday.pushups.goal;
-        goalSpan.textContent = strengthToday.pushups.goal;
-        
-        slider.addEventListener('input', function() {
-            const value = this.value;
-            valueSpan.textContent = value;
-            goalSpan.textContent = value;
-            strengthToday.pushups.goal = parseInt(value);
-            updatePushupsStats();
-            saveState();
-        });
-    }
-}
-
-// Обновление статистики подтягиваний
-function updatePullupsStats() {
-    const todaySpan = document.getElementById('pullups-today');
-    const summaryPullups = document.getElementById('summary-pullups');
-    
-    const totalCompleted = strengthToday.pullups.sets
-        .filter(set => set.completed)
-        .reduce((sum, set) => sum + set.reps, 0);
-    
-    const goal = strengthToday.pullups.goal;
-    
-    if (todaySpan) {
-        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
-    }
-    
-    if (summaryPullups) {
-        summaryPullups.textContent = totalCompleted;
-    }
-    
-    strengthToday.pullups.completed = totalCompleted >= goal;
-    
-    updateStrengthProgress();
-}
-
-// Обновление статистики отжиманий
-function updatePushupsStats() {
-    const todaySpan = document.getElementById('pushups-today');
-    const summaryPushups = document.getElementById('summary-pushups');
-    
-    const totalCompleted = strengthToday.pushups.sets
-        .filter(set => set.completed)
-        .reduce((sum, set) => sum + set.reps, 0);
-    
-    const goal = strengthToday.pushups.goal;
-    
-    if (todaySpan) {
-        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
-    }
-    
-    if (summaryPushups) {
-        summaryPushups.textContent = totalCompleted;
-    }
-    
-    strengthToday.pushups.completed = totalCompleted >= goal;
-    
-    updateStrengthProgress();
-}
-
-// Обновление статистики комплексной тренировки
-function updateMixedStats() {
-    const summaryPullups = document.getElementById('summary-pullups');
-    const summaryPushups = document.getElementById('summary-pushups');
-    
-    let totalPullupsCompleted = 0;
-    let totalPushupsCompleted = 0;
-    let allRoundsCompleted = true;
-    
-    strengthToday.mixed.rounds.forEach(round => {
-        if (round.pullupsCompleted) totalPullupsCompleted += round.pullups;
-        if (round.pushupsCompleted) totalPushupsCompleted += round.pushups;
-        if (!round.completed) allRoundsCompleted = false;
-    });
-    
-    if (summaryPullups) summaryPullups.textContent = totalPullupsCompleted;
-    if (summaryPushups) summaryPushups.textContent = totalPushupsCompleted;
-    
-    strengthToday.mixed.completed = allRoundsCompleted;
-    
-    updateStrengthProgress();
-}
-
-// Обновление общего прогресса силы
-function updateStrengthProgress() {
-    const progressBar = document.getElementById('strength-progress');
-    const percentSpan = document.getElementById('strength-percent');
-    const completeBtn = document.getElementById('complete-strength-btn');
-    
-    let totalCompleted = 0;
-    let totalGoal = 0;
-    
-    if (currentStrengthType === 'pullups') {
-        const completed = strengthToday.pullups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
-        totalCompleted = completed;
-        totalGoal = strengthToday.pullups.goal;
-    } else if (currentStrengthType === 'pushups') {
-        const completed = strengthToday.pushups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
-        totalCompleted = completed;
-        totalGoal = strengthToday.pushups.goal;
-    } else if (currentStrengthType === 'mixed') {
-        strengthToday.mixed.rounds.forEach(round => {
-            if (round.pullupsCompleted) totalCompleted += round.pullups;
-            if (round.pushupsCompleted) totalCompleted += round.pushups;
-        });
-        strengthToday.mixed.rounds.forEach(round => {
-            totalGoal += round.pullups + round.pushups;
-        });
-    }
-    
-    const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
-    
-    if (progressBar) progressBar.style.width = percent + '%';
-    if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
-    
-    // Проверяем, можно ли завершить тренировку
-    let canComplete = false;
-    
-    if (currentStrengthType === 'pullups') {
-        canComplete = strengthToday.pullups.completed;
-    } else if (currentStrengthType === 'pushups') {
-        canComplete = strengthToday.pushups.completed;
-    } else if (currentStrengthType === 'mixed') {
-        canComplete = strengthToday.mixed.completed;
-    }
-    
-    if (completeBtn) completeBtn.disabled = !canComplete;
-    
-    // Обновляем калории (примерно 1 калория на 2 повторения)
-    const calories = Math.round(totalCompleted * 0.5);
-    const summaryCalories = document.getElementById('summary-calories');
-    if (summaryCalories) summaryCalories.textContent = calories;
-}
-
-// Завершение силовой тренировки
-function completeStrengthWorkout() {
-    let totalPullupsToday = 0;
-    let totalPushupsToday = 0;
-    
-    if (currentStrengthType === 'pullups') {
-        totalPullupsToday = strengthToday.pullups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
-    } else if (currentStrengthType === 'pushups') {
-        totalPushupsToday = strengthToday.pushups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
-    } else if (currentStrengthType === 'mixed') {
-        strengthToday.mixed.rounds.forEach(round => {
-            if (round.pullupsCompleted) totalPullupsToday += round.pullups;
-            if (round.pushupsCompleted) totalPushupsToday += round.pushups;
-        });
-    }
-    
-    // Обновляем общую статистику
-    totalPullups += totalPullupsToday;
-    totalPushups += totalPushupsToday;
-    strengthDays++;
-    
-    if (totalPullupsToday > bestPullups) bestPullups = totalPullupsToday;
-    if (totalPushupsToday > bestPushups) bestPushups = totalPushupsToday;
-    
-    // Добавляем в историю
-    strengthHistory.push({
-        date: new Date().toISOString(),
-        pullups: totalPullupsToday,
-        pushups: totalPushupsToday,
-        type: currentStrengthType
-    });
-    
-    // Сбрасываем сегодняшнюю тренировку
-    strengthToday = {
-        pullups: {
-            goal: 30,
-            sets: [{ reps: 10, completed: false }],
-            completed: false
-        },
-        pushups: {
-            goal: 50,
-            sets: [{ reps: 15, completed: false }],
-            completed: false
-        },
-        mixed: {
-            completed: false,
-            rounds: [
-                { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
-                { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
-                { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
-            ]
-        }
-    };
-    
-    saveState();
-    
-    // Обновляем UI
-    renderPullupsSets();
-    renderPushupsSets();
-    renderMixedSets();
-    updateStrengthProgress();
-    updateStrengthStats();
-    
-    // Показываем новую мотивационную цитату
-    const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
-    const quoteEl = document.getElementById('strength-quote');
-    if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
-    
-    tg.showPopup({
-        title: '🎉',
-        message: t('strengthCompleted'),
-        buttons: [{ type: 'close' }]
-    });
-}
-
-// Обновление статистики силы в общем разделе
-function updateStrengthStats() {
-    const totalPullupsEl = document.getElementById('total-pullups');
-    const totalPushupsEl = document.getElementById('total-pushups');
-    const strengthDaysEl = document.getElementById('total-strength-days');
-    const bestPullupsEl = document.getElementById('best-pullups');
-    
-    if (totalPullupsEl) totalPullupsEl.textContent = totalPullups;
-    if (totalPushupsEl) totalPushupsEl.textContent = totalPushups;
-    if (strengthDaysEl) strengthDaysEl.textContent = strengthDays;
-    if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
 // ========== ФУНКЦИИ ДЛЯ ДНЕВНИКА ==========
@@ -2126,7 +1557,7 @@ function renderCustomCreator() {
     container.innerHTML = '';
     
     if (currentCustomTasks.length === 0) {
-        container.innerHTML = `<div class="empty-tasks">➕ Добавьте задания</div>`;
+        container.innerHTML = `<div class="empty-tasks">${t('noTasks')}</div>`;
         return;
     }
     
@@ -2165,7 +1596,7 @@ function updateCreateButtonState() {
 
 function saveWorkout() {
     if (currentCustomTasks.length === 0) {
-        tg.showAlert('Добавьте хотя бы одно задание');
+        tg.showAlert(t('enterTask'));
         return;
     }
     
@@ -2174,7 +1605,7 @@ function saveWorkout() {
     
     const newWorkout = {
         id: Date.now(),
-        name: `🏋️ Тренировка ${savedWorkouts.length + 1}`,
+        name: `🏋️ ${t('myWorkouts')} ${savedWorkouts.length + 1}`,
         goal: goal,
         tasks: [...currentCustomTasks],
         steps: currentCustomTasks.map((task, index) => ({
@@ -2198,7 +1629,7 @@ function saveWorkout() {
     };
     localStorage.setItem(STORAGE_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
     
-    tg.showAlert('Тренировка создана!');
+    tg.showAlert(t('workoutCompleted'));
     
     currentCustomTasks = [];
     goalInput.value = 5;
@@ -2242,7 +1673,7 @@ function renderSavedWorkouts() {
             <div class="saved-workout-icon">🏋️</div>
             <div class="saved-workout-info">
                 <span class="saved-workout-name">${workout.name}${progressText}</span>
-                <span class="saved-workout-meta">${totalSteps} заданий • ${workout.goal} км</span>
+                <span class="saved-workout-meta">${totalSteps} ${t('addTask')} • ${workout.goal} ${t('distance')}</span>
             </div>
             <div class="saved-workout-actions">
                 ${!isActive ? `<button class="workout-start-btn" data-id="${workout.id}">▶️</button>` : ''}
@@ -2323,7 +1754,7 @@ function renderActiveWorkout() {
     container.style.display = 'block';
     
     nameEl.textContent = activeWorkout.name;
-    goalEl.textContent = activeWorkout.goal + ' км';
+    goalEl.textContent = activeWorkout.goal + ' ' + t('distance');
     
     stepsContainer.innerHTML = '';
     
@@ -2337,7 +1768,7 @@ function renderActiveWorkout() {
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" ${step.completed ? 'checked' : ''}>
             <span class="step-text">${step.text}</span>
-            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
+            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} ${t('distance')}</span>` : ''}
         `;
         stepsContainer.appendChild(stepDiv);
     });
@@ -2396,6 +1827,577 @@ function completeWorkout() {
     
     renderActiveWorkout();
     renderSavedWorkouts();
+}
+
+// ========== ФУНКЦИИ ДЛЯ СИЛОВЫХ УПРАЖНЕНИЙ ==========
+
+// Переключение типа тренировки
+function switchStrengthType(type) {
+    console.log('Переключение на тип:', type);
+    currentStrengthType = type;
+    
+    // Обновляем активные кнопки
+    document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const activeBtn = document.getElementById(`type-${type}`);
+    if (activeBtn) activeBtn.classList.add('active');
+    
+    // Показываем нужную карточку
+    const pullupsCard = document.getElementById('pullups-card');
+    const pushupsCard = document.getElementById('pushups-card');
+    const mixedCard = document.getElementById('mixed-card');
+    
+    if (pullupsCard) pullupsCard.style.display = type === 'pullups' ? 'block' : 'none';
+    if (pushupsCard) pushupsCard.style.display = type === 'pushups' ? 'block' : 'none';
+    if (mixedCard) mixedCard.style.display = type === 'mixed' ? 'block' : 'none';
+    
+    // Обновляем интерфейс
+    if (type === 'pullups') {
+        renderPullupsSets();
+    } else if (type === 'pushups') {
+        renderPushupsSets();
+    } else if (type === 'mixed') {
+        renderMixedSets();
+    }
+    
+    updateStrengthProgress();
+}
+
+// Рендеринг сетов для подтягиваний
+function renderPullupsSets() {
+    const container = document.getElementById('pullups-sets');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (!strengthToday.pullups.sets || strengthToday.pullups.sets.length === 0) {
+        strengthToday.pullups.sets = [{ reps: 10, completed: false }];
+    }
+    
+    strengthToday.pullups.sets.forEach((set, index) => {
+        const setCard = document.createElement('div');
+        setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
+        setCard.innerHTML = `
+            <div class="set-header">
+                <span class="set-number">${t('set')} ${index + 1}</span>
+                ${strengthToday.pullups.sets.length > 1 ? `<button class="set-remove" data-index="${index}">✕</button>` : ''}
+            </div>
+            <div class="set-inputs">
+                <div class="set-reps">
+                    <label>${t('reps')}</label>
+                    <input type="number" class="set-reps-input" data-index="${index}" value="${set.reps}" min="1" max="50" ${set.completed ? 'disabled' : ''}>
+                </div>
+                <label class="set-complete">
+                    <input type="checkbox" class="set-complete-check" data-index="${index}" ${set.completed ? 'checked' : ''}>
+                    <span>${t('completed')}</span>
+                </label>
+            </div>
+        `;
+        container.appendChild(setCard);
+    });
+    
+    // Добавляем обработчики
+    document.querySelectorAll('#pullups-sets .set-remove').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const index = parseInt(this.dataset.index);
+            strengthToday.pullups.sets.splice(index, 1);
+            renderPullupsSets();
+            updatePullupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pullups-sets .set-reps-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            const value = parseInt(this.value) || 0;
+            strengthToday.pullups.sets[index].reps = value;
+            updatePullupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pullups-sets .set-complete-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            strengthToday.pullups.sets[index].completed = this.checked;
+            
+            const setCard = this.closest('.set-card');
+            if (this.checked) {
+                setCard.classList.add('completed');
+            } else {
+                setCard.classList.remove('completed');
+            }
+            
+            updatePullupsStats();
+            saveState();
+        });
+    });
+    
+    updatePullupsStats();
+}
+
+// Рендеринг сетов для отжиманий
+function renderPushupsSets() {
+    const container = document.getElementById('pushups-sets');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (!strengthToday.pushups.sets || strengthToday.pushups.sets.length === 0) {
+        strengthToday.pushups.sets = [{ reps: 15, completed: false }];
+    }
+    
+    strengthToday.pushups.sets.forEach((set, index) => {
+        const setCard = document.createElement('div');
+        setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
+        setCard.innerHTML = `
+            <div class="set-header">
+                <span class="set-number">${t('set')} ${index + 1}</span>
+                ${strengthToday.pushups.sets.length > 1 ? `<button class="set-remove" data-index="${index}">✕</button>` : ''}
+            </div>
+            <div class="set-inputs">
+                <div class="set-reps">
+                    <label>${t('reps')}</label>
+                    <input type="number" class="set-reps-input" data-index="${index}" value="${set.reps}" min="1" max="100" ${set.completed ? 'disabled' : ''}>
+                </div>
+                <label class="set-complete">
+                    <input type="checkbox" class="set-complete-check" data-index="${index}" ${set.completed ? 'checked' : ''}>
+                    <span>${t('completed')}</span>
+                </label>
+            </div>
+        `;
+        container.appendChild(setCard);
+    });
+    
+    // Добавляем обработчики
+    document.querySelectorAll('#pushups-sets .set-remove').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const index = parseInt(this.dataset.index);
+            strengthToday.pushups.sets.splice(index, 1);
+            renderPushupsSets();
+            updatePushupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pushups-sets .set-reps-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            const value = parseInt(this.value) || 0;
+            strengthToday.pushups.sets[index].reps = value;
+            updatePushupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pushups-sets .set-complete-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            strengthToday.pushups.sets[index].completed = this.checked;
+            
+            const setCard = this.closest('.set-card');
+            if (this.checked) {
+                setCard.classList.add('completed');
+            } else {
+                setCard.classList.remove('completed');
+            }
+            
+            updatePushupsStats();
+            saveState();
+        });
+    });
+    
+    updatePushupsStats();
+}
+
+// Рендеринг комплексной тренировки
+function renderMixedSets() {
+    const mixedWorkout = document.getElementById('mixed-workout');
+    if (!mixedWorkout) return;
+    
+    mixedWorkout.innerHTML = '';
+    
+    strengthToday.mixed.rounds.forEach((round, index) => {
+        const roundDiv = document.createElement('div');
+        roundDiv.className = `mixed-exercise ${round.completed ? 'completed' : ''}`;
+        roundDiv.innerHTML = `
+            <div class="mixed-header">
+                <span class="mixed-name">🔥 ${t('round')} ${index + 1}</span>
+                <span class="mixed-check">✓</span>
+            </div>
+            <div class="mixed-items">
+                <div class="mixed-item ${round.pullupsCompleted ? 'completed' : ''}">
+                    <span class="item-name">${t('pullups')}</span>
+                    <input type="number" class="item-input" data-round="${index}" data-exercise="pullups" value="${round.pullups}" min="1" max="30" ${round.completed ? 'disabled' : ''}>
+                    <span class="item-unit">${t('reps')}</span>
+                    <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pullups" ${round.pullupsCompleted ? 'checked' : ''}>
+                </div>
+                <div class="mixed-item ${round.pushupsCompleted ? 'completed' : ''}">
+                    <span class="item-name">${t('pushups')}</span>
+                    <input type="number" class="item-input" data-round="${index}" data-exercise="pushups" value="${round.pushups}" min="1" max="50" ${round.completed ? 'disabled' : ''}>
+                    <span class="item-unit">${t('reps')}</span>
+                    <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pushups" ${round.pushupsCompleted ? 'checked' : ''}>
+                </div>
+            </div>
+        `;
+        mixedWorkout.appendChild(roundDiv);
+    });
+    
+    // Добавляем обработчики
+    document.querySelectorAll('.mixed-item .item-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const round = parseInt(this.dataset.round);
+            const exercise = this.dataset.exercise;
+            const value = parseInt(this.value) || 0;
+            
+            if (exercise === 'pullups') {
+                strengthToday.mixed.rounds[round].pullups = value;
+            } else {
+                strengthToday.mixed.rounds[round].pushups = value;
+            }
+            
+            updateMixedStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('.mixed-item .item-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const round = parseInt(this.dataset.round);
+            const exercise = this.dataset.exercise;
+            const mixedItem = this.closest('.mixed-item');
+            
+            if (exercise === 'pullups') {
+                strengthToday.mixed.rounds[round].pullupsCompleted = this.checked;
+            } else {
+                strengthToday.mixed.rounds[round].pushupsCompleted = this.checked;
+            }
+            
+            if (this.checked) {
+                mixedItem.classList.add('completed');
+            } else {
+                mixedItem.classList.remove('completed');
+            }
+            
+            // Проверяем, завершен ли весь круг
+            const roundData = strengthToday.mixed.rounds[round];
+            const allCompleted = roundData.pullupsCompleted && roundData.pushupsCompleted;
+            roundData.completed = allCompleted;
+            
+            const roundDiv = this.closest('.mixed-exercise');
+            if (allCompleted) {
+                roundDiv.classList.add('completed');
+            } else {
+                roundDiv.classList.remove('completed');
+            }
+            
+            updateMixedStats();
+            saveState();
+        });
+    });
+    
+    updateMixedStats();
+}
+
+// Добавление нового подхода
+function addSet(type) {
+    if (type === 'pullups') {
+        strengthToday.pullups.sets.push({ reps: 8, completed: false });
+        renderPullupsSets();
+    } else if (type === 'pushups') {
+        strengthToday.pushups.sets.push({ reps: 12, completed: false });
+        renderPushupsSets();
+    }
+    saveState();
+}
+
+// Добавление нового круга в комплекс
+function addMixedSet() {
+    if (strengthToday.mixed.rounds.length >= 5) {
+        tg.showAlert(t('maxRounds'));
+        return;
+    }
+    
+    strengthToday.mixed.rounds.push({
+        pullups: 5,
+        pushups: 10,
+        pullupsCompleted: false,
+        pushupsCompleted: false,
+        completed: false
+    });
+    
+    renderMixedSets();
+    saveState();
+}
+
+// Обновление цели для подтягиваний
+function updatePullupsGoal() {
+    const slider = document.getElementById('pullups-goal-slider');
+    const valueSpan = document.getElementById('pullups-goal-value');
+    const goalSpan = document.getElementById('pullups-goal');
+    
+    if (slider && valueSpan && goalSpan) {
+        slider.value = strengthToday.pullups.goal;
+        valueSpan.textContent = strengthToday.pullups.goal;
+        goalSpan.textContent = strengthToday.pullups.goal;
+        
+        slider.addEventListener('input', function() {
+            const value = this.value;
+            valueSpan.textContent = value;
+            goalSpan.textContent = value;
+            strengthToday.pullups.goal = parseInt(value);
+            updatePullupsStats();
+            saveState();
+        });
+    }
+}
+
+// Обновление цели для отжиманий
+function updatePushupsGoal() {
+    const slider = document.getElementById('pushups-goal-slider');
+    const valueSpan = document.getElementById('pushups-goal-value');
+    const goalSpan = document.getElementById('pushups-goal');
+    
+    if (slider && valueSpan && goalSpan) {
+        slider.value = strengthToday.pushups.goal;
+        valueSpan.textContent = strengthToday.pushups.goal;
+        goalSpan.textContent = strengthToday.pushups.goal;
+        
+        slider.addEventListener('input', function() {
+            const value = this.value;
+            valueSpan.textContent = value;
+            goalSpan.textContent = value;
+            strengthToday.pushups.goal = parseInt(value);
+            updatePushupsStats();
+            saveState();
+        });
+    }
+}
+
+// Обновление статистики подтягиваний
+function updatePullupsStats() {
+    const todaySpan = document.getElementById('pullups-today');
+    const summaryPullups = document.getElementById('summary-pullups');
+    
+    const totalCompleted = strengthToday.pullups.sets
+        .filter(set => set.completed)
+        .reduce((sum, set) => sum + set.reps, 0);
+    
+    const goal = strengthToday.pullups.goal;
+    
+    if (todaySpan) {
+        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    }
+    
+    if (summaryPullups) {
+        summaryPullups.textContent = totalCompleted;
+    }
+    
+    strengthToday.pullups.completed = totalCompleted >= goal;
+    
+    updateStrengthProgress();
+}
+
+// Обновление статистики отжиманий
+function updatePushupsStats() {
+    const todaySpan = document.getElementById('pushups-today');
+    const summaryPushups = document.getElementById('summary-pushups');
+    
+    const totalCompleted = strengthToday.pushups.sets
+        .filter(set => set.completed)
+        .reduce((sum, set) => sum + set.reps, 0);
+    
+    const goal = strengthToday.pushups.goal;
+    
+    if (todaySpan) {
+        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    }
+    
+    if (summaryPushups) {
+        summaryPushups.textContent = totalCompleted;
+    }
+    
+    strengthToday.pushups.completed = totalCompleted >= goal;
+    
+    updateStrengthProgress();
+}
+
+// Обновление статистики комплексной тренировки
+function updateMixedStats() {
+    const summaryPullups = document.getElementById('summary-pullups');
+    const summaryPushups = document.getElementById('summary-pushups');
+    const mixedToday = document.getElementById('mixed-today');
+    
+    let totalPullupsCompleted = 0;
+    let totalPushupsCompleted = 0;
+    let completedRounds = 0;
+    
+    strengthToday.mixed.rounds.forEach(round => {
+        if (round.pullupsCompleted) totalPullupsCompleted += round.pullups;
+        if (round.pushupsCompleted) totalPushupsCompleted += round.pushups;
+        if (round.completed) completedRounds++;
+    });
+    
+    if (summaryPullups) summaryPullups.textContent = totalPullupsCompleted;
+    if (summaryPushups) summaryPushups.textContent = totalPushupsCompleted;
+    if (mixedToday) mixedToday.textContent = `${completedRounds}/${strengthToday.mixed.rounds.length} ${t('round')}`;
+    
+    strengthToday.mixed.completed = completedRounds === strengthToday.mixed.rounds.length;
+    
+    updateStrengthProgress();
+}
+
+// Обновление общего прогресса силы
+function updateStrengthProgress() {
+    const progressBar = document.getElementById('strength-progress');
+    const percentSpan = document.getElementById('strength-percent');
+    const completeBtn = document.getElementById('complete-strength-btn');
+    
+    let totalCompleted = 0;
+    let totalGoal = 0;
+    
+    if (currentStrengthType === 'pullups') {
+        const completed = strengthToday.pullups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+        totalCompleted = completed;
+        totalGoal = strengthToday.pullups.goal;
+    } else if (currentStrengthType === 'pushups') {
+        const completed = strengthToday.pushups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+        totalCompleted = completed;
+        totalGoal = strengthToday.pushups.goal;
+    } else if (currentStrengthType === 'mixed') {
+        strengthToday.mixed.rounds.forEach(round => {
+            if (round.pullupsCompleted) totalCompleted += round.pullups;
+            if (round.pushupsCompleted) totalCompleted += round.pushups;
+        });
+        strengthToday.mixed.rounds.forEach(round => {
+            totalGoal += round.pullups + round.pushups;
+        });
+    }
+    
+    const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
+    
+    if (progressBar) progressBar.style.width = percent + '%';
+    if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
+    
+    // Проверяем, можно ли завершить тренировку
+    let canComplete = false;
+    
+    if (currentStrengthType === 'pullups') {
+        canComplete = strengthToday.pullups.completed;
+    } else if (currentStrengthType === 'pushups') {
+        canComplete = strengthToday.pushups.completed;
+    } else if (currentStrengthType === 'mixed') {
+        canComplete = strengthToday.mixed.completed;
+    }
+    
+    if (completeBtn) completeBtn.disabled = !canComplete;
+    
+    // Обновляем калории (примерно 1 калория на 2 повторения)
+    const calories = Math.round(totalCompleted * 0.5);
+    const summaryCalories = document.getElementById('summary-calories');
+    if (summaryCalories) summaryCalories.textContent = calories;
+}
+
+// Завершение силовой тренировки
+function completeStrengthWorkout() {
+    let totalPullupsToday = 0;
+    let totalPushupsToday = 0;
+    
+    if (currentStrengthType === 'pullups') {
+        totalPullupsToday = strengthToday.pullups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+    } else if (currentStrengthType === 'pushups') {
+        totalPushupsToday = strengthToday.pushups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+    } else if (currentStrengthType === 'mixed') {
+        strengthToday.mixed.rounds.forEach(round => {
+            if (round.pullupsCompleted) totalPullupsToday += round.pullups;
+            if (round.pushupsCompleted) totalPushupsToday += round.pushups;
+        });
+    }
+    
+    // Обновляем общую статистику
+    totalPullups += totalPullupsToday;
+    totalPushups += totalPushupsToday;
+    strengthDays++;
+    
+    if (totalPullupsToday > bestPullups) bestPullups = totalPullupsToday;
+    if (totalPushupsToday > bestPushups) bestPushups = totalPushupsToday;
+    
+    // Добавляем в историю
+    strengthHistory.push({
+        date: new Date().toISOString(),
+        pullups: totalPullupsToday,
+        pushups: totalPushupsToday,
+        type: currentStrengthType
+    });
+    
+    // Сбрасываем сегодняшнюю тренировку
+    strengthToday = {
+        pullups: {
+            goal: 30,
+            sets: [{ reps: 10, completed: false }],
+            completed: false
+        },
+        pushups: {
+            goal: 50,
+            sets: [{ reps: 15, completed: false }],
+            completed: false
+        },
+        mixed: {
+            completed: false,
+            rounds: [
+                { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
+            ]
+        }
+    };
+    
+    saveState();
+    
+    // Обновляем UI
+    renderPullupsSets();
+    renderPushupsSets();
+    renderMixedSets();
+    updateStrengthProgress();
+    updateStrengthStats();
+    
+    // Показываем новую мотивационную цитату
+    const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
+    const quoteEl = document.getElementById('strength-quote');
+    if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
+    
+    tg.showPopup({
+        title: '🎉',
+        message: t('strengthCompleted'),
+        buttons: [{ type: 'close' }]
+    });
+}
+
+// Обновление статистики силы в общем разделе
+function updateStrengthStats() {
+    const totalPullupsEl = document.getElementById('total-pullups');
+    const totalPushupsEl = document.getElementById('total-pushups');
+    const strengthDaysEl = document.getElementById('total-strength-days');
+    const bestPullupsEl = document.getElementById('best-pullups');
+    
+    if (totalPullupsEl) totalPullupsEl.textContent = totalPullups;
+    if (totalPushupsEl) totalPushupsEl.textContent = totalPushups;
+    if (strengthDaysEl) strengthDaysEl.textContent = strengthDays;
+    if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
 // ========== СТАТИСТИКА ==========
@@ -2498,10 +2500,10 @@ function updateStats() {
                             <span class="history-workout">${workout.name || `День ${workout.day}`}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 12px;">
-                            <span>${workout.distance} км</span>
-                            <span>${workout.time} мин</span>
-                            <span>${workout.calories} ккал</span>
-                            <span>${pace} мин/км</span>
+                            <span>${workout.distance} ${t('distance')}</span>
+                            <span>${workout.time} ${t('minutes')}</span>
+                            <span>${workout.calories} ${t('kcal')}</span>
+                            <span>${pace} ${t('pace')}</span>
                         </div>
                     </div>
                 `;
@@ -2626,7 +2628,7 @@ function renderWorkout() {
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="main" ${completedSteps[index] ? 'checked' : ''}>
             <span class="step-text">${stepText}</span>
-            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
+            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} ${t('distance')}</span>` : ''}
         `;
         stepsContainer.appendChild(stepDiv);
     });
@@ -2645,7 +2647,7 @@ function renderWorkout() {
                 stepDiv.innerHTML = `
                     <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="extra" ${additionalCompleted[index] ? 'checked' : ''}>
                     <span class="step-text">${task.text}</span>
-                    ${task.distance > 0 ? `<span class="step-distance">+${task.distance} км</span>` : ''}
+                    ${task.distance > 0 ? `<span class="step-distance">+${task.distance} ${t('distance')}</span>` : ''}
                 `;
                 additionalContainer.appendChild(stepDiv);
             });
@@ -2923,17 +2925,17 @@ function updateAllText() {
     
     const goalSliders = document.querySelectorAll('.goal-slider label');
     goalSliders.forEach(label => {
-        label.textContent = t('goal');
+        label.textContent = t('goal_');
     });
     
     const addSetBtns = document.querySelectorAll('.add-set-btn');
     addSetBtns.forEach(btn => {
-        btn.innerHTML = `<span>${t('addSet')}</span>`;
+        btn.innerHTML = `<span class="btn-icon">➕</span><span class="btn-text">${t('addSet')}</span>`;
     });
     
     const addMixedBtn = document.getElementById('add-mixed-set');
     if (addMixedBtn) {
-        addMixedBtn.innerHTML = `<span>${t('addRound')}</span>`;
+        addMixedBtn.innerHTML = `<span class="btn-icon">➕</span><span class="btn-text">${t('addRound')}</span>`;
     }
     
     const completeStrengthBtn = document.getElementById('complete-strength-btn');
@@ -2954,7 +2956,7 @@ function updateAllText() {
     if (menuTitles[3]) menuTitles[3].textContent = t('contacts');
     
     const resetMenuItem = document.getElementById('reset-marathon');
-    if (resetMenuItem) resetMenuItem.innerHTML = `🔄 ${t('reset')}`;
+    if (resetMenuItem) resetMenuItem.innerHTML = `🔄 ${t('reset')} ${t('marathon').toLowerCase()}`;
     
     const statsMenuItem = document.getElementById('stats-menu');
     if (statsMenuItem) statsMenuItem.innerHTML = `📊 ${t('statsMenu')}`;
@@ -3003,8 +3005,6 @@ function updateAllText() {
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
-    updatePullupsGoal();
-    updatePushupsGoal();
     updateStrengthProgress();
     
     // Мотивационная цитата
@@ -3084,8 +3084,6 @@ window.switchPage = function(pageIndex) {
         renderPullupsSets();
         renderPushupsSets();
         renderMixedSets();
-        updatePullupsGoal();
-        updatePushupsGoal();
         updateStrengthProgress();
     }
 };
@@ -3144,8 +3142,6 @@ window.setLanguage = function(lang) {
         renderPullupsSets();
         renderPushupsSets();
         renderMixedSets();
-        updatePullupsGoal();
-        updatePushupsGoal();
         updateStrengthProgress();
     }
 };
@@ -3181,67 +3177,84 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePushupsGoal();
     updateStrengthProgress();
     
-    // Проверяем start parameter при загрузке
-    if (tg.initDataUnsafe?.start_param) {
-        handleInvite(tg.initDataUnsafe.start_param);
-    }
+    // ===== ИСПРАВЛЕННЫЕ ОБРАБОТЧИКИ ДЛЯ КНОПОК =====
     
-    // Обработчики для кнопок силовых
+    // Кнопки переключения типа тренировки
     document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            switchStrengthType(this.dataset.type);
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const type = this.dataset.type;
+            switchStrengthType(type);
         });
     });
     
-    document.getElementById('add-pullups-set')?.addEventListener('click', () => addSet('pullups'));
-    document.getElementById('add-pushups-set')?.addEventListener('click', () => addSet('pushups'));
-    document.getElementById('add-mixed-set')?.addEventListener('click', addMixedSet);
-    document.getElementById('complete-strength-btn')?.addEventListener('click', completeStrengthWorkout);
-    
-    // Обработчики для новых кнопок приглашений
-    const inviteBtn = document.getElementById('invite-friends-btn');
-    if (inviteBtn) {
-        inviteBtn.addEventListener('click', inviteFriend);
-    }
-    
-    const copyBtn = document.getElementById('copy-invite-btn');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', copyInviteLink);
-    }
-    
-    const shareBtn = document.getElementById('share-progress-btn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', shareProgress);
-    }
-    
-    // Обработчики для периода в таблице лидеров
-    document.querySelectorAll('.period-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
-            this.classList.add('active');
-            resultsPeriod = this.dataset.period;
-            renderLeaderboard();
-            renderFriendResults();
-        });
-    });
-    
-    // Табы
-    const tabFriends = document.getElementById('tab-friends');
-    const tabDiary = document.getElementById('tab-diary');
-    
-    if (tabFriends) {
-        tabFriends.addEventListener('click', function(e) {
+    // Кнопка добавления подхода для подтягиваний
+    const addPullupsBtn = document.getElementById('add-pullups-set');
+    if (addPullupsBtn) {
+        addPullupsBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            switchTab('friends');
+            e.stopPropagation();
+            addSet('pullups');
         });
     }
     
-    if (tabDiary) {
-        tabDiary.addEventListener('click', function(e) {
+    // Кнопка добавления подхода для отжиманий
+    const addPushupsBtn = document.getElementById('add-pushups-set');
+    if (addPushupsBtn) {
+        addPushupsBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            switchTab('diary');
+            e.stopPropagation();
+            addSet('pushups');
         });
     }
+    
+    // Кнопка добавления круга для комплекса
+    const addMixedBtn = document.getElementById('add-mixed-set');
+    if (addMixedBtn) {
+        addMixedBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            addMixedSet();
+        });
+    }
+    
+    // Кнопка завершения силовой тренировки
+    const completeStrengthBtn = document.getElementById('complete-strength-btn');
+    if (completeStrengthBtn) {
+        completeStrengthBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (!this.disabled) {
+                completeStrengthWorkout();
+            }
+        });
+    }
+    
+    // Обработчики для слайдеров цели
+    const pullupsSlider = document.getElementById('pullups-goal-slider');
+    if (pullupsSlider) {
+        pullupsSlider.addEventListener('input', function() {
+            const value = this.value;
+            document.getElementById('pullups-goal-value').textContent = value;
+            document.getElementById('pullups-goal').textContent = value;
+            strengthToday.pullups.goal = parseInt(value);
+            updatePullupsStats();
+            saveState();
+        });
+    }
+    
+    const pushupsSlider = document.getElementById('pushups-goal-slider');
+    if (pushupsSlider) {
+        pushupsSlider.addEventListener('input', function() {
+            const value = this.value;
+            document.getElementById('pushups-goal-value').textContent = value;
+            document.getElementById('pushups-goal').textContent = value;
+            strengthToday.pushups.goal = parseInt(value);
+            updatePushupsStats();
+            saveState();
+        });
+    }
+    
+    // ===== ОСТАЛЬНЫЕ ОБРАБОТЧИКИ =====
     
     // Кнопка обновления рекомендации
     const refreshBtn = document.getElementById('refresh-recommendation');
@@ -3362,6 +3375,22 @@ document.addEventListener('DOMContentLoaded', function() {
             if (congratsScreen) congratsScreen.style.display = 'none';
             updateUI();
         });
+    }
+    
+    // Кнопки приглашений
+    const inviteBtn = document.getElementById('invite-friends-btn');
+    if (inviteBtn) {
+        inviteBtn.addEventListener('click', inviteFriend);
+    }
+    
+    const copyBtn = document.getElementById('copy-invite-btn');
+    if (copyBtn) {
+        copyBtn.addEventListener('click', copyInviteLink);
+    }
+    
+    const shareBtn = document.getElementById('share-progress-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', shareProgress);
     }
     
     // Кнопка отправки заявки в друзья
@@ -3519,8 +3548,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderPullupsSets();
                 renderPushupsSets();
                 renderMixedSets();
-                updatePullupsGoal();
-                updatePushupsGoal();
                 updateStrengthProgress();
                 
                 const menu = document.getElementById('menu-dropdown');
@@ -3628,7 +3655,36 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Проверка заявок (имитация)
+    // Табы
+    const tabFriends = document.getElementById('tab-friends');
+    const tabDiary = document.getElementById('tab-diary');
+    
+    if (tabFriends) {
+        tabFriends.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchTab('friends');
+        });
+    }
+    
+    if (tabDiary) {
+        tabDiary.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchTab('diary');
+        });
+    }
+    
+    // Обработчики для периода в таблице лидеров
+    document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            resultsPeriod = this.dataset.period;
+            renderLeaderboard();
+            renderFriendResults();
+        });
+    });
+    
+    // Проверка заявок
     setInterval(checkIncomingRequests, 30000);
     
     // Интервал обновления времени
