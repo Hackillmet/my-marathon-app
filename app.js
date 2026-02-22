@@ -48,6 +48,7 @@ const translations = {
         until23: "⏳ До 23:00",
         timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
         dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется через 24 часа.",
+        newDayAvailable: "🌟 Новый день доступен!",
         
         // Тренировка
         mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
@@ -198,6 +199,7 @@ const translations = {
         until23: "⏳ Until 11 PM",
         timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
         dayExpiredMsg: "⏰ Workout time expired! New day starts in 24 hours.",
+        newDayAvailable: "🌟 New day available!",
         
         // Workout
         mainWorkout: "MAIN WORKOUT",
@@ -569,6 +571,84 @@ function t(key, ...args) {
         return text(...args);
     }
     return text;
+}
+
+// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ВРЕМЕНИ ==========
+
+function getCurrentHour() {
+    return new Date().getHours();
+}
+
+function getCurrentTime() {
+    return new Date().getTime();
+}
+
+function canStartDay() {
+    const hour = getCurrentHour();
+    // Можно начинать с 4 утра до 23:00
+    return hour >= 4 && hour < 23;
+}
+
+function canCompleteDay() {
+    const hour = getCurrentHour();
+    // Завершить можно только до 23:00
+    return hour < 23;
+}
+
+function canStartNewDay() {
+    if (!dayCompletedTime) return true;
+    
+    const now = getCurrentTime();
+    const completed = parseInt(dayCompletedTime);
+    const hoursPassed = (now - completed) / (1000 * 60 * 60);
+    
+    // Проверяем, прошло ли 24 часа
+    return hoursPassed >= 24;
+}
+
+function getTimeRemaining() {
+    if (!dayCompletedTime) return null;
+    
+    const now = getCurrentTime();
+    const completed = parseInt(dayCompletedTime);
+    const hoursPassed = (now - completed) / (1000 * 60 * 60);
+    
+    if (hoursPassed >= 24) return null;
+    
+    const remaining = 24 - hoursPassed;
+    const hours = Math.floor(remaining);
+    const minutes = Math.ceil((remaining - hours) * 60);
+    
+    return { hours, minutes };
+}
+
+function isDayExpired() {
+    if (!dayStartTime) return false;
+    const now = getCurrentTime();
+    const start = parseInt(dayStartTime);
+    const hoursPassed = (now - start) / (1000 * 60 * 60);
+    
+    // День истекает через 24 часа после начала
+    return hoursPassed >= 24;
+}
+
+function checkNewDayAvailability() {
+    // Проверяем, можно ли начать новый день
+    if (dayCompletedTime && canStartNewDay()) {
+        // Если прошло 24 часа, сбрасываем флаг завершения
+        dayCompletedTime = null;
+        saveState();
+        
+        // Показываем уведомление
+        tg.showPopup({
+            title: '🌟',
+            message: t('newDayAvailable'),
+            buttons: [{ type: 'close' }]
+        });
+        
+        return true;
+    }
+    return false;
 }
 
 // ========== ФУНКЦИИ ДЛЯ ДРУЗЕЙ ==========
@@ -1177,54 +1257,6 @@ function updateRecommendation() {
     `;
 }
 
-// ========== ФУНКЦИИ ВРЕМЕНИ ==========
-function getCurrentHour() {
-    return new Date().getHours();
-}
-
-function canStartDay() {
-    const hour = getCurrentHour();
-    return hour >= 4 && hour < 23;
-}
-
-function canCompleteDay() {
-    const hour = getCurrentHour();
-    return hour < 23;
-}
-
-function canStartNewDay() {
-    if (!dayCompletedTime) return true;
-    
-    const now = Date.now();
-    const completed = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completed) / (1000 * 60 * 60);
-    
-    return hoursPassed >= 24;
-}
-
-function getTimeRemaining() {
-    if (!dayCompletedTime) return null;
-    
-    const now = Date.now();
-    const completed = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completed) / (1000 * 60 * 60);
-    
-    if (hoursPassed >= 24) return null;
-    
-    const remaining = 24 - hoursPassed;
-    const hours = Math.floor(remaining);
-    const minutes = Math.ceil((remaining - hours) * 60);
-    
-    return { hours, minutes };
-}
-
-function isDayExpired() {
-    if (!dayStartTime) return false;
-    const now = Date.now();
-    const start = parseInt(dayStartTime);
-    return (now - start) / (1000 * 60 * 60) >= 24;
-}
-
 // ========== СОХРАНЕНИЕ ==========
 function saveState() {
     localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
@@ -1460,12 +1492,14 @@ function updateUI() {
     if (startDayNumber) startDayNumber.textContent = currentDay;
     if (currentDayEl) currentDayEl.textContent = currentDay;
     
+    // Проверяем, не истек ли текущий день
     if (dayStarted && dayStartTime) {
-        const now = Date.now();
+        const now = getCurrentTime();
         const start = parseInt(dayStartTime);
         const hoursPassed = (now - start) / (1000 * 60 * 60);
         
         if (hoursPassed >= 24) {
+            // День истек
             dayStarted = false;
             dayStartTime = null;
             dayCompletedTime = now.toString();
@@ -1476,6 +1510,9 @@ function updateUI() {
         }
     }
     
+    // Проверяем, можно ли начать новый день
+    checkNewDayAvailability();
+    
     const startScreen = document.getElementById('start-screen');
     const marathonScreen = document.getElementById('marathon-screen');
     const congratsScreen = document.getElementById('congrats');
@@ -1483,37 +1520,36 @@ function updateUI() {
     if (!startScreen || !marathonScreen || !congratsScreen) return;
     
     if (dayStarted) {
+        // Показываем экран тренировки
         startScreen.style.display = 'none';
         marathonScreen.style.display = 'block';
         congratsScreen.style.display = 'none';
         renderWorkout();
         updateDeadlineInfo();
-    } else if (dayCompletedTime && !canStartNewDay()) {
-        startScreen.style.display = 'block';
-        marathonScreen.style.display = 'none';
-        congratsScreen.style.display = 'none';
-        
-        const remaining = getTimeRemaining();
-        const timeInfo = document.getElementById('time-info');
-        const startBtn = document.getElementById('start-day-btn');
-        
-        if (timeInfo && remaining) {
-            timeInfo.textContent = t('waitHours', remaining.hours, remaining.minutes);
-            timeInfo.style.color = 'var(--warning)';
-        }
-        if (startBtn) {
-            startBtn.disabled = true;
-            startBtn.textContent = t('waitHours', remaining.hours, remaining.minutes);
-        }
     } else {
+        // Показываем стартовый экран
         startScreen.style.display = 'block';
         marathonScreen.style.display = 'none';
         congratsScreen.style.display = 'none';
         
+        const canStart = canStartNewDay();
+        const canStartByTime = canStartDay();
         const timeInfo = document.getElementById('time-info');
         const startBtn = document.getElementById('start-day-btn');
         
-        if (!canStartDay()) {
+        if (dayCompletedTime && !canStart) {
+            // Ждем 24 часа
+            const remaining = getTimeRemaining();
+            if (timeInfo && remaining) {
+                timeInfo.textContent = t('waitHours', remaining.hours, remaining.minutes);
+                timeInfo.style.color = 'var(--warning)';
+            }
+            if (startBtn) {
+                startBtn.disabled = true;
+                startBtn.textContent = t('waitHours', remaining.hours, remaining.minutes);
+            }
+        } else if (!canStartByTime) {
+            // Ждем 4 утра
             if (timeInfo) {
                 timeInfo.textContent = t('waitUntil4am');
                 timeInfo.style.color = 'var(--warning)';
@@ -1523,6 +1559,7 @@ function updateUI() {
                 startBtn.textContent = t('waitUntil4am');
             }
         } else {
+            // Можно начинать
             if (timeInfo) {
                 timeInfo.textContent = t('canStart');
                 timeInfo.style.color = 'var(--success)';
@@ -1645,33 +1682,38 @@ function updateProgress() {
     if (workoutPercent) workoutPercent.textContent = Math.round(progress) + '%';
     
     const allCompleted = totalCompleted === total;
+    const canComplete = canCompleteDay();
+    const expired = isDayExpired();
     
-    if (allCompleted && canCompleteDay()) {
+    if (expired) {
         if (completeBtn) {
-            completeBtn.disabled = false;
-            completeBtn.textContent = t('completeBtn');
+            completeBtn.disabled = true;
+            completeBtn.textContent = t('dayExpired');
+        }
+    } else if (!canComplete) {
+        if (completeBtn) {
+            completeBtn.disabled = true;
+            completeBtn.textContent = t('until23');
         }
     } else {
         if (completeBtn) {
-            completeBtn.disabled = true;
-            if (!canCompleteDay()) {
-                completeBtn.textContent = t('until23');
-            } else if (isDayExpired()) {
-                completeBtn.textContent = t('dayExpired');
-            } else {
-                completeBtn.textContent = t('completeBtn');
-            }
+            completeBtn.disabled = !allCompleted;
+            completeBtn.textContent = t('completeBtn');
         }
     }
 }
 
 function updateDeadlineInfo() {
     const deadlineInfo = document.getElementById('deadline-info');
-    if (!deadlineInfo) return;
+    if (!deadlineInfo || !dayStarted) return;
     
     const hour = getCurrentHour();
+    const expired = isDayExpired();
     
-    if (hour >= 23) {
+    if (expired) {
+        deadlineInfo.textContent = t('dayExpiredMsg');
+        deadlineInfo.style.color = 'var(--danger)';
+    } else if (hour >= 23) {
         deadlineInfo.textContent = t('dayExpired');
         deadlineInfo.style.color = 'var(--danger)';
     } else {
@@ -2084,7 +2126,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             dayStarted = true;
-            dayStartTime = Date.now().toString();
+            dayStartTime = getCurrentTime().toString();
             dayCompletedTime = null;
             
             const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
@@ -2102,6 +2144,11 @@ document.addEventListener('DOMContentLoaded', function() {
         completeBtn.addEventListener('click', function() {
             if (!canCompleteDay()) {
                 tg.showAlert(t('onlyUntil23'));
+                return;
+            }
+            
+            if (isDayExpired()) {
+                tg.showAlert(t('dayExpiredMsg'));
                 return;
             }
             
@@ -2159,7 +2206,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (congratsScreen) congratsScreen.style.display = 'block';
             
             dayStarted = false;
-            dayCompletedTime = Date.now().toString();
+            dayCompletedTime = getCurrentTime().toString();
             dayStartTime = null;
             currentDay++;
             completedSteps = [];
