@@ -129,21 +129,26 @@ const translations = {
         requestSentSuccess: (name) => `✅ Заявка отправлена ${name}`,
         requestAccepted: (name) => `✅ Вы приняли заявку от ${name}`,
         requestDeclined: (name) => `❌ Заявка от ${name} отклонена`,
-        requestCancelled: (name) => `✕ Заявка ${name} отменена`,
         friendRemoved: (name) => `✕ Друг ${name} удален`,
-        friendAdded: (name) => `✅ Пользователь ${name} добавлен!`,
         writeToTelegram: "💬 Написать",
         newRequest: "🔔 Новая заявка",
         
-        // Приглашения
+        // Приглашения (ИСПРАВЛЕНО)
         inviteFriends: "🔗 Пригласить друзей",
-        inviteText: "Присоединяйся ко мне в беговом марафоне! Будем соревноваться и мотивировать друг друга 💪",
+        inviteText: (name) => `🏃 Привет! ${name} приглашает тебя в беговой марафон! Будем соревноваться и мотивировать друг друга 💪\n\n👉 Открывай приложение и присоединяйся!`,
         copyInvite: "📋 Копировать ссылку",
-        inviteCopied: "✅ Ссылка скопирована! Отправь другу",
+        inviteCopied: "✅ Ссылка скопирована! Отправь другу в личные сообщения",
         bonusPoints: "🎁 Бонусные очки",
         invitedCount: "приглашено",
         joinedCount: "присоединились",
         bonusEarned: "бонусов",
+        inviteReceived: "🎉 Вас пригласили в марафон!",
+        inviteFrom: (name, username) => `${name} (@${username}) приглашает вас присоединиться к беговому марафону!`,
+        joinNow: "👥 Присоединиться",
+        sendInvite: "📤 Отправить приглашение",
+        inviteSent: "✅ Приглашение отправлено!",
+        enterFriendUsername: "Введите username друга для приглашения",
+        inviteSuccess: (name) => `✅ Приглашение отправлено пользователю @${name}`,
         
         // Таблица лидеров
         leaderboard: "🏆 ТАБЛИЦА ЛИДЕРОВ",
@@ -307,21 +312,26 @@ const translations = {
         requestSentSuccess: (name) => `✅ Request sent to ${name}`,
         requestAccepted: (name) => `✅ Accepted from ${name}`,
         requestDeclined: (name) => `❌ Declined from ${name}`,
-        requestCancelled: (name) => `✕ Cancelled to ${name}`,
         friendRemoved: (name) => `✕ Friend ${name} removed`,
-        friendAdded: (name) => `✅ User ${name} added!`,
         writeToTelegram: "💬 Write",
         newRequest: "🔔 New request",
         
-        // Invites
+        // Invites (FIXED)
         inviteFriends: "🔗 Invite Friends",
-        inviteText: "Join me in the running marathon! Let's compete and motivate each other 💪",
+        inviteText: (name) => `🏃 Hi! ${name} invites you to the running marathon! Let's compete and motivate each other 💪\n\n👉 Open the app and join!`,
         copyInvite: "📋 Copy link",
-        inviteCopied: "✅ Link copied! Send to friend",
+        inviteCopied: "✅ Link copied! Send to friend in private message",
         bonusPoints: "🎁 Bonus points",
         invitedCount: "invited",
         joinedCount: "joined",
         bonusEarned: "bonus",
+        inviteReceived: "🎉 You've been invited to the marathon!",
+        inviteFrom: (name, username) => `${name} (@${username}) invites you to join the running marathon!`,
+        joinNow: "👥 Join now",
+        sendInvite: "📤 Send invite",
+        inviteSent: "✅ Invitation sent!",
+        enterFriendUsername: "Enter friend's username to invite",
+        inviteSuccess: (name) => `✅ Invitation sent to @${name}`,
         
         // Leaderboard
         leaderboard: "🏆 LEADERBOARD",
@@ -623,14 +633,14 @@ let sentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.SENT_REQUESTS)) 
 let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
 let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
 
-// Приглашения и бонусы
+// Приглашения и бонусы (ИСПРАВЛЕНО)
 let invitedFriends = JSON.parse(localStorage.getItem(STORAGE_KEYS.INVITED_FRIENDS)) || [];
 let bonusPoints = parseInt(localStorage.getItem(STORAGE_KEYS.BONUS_POINTS)) || 0;
 
-// Код приглашения
+// Код приглашения (для реферальной системы)
 let inviteCode = localStorage.getItem(STORAGE_KEYS.INVITE_CODE);
 if (!inviteCode) {
-    inviteCode = 'user_' + userId + '_' + Date.now();
+    inviteCode = 'ref_' + userId + '_' + Date.now().toString(36);
     localStorage.setItem(STORAGE_KEYS.INVITE_CODE, inviteCode);
 }
 
@@ -799,17 +809,64 @@ function renderDiary() {
     });
 }
 
-// ========== ФУНКЦИИ ДЛЯ ПРИГЛАШЕНИЙ ==========
+// ========== ФУНКЦИИ ДЛЯ ПРИГЛАШЕНИЙ (ИСПРАВЛЕНО) ==========
+
+// Отправка приглашения другу через Telegram
 function inviteFriend() {
-    const inviteText = `${t('inviteText')}\n\n🔗 Ссылка: https://t.me/your_bot_name?start=${inviteCode}\n\n🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок`;
+    // Создаем временное поле для ввода username друга
+    const friendUsername = prompt(t('enterFriendUsername'), '@');
     
-    tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(inviteText)}`);
+    if (!friendUsername) return;
+    
+    const cleanUsername = friendUsername.replace('@', '').trim();
+    
+    if (!cleanUsername) {
+        tg.showAlert(t('enterFriendUsername'));
+        return;
+    }
+    
+    if (cleanUsername === userUsername) {
+        tg.showAlert(t('cantAddSelf'));
+        return;
+    }
+    
+    // Проверяем, не является ли уже другом
+    const alreadyFriend = friends.some(f => f.username === cleanUsername);
+    if (alreadyFriend) {
+        tg.showAlert(t('alreadyFriend'));
+        return;
+    }
+    
+    // Создаем сообщение с приглашением
+    const inviteMessage = `${t('inviteText', userName)}\n\n` +
+                         `👤 От: ${userName} (@${userUsername})\n` +
+                         `🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n\n` +
+                         `👉 Нажми, чтобы открыть приложение: https://t.me/your_bot_name?start=${inviteCode}`;
+    
+    // Открываем диалог с другом в Telegram
+    tg.openTelegramLink(`https://t.me/${cleanUsername}?text=${encodeURIComponent(inviteMessage)}`);
+    
+    // Добавляем в список приглашенных
+    invitedFriends.push({
+        username: cleanUsername,
+        date: new Date().toISOString(),
+        joined: false
+    });
+    
+    // Добавляем бонусные очки
+    bonusPoints += 10;
+    saveState();
+    
+    renderInviteStats();
+    
+    tg.showAlert(t('inviteSuccess', cleanUsername));
 }
 
+// Копирование реферальной ссылки
 function copyInviteLink() {
     const link = `https://t.me/your_bot_name?start=${inviteCode}`;
     
-    // Создаем временный input
+    // Копируем в буфер обмена
     const input = document.createElement('input');
     input.value = link;
     document.body.appendChild(input);
@@ -817,37 +874,20 @@ function copyInviteLink() {
     document.execCommand('copy');
     document.body.removeChild(input);
     
-    // Добавляем бонус за приглашение
-    bonusPoints += 10;
-    saveState();
-    
     tg.showPopup({
         title: '✅',
         message: t('inviteCopied'),
         buttons: [{ type: 'close' }]
     });
-    
-    renderInviteStats();
 }
 
-function renderInviteStats() {
-    const invitedCountEl = document.getElementById('invited-count');
-    const joinedCountEl = document.getElementById('joined-count');
-    const bonusCountEl = document.getElementById('bonus-count');
-    
-    if (invitedCountEl) invitedCountEl.textContent = invitedFriends.length;
-    if (joinedCountEl) joinedCountEl.textContent = invitedFriends.filter(f => f.joined).length;
-    if (bonusCountEl) bonusCountEl.textContent = bonusPoints;
-}
-
+// Поделиться прогрессом
 function shareProgress() {
-    const stats = calculateStats(workoutHistory, 'thisWeek');
-    const message = `🏃 Моя неделя в беговом марафоне:\n\n` +
-                   `📊 Дистанция: ${stats.distance.toFixed(1)} км\n` +
-                   `🎯 Тренировок: ${stats.workouts}\n` +
-                   `⏱ Время: ${Math.floor(stats.time / 60)}ч ${stats.time % 60}м\n` +
-                   `🔥 Калории: ${stats.calories}\n\n` +
-                   `👥 Присоединяйся!`;
+    const message = `🏃 Мой прогресс в беговом марафоне:\n\n` +
+                   `📊 Всего: ${totalDistance.toFixed(1)} км\n` +
+                   `🎯 Тренировок: ${totalWorkouts}\n` +
+                   `🔥 Калорий: ${totalCalories}\n\n` +
+                   `👥 Присоединяйся! https://t.me/your_bot_name?start=${inviteCode}`;
     
     tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(message)}`);
     
@@ -856,6 +896,42 @@ function shareProgress() {
         message: t('shared'),
         buttons: [{ type: 'close' }]
     });
+}
+
+// Обработка входящего приглашения (по start параметру)
+function handleInvite(startParam) {
+    if (startParam && startParam.startsWith('ref_')) {
+        // Извлекаем ID пригласившего
+        const inviterId = startParam.split('_')[1];
+        
+        // Проверяем, не пригласил ли сам себя
+        if (inviterId === userId) return;
+        
+        tg.showPopup({
+            title: '🎉',
+            message: t('inviteReceived'),
+            buttons: [
+                { id: 'join', type: 'default', text: t('joinNow') },
+                { type: 'close', text: 'Закрыть' }
+            ]
+        }, (buttonId) => {
+            if (buttonId === 'join') {
+                // Здесь можно добавить логику для автоматического добавления в друзья
+                // когда будет готова серверная часть
+            }
+        });
+    }
+}
+
+// Рендеринг статистики приглашений
+function renderInviteStats() {
+    const invitedCountEl = document.getElementById('invited-count');
+    const joinedCountEl = document.getElementById('joined-count');
+    const bonusCountEl = document.getElementById('bonus-count');
+    
+    if (invitedCountEl) invitedCountEl.textContent = invitedFriends.length;
+    if (joinedCountEl) joinedCountEl.textContent = invitedFriends.filter(f => f.joined).length;
+    if (bonusCountEl) bonusCountEl.textContent = bonusPoints;
 }
 
 // ========== ФУНКЦИИ ДЛЯ ДРУЗЕЙ ==========
@@ -965,39 +1041,29 @@ function sendFriendRequest() {
         return;
     }
     
-    // Создаем новую заявку
+    // Создаем сообщение с заявкой
+    const requestMessage = `👋 ${userName} (@${userUsername}) хочет добавить тебя в друзья в беговом марафоне!\n\n` +
+                          `📊 Его статистика:\n` +
+                          `🏃 Дистанция: ${totalDistance.toFixed(1)} км\n` +
+                          `🎯 Тренировок: ${totalWorkouts}\n` +
+                          `🔥 Калорий: ${totalCalories}\n\n` +
+                          `👉 Открой приложение, чтобы принять заявку: https://t.me/your_bot_name`;
+    
+    // Открываем диалог с пользователем
+    tg.openTelegramLink(`https://t.me/${cleanUsername}?text=${encodeURIComponent(requestMessage)}`);
+    
+    // Добавляем в отправленные заявки
     const newRequest = {
         id: Date.now(),
-        name: cleanUsername,
         username: cleanUsername,
-        avatar: '👤',
-        fromUserId: userId,
-        fromUserName: userName,
-        fromUserUsername: userUsername,
-        fromUserWorkouts: totalWorkouts,
-        fromUserDistance: totalDistance,
-        fromUserTime: totalTime,
-        fromUserCalories: totalCalories,
+        name: cleanUsername,
         date: new Date().toISOString()
     };
     
-    // Добавляем в отправленные заявки
     sentRequests.push(newRequest);
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
     
-    // Сохраняем заявку для получателя
-    const friendRequestKey = `friend_request_${cleanUsername}`;
-    const existingRequests = JSON.parse(localStorage.getItem(friendRequestKey)) || [];
-    existingRequests.push(newRequest);
-    localStorage.setItem(friendRequestKey, JSON.stringify(existingRequests));
-    
-    // Добавляем в общий список заявок (для тестового режима)
-    friendRequests.push(newRequest);
-    localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
-    
     input.value = '';
-    
-    renderFriendRequests();
     
     tg.showAlert(t('requestSentSuccess', cleanUsername));
 }
@@ -1250,17 +1316,19 @@ function updateTeamProgress() {
 }
 
 function checkIncomingRequests() {
-    const requestKey = `friend_request_${userUsername}`;
-    const requests = JSON.parse(localStorage.getItem(requestKey)) || [];
+    // В реальном приложении здесь был бы запрос к серверу
+    // Для демо просто проверяем локальное хранилище
+    const pendingKey = `pending_request_${userUsername}`;
+    const pending = JSON.parse(localStorage.getItem(pendingKey)) || [];
     
-    if (requests.length > 0) {
-        requests.forEach(request => {
-            const exists = friendRequests.some(r => r.id === request.id);
+    if (pending.length > 0) {
+        pending.forEach(req => {
+            const exists = friendRequests.some(r => r.id === req.id);
             if (!exists) {
-                friendRequests.push(request);
+                friendRequests.push(req);
                 tg.showPopup({
                     title: '🔔',
-                    message: `${request.fromUserName} ${t('newRequest')}`,
+                    message: `${req.fromUserName} ${t('newRequest')}`,
                     buttons: [
                         { id: 'view', type: 'default', text: '👥 Перейти' },
                         { type: 'close', text: 'Закрыть' }
@@ -1275,7 +1343,7 @@ function checkIncomingRequests() {
         });
         
         localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
-        localStorage.removeItem(requestKey);
+        localStorage.removeItem(pendingKey);
     }
 }
 
@@ -2084,7 +2152,7 @@ function updateAllText() {
     // Друзья - новые элементы
     const inviteBtn = document.getElementById('invite-friends-btn');
     if (inviteBtn) {
-        inviteBtn.innerHTML = `<span class="btn-icon">📤</span><span class="btn-text">${t('inviteFriends')}</span>`;
+        inviteBtn.innerHTML = `<span class="btn-icon">📤</span><span class="btn-text">${t('sendInvite')}</span>`;
     }
     
     const copyBtn = document.getElementById('copy-invite-btn');
@@ -2346,7 +2414,12 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSavedWorkouts();
     renderActiveWorkout();
     
-    // Обработчики для новых кнопок
+    // Проверяем start parameter при загрузке
+    if (tg.initDataUnsafe?.start_param) {
+        handleInvite(tg.initDataUnsafe.start_param);
+    }
+    
+    // Обработчики для новых кнопок приглашений
     const inviteBtn = document.getElementById('invite-friends-btn');
     if (inviteBtn) {
         inviteBtn.addEventListener('click', inviteFriend);
@@ -2740,8 +2813,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Проверка заявок
-    checkIncomingRequests();
+    // Проверка заявок (имитация)
     setInterval(checkIncomingRequests, 30000);
     
     // Интервал обновления времени
