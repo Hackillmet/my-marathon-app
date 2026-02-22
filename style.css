@@ -790,168 +790,191 @@ body {
     color: white;
 }
 
-/* ===== СОЦИАЛЬНЫЕ ФУНКЦИИ ===== */
-.friends-section {
+/* ===== ОБЪЕДИНЕННЫЙ СЛАЙД ДРУЗЬЯ/ДНЕВНИК ===== */
+.combined-section {
     background: var(--bg-card);
     border-radius: 16px;
-    padding: 20px;
+    padding: 16px;
     border: 1px solid var(--border-color);
     margin-bottom: 20px;
+}
+
+.section-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background: var(--blue);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Компактные стили для друзей */
+.friends-section-compact {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
+    gap: 12px;
 }
 
-.friends-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 20px;
-    letter-spacing: 1px;
-    width: 100%;
-}
-
-/* Профиль пользователя */
 .user-profile-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 2px solid var(--blue);
+    border-radius: 12px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    gap: 15px;
-    animation: slideIn 0.3s ease;
-    width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    gap: 12px;
+    border: 1px solid var(--border-color);
 }
 
 .user-avatar {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 30px;
+    font-size: 20px;
     color: white;
-    box-shadow: 0 4px 10px rgba(0, 102, 255, 0.3);
     flex-shrink: 0;
 }
 
 .user-info {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
     min-width: 0;
 }
 
 .user-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .user-stats {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.new-user-badge {
-    background: var(--warning);
-    color: white;
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    margin-left: 8px;
-    text-transform: uppercase;
-    display: inline-block;
-}
-
 .share-profile-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 20px;
-    padding: 8px 15px;
-    color: var(--text-primary);
-    font-size: 13px;
+    padding: 6px 12px;
+    font-size: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
     flex-shrink: 0;
 }
 
-.share-profile-btn:active {
+.add-friend-card {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.add-friend-form {
+    display: flex;
+    gap: 8px;
+}
+
+.add-friend-form input {
+    flex: 1;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 13px;
+}
+
+.add-friend-form input:focus {
+    border-color: var(--blue);
+    outline: none;
+}
+
+.send-request-btn {
+    width: 40px;
+    height: 40px;
     background: var(--blue);
     color: white;
-    border-color: var(--blue);
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
 }
 
-/* Заявки в друзья */
-.friend-requests-card,
-.friend-requests-sent-card {
+.send-request-btn:active {
+    transform: scale(0.95);
+    opacity: 0.9;
+}
+
+.friend-requests-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 12px;
+    padding: 12px;
     border: 2px solid var(--warning);
     animation: pulse 2s infinite;
-    width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.friend-requests-card h3,
-.friend-requests-sent-card h3 {
+.friend-requests-card h3 {
     color: var(--warning);
-    font-size: 14px;
-    margin-bottom: 15px;
+    font-size: 12px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
-    text-align: center;
-}
-
-.friend-requests-list,
-.friend-requests-sent-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
 }
 
 .friend-request-item {
     display: flex;
     align-items: center;
-    padding: 15px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    animation: slideIn 0.3s ease;
-    width: 100%;
     gap: 10px;
+    padding: 10px;
+    background: var(--bg-card);
+    border-radius: 8px;
+    margin-bottom: 8px;
     flex-wrap: wrap;
 }
 
 .friend-request-avatar {
-    width: 45px;
-    height: 45px;
-    background: linear-gradient(135deg, var(--warning) 0%, #ffaa00 100%);
+    width: 32px;
+    height: 32px;
+    background: var(--warning);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 16px;
     color: white;
     flex-shrink: 0;
 }
@@ -962,18 +985,16 @@ body {
 }
 
 .friend-request-name {
-    font-size: 16px;
     font-weight: 600;
-    color: var(--text-primary);
+    font-size: 13px;
     display: block;
-    margin-bottom: 3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .friend-request-username {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
@@ -982,39 +1003,34 @@ body {
 
 .friend-request-actions {
     display: flex;
-    gap: 8px;
+    gap: 5px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .friend-request-accept {
     background: var(--success);
     color: white;
     border: none;
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 13px;
-    font-weight: 600;
+    border-radius: 15px;
+    padding: 4px 10px;
+    font-size: 11px;
     cursor: pointer;
     transition: all 0.2s ease;
-    white-space: nowrap;
 }
 
 .friend-request-accept:active {
     transform: scale(0.95);
-    opacity: 0.9;
 }
 
 .friend-request-decline {
     background: var(--bg-card);
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 8px 16px;
-    font-size: 13px;
+    border-radius: 15px;
+    padding: 4px 10px;
+    font-size: 11px;
     cursor: pointer;
     transition: all 0.2s ease;
-    white-space: nowrap;
 }
 
 .friend-request-decline:active {
@@ -1023,189 +1039,46 @@ body {
     border-color: var(--danger);
 }
 
-.friend-request-sent-item {
-    display: flex;
-    align-items: center;
-    padding: 15px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    opacity: 0.8;
-    width: 100%;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.friend-request-sent-avatar {
-    width: 45px;
-    height: 45px;
-    background: var(--bg-secondary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-}
-
-.friend-request-sent-info {
-    flex: 1;
-    min-width: 120px;
-}
-
-.friend-request-sent-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: block;
-    margin-bottom: 3px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.friend-request-sent-status {
-    font-size: 12px;
-    color: var(--warning);
-}
-
-.friend-request-cancel {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 8px;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.friend-request-cancel:active {
-    color: var(--danger);
-    transform: rotate(90deg);
-}
-
-/* Добавление друга */
-.add-friend-card {
-    background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-    width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.add-friend-card h3 {
-    color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
-    text-align: center;
-}
-
-.add-friend-form {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.add-friend-form input {
-    flex: 1;
-    min-width: 200px;
-    padding: 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 14px;
-}
-
-.add-friend-form input:focus {
-    border-color: var(--blue);
-    outline: none;
-}
-
-.add-friend-btn {
-    padding: 14px 20px;
-    background: var(--blue);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-
-.add-friend-btn:active {
-    transform: scale(0.95);
-    opacity: 0.9;
-}
-
-.add-friend-hint {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-top: 10px;
-    text-align: center;
-}
-
-/* Список друзей */
 .friends-list-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-    width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    border-radius: 12px;
+    padding: 12px;
 }
 
 .friends-list-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 15px;
+    font-size: 12px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
-    text-align: center;
 }
 
 .friends-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 300px;
+    gap: 6px;
+    max-height: 200px;
     overflow-y: auto;
-    width: 100%;
 }
 
 .friend-item {
     display: flex;
     align-items: center;
-    padding: 15px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px solid var(--border-color);
-    animation: slideIn 0.2s ease;
     gap: 10px;
+    padding: 8px;
+    background: var(--bg-card);
+    border-radius: 8px;
     flex-wrap: wrap;
 }
 
 .friend-avatar {
-    width: 45px;
-    height: 45px;
+    width: 32px;
+    height: 32px;
     background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 16px;
     color: white;
     flex-shrink: 0;
 }
@@ -1216,33 +1089,26 @@ body {
 }
 
 .friend-name {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 600;
-    color: var(--text-primary);
     display: block;
-    margin-bottom: 3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .friend-stats {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.zero-stats {
-    color: var(--text-secondary);
-    font-style: italic;
-}
-
 .friend-status {
-    font-size: 12px;
-    padding: 4px 12px;
-    border-radius: 20px;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 12px;
     background: rgba(0, 204, 136, 0.1);
     color: var(--success);
     white-space: nowrap;
@@ -1257,11 +1123,11 @@ body {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
-    padding: 5px;
-    transition: all 0.2s ease;
+    padding: 4px;
     flex-shrink: 0;
+    transition: all 0.2s ease;
 }
 
 .friend-remove:active {
@@ -1271,60 +1137,28 @@ body {
 
 .empty-friends {
     text-align: center;
-    padding: 30px;
+    padding: 20px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     background: var(--bg-card);
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px dashed var(--border-color);
-    width: 100%;
 }
 
-/* Командный зачет */
 .team-challenge-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 12px;
     border: 2px solid var(--success);
     animation: pulse 2s infinite;
-    width: 100%;
-    max-width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(0, 204, 136, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(0, 204, 136, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(0, 204, 136, 0);
-    }
-}
-
-.team-challenge-card h3 {
-    color: var(--success);
-    font-size: 16px;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    text-align: center;
-}
-
-.team-progress {
-    margin-bottom: 20px;
-    width: 100%;
 }
 
 .team-progress-bar {
-    width: 100%;
-    height: 10px;
+    height: 6px;
     background: var(--bg-card);
-    border-radius: 5px;
+    border-radius: 3px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .team-progress-fill {
@@ -1335,343 +1169,33 @@ body {
 
 .team-numbers {
     text-align: center;
-    font-size: 16px;
+    font-size: 12px;
     color: var(--text-secondary);
 }
 
 .team-numbers span:first-child {
     color: var(--success);
     font-weight: bold;
-    font-size: 20px;
 }
 
-.team-members {
+/* Компактный дневник */
+.diary-section-compact {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    width: 100%;
-}
-
-.team-member {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    gap: 10px;
-}
-
-.team-member-avatar {
-    width: 30px;
-    height: 30px;
-    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    color: white;
-    flex-shrink: 0;
-}
-
-.team-member-info {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-}
-
-.team-member-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.team-member-distance {
-    font-size: 13px;
-    color: var(--success);
-    font-weight: 600;
-    white-space: nowrap;
-}
-
-/* ===== СОЗДАНИЕ ЗАДАНИЙ ===== */
-.custom-workout-section {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 20px;
-}
-
-.custom-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 24px;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-
-.goal-card {
-    background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-}
-
-.goal-card h3 {
-    color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-    text-align: center;
-}
-
-.goal-input {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-}
-
-.goal-input input {
-    flex: 1;
-    max-width: 200px;
-    padding: 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.goal-input input:focus {
-    border-color: var(--blue);
-    outline: none;
-}
-
-.goal-input span {
-    font-size: 16px;
-    color: var(--text-secondary);
-    min-width: 40px;
-}
-
-.tasks-creator {
-    background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-}
-
-.tasks-creator h3 {
-    color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 16px;
-    letter-spacing: 1px;
-    text-align: center;
-}
-
-.add-task-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    align-items: center;
-}
-
-.add-task-form input {
-    width: 100%;
-    max-width: 300px;
-    padding: 12px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    color: var(--text-primary);
-    font-size: 14px;
-}
-
-.add-task-form input:focus {
-    border-color: var(--blue);
-    outline: none;
-}
-
-.task-distance-input {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-}
-
-.task-distance-input input {
-    flex: 1;
-    max-width: 150px;
-    text-align: center;
-}
-
-.task-distance-input span {
-    color: var(--text-secondary);
-    font-size: 14px;
-    min-width: 30px;
-}
-
-.add-task-btn {
-    width: 100%;
-    max-width: 300px;
-    padding: 14px;
-    background: var(--bg-card);
-    color: var(--blue);
-    border: 2px dashed var(--border-color);
-    border-radius: 12px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.add-task-btn:active {
-    border-color: var(--blue);
-    background: var(--blue);
-    color: white;
-}
-
-#custom-tasks-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-height: 100px;
-    max-height: 300px;
-    overflow-y: auto;
-    width: 100%;
-    align-items: center;
-}
-
-.custom-task-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    animation: slideIn 0.2s ease;
-    width: 100%;
-    max-width: 400px;
-    gap: 10px;
-}
-
-.custom-task-text {
-    flex: 1;
-    font-size: 14px;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.custom-task-distance {
-    color: var(--blue);
-    font-weight: 600;
-    min-width: 70px;
-    text-align: right;
-    white-space: nowrap;
-}
-
-.custom-task-delete {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px 8px;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-}
-
-.custom-task-delete:active {
-    color: var(--danger);
-    transform: rotate(90deg);
-}
-
-.empty-tasks {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px dashed var(--border-color);
-    width: 100%;
-    max-width: 400px;
-}
-
-.create-plan-btn {
-    width: 100%;
-    max-width: 400px;
-    padding: 18px;
-    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
-    color: white;
-    border: none;
-    border-radius: 14px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.create-plan-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.4);
-}
-
-.create-plan-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--text-secondary);
-    box-shadow: none;
-}
-
-/* ДНЕВНИК */
-.diary-section {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-}
-
-.diary-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 20px;
-    letter-spacing: 1px;
+    gap: 12px;
 }
 
 .add-entry-btn {
-    width: 100%;
-    padding: 16px;
     background: var(--bg-primary);
-    color: var(--text-primary);
     border: 2px dashed var(--border-color);
     border-radius: 12px;
-    font-size: 15px;
+    padding: 12px;
+    font-size: 14px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 20px;
     transition: all 0.2s ease;
 }
 
@@ -1680,51 +1204,45 @@ body {
     color: var(--blue);
 }
 
-.plus-icon {
-    font-size: 20px;
-    font-weight: bold;
-}
-
 .add-entry-form {
-    margin-bottom: 20px;
-    padding: 16px;
     background: var(--bg-primary);
     border-radius: 12px;
+    padding: 12px;
     border: 1px solid var(--border-color);
     animation: slideIn 0.2s ease;
 }
 
 .add-entry-form textarea {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    font-size: 14px;
-    outline: none;
+    font-size: 13px;
     color: var(--text-primary);
     resize: vertical;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     font-family: inherit;
 }
 
 .add-entry-form textarea:focus {
     border-color: var(--blue);
+    outline: none;
 }
 
 .form-buttons {
     display: flex;
     gap: 8px;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .btn-small {
-    padding: 10px 20px;
+    padding: 8px 16px;
     background: var(--bg-primary);
     color: var(--text-primary);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: 6px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -1743,13 +1261,15 @@ body {
 .entries-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .entry-item {
     background: var(--bg-primary);
     border-radius: 12px;
-    padding: 16px;
+    padding: 12px;
     border: 1px solid var(--border-color);
 }
 
@@ -1757,13 +1277,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 8px;
-    padding-bottom: 8px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .entry-date {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--blue);
     font-weight: 500;
 }
@@ -1772,9 +1292,9 @@ body {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 4px;
     transition: all 0.2s ease;
 }
 
@@ -1784,112 +1304,289 @@ body {
 }
 
 .entry-content {
-    font-size: 14px;
-    color: var(--text-primary);
-    line-height: 1.5;
+    font-size: 13px;
+    line-height: 1.4;
     white-space: pre-wrap;
 }
 
 .empty-entries {
     text-align: center;
-    padding: 40px 20px;
+    padding: 30px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     background: var(--bg-primary);
-    border-radius: 12px;
+    border-radius: 8px;
     border: 1px dashed var(--border-color);
 }
 
-/* НАСТРОЙКИ */
-.settings-section {
+/* Настройки в меню */
+.settings-menu {
+    padding: 8px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.theme-selector, .language-selector {
+    margin-bottom: 12px;
+}
+
+.theme-selector span, .language-selector span {
+    display: block;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.theme-buttons-menu, .lang-buttons-menu {
+    display: flex;
+    gap: 8px;
+}
+
+.theme-btn-small, .lang-btn-small {
+    flex: 1;
+    padding: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.theme-btn-small.active, .lang-btn-small.active {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+}
+
+.theme-btn-small:active, .lang-btn-small:active {
+    transform: scale(0.95);
+}
+
+/* ===== СОЗДАНИЕ ЗАДАНИЙ ===== */
+.custom-workout-section {
     background: var(--bg-card);
     border-radius: 16px;
     padding: 20px;
     border: 1px solid var(--border-color);
+    margin-bottom: 20px;
 }
 
-.settings-title {
+.custom-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 24px;
-    font-size: 20px;
+    margin-bottom: 20px;
+    font-size: 18px;
     letter-spacing: 1px;
 }
 
-.settings-group {
-    margin-bottom: 24px;
+.goal-card {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
 }
 
-.settings-group h3 {
+.goal-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 12px;
+    font-size: 12px;
+    margin-bottom: 10px;
     letter-spacing: 1px;
     text-align: center;
 }
 
-.theme-buttons, .language-buttons {
+.goal-input {
     display: flex;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
     justify-content: center;
+}
+
+.goal-input input {
+    width: 120px;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.goal-input input:focus {
+    border-color: var(--blue);
+    outline: none;
+}
+
+.goal-input span {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.tasks-creator {
+    background: var(--bg-primary);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.add-task-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
 }
 
-.theme-btn, .lang-btn {
+.add-task-form input {
     flex: 1;
-    min-width: 120px;
-    max-width: 200px;
-    padding: 14px;
-    background: var(--bg-primary);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
+    min-width: 150px;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 14px;
-    transition: all 0.2s ease;
+    font-size: 13px;
 }
 
-.theme-btn.active, .lang-btn.active {
+.add-task-form input:focus {
+    border-color: var(--blue);
+    outline: none;
+}
+
+.task-distance-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100px;
+}
+
+.task-distance-input input {
+    width: 60px;
+    text-align: center;
+    padding: 10px;
+}
+
+.task-distance-input span {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.add-task-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    color: var(--blue);
+    border: 2px dashed var(--border-color);
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.add-task-btn:active {
     border-color: var(--blue);
     background: var(--blue);
     color: white;
 }
 
-.theme-preview {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+#custom-tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 80px;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
-.dark-preview {
-    background: #000;
-    border: 2px solid #fff;
-}
-
-.light-preview {
-    background: #fff;
-    border: 2px solid #333;
-}
-
-.about-info {
-    background: var(--bg-primary);
-    padding: 16px;
-    border-radius: 12px;
+.custom-task-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: var(--bg-card);
+    border-radius: 6px;
     border: 1px solid var(--border-color);
-    text-align: center;
+    animation: slideIn 0.2s ease;
+    gap: 8px;
 }
 
-.about-info p {
-    margin: 8px 0;
+.custom-task-text {
+    flex: 1;
+    font-size: 13px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.custom-task-distance {
+    color: var(--blue);
+    font-weight: 600;
+    font-size: 12px;
+    min-width: 50px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.custom-task-delete {
+    background: none;
+    border: none;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
-/* Нижняя навигация для 6 кнопок */
+.custom-task-delete:active {
+    color: var(--danger);
+    transform: rotate(90deg);
+}
+
+.empty-tasks {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    background: var(--bg-card);
+    border-radius: 6px;
+    border: 1px dashed var(--border-color);
+}
+
+.create-plan-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+}
+
+.create-plan-btn:active:not(:disabled) {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.4);
+}
+
+.create-plan-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: var(--text-secondary);
+    box-shadow: none;
+}
+
+/* Нижняя навигация для 4 кнопок */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -1899,7 +1596,7 @@ body {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-around;
-    padding: 5px 5px;
+    padding: 8px 12px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 100;
@@ -1909,29 +1606,30 @@ body {
 
 .nav-btn {
     flex: 1;
-    max-width: 60px;
+    max-width: 80px;
     background: transparent;
     border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2px;
-    padding: 5px;
+    gap: 4px;
+    padding: 6px;
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .nav-icon {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--icon-inactive);
     transition: all 0.2s ease;
 }
 
 .nav-text {
-    font-size: 9px;
+    font-size: 10px;
     color: var(--icon-inactive);
     transition: all 0.2s ease;
+    text-align: center;
 }
 
 .nav-btn.active .nav-icon {
@@ -1955,55 +1653,35 @@ body {
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 170, 0, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 170, 0, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 170, 0, 0);
+    }
+}
+
 /* Адаптация */
 @media (max-width: 480px) {
-    .user-profile-card {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .user-info {
-        align-items: center;
-    }
-    
-    .friend-request-item {
-        justify-content: center;
-        text-align: center;
-    }
-    
-    .friend-request-info {
-        text-align: center;
-    }
-    
-    .friend-request-actions {
-        width: 100%;
-        justify-content: center;
-    }
-    
-    .friend-item {
-        justify-content: center;
-        text-align: center;
-    }
-    
-    .friend-info {
-        text-align: center;
-    }
-    
-    .add-friend-form {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .add-friend-form input {
-        width: 100%;
-    }
-    
     .nav-text {
-        font-size: 8px;
+        font-size: 9px;
     }
     
     .nav-icon {
-        font-size: 16px;
+        font-size: 18px;
     }
     
     .start-content h2 {
@@ -2014,65 +1692,25 @@ body {
         font-size: 18px;
     }
     
-    .custom-task-text {
-        font-size: 12px;
+    .friend-request-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
     
-    .custom-task-distance {
-        font-size: 12px;
-        min-width: 60px;
+    .friend-request-actions {
+        width: 100%;
+        justify-content: flex-start;
     }
-}
-/* Добавьте в конец файла style.css */
-
-/* ===== КНОПКИ ДЛЯ ДРУЗЕЙ ===== */
-.friend-action-buttons {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-}
-
-.send-request-btn, .add-direct-btn {
-    padding: 14px 20px;
-    border: none;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    flex: 1;
-    min-width: 140px;
-}
-
-.send-request-btn {
-    background: var(--blue);
-    color: white;
-}
-
-.send-request-btn:active {
-    transform: scale(0.95);
-    opacity: 0.9;
-}
-
-.add-direct-btn {
-    background: var(--success);
-    color: white;
-}
-
-.add-direct-btn:active {
-    transform: scale(0.95);
-    opacity: 0.9;
-}
-
-@media (max-width: 480px) {
-    .friend-action-buttons {
+    
+    .add-task-form {
         flex-direction: column;
     }
     
-    .send-request-btn, .add-direct-btn {
+    .task-distance-input {
+        width: 100%;
+    }
+    
+    .add-task-btn {
         width: 100%;
     }
 }
