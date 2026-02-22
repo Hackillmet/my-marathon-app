@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: ДРУЗЬЯ + ДНЕВНИК (ОБЪЕДИНЕННЫЙ) -->
+            <!-- СЛАЙД 3: ДРУЗЬЯ + ДНЕВНИК (НОВЫЙ ДИЗАЙН) -->
             <div class="slide" id="slide3">
                 <div class="combined-section">
                     <div class="section-tabs">
@@ -230,50 +230,128 @@
                         <button class="tab-btn" id="tab-diary">📔 Дневник</button>
                     </div>
                     
-                    <!-- Вкладка ДРУЗЬЯ -->
+                    <!-- Вкладка ДРУЗЬЯ (ПОЛНОСТЬЮ НОВЫЙ ДИЗАЙН) -->
                     <div class="tab-content active" id="friends-tab">
-                        <div class="friends-section-compact">
-                            <!-- Профиль пользователя -->
-                            <div class="user-profile-card">
-                                <div class="user-avatar">👤</div>
-                                <div class="user-info">
-                                    <span class="user-name" id="user-name">Пользователь</span>
-                                    <span class="user-stats" id="user-stats">0 тренировок • 0 км</span>
+                        <!-- Приветственный баннер с прогрессом -->
+                        <div class="friends-welcome-card">
+                            <div class="welcome-content">
+                                <div class="welcome-avatar">
+                                    <span id="friends-user-avatar">👤</span>
                                 </div>
-                                <button class="share-profile-btn" id="share-profile">📤</button>
-                            </div>
-
-                            <!-- Входящие заявки -->
-                            <div class="friend-requests-card" id="friend-requests-card" style="display: none;">
-                                <h3>📨 ЗАЯВКИ</h3>
-                                <div class="friend-requests-list" id="friend-requests-list"></div>
-                            </div>
-
-                            <!-- Добавление друга -->
-                            <div class="add-friend-card">
-                                <div class="add-friend-form">
-                                    <input type="text" id="friend-username" placeholder="@username">
-                                    <button class="send-request-btn" id="send-request-btn">➕</button>
-                                </div>
-                            </div>
-
-                            <!-- Список друзей -->
-                            <div class="friends-list-card">
-                                <h3>👥 МОИ ДРУЗЬЯ</h3>
-                                <div class="friends-list" id="friends-list"></div>
-                            </div>
-
-                            <!-- Командный зачет -->
-                            <div class="team-challenge-card">
-                                <div class="team-progress">
-                                    <div class="team-progress-bar">
-                                        <div class="team-progress-fill" id="team-progress" style="width: 0%;"></div>
-                                    </div>
-                                    <div class="team-numbers">
-                                        <span id="team-current">0</span>/<span id="team-goal">100</span> км
+                                <div class="welcome-info">
+                                    <h3 id="friends-user-name">Пользователь</h3>
+                                    <div class="welcome-stats">
+                                        <div class="welcome-stat">
+                                            <span class="stat-value" id="friends-total-distance">0</span>
+                                            <span class="stat-label">км</span>
+                                        </div>
+                                        <div class="welcome-stat">
+                                            <span class="stat-value" id="friends-total-workouts">0</span>
+                                            <span class="stat-label">тренировки</span>
+                                        </div>
+                                        <div class="welcome-stat">
+                                            <span class="stat-value" id="friends-best-pace">0</span>
+                                            <span class="stat-label">темп</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="welcome-progress">
+                                <div class="progress-label">
+                                    <span>🏆 Командный прогресс</span>
+                                    <span id="team-progress-text">0/100 км</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill team-fill" id="team-progress-bar" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Блок приглашений (НОВЫЙ) -->
+                        <div class="invite-card">
+                            <div class="invite-header">
+                                <h3>🔗 ПРИГЛАСИТЬ ДРУЗЕЙ</h3>
+                                <span class="invite-badge">+50 бонусов</span>
+                            </div>
+                            <div class="invite-buttons">
+                                <button class="invite-btn" id="invite-friends-btn">
+                                    <span class="btn-icon">📤</span>
+                                    <span class="btn-text">Отправить приглашение</span>
+                                </button>
+                                <button class="copy-btn" id="copy-invite-btn">
+                                    <span class="btn-icon">📋</span>
+                                </button>
+                                <button class="share-progress-btn" id="share-progress-btn">
+                                    <span class="btn-icon">📊</span>
+                                </button>
+                            </div>
+                            <div class="invite-stats">
+                                <div class="invite-stat">
+                                    <span class="stat-value" id="invited-count">0</span>
+                                    <span class="stat-label">приглашено</span>
+                                </div>
+                                <div class="invite-stat">
+                                    <span class="stat-value" id="joined-count">0</span>
+                                    <span class="stat-label">присоединились</span>
+                                </div>
+                                <div class="invite-stat">
+                                    <span class="stat-value" id="bonus-count">0</span>
+                                    <span class="stat-label">бонусов</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Таблица лидеров (НОВАЯ) -->
+                        <div class="leaderboard-card">
+                            <div class="leaderboard-header">
+                                <h3>🏆 ТАБЛИЦА ЛИДЕРОВ</h3>
+                                <div class="period-selector">
+                                    <button class="period-btn active" data-period="allTime">Все время</button>
+                                    <button class="period-btn" data-period="thisMonth">Месяц</button>
+                                    <button class="period-btn" data-period="thisWeek">Неделя</button>
+                                </div>
+                            </div>
+                            <div class="leaderboard-content" id="leaderboard-container">
+                                <!-- Здесь будет таблица лидеров -->
+                            </div>
+                        </div>
+
+                        <!-- Результаты друзей (НОВЫЕ) -->
+                        <div class="friends-results-card">
+                            <div class="results-header">
+                                <h3>👥 РЕЗУЛЬТАТЫ ДРУЗЕЙ</h3>
+                                <span class="results-count" id="friends-count">0</span>
+                            </div>
+                            <div class="results-list" id="friend-results-container">
+                                <!-- Здесь будут результаты друзей -->
+                            </div>
+                        </div>
+
+                        <!-- Входящие заявки -->
+                        <div class="requests-card" id="friend-requests-card" style="display: none;">
+                            <div class="requests-header">
+                                <h3>📨 ЗАЯВКИ В ДРУЗЬЯ</h3>
+                                <span class="requests-badge" id="requests-count">0</span>
+                            </div>
+                            <div class="requests-list" id="friend-requests-list"></div>
+                        </div>
+
+                        <!-- Добавление друга -->
+                        <div class="add-friend-card">
+                            <div class="add-friend-form">
+                                <input type="text" id="friend-username" placeholder="@username">
+                                <button class="send-request-btn" id="send-request-btn">➕</button>
+                            </div>
+                        </div>
+
+                        <!-- Мой профиль (компактный) -->
+                        <div class="profile-mini-card">
+                            <div class="profile-mini-avatar">👤</div>
+                            <div class="profile-mini-info">
+                                <span class="profile-mini-name" id="profile-mini-name">Пользователь</span>
+                                <span class="profile-mini-stats" id="profile-mini-stats">0 км • 0 тренировок</span>
+                            </div>
+                            <button class="profile-mini-share" id="share-profile">📤</button>
                         </div>
                     </div>
                     
@@ -377,8 +455,8 @@
                 <span class="nav-text">Статистика</span>
             </button>
             <button class="nav-btn" id="nav-social" onclick="switchPage(2)">
-                <span class="nav-icon">👥📔</span>
-                <span class="nav-text">Друзья/Дневник</span>
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">Друзья</span>
             </button>
             <button class="nav-btn" id="nav-create" onclick="switchPage(3)">
                 <span class="nav-icon">🎯</span>
