@@ -22,7 +22,7 @@
             </button>
         </div>
 
-        <!-- Меню (ТЕПЕРЬ ЗДЕСЬ И НАСТРОЙКИ) -->
+        <!-- Меню (с настройками) -->
         <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
             <div class="menu-section">
                 <div class="menu-title">🏃 МАРАФОН</div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="contact-item">
                         <span>📱 Версия:</span>
-                        <span class="contact-highlight">9.0.0</span>
+                        <span class="contact-highlight">10.0.0</span>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
             <span id="current-date"></span>
         </div>
 
-        <!-- Контейнер для слайдов (ТЕПЕРЬ 4 СЛАЙДА) -->
+        <!-- Контейнер для слайдов (4 слайда) -->
         <div class="slides-container" id="slidesContainer">
             <!-- СЛАЙД 1: БЕГ -->
             <div class="slide active" id="slide1">
@@ -207,7 +207,7 @@
                             <!-- Здесь будут появляться рекомендации -->
                         </div>
                         <button class="refresh-recommendation" id="refresh-recommendation">
-                            🔄 Обновить рекомендацию
+                            🔄 Обновить
                         </button>
                     </div>
 
@@ -298,12 +298,12 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 4: СОЗДАТЬ ЗАДАНИЯ -->
+            <!-- СЛАЙД 4: СОЗДАТЬ И ВЫПОЛНИТЬ (С СОХРАНЕННЫМИ ТРЕНИРОВКАМИ) -->
             <div class="slide" id="slide4">
                 <div class="custom-workout-section">
-                    <h2 class="custom-title">🎯 СОЗДАТЬ ЗАДАНИЯ</h2>
+                    <h2 class="custom-title">🎯 СОЗДАТЬ ТРЕНИРОВКУ</h2>
                     
-                    <!-- Цель на сегодня -->
+                    <!-- Форма создания -->
                     <div class="goal-card">
                         <h3>🎯 ЦЕЛЬ</h3>
                         <div class="goal-input">
@@ -312,15 +312,15 @@
                         </div>
                     </div>
                     
-                    <!-- Добавление заданий -->
                     <div class="tasks-creator">
+                        <h3>📝 ДОБАВИТЬ ЗАДАНИЕ</h3>
                         <div class="add-task-form">
-                            <input type="text" id="new-task-text" placeholder="Задание">
+                            <input type="text" id="new-task-text" placeholder="Например: Разминка">
                             <div class="task-distance-input">
                                 <input type="number" id="new-task-distance" value="0" min="0" step="0.1">
                                 <span>км</span>
                             </div>
-                            <button class="add-task-btn" id="add-task-btn">+</button>
+                            <button class="add-task-btn" id="add-task-btn">+ Добавить</button>
                         </div>
                         
                         <div class="tasks-list" id="custom-tasks-list">
@@ -329,8 +329,39 @@
                     </div>
                     
                     <button class="create-plan-btn" id="create-plan-btn" disabled>
-                        📌 Отправить
+                        💾 Сохранить тренировку
                     </button>
+                    
+                    <!-- СПИСОК СОХРАНЕННЫХ ТРЕНИРОВОК -->
+                    <div class="saved-workouts-section">
+                        <h3 class="saved-workouts-title">📋 МОИ ТРЕНИРОВКИ</h3>
+                        <div class="saved-workouts-list" id="saved-workouts-list">
+                            <!-- Сюда будут загружаться сохраненные тренировки -->
+                        </div>
+                    </div>
+                    
+                    <!-- АКТИВНАЯ ТРЕНИРОВКА -->
+                    <div class="active-workout" id="active-workout" style="display: none;">
+                        <div class="active-workout-header">
+                            <h3 id="active-workout-name">Моя тренировка</h3>
+                            <span class="active-workout-goal" id="active-workout-goal">5 км</span>
+                        </div>
+                        
+                        <div class="active-workout-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill mind-fill" id="active-workout-progress" style="width: 0%;"></div>
+                            </div>
+                            <span class="progress-percent" id="active-workout-percent">0%</span>
+                        </div>
+                        
+                        <div class="active-workout-steps" id="active-workout-steps">
+                            <!-- Шаги активной тренировки -->
+                        </div>
+                        
+                        <button class="complete-workout-btn" id="complete-workout-btn" disabled>
+                            ✅ Завершить тренировку
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
