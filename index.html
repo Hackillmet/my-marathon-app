@@ -79,7 +79,7 @@
             <span id="current-date"></span>
         </div>
 
-        <!-- Контейнер для слайдов (4 слайда) -->
+        <!-- Контейнер для слайдов (5 слайдов) -->
         <div class="slides-container" id="slidesContainer">
             <!-- СЛАЙД 1: БЕГ -->
             <div class="slide active" id="slide1">
@@ -190,6 +190,26 @@
                         </div>
                     </div>
 
+                    <!-- Статистика по силовым (НОВОЕ) -->
+                    <div class="strength-stats-grid">
+                        <div class="stat-card strength-stat">
+                            <span class="stat-value" id="total-pullups">0</span>
+                            <span class="stat-label">Подтягивания</span>
+                        </div>
+                        <div class="stat-card strength-stat">
+                            <span class="stat-value" id="total-pushups">0</span>
+                            <span class="stat-label">Отжимания</span>
+                        </div>
+                        <div class="stat-card strength-stat">
+                            <span class="stat-value" id="total-strength-days">0</span>
+                            <span class="stat-label">Силовых дней</span>
+                        </div>
+                        <div class="stat-card strength-stat">
+                            <span class="stat-value" id="best-pullups">0</span>
+                            <span class="stat-label">Лучшие подт.</span>
+                        </div>
+                    </div>
+
                     <div class="weekly-card">
                         <h3>📅 ПРОГРЕСС ЗА МЕСЯЦ</h3>
                         <div class="progress-bar">
@@ -222,7 +242,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: ДРУЗЬЯ + ДНЕВНИК (НОВЫЙ ДИЗАЙН) -->
+            <!-- СЛАЙД 3: ДРУЗЬЯ + ДНЕВНИК -->
             <div class="slide" id="slide3">
                 <div class="combined-section">
                     <div class="section-tabs">
@@ -230,7 +250,7 @@
                         <button class="tab-btn" id="tab-diary">📔 Дневник</button>
                     </div>
                     
-                    <!-- Вкладка ДРУЗЬЯ (ПОЛНОСТЬЮ НОВЫЙ ДИЗАЙН) -->
+                    <!-- Вкладка ДРУЗЬЯ -->
                     <div class="tab-content active" id="friends-tab">
                         <!-- Приветственный баннер с прогрессом -->
                         <div class="friends-welcome-card">
@@ -267,7 +287,7 @@
                             </div>
                         </div>
 
-                        <!-- Блок приглашений (НОВЫЙ) -->
+                        <!-- Блок приглашений -->
                         <div class="invite-card">
                             <div class="invite-header">
                                 <h3>🔗 ПРИГЛАСИТЬ ДРУЗЕЙ</h3>
@@ -301,7 +321,7 @@
                             </div>
                         </div>
 
-                        <!-- Таблица лидеров (НОВАЯ) -->
+                        <!-- Таблица лидеров -->
                         <div class="leaderboard-card">
                             <div class="leaderboard-header">
                                 <h3>🏆 ТАБЛИЦА ЛИДЕРОВ</h3>
@@ -316,7 +336,7 @@
                             </div>
                         </div>
 
-                        <!-- Результаты друзей (НОВЫЕ) -->
+                        <!-- Результаты друзей -->
                         <div class="friends-results-card">
                             <div class="results-header">
                                 <h3>👥 РЕЗУЛЬТАТЫ ДРУЗЕЙ</h3>
@@ -376,7 +396,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 4: СОЗДАТЬ И ВЫПОЛНИТЬ (С СОХРАНЕННЫМИ ТРЕНИРОВКАМИ) -->
+            <!-- СЛАЙД 4: СОЗДАТЬ И ВЫПОЛНИТЬ -->
             <div class="slide" id="slide4">
                 <div class="custom-workout-section">
                     <h2 class="custom-title">🎯 СОЗДАТЬ ТРЕНИРОВКУ</h2>
@@ -442,9 +462,217 @@
                     </div>
                 </div>
             </div>
+
+            <!-- СЛАЙД 5: ПОДТЯГИВАНИЯ И ОТЖИМАНИЯ (НОВЫЙ) -->
+            <div class="slide" id="slide5">
+                <div class="strength-section">
+                    <h2 class="strength-title">💪 СИЛОВАЯ ТРЕНИРОВКА</h2>
+                    
+                    <!-- Прогресс дня -->
+                    <div class="strength-progress-card">
+                        <div class="progress-header">
+                            <span class="progress-title">Прогресс сегодня</span>
+                            <span class="progress-percent" id="strength-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill strength-fill" id="strength-progress" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Карточка с выбором типа тренировки -->
+                    <div class="workout-type-selector">
+                        <button class="type-btn active" id="type-pullups" data-type="pullups">
+                            <span class="type-icon">🏋️</span>
+                            <span class="type-name">Подтягивания</span>
+                        </button>
+                        <button class="type-btn" id="type-pushups" data-type="pushups">
+                            <span class="type-icon">💪</span>
+                            <span class="type-name">Отжимания</span>
+                        </button>
+                        <button class="type-btn" id="type-mixed" data-type="mixed">
+                            <span class="type-icon">⚡</span>
+                            <span class="type-name">Комплекс</span>
+                        </button>
+                    </div>
+
+                    <!-- Блок ПОДТЯГИВАНИЯ -->
+                    <div class="exercise-card active" id="pullups-card">
+                        <div class="exercise-header">
+                            <div class="exercise-icon">🏋️</div>
+                            <div class="exercise-title">
+                                <h3>ПОДТЯГИВАНИЯ</h3>
+                                <span class="exercise-subtitle">Pull-ups</span>
+                            </div>
+                            <div class="exercise-stats" id="pullups-today">
+                                0/<span id="pullups-goal">30</span>
+                            </div>
+                        </div>
+
+                        <!-- Настройка цели -->
+                        <div class="goal-settings">
+                            <div class="goal-slider">
+                                <label>Цель на сегодня:</label>
+                                <input type="range" id="pullups-goal-slider" min="5" max="50" value="30" step="5">
+                                <span class="goal-value" id="pullups-goal-value">30</span>
+                            </div>
+                        </div>
+
+                        <!-- Сет для подтягиваний -->
+                        <div class="sets-container" id="pullups-sets">
+                            <!-- Сеты будут добавляться динамически -->
+                        </div>
+
+                        <button class="add-set-btn" id="add-pullups-set">
+                            <span>➕ Добавить подход</span>
+                        </button>
+                    </div>
+
+                    <!-- Блок ОТЖИМАНИЯ -->
+                    <div class="exercise-card" id="pushups-card" style="display: none;">
+                        <div class="exercise-header">
+                            <div class="exercise-icon">💪</div>
+                            <div class="exercise-title">
+                                <h3>ОТЖИМАНИЯ</h3>
+                                <span class="exercise-subtitle">Push-ups</span>
+                            </div>
+                            <div class="exercise-stats" id="pushups-today">
+                                0/<span id="pushups-goal">50</span>
+                            </div>
+                        </div>
+
+                        <!-- Настройка цели -->
+                        <div class="goal-settings">
+                            <div class="goal-slider">
+                                <label>Цель на сегодня:</label>
+                                <input type="range" id="pushups-goal-slider" min="10" max="100" value="50" step="5">
+                                <span class="goal-value" id="pushups-goal-value">50</span>
+                            </div>
+                        </div>
+
+                        <!-- Сет для отжиманий -->
+                        <div class="sets-container" id="pushups-sets">
+                            <!-- Сеты будут добавляться динамически -->
+                        </div>
+
+                        <button class="add-set-btn" id="add-pushups-set">
+                            <span>➕ Добавить подход</span>
+                        </button>
+                    </div>
+
+                    <!-- Блок КОМПЛЕКС (микс) -->
+                    <div class="exercise-card" id="mixed-card" style="display: none;">
+                        <div class="exercise-header">
+                            <div class="exercise-icon">⚡</div>
+                            <div class="exercise-title">
+                                <h3>КОМПЛЕКС</h3>
+                                <span class="exercise-subtitle">Mixed</span>
+                            </div>
+                            <div class="exercise-stats" id="mixed-today">
+                                0/3 упражнения
+                            </div>
+                        </div>
+
+                        <!-- Комплексная тренировка -->
+                        <div class="mixed-workout">
+                            <div class="mixed-exercise">
+                                <div class="mixed-header">
+                                    <span class="mixed-name">🔥 Круг 1</span>
+                                    <span class="mixed-check">✓</span>
+                                </div>
+                                <div class="mixed-items">
+                                    <div class="mixed-item" data-exercise="pullups" data-set="1">
+                                        <span class="item-name">Подтягивания</span>
+                                        <input type="number" class="item-input" id="mixed-pullups-1" value="10" min="1" max="30">
+                                        <span class="item-unit">раз</span>
+                                        <input type="checkbox" class="item-check" id="check-pullups-1">
+                                    </div>
+                                    <div class="mixed-item" data-exercise="pushups" data-set="1">
+                                        <span class="item-name">Отжимания</span>
+                                        <input type="number" class="item-input" id="mixed-pushups-1" value="20" min="1" max="50">
+                                        <span class="item-unit">раз</span>
+                                        <input type="checkbox" class="item-check" id="check-pushups-1">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mixed-exercise">
+                                <div class="mixed-header">
+                                    <span class="mixed-name">🔥 Круг 2</span>
+                                    <span class="mixed-check">✓</span>
+                                </div>
+                                <div class="mixed-items">
+                                    <div class="mixed-item" data-exercise="pullups" data-set="2">
+                                        <span class="item-name">Подтягивания</span>
+                                        <input type="number" class="item-input" id="mixed-pullups-2" value="8" min="1" max="30">
+                                        <span class="item-unit">раз</span>
+                                        <input type="checkbox" class="item-check" id="check-pullups-2">
+                                    </div>
+                                    <div class="mixed-item" data-exercise="pushups" data-set="2">
+                                        <span class="item-name">Отжимания</span>
+                                        <input type="number" class="item-input" id="mixed-pushups-2" value="15" min="1" max="50">
+                                        <span class="item-unit">раз</span>
+                                        <input type="checkbox" class="item-check" id="check-pushups-2">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mixed-exercise">
+                                <div class="mixed-header">
+                                    <span class="mixed-name">🔥 Круг 3</span>
+                                    <span class="mixed-check">✓</span>
+                                </div>
+                                <div class="mixed-items">
+                                    <div class="mixed-item" data-exercise="pullups" data-set="3">
+                                        <span class="item-name">Подтягивания</span>
+                                        <input type="number" class="item-input" id="mixed-pullups-3" value="5" min="1" max="30">
+                                        <span class="item-unit">раз</span>
+                                        <input type="checkbox" class="item-check" id="check-pullups-3">
+                                    </div>
+                                    <div class="mixed-item" data-exercise="pushups" data-set="3">
+                                        <span class="item-name">Отжимания</span>
+                                        <input type="number" class="item-input" id="mixed-pushups-3" value="10" min="1" max="50">
+                                        <span class="item-unit">раз</span>
+                                        <input type="checkbox" class="item-check" id="check-pushups-3">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <button class="add-mixed-set-btn" id="add-mixed-set">
+                                <span>➕ Добавить круг</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Статистика за день -->
+                    <div class="strength-summary">
+                        <div class="summary-item">
+                            <span class="summary-label">Подтягивания</span>
+                            <span class="summary-value" id="summary-pullups">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Отжимания</span>
+                            <span class="summary-value" id="summary-pushups">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Калории</span>
+                            <span class="summary-value" id="summary-calories">0</span>
+                        </div>
+                    </div>
+
+                    <!-- Кнопка завершения -->
+                    <button class="complete-strength-btn" id="complete-strength-btn" disabled>
+                        ✅ Завершить силовую тренировку
+                    </button>
+
+                    <!-- Мотивационная цитата -->
+                    <div class="strength-quote" id="strength-quote">
+                        "Сила не приходит от побед. Силу рождает борьба."
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Нижняя навигация (4 кнопки) -->
+        <!-- Нижняя навигация (5 кнопок) -->
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-run" onclick="switchPage(0)">
                 <span class="nav-icon">🏃</span>
@@ -461,6 +689,10 @@
             <button class="nav-btn" id="nav-create" onclick="switchPage(3)">
                 <span class="nav-icon">🎯</span>
                 <span class="nav-text">Создать</span>
+            </button>
+            <button class="nav-btn" id="nav-strength" onclick="switchPage(4)">
+                <span class="nav-icon">💪</span>
+                <span class="nav-text">Сила</span>
             </button>
         </div>
     </div>
