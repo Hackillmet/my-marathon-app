@@ -35,7 +35,15 @@ const STORAGE_KEYS = {
     LEADERBOARD: 'leaderboard',
     INVITE_CODE: 'invite_code',
     INVITED_FRIENDS: 'invited_friends',
-    BONUS_POINTS: 'bonus_points'
+    BONUS_POINTS: 'bonus_points',
+    // Новые ключи для силовых
+    STRENGTH_HISTORY: 'strength_history',
+    STRENGTH_TOTAL_PULLUPS: 'strength_total_pullups',
+    STRENGTH_TOTAL_PUSHUPS: 'strength_total_pushups',
+    STRENGTH_TOTAL_DAYS: 'strength_total_days',
+    STRENGTH_BEST_PULLUPS: 'strength_best_pullups',
+    STRENGTH_BEST_PUSHUPS: 'strength_best_pushups',
+    STRENGTH_TODAY: 'strength_today'
 };
 
 // ========== ПЕРЕВОДЫ ==========
@@ -129,26 +137,21 @@ const translations = {
         requestSentSuccess: (name) => `✅ Заявка отправлена ${name}`,
         requestAccepted: (name) => `✅ Вы приняли заявку от ${name}`,
         requestDeclined: (name) => `❌ Заявка от ${name} отклонена`,
+        requestCancelled: (name) => `✕ Заявка ${name} отменена`,
         friendRemoved: (name) => `✕ Друг ${name} удален`,
+        friendAdded: (name) => `✅ Пользователь ${name} добавлен!`,
         writeToTelegram: "💬 Написать",
         newRequest: "🔔 Новая заявка",
         
-        // Приглашения (ИСПРАВЛЕНО)
+        // Приглашения
         inviteFriends: "🔗 Пригласить друзей",
-        inviteText: (name) => `🏃 Привет! ${name} приглашает тебя в беговой марафон! Будем соревноваться и мотивировать друг друга 💪\n\n👉 Открывай приложение и присоединяйся!`,
+        inviteText: (name) => `🏃 Привет! ${name} приглашает тебя в беговой марафон! Будем соревноваться и мотивировать друг друга 💪`,
         copyInvite: "📋 Копировать ссылку",
-        inviteCopied: "✅ Ссылка скопирована! Отправь другу в личные сообщения",
+        inviteCopied: "✅ Ссылка скопирована! Отправь другу",
         bonusPoints: "🎁 Бонусные очки",
         invitedCount: "приглашено",
         joinedCount: "присоединились",
         bonusEarned: "бонусов",
-        inviteReceived: "🎉 Вас пригласили в марафон!",
-        inviteFrom: (name, username) => `${name} (@${username}) приглашает вас присоединиться к беговому марафону!`,
-        joinNow: "👥 Присоединиться",
-        sendInvite: "📤 Отправить приглашение",
-        inviteSent: "✅ Приглашение отправлено!",
-        enterFriendUsername: "Введите username друга для приглашения",
-        inviteSuccess: (name) => `✅ Приглашение отправлено пользователю @${name}`,
         
         // Таблица лидеров
         leaderboard: "🏆 ТАБЛИЦА ЛИДЕРОВ",
@@ -196,6 +199,32 @@ const translations = {
         workoutCompleted: "🎉 Тренировка завершена!",
         deleteWorkout: "✕",
         
+        // Силовые тренировки (НОВЫЕ)
+        strengthTitle: "💪 СИЛОВАЯ ТРЕНИРОВКА",
+        pullups: "ПОДТЯГИВАНИЯ",
+        pushups: "ОТЖИМАНИЯ",
+        mixed: "КОМПЛЕКС",
+        pullupsSub: "Pull-ups",
+        pushupsSub: "Push-ups",
+        mixedSub: "Mixed",
+        goal: "Цель на сегодня:",
+        addSet: "➕ Добавить подход",
+        addRound: "➕ Добавить круг",
+        set: "Подход",
+        reps: "Количество:",
+        completed: "Выполнено",
+        round: "Круг",
+        summaryPullups: "Подтягивания",
+        summaryPushups: "Отжимания",
+        summaryCalories: "Калории",
+        completeStrength: "✅ Завершить силовую тренировку",
+        strengthCompleted: "🎉 Силовая тренировка завершена!",
+        strengthStats: "Статистика силы",
+        totalPullups: "Всего подтягиваний",
+        totalPushups: "Всего отжиманий",
+        strengthDays: "Силовых дней",
+        bestPullups: "Лучшие подт.",
+        
         // Меню
         marathon: "🏃 МАРАФОН",
         reset: "🔄 Сбросить",
@@ -221,7 +250,7 @@ const translations = {
         onlyFrom4am: "⏰ Только с 4 утра!",
         onlyUntil23: "⏰ Только до 23:00!",
         completeSteps: "⚠️ Выполни все шаги!",
-        faqText: "❓ FAQ:\n\n• Начать день с 4 утра\n• Завершить до 23:00\n• 24ч таймер\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации"
+        faqText: "❓ FAQ:\n\n• Начать день с 4 утра\n• Завершить до 23:00\n• 24ч таймер\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
     },
     en: {
         // Common
@@ -316,22 +345,15 @@ const translations = {
         writeToTelegram: "💬 Write",
         newRequest: "🔔 New request",
         
-        // Invites (FIXED)
+        // Invites
         inviteFriends: "🔗 Invite Friends",
-        inviteText: (name) => `🏃 Hi! ${name} invites you to the running marathon! Let's compete and motivate each other 💪\n\n👉 Open the app and join!`,
+        inviteText: (name) => `🏃 Hi! ${name} invites you to the running marathon! Let's compete and motivate each other 💪`,
         copyInvite: "📋 Copy link",
-        inviteCopied: "✅ Link copied! Send to friend in private message",
+        inviteCopied: "✅ Link copied! Send to friend",
         bonusPoints: "🎁 Bonus points",
         invitedCount: "invited",
         joinedCount: "joined",
         bonusEarned: "bonus",
-        inviteReceived: "🎉 You've been invited to the marathon!",
-        inviteFrom: (name, username) => `${name} (@${username}) invites you to join the running marathon!`,
-        joinNow: "👥 Join now",
-        sendInvite: "📤 Send invite",
-        inviteSent: "✅ Invitation sent!",
-        enterFriendUsername: "Enter friend's username to invite",
-        inviteSuccess: (name) => `✅ Invitation sent to @${name}`,
         
         // Leaderboard
         leaderboard: "🏆 LEADERBOARD",
@@ -379,6 +401,32 @@ const translations = {
         workoutCompleted: "🎉 Workout completed!",
         deleteWorkout: "✕",
         
+        // Strength workouts (NEW)
+        strengthTitle: "💪 STRENGTH TRAINING",
+        pullups: "PULL-UPS",
+        pushups: "PUSH-UPS",
+        mixed: "MIXED",
+        pullupsSub: "Pull-ups",
+        pushupsSub: "Push-ups",
+        mixedSub: "Mixed",
+        goal: "Today's goal:",
+        addSet: "➕ Add set",
+        addRound: "➕ Add round",
+        set: "Set",
+        reps: "Reps:",
+        completed: "Completed",
+        round: "Round",
+        summaryPullups: "Pull-ups",
+        summaryPushups: "Push-ups",
+        summaryCalories: "Calories",
+        completeStrength: "✅ Complete strength workout",
+        strengthCompleted: "🎉 Strength workout completed!",
+        strengthStats: "Strength statistics",
+        totalPullups: "Total pull-ups",
+        totalPushups: "Total push-ups",
+        strengthDays: "Strength days",
+        bestPullups: "Best pull-ups",
+        
         // Menu
         marathon: "🏃 MARATHON",
         reset: "🔄 Reset",
@@ -404,7 +452,7 @@ const translations = {
         onlyFrom4am: "⏰ Only from 4 AM!",
         onlyUntil23: "⏰ Only until 11 PM!",
         completeSteps: "⚠️ Complete all steps!",
-        faqText: "❓ FAQ:\n\n• Start at 4 AM\n• Complete before 11 PM\n• 24h timer\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations"
+        faqText: "❓ FAQ:\n\n• Start at 4 AM\n• Complete before 11 PM\n• 24h timer\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts"
     }
 };
 
@@ -593,6 +641,22 @@ const recommendations = {
             { icon: "☀️", text: "Morning running is good for routine, evening running for stress relief." },
             { icon: "📝", text: "Keep a workout diary - it helps track progress and analyze." }
         ]
+    },
+    strength: {
+        ru: [
+            { icon: "💪", text: "Для роста мышц делай 3-4 подхода по 8-12 повторений." },
+            { icon: "🏋️", text: "Не забывай про отдых между подходами: 60-90 секунд." },
+            { icon: "📈", text: "Увеличивай вес/количество повторений каждую неделю." },
+            { icon: "🧘", text: "Растяжка после тренировки ускорит восстановление." },
+            { icon: "🥩", text: "Белок после тренировки поможет мышцам восстановиться." }
+        ],
+        en: [
+            { icon: "💪", text: "For muscle growth, do 3-4 sets of 8-12 reps." },
+            { icon: "🏋️", text: "Don't forget rest between sets: 60-90 seconds." },
+            { icon: "📈", text: "Increase weight/reps every week." },
+            { icon: "🧘", text: "Stretching after workout speeds up recovery." },
+            { icon: "🥩", text: "Protein after workout helps muscle recovery." }
+        ]
     }
 };
 
@@ -633,16 +697,63 @@ let sentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.SENT_REQUESTS)) 
 let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
 let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
 
-// Приглашения и бонусы (ИСПРАВЛЕНО)
+// Приглашения и бонусы
 let invitedFriends = JSON.parse(localStorage.getItem(STORAGE_KEYS.INVITED_FRIENDS)) || [];
 let bonusPoints = parseInt(localStorage.getItem(STORAGE_KEYS.BONUS_POINTS)) || 0;
 
-// Код приглашения (для реферальной системы)
+// Код приглашения
 let inviteCode = localStorage.getItem(STORAGE_KEYS.INVITE_CODE);
 if (!inviteCode) {
-    inviteCode = 'ref_' + userId + '_' + Date.now().toString(36);
+    inviteCode = 'user_' + userId + '_' + Date.now();
     localStorage.setItem(STORAGE_KEYS.INVITE_CODE, inviteCode);
 }
+
+// ========== НОВОЕ СОСТОЯНИЕ ДЛЯ СИЛОВЫХ ==========
+let strengthHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_HISTORY)) || [];
+let totalPullups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_TOTAL_PULLUPS)) || 0;
+let totalPushups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_TOTAL_PUSHUPS)) || 0;
+let strengthDays = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_TOTAL_DAYS)) || 0;
+let bestPullups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_BEST_PULLUPS)) || 0;
+let bestPushups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS)) || 0;
+
+// Текущая силовая тренировка
+let strengthToday = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_TODAY)) || {
+    pullups: {
+        goal: 30,
+        sets: [{ reps: 10, completed: false }],
+        completed: false
+    },
+    pushups: {
+        goal: 50,
+        sets: [{ reps: 15, completed: false }],
+        completed: false
+    },
+    mixed: {
+        completed: false,
+        rounds: [
+            { pullups: 10, pushups: 20, completed: false },
+            { pullups: 8, pushups: 15, completed: false },
+            { pullups: 5, pushups: 10, completed: false }
+        ]
+    }
+};
+
+// Текущий тип тренировки
+let currentStrengthType = 'pullups';
+
+// Мотивационные цитаты для силы
+const strengthQuotes = [
+    { ru: '"Сила не приходит от побед. Силу рождает борьба."', en: '"Strength does not come from winning. Your struggles develop your strengths."' },
+    { ru: '"Ты сильнее, чем думаешь."', en: '"You are stronger than you think."' },
+    { ru: '"Каждое повторение делает тебя сильнее."', en: '"Every rep makes you stronger."' },
+    { ru: '"Боль временна, гордость вечна."', en: '"Pain is temporary, pride is forever."' },
+    { ru: '"Невозможное - это просто вызов."', en: '"Impossible is just a challenge."' },
+    { ru: '"Сила - это не только мышцы, это характер."', en: '"Strength is not just muscles, it\'s character."' },
+    { ru: '"Сегодня больно, завтра - чемпион."', en: '"Today hurts, tomorrow champion."' },
+    { ru: '"Твои руки могут больше, чем ты думаешь."', en: '"Your arms can do more than you think."' },
+    { ru: '"Подтянись к своей мечте!"', en: '"Pull up to your dream!"' },
+    { ru: '"Отжимайся от проблем!"', en: '"Push up from problems!"' }
+];
 
 // Язык
 let currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
@@ -757,8 +868,583 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.INVITED_FRIENDS, JSON.stringify(invitedFriends));
     localStorage.setItem(STORAGE_KEYS.BONUS_POINTS, bonusPoints);
     
+    // Сохраняем силовые данные
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_HISTORY, JSON.stringify(strengthHistory));
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_TOTAL_PULLUPS, totalPullups);
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_TOTAL_PUSHUPS, totalPushups);
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_TOTAL_DAYS, strengthDays);
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PULLUPS, bestPullups);
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS, bestPushups);
+    localStorage.setItem(STORAGE_KEYS.STRENGTH_TODAY, JSON.stringify(strengthToday));
+    
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
+}
+
+// ========== ФУНКЦИИ ДЛЯ СИЛОВЫХ УПРАЖНЕНИЙ ==========
+
+// Переключение типа тренировки
+function switchStrengthType(type) {
+    currentStrengthType = type;
+    
+    // Обновляем активные кнопки
+    document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.getElementById(`type-${type}`).classList.add('active');
+    
+    // Показываем нужную карточку
+    document.getElementById('pullups-card').style.display = type === 'pullups' ? 'block' : 'none';
+    document.getElementById('pushups-card').style.display = type === 'pushups' ? 'block' : 'none';
+    document.getElementById('mixed-card').style.display = type === 'mixed' ? 'block' : 'none';
+    
+    // Обновляем интерфейс
+    if (type === 'pullups') {
+        renderPullupsSets();
+        updatePullupsGoal();
+    } else if (type === 'pushups') {
+        renderPushupsSets();
+        updatePushupsGoal();
+    } else if (type === 'mixed') {
+        renderMixedSets();
+    }
+    
+    updateStrengthProgress();
+}
+
+// Рендеринг сетов для подтягиваний
+function renderPullupsSets() {
+    const container = document.getElementById('pullups-sets');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (!strengthToday.pullups.sets || strengthToday.pullups.sets.length === 0) {
+        strengthToday.pullups.sets = [{ reps: 10, completed: false }];
+    }
+    
+    strengthToday.pullups.sets.forEach((set, index) => {
+        const setCard = document.createElement('div');
+        setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
+        setCard.innerHTML = `
+            <div class="set-header">
+                <span class="set-number">${t('set')} ${index + 1}</span>
+                ${strengthToday.pullups.sets.length > 1 ? `<button class="set-remove" data-index="${index}">✕</button>` : ''}
+            </div>
+            <div class="set-inputs">
+                <div class="set-reps">
+                    <label>${t('reps')}</label>
+                    <input type="number" class="set-reps-input" data-index="${index}" value="${set.reps}" min="1" max="50" ${set.completed ? 'disabled' : ''}>
+                </div>
+                <label class="set-complete">
+                    <input type="checkbox" class="set-complete-check" data-index="${index}" ${set.completed ? 'checked' : ''}>
+                    <span>${t('completed')}</span>
+                </label>
+            </div>
+        `;
+        container.appendChild(setCard);
+    });
+    
+    // Добавляем обработчики
+    document.querySelectorAll('#pullups-sets .set-remove').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            strengthToday.pullups.sets.splice(index, 1);
+            renderPullupsSets();
+            updatePullupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pullups-sets .set-reps-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            const value = parseInt(this.value) || 0;
+            strengthToday.pullups.sets[index].reps = value;
+            updatePullupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pullups-sets .set-complete-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            strengthToday.pullups.sets[index].completed = this.checked;
+            
+            const setCard = this.closest('.set-card');
+            if (this.checked) {
+                setCard.classList.add('completed');
+            } else {
+                setCard.classList.remove('completed');
+            }
+            
+            updatePullupsStats();
+            saveState();
+        });
+    });
+    
+    updatePullupsStats();
+}
+
+// Рендеринг сетов для отжиманий
+function renderPushupsSets() {
+    const container = document.getElementById('pushups-sets');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (!strengthToday.pushups.sets || strengthToday.pushups.sets.length === 0) {
+        strengthToday.pushups.sets = [{ reps: 15, completed: false }];
+    }
+    
+    strengthToday.pushups.sets.forEach((set, index) => {
+        const setCard = document.createElement('div');
+        setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
+        setCard.innerHTML = `
+            <div class="set-header">
+                <span class="set-number">${t('set')} ${index + 1}</span>
+                ${strengthToday.pushups.sets.length > 1 ? `<button class="set-remove" data-index="${index}">✕</button>` : ''}
+            </div>
+            <div class="set-inputs">
+                <div class="set-reps">
+                    <label>${t('reps')}</label>
+                    <input type="number" class="set-reps-input" data-index="${index}" value="${set.reps}" min="1" max="100" ${set.completed ? 'disabled' : ''}>
+                </div>
+                <label class="set-complete">
+                    <input type="checkbox" class="set-complete-check" data-index="${index}" ${set.completed ? 'checked' : ''}>
+                    <span>${t('completed')}</span>
+                </label>
+            </div>
+        `;
+        container.appendChild(setCard);
+    });
+    
+    // Добавляем обработчики
+    document.querySelectorAll('#pushups-sets .set-remove').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            strengthToday.pushups.sets.splice(index, 1);
+            renderPushupsSets();
+            updatePushupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pushups-sets .set-reps-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            const value = parseInt(this.value) || 0;
+            strengthToday.pushups.sets[index].reps = value;
+            updatePushupsStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('#pushups-sets .set-complete-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            strengthToday.pushups.sets[index].completed = this.checked;
+            
+            const setCard = this.closest('.set-card');
+            if (this.checked) {
+                setCard.classList.add('completed');
+            } else {
+                setCard.classList.remove('completed');
+            }
+            
+            updatePushupsStats();
+            saveState();
+        });
+    });
+    
+    updatePushupsStats();
+}
+
+// Рендеринг комплексной тренировки
+function renderMixedSets() {
+    const mixedWorkout = document.querySelector('.mixed-workout');
+    if (!mixedWorkout) return;
+    
+    // Очищаем контейнер, но оставляем кнопку добавления
+    const addButton = document.getElementById('add-mixed-set');
+    mixedWorkout.innerHTML = '';
+    
+    strengthToday.mixed.rounds.forEach((round, index) => {
+        const roundDiv = document.createElement('div');
+        roundDiv.className = `mixed-exercise ${round.completed ? 'completed' : ''}`;
+        roundDiv.innerHTML = `
+            <div class="mixed-header">
+                <span class="mixed-name">🔥 ${t('round')} ${index + 1}</span>
+                <span class="mixed-check">✓</span>
+            </div>
+            <div class="mixed-items">
+                <div class="mixed-item ${round.pullupsCompleted ? 'completed' : ''}">
+                    <span class="item-name">${t('pullups')}</span>
+                    <input type="number" class="item-input" data-round="${index}" data-exercise="pullups" value="${round.pullups}" min="1" max="30" ${round.completed ? 'disabled' : ''}>
+                    <span class="item-unit">раз</span>
+                    <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pullups" ${round.pullupsCompleted ? 'checked' : ''}>
+                </div>
+                <div class="mixed-item ${round.pushupsCompleted ? 'completed' : ''}">
+                    <span class="item-name">${t('pushups')}</span>
+                    <input type="number" class="item-input" data-round="${index}" data-exercise="pushups" value="${round.pushups}" min="1" max="50" ${round.completed ? 'disabled' : ''}>
+                    <span class="item-unit">раз</span>
+                    <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pushups" ${round.pushupsCompleted ? 'checked' : ''}>
+                </div>
+            </div>
+        `;
+        mixedWorkout.appendChild(roundDiv);
+    });
+    
+    // Добавляем кнопку обратно
+    mixedWorkout.appendChild(addButton);
+    
+    // Добавляем обработчики
+    document.querySelectorAll('.mixed-item .item-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const round = parseInt(this.dataset.round);
+            const exercise = this.dataset.exercise;
+            const value = parseInt(this.value) || 0;
+            
+            if (exercise === 'pullups') {
+                strengthToday.mixed.rounds[round].pullups = value;
+            } else {
+                strengthToday.mixed.rounds[round].pushups = value;
+            }
+            
+            updateMixedStats();
+            saveState();
+        });
+    });
+    
+    document.querySelectorAll('.mixed-item .item-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            const round = parseInt(this.dataset.round);
+            const exercise = this.dataset.exercise;
+            const mixedItem = this.closest('.mixed-item');
+            
+            if (exercise === 'pullups') {
+                strengthToday.mixed.rounds[round].pullupsCompleted = this.checked;
+            } else {
+                strengthToday.mixed.rounds[round].pushupsCompleted = this.checked;
+            }
+            
+            if (this.checked) {
+                mixedItem.classList.add('completed');
+            } else {
+                mixedItem.classList.remove('completed');
+            }
+            
+            // Проверяем, завершен ли весь круг
+            const roundData = strengthToday.mixed.rounds[round];
+            const allCompleted = roundData.pullupsCompleted && roundData.pushupsCompleted;
+            roundData.completed = allCompleted;
+            
+            const roundDiv = this.closest('.mixed-exercise');
+            if (allCompleted) {
+                roundDiv.classList.add('completed');
+            } else {
+                roundDiv.classList.remove('completed');
+            }
+            
+            updateMixedStats();
+            saveState();
+        });
+    });
+    
+    updateMixedStats();
+}
+
+// Добавление нового подхода
+function addSet(type) {
+    if (type === 'pullups') {
+        strengthToday.pullups.sets.push({ reps: 8, completed: false });
+        renderPullupsSets();
+    } else if (type === 'pushups') {
+        strengthToday.pushups.sets.push({ reps: 12, completed: false });
+        renderPushupsSets();
+    }
+    saveState();
+}
+
+// Добавление нового круга в комплекс
+function addMixedSet() {
+    if (strengthToday.mixed.rounds.length >= 5) {
+        tg.showAlert('Максимум 5 кругов');
+        return;
+    }
+    
+    strengthToday.mixed.rounds.push({
+        pullups: 5,
+        pushups: 10,
+        pullupsCompleted: false,
+        pushupsCompleted: false,
+        completed: false
+    });
+    
+    renderMixedSets();
+    saveState();
+}
+
+// Обновление цели для подтягиваний
+function updatePullupsGoal() {
+    const slider = document.getElementById('pullups-goal-slider');
+    const valueSpan = document.getElementById('pullups-goal-value');
+    const goalSpan = document.getElementById('pullups-goal');
+    
+    if (slider && valueSpan && goalSpan) {
+        slider.value = strengthToday.pullups.goal;
+        valueSpan.textContent = strengthToday.pullups.goal;
+        goalSpan.textContent = strengthToday.pullups.goal;
+        
+        slider.addEventListener('input', function() {
+            const value = this.value;
+            valueSpan.textContent = value;
+            goalSpan.textContent = value;
+            strengthToday.pullups.goal = parseInt(value);
+            updatePullupsStats();
+            saveState();
+        });
+    }
+}
+
+// Обновление цели для отжиманий
+function updatePushupsGoal() {
+    const slider = document.getElementById('pushups-goal-slider');
+    const valueSpan = document.getElementById('pushups-goal-value');
+    const goalSpan = document.getElementById('pushups-goal');
+    
+    if (slider && valueSpan && goalSpan) {
+        slider.value = strengthToday.pushups.goal;
+        valueSpan.textContent = strengthToday.pushups.goal;
+        goalSpan.textContent = strengthToday.pushups.goal;
+        
+        slider.addEventListener('input', function() {
+            const value = this.value;
+            valueSpan.textContent = value;
+            goalSpan.textContent = value;
+            strengthToday.pushups.goal = parseInt(value);
+            updatePushupsStats();
+            saveState();
+        });
+    }
+}
+
+// Обновление статистики подтягиваний
+function updatePullupsStats() {
+    const todaySpan = document.getElementById('pullups-today');
+    const summaryPullups = document.getElementById('summary-pullups');
+    
+    const totalCompleted = strengthToday.pullups.sets
+        .filter(set => set.completed)
+        .reduce((sum, set) => sum + set.reps, 0);
+    
+    const goal = strengthToday.pullups.goal;
+    
+    if (todaySpan) {
+        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    }
+    
+    if (summaryPullups) {
+        summaryPullups.textContent = totalCompleted;
+    }
+    
+    strengthToday.pullups.completed = totalCompleted >= goal;
+    
+    updateStrengthProgress();
+}
+
+// Обновление статистики отжиманий
+function updatePushupsStats() {
+    const todaySpan = document.getElementById('pushups-today');
+    const summaryPushups = document.getElementById('summary-pushups');
+    
+    const totalCompleted = strengthToday.pushups.sets
+        .filter(set => set.completed)
+        .reduce((sum, set) => sum + set.reps, 0);
+    
+    const goal = strengthToday.pushups.goal;
+    
+    if (todaySpan) {
+        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    }
+    
+    if (summaryPushups) {
+        summaryPushups.textContent = totalCompleted;
+    }
+    
+    strengthToday.pushups.completed = totalCompleted >= goal;
+    
+    updateStrengthProgress();
+}
+
+// Обновление статистики комплексной тренировки
+function updateMixedStats() {
+    const summaryPullups = document.getElementById('summary-pullups');
+    const summaryPushups = document.getElementById('summary-pushups');
+    
+    let totalPullupsCompleted = 0;
+    let totalPushupsCompleted = 0;
+    let allRoundsCompleted = true;
+    
+    strengthToday.mixed.rounds.forEach(round => {
+        if (round.pullupsCompleted) totalPullupsCompleted += round.pullups;
+        if (round.pushupsCompleted) totalPushupsCompleted += round.pushups;
+        if (!round.completed) allRoundsCompleted = false;
+    });
+    
+    if (summaryPullups) summaryPullups.textContent = totalPullupsCompleted;
+    if (summaryPushups) summaryPushups.textContent = totalPushupsCompleted;
+    
+    strengthToday.mixed.completed = allRoundsCompleted;
+    
+    updateStrengthProgress();
+}
+
+// Обновление общего прогресса силы
+function updateStrengthProgress() {
+    const progressBar = document.getElementById('strength-progress');
+    const percentSpan = document.getElementById('strength-percent');
+    const completeBtn = document.getElementById('complete-strength-btn');
+    
+    let totalCompleted = 0;
+    let totalGoal = 0;
+    
+    if (currentStrengthType === 'pullups') {
+        const completed = strengthToday.pullups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+        totalCompleted = completed;
+        totalGoal = strengthToday.pullups.goal;
+    } else if (currentStrengthType === 'pushups') {
+        const completed = strengthToday.pushups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+        totalCompleted = completed;
+        totalGoal = strengthToday.pushups.goal;
+    } else if (currentStrengthType === 'mixed') {
+        strengthToday.mixed.rounds.forEach(round => {
+            if (round.pullupsCompleted) totalCompleted += round.pullups;
+            if (round.pushupsCompleted) totalCompleted += round.pushups;
+        });
+        strengthToday.mixed.rounds.forEach(round => {
+            totalGoal += round.pullups + round.pushups;
+        });
+    }
+    
+    const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
+    
+    if (progressBar) progressBar.style.width = percent + '%';
+    if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
+    
+    // Проверяем, можно ли завершить тренировку
+    let canComplete = false;
+    
+    if (currentStrengthType === 'pullups') {
+        canComplete = strengthToday.pullups.completed;
+    } else if (currentStrengthType === 'pushups') {
+        canComplete = strengthToday.pushups.completed;
+    } else if (currentStrengthType === 'mixed') {
+        canComplete = strengthToday.mixed.completed;
+    }
+    
+    if (completeBtn) completeBtn.disabled = !canComplete;
+    
+    // Обновляем калории (примерно 1 калория на 2 повторения)
+    const calories = Math.round(totalCompleted * 0.5);
+    const summaryCalories = document.getElementById('summary-calories');
+    if (summaryCalories) summaryCalories.textContent = calories;
+}
+
+// Завершение силовой тренировки
+function completeStrengthWorkout() {
+    let totalPullupsToday = 0;
+    let totalPushupsToday = 0;
+    
+    if (currentStrengthType === 'pullups') {
+        totalPullupsToday = strengthToday.pullups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+    } else if (currentStrengthType === 'pushups') {
+        totalPushupsToday = strengthToday.pushups.sets
+            .filter(set => set.completed)
+            .reduce((sum, set) => sum + set.reps, 0);
+    } else if (currentStrengthType === 'mixed') {
+        strengthToday.mixed.rounds.forEach(round => {
+            if (round.pullupsCompleted) totalPullupsToday += round.pullups;
+            if (round.pushupsCompleted) totalPushupsToday += round.pushups;
+        });
+    }
+    
+    // Обновляем общую статистику
+    totalPullups += totalPullupsToday;
+    totalPushups += totalPushupsToday;
+    strengthDays++;
+    
+    if (totalPullupsToday > bestPullups) bestPullups = totalPullupsToday;
+    if (totalPushupsToday > bestPushups) bestPushups = totalPushupsToday;
+    
+    // Добавляем в историю
+    strengthHistory.push({
+        date: new Date().toISOString(),
+        pullups: totalPullupsToday,
+        pushups: totalPushupsToday,
+        type: currentStrengthType
+    });
+    
+    // Сбрасываем сегодняшнюю тренировку
+    strengthToday = {
+        pullups: {
+            goal: 30,
+            sets: [{ reps: 10, completed: false }],
+            completed: false
+        },
+        pushups: {
+            goal: 50,
+            sets: [{ reps: 15, completed: false }],
+            completed: false
+        },
+        mixed: {
+            completed: false,
+            rounds: [
+                { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
+            ]
+        }
+    };
+    
+    saveState();
+    
+    // Обновляем UI
+    renderPullupsSets();
+    renderPushupsSets();
+    renderMixedSets();
+    updateStrengthProgress();
+    updateStrengthStats();
+    
+    // Показываем новую мотивационную цитату
+    const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
+    const quoteEl = document.getElementById('strength-quote');
+    if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
+    
+    tg.showPopup({
+        title: '🎉',
+        message: t('strengthCompleted'),
+        buttons: [{ type: 'close' }]
+    });
+}
+
+// Обновление статистики силы в общем разделе
+function updateStrengthStats() {
+    const totalPullupsEl = document.getElementById('total-pullups');
+    const totalPushupsEl = document.getElementById('total-pushups');
+    const strengthDaysEl = document.getElementById('total-strength-days');
+    const bestPullupsEl = document.getElementById('best-pullups');
+    
+    if (totalPullupsEl) totalPullupsEl.textContent = totalPullups;
+    if (totalPushupsEl) totalPushupsEl.textContent = totalPushups;
+    if (strengthDaysEl) strengthDaysEl.textContent = strengthDays;
+    if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
 // ========== ФУНКЦИИ ДЛЯ ДНЕВНИКА ==========
@@ -809,11 +1495,10 @@ function renderDiary() {
     });
 }
 
-// ========== ФУНКЦИИ ДЛЯ ПРИГЛАШЕНИЙ (ИСПРАВЛЕНО) ==========
+// ========== ФУНКЦИИ ДЛЯ ПРИГЛАШЕНИЙ ==========
 
 // Отправка приглашения другу через Telegram
 function inviteFriend() {
-    // Создаем временное поле для ввода username друга
     const friendUsername = prompt(t('enterFriendUsername'), '@');
     
     if (!friendUsername) return;
@@ -840,7 +1525,8 @@ function inviteFriend() {
     // Создаем сообщение с приглашением
     const inviteMessage = `${t('inviteText', userName)}\n\n` +
                          `👤 От: ${userName} (@${userUsername})\n` +
-                         `🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n\n` +
+                         `🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
+                         `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n\n` +
                          `👉 Нажми, чтобы открыть приложение: https://t.me/your_bot_name?start=${inviteCode}`;
     
     // Открываем диалог с другом в Telegram
@@ -884,8 +1570,8 @@ function copyInviteLink() {
 // Поделиться прогрессом
 function shareProgress() {
     const message = `🏃 Мой прогресс в беговом марафоне:\n\n` +
-                   `📊 Всего: ${totalDistance.toFixed(1)} км\n` +
-                   `🎯 Тренировок: ${totalWorkouts}\n` +
+                   `📊 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
+                   `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
                    `🔥 Калорий: ${totalCalories}\n\n` +
                    `👥 Присоединяйся! https://t.me/your_bot_name?start=${inviteCode}`;
     
@@ -896,31 +1582,6 @@ function shareProgress() {
         message: t('shared'),
         buttons: [{ type: 'close' }]
     });
-}
-
-// Обработка входящего приглашения (по start параметру)
-function handleInvite(startParam) {
-    if (startParam && startParam.startsWith('ref_')) {
-        // Извлекаем ID пригласившего
-        const inviterId = startParam.split('_')[1];
-        
-        // Проверяем, не пригласил ли сам себя
-        if (inviterId === userId) return;
-        
-        tg.showPopup({
-            title: '🎉',
-            message: t('inviteReceived'),
-            buttons: [
-                { id: 'join', type: 'default', text: t('joinNow') },
-                { type: 'close', text: 'Закрыть' }
-            ]
-        }, (buttonId) => {
-            if (buttonId === 'join') {
-                // Здесь можно добавить логику для автоматического добавления в друзья
-                // когда будет готова серверная часть
-            }
-        });
-    }
 }
 
 // Рендеринг статистики приглашений
@@ -951,7 +1612,7 @@ function updateUserProfile() {
     if (userPaceEl) userPaceEl.textContent = avgPace;
     
     if (profileNameEl) profileNameEl.textContent = userName;
-    if (profileStatsEl) profileStatsEl.textContent = `${totalDistance.toFixed(1)} км • ${totalWorkouts} тренировок`;
+    if (profileStatsEl) profileStatsEl.textContent = `${totalDistance.toFixed(1)} км • ${totalWorkouts} тренировок • 💪 ${totalPullups}`;
 }
 
 function renderFriendRequests() {
@@ -1044,8 +1705,8 @@ function sendFriendRequest() {
     // Создаем сообщение с заявкой
     const requestMessage = `👋 ${userName} (@${userUsername}) хочет добавить тебя в друзья в беговом марафоне!\n\n` +
                           `📊 Его статистика:\n` +
-                          `🏃 Дистанция: ${totalDistance.toFixed(1)} км\n` +
-                          `🎯 Тренировок: ${totalWorkouts}\n` +
+                          `🏃 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
+                          `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
                           `🔥 Калорий: ${totalCalories}\n\n` +
                           `👉 Открой приложение, чтобы принять заявку: https://t.me/your_bot_name`;
     
@@ -1167,7 +1828,9 @@ function getFriendResults() {
         
         results.push({
             ...friend,
-            history: mockHistory
+            history: mockHistory,
+            pullups: Math.floor(Math.random() * 100),
+            pushups: Math.floor(Math.random() * 200)
         });
     });
     
@@ -1185,7 +1848,9 @@ function getLeaderboard() {
             username: userUsername,
             avatar: '👤',
             isYou: true,
-            ...calculateStats(workoutHistory, resultsPeriod)
+            ...calculateStats(workoutHistory, resultsPeriod),
+            pullups: totalPullups,
+            pushups: totalPushups
         },
         // Друзья
         ...friendResults.map(friend => ({
@@ -1285,6 +1950,10 @@ function renderFriendResults() {
                     <div class="stat-row">
                         <span>${t('pace')}</span>
                         <span class="stat-value">${stats.pace} мин/км</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>💪 Сила</span>
+                        <span class="stat-value">${friend.pullups || 0}/${friend.pushups || 0}</span>
                     </div>
                 </div>
                 <div class="vs-row ${vsClass}">
@@ -1394,6 +2063,12 @@ function getPersonalizedRecommendation() {
     const needRecovery = needsRecovery();
     const streak = calculateStreak();
     const lang = currentLanguage;
+    
+    // Иногда показываем советы по силовым
+    if (Math.random() < 0.3 && totalPullups + totalPushups > 0) {
+        const strengthIndex = Math.floor(Math.random() * recommendations.strength[lang].length);
+        return recommendations.strength[lang][strengthIndex];
+    }
     
     if (Math.random() < 0.2 && totalWorkouts > 0) {
         const motiIndex = Math.floor(Math.random() * recommendations.motivation[lang].length);
@@ -1834,6 +2509,9 @@ function updateStats() {
             });
         }
     }
+    
+    // Обновляем силовую статистику
+    updateStrengthStats();
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
@@ -2149,7 +2827,7 @@ function updateAllText() {
     if (tabFriends) tabFriends.textContent = t('friends');
     if (tabDiary) tabDiary.textContent = t('diary');
     
-    // Друзья - новые элементы
+    // Друзья
     const inviteBtn = document.getElementById('invite-friends-btn');
     if (inviteBtn) {
         inviteBtn.innerHTML = `<span class="btn-icon">📤</span><span class="btn-text">${t('sendInvite')}</span>`;
@@ -2215,6 +2893,59 @@ function updateAllText() {
     const completeWorkoutBtn = document.getElementById('complete-workout-btn');
     if (completeWorkoutBtn) completeWorkoutBtn.textContent = t('completeWorkout');
     
+    // Силовые тренировки
+    const strengthTitle = document.querySelector('.strength-title');
+    if (strengthTitle) strengthTitle.textContent = t('strengthTitle');
+    
+    const pullupsCard = document.getElementById('pullups-card');
+    if (pullupsCard) {
+        const title = pullupsCard.querySelector('.exercise-title h3');
+        const subtitle = pullupsCard.querySelector('.exercise-subtitle');
+        if (title) title.textContent = t('pullups');
+        if (subtitle) subtitle.textContent = t('pullupsSub');
+    }
+    
+    const pushupsCard = document.getElementById('pushups-card');
+    if (pushupsCard) {
+        const title = pushupsCard.querySelector('.exercise-title h3');
+        const subtitle = pushupsCard.querySelector('.exercise-subtitle');
+        if (title) title.textContent = t('pushups');
+        if (subtitle) subtitle.textContent = t('pushupsSub');
+    }
+    
+    const mixedCard = document.getElementById('mixed-card');
+    if (mixedCard) {
+        const title = mixedCard.querySelector('.exercise-title h3');
+        const subtitle = mixedCard.querySelector('.exercise-subtitle');
+        if (title) title.textContent = t('mixed');
+        if (subtitle) subtitle.textContent = t('mixedSub');
+    }
+    
+    const goalSliders = document.querySelectorAll('.goal-slider label');
+    goalSliders.forEach(label => {
+        label.textContent = t('goal');
+    });
+    
+    const addSetBtns = document.querySelectorAll('.add-set-btn');
+    addSetBtns.forEach(btn => {
+        btn.innerHTML = `<span>${t('addSet')}</span>`;
+    });
+    
+    const addMixedBtn = document.getElementById('add-mixed-set');
+    if (addMixedBtn) {
+        addMixedBtn.innerHTML = `<span>${t('addRound')}</span>`;
+    }
+    
+    const completeStrengthBtn = document.getElementById('complete-strength-btn');
+    if (completeStrengthBtn) {
+        completeStrengthBtn.textContent = t('completeStrength');
+    }
+    
+    const summaryLabels = document.querySelectorAll('.summary-label');
+    if (summaryLabels[0]) summaryLabels[0].textContent = t('summaryPullups');
+    if (summaryLabels[1]) summaryLabels[1].textContent = t('summaryPushups');
+    if (summaryLabels[2]) summaryLabels[2].textContent = t('summaryCalories');
+    
     // Меню
     const menuTitles = document.querySelectorAll('.menu-title');
     if (menuTitles[0]) menuTitles[0].textContent = t('marathon');
@@ -2267,6 +2998,19 @@ function updateAllText() {
     updateTeamProgress();
     renderSavedWorkouts();
     renderActiveWorkout();
+    
+    // Обновляем силовые
+    renderPullupsSets();
+    renderPushupsSets();
+    renderMixedSets();
+    updatePullupsGoal();
+    updatePushupsGoal();
+    updateStrengthProgress();
+    
+    // Мотивационная цитата
+    const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
+    const quoteEl = document.getElementById('strength-quote');
+    if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
 }
 
 // ========== ПЕРЕКЛЮЧЕНИЕ ТАБОВ ==========
@@ -2336,6 +3080,14 @@ window.switchPage = function(pageIndex) {
         renderSavedWorkouts();
         renderActiveWorkout();
     }
+    if (pageIndex === 4) {
+        renderPullupsSets();
+        renderPushupsSets();
+        renderMixedSets();
+        updatePullupsGoal();
+        updatePushupsGoal();
+        updateStrengthProgress();
+    }
 };
 
 // ========== ТЕМЫ ==========
@@ -2388,6 +3140,13 @@ window.setLanguage = function(lang) {
         renderCustomCreator();
         renderSavedWorkouts();
         renderActiveWorkout();
+    } else if (currentSlide === 4) {
+        renderPullupsSets();
+        renderPushupsSets();
+        renderMixedSets();
+        updatePullupsGoal();
+        updatePushupsGoal();
+        updateStrengthProgress();
     }
 };
 
@@ -2414,10 +3173,30 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSavedWorkouts();
     renderActiveWorkout();
     
+    // Инициализация силовых
+    renderPullupsSets();
+    renderPushupsSets();
+    renderMixedSets();
+    updatePullupsGoal();
+    updatePushupsGoal();
+    updateStrengthProgress();
+    
     // Проверяем start parameter при загрузке
     if (tg.initDataUnsafe?.start_param) {
         handleInvite(tg.initDataUnsafe.start_param);
     }
+    
+    // Обработчики для кнопок силовых
+    document.querySelectorAll('.type-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            switchStrengthType(this.dataset.type);
+        });
+    });
+    
+    document.getElementById('add-pullups-set')?.addEventListener('click', () => addSet('pullups'));
+    document.getElementById('add-pushups-set')?.addEventListener('click', () => addSet('pushups'));
+    document.getElementById('add-mixed-set')?.addEventListener('click', addMixedSet);
+    document.getElementById('complete-strength-btn')?.addEventListener('click', completeStrengthWorkout);
     
     // Обработчики для новых кнопок приглашений
     const inviteBtn = document.getElementById('invite-friends-btn');
@@ -2694,6 +3473,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 activeWorkout = null;
                 invitedFriends = [];
                 bonusPoints = 0;
+                
+                // Сброс силовых
+                totalPullups = 0;
+                totalPushups = 0;
+                strengthDays = 0;
+                bestPullups = 0;
+                bestPushups = 0;
+                strengthToday = {
+                    pullups: {
+                        goal: 30,
+                        sets: [{ reps: 10, completed: false }],
+                        completed: false
+                    },
+                    pushups: {
+                        goal: 50,
+                        sets: [{ reps: 15, completed: false }],
+                        completed: false
+                    },
+                    mixed: {
+                        completed: false,
+                        rounds: [
+                            { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                            { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                            { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
+                        ]
+                    }
+                };
+                
                 localStorage.clear();
                 updateUI();
                 updateStats();
@@ -2707,6 +3514,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderLeaderboard();
                 renderFriendResults();
                 updateTeamProgress();
+                
+                // Обновляем силовые
+                renderPullupsSets();
+                renderPushupsSets();
+                renderMixedSets();
+                updatePullupsGoal();
+                updatePushupsGoal();
+                updateStrengthProgress();
                 
                 const menu = document.getElementById('menu-dropdown');
                 const menuBtn = document.getElementById('menu-btn');
