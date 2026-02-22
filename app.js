@@ -1,4 +1,4 @@
- let tg = window.Telegram.WebApp;
+let tg = window.Telegram.WebApp;
 tg.expand();
 
 // Получаем ID пользователя из Telegram
@@ -28,7 +28,8 @@ const STORAGE_KEYS = {
     SENT_REQUESTS: 'sent_requests',
     USER_STATS: 'user_stats',
     TEAM_GOAL: 'team_goal',
-    TEAM_PROGRESS: 'team_progress'
+    TEAM_PROGRESS: 'team_progress',
+    SAVED_WORKOUTS: 'saved_workouts'
 };
 
 // ========== ПЕРЕВОДЫ ==========
@@ -92,7 +93,7 @@ const translations = {
         
         // AI рекомендации
         aiRecommendations: "🤖 AI-РЕКОМЕНДАЦИИ",
-        refreshRecommendation: "🔄 Обновить рекомендацию",
+        refreshRecommendation: "🔄 Обновить",
         
         // Социальные функции
         friends: "👥 Друзья",
@@ -130,14 +131,23 @@ const translations = {
         newRequest: "🔔 Новая заявка",
         
         // Создание заданий
-        createTitle: "🎯 СОЗДАТЬ ЗАДАНИЯ",
+        createTitle: "🎯 СОЗДАТЬ ТРЕНИРОВКУ",
         goal: "ЦЕЛЬ",
         goalPlaceholder: "км",
         addTask: "ЗАДАНИЕ",
         taskPlaceholder: "Например: Разминка",
         addTaskBtn: "+",
-        sendBtn: "📌 Отправить",
+        sendBtn: "📌 Создать",
         noTasks: "➕ Добавь задания",
+        
+        // Режимы
+        createMode: "✏️ Создать",
+        executeMode: "▶️ Выполнить",
+        savedWorkouts: "📋 СОХРАНЕННЫЕ ТРЕНИРОВКИ",
+        noSavedWorkouts: "У вас пока нет сохраненных тренировок",
+        startWorkout: "▶️ Начать",
+        completeWorkout: "✅ Завершить",
+        workoutCompleted: "🎉 Тренировка завершена!",
         
         // Дневник
         newEntry: "Новая запись",
@@ -270,14 +280,23 @@ const translations = {
         newRequest: "🔔 New request",
         
         // Create tasks
-        createTitle: "🎯 CREATE TASKS",
+        createTitle: "🎯 CREATE WORKOUT",
         goal: "GOAL",
         goalPlaceholder: "km",
         addTask: "TASK",
         taskPlaceholder: "Example: Warm-up",
         addTaskBtn: "+",
-        sendBtn: "📌 Send",
+        sendBtn: "📌 Create",
         noTasks: "➕ Add tasks",
+        
+        // Modes
+        createMode: "✏️ Create",
+        executeMode: "▶️ Execute",
+        savedWorkouts: "📋 SAVED WORKOUTS",
+        noSavedWorkouts: "No saved workouts yet",
+        startWorkout: "▶️ Start",
+        completeWorkout: "✅ Complete",
+        workoutCompleted: "🎉 Workout completed!",
         
         // Diary
         newEntry: "New entry",
@@ -527,6 +546,12 @@ let diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) 
 // Текущие данные для создания тренировки
 let currentCustomTasks = [];
 
+// Сохраненные тренировки
+let savedWorkouts = JSON.parse(localStorage.getItem(STORAGE_KEYS.SAVED_WORKOUTS)) || [];
+
+// Активная тренировка для выполнения
+let activeWorkout = null;
+
 // Друзья и заявки
 let friends = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIENDS)) || [];
 let friendRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIEND_REQUESTS)) || [];
@@ -539,6 +564,9 @@ let currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
 
 // Текущая вкладка
 let currentTab = 'friends';
+
+// Текущий режим в создании
+let currentMode = 'create';
 
 // ========== ФУНКЦИЯ ПЕРЕВОДА ==========
 function t(key, ...args) {
@@ -640,13 +668,15 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
     localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
+    localStorage.setItem(STORAGE_KEYS.SAVED_WORKOUTS, JSON.stringify(savedWorkouts));
     
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
-// ========== ФУНКЦИИ ДЛЯ ТАБОВ ==========
+// ========== ПЕРЕКЛЮЧЕНИЕ ТАБОВ ==========
 function switchTab(tabName) {
+    console.log('Переключение на вкладку:', tabName);
     currentTab = tabName;
     
     const friendsTab = document.getElementById('friends-tab');
@@ -654,11 +684,17 @@ function switchTab(tabName) {
     const friendsBtn = document.getElementById('tab-friends');
     const diaryBtn = document.getElementById('tab-diary');
     
+    if (!friendsTab || !diaryTab || !friendsBtn || !diaryBtn) {
+        console.error('Элементы табов не найдены');
+        return;
+    }
+    
     if (tabName === 'friends') {
         friendsTab.classList.add('active');
         diaryTab.classList.remove('active');
         friendsBtn.classList.add('active');
         diaryBtn.classList.remove('active');
+        // Обновляем контент друзей
         renderFriendRequests();
         renderFriends();
         updateTeamProgress();
@@ -667,7 +703,216 @@ function switchTab(tabName) {
         diaryTab.classList.add('active');
         friendsBtn.classList.remove('active');
         diaryBtn.classList.add('active');
+        // Обновляем дневник
         renderDiary();
+    }
+}
+
+// ========== ПЕРЕКЛЮЧЕНИЕ РЕЖИМОВ В СОЗДАНИИ ==========
+function switchMode(mode) {
+    console.log('Переключение на режим:', mode);
+    currentMode = mode;
+    
+    const createMode = document.getElementById('create-mode');
+    const executeMode = document.getElementById('execute-mode');
+    const createBtn = document.getElementById('mode-create');
+    const executeBtn = document.getElementById('mode-execute');
+    
+    if (!createMode || !executeMode || !createBtn || !executeBtn) {
+        console.error('Элементы режимов не найдены');
+        return;
+    }
+    
+    if (mode === 'create') {
+        createMode.classList.add('active');
+        executeMode.classList.remove('active');
+        createBtn.classList.add('active');
+        executeBtn.classList.remove('active');
+    } else {
+        createMode.classList.remove('active');
+        executeMode.classList.add('active');
+        createBtn.classList.remove('active');
+        executeBtn.classList.add('active');
+        renderSavedWorkouts();
+    }
+}
+
+// ========== ФУНКЦИИ ДЛЯ СОХРАНЕННЫХ ТРЕНИРОВОК ==========
+function saveWorkout() {
+    if (currentCustomTasks.length === 0) {
+        tg.showAlert('Добавьте хотя бы одно задание');
+        return;
+    }
+    
+    const goalInput = document.getElementById('goal-distance');
+    const goal = parseFloat(goalInput.value);
+    
+    const newWorkout = {
+        id: Date.now(),
+        name: `Тренировка ${savedWorkouts.length + 1}`,
+        goal: goal,
+        tasks: [...currentCustomTasks],
+        date: new Date().toISOString()
+    };
+    
+    savedWorkouts.push(newWorkout);
+    localStorage.setItem(STORAGE_KEYS.SAVED_WORKOUTS, JSON.stringify(savedWorkouts));
+    
+    tg.showAlert('Тренировка сохранена!');
+    
+    // Очищаем форму
+    currentCustomTasks = [];
+    goalInput.value = 5;
+    document.getElementById('new-task-text').value = '';
+    document.getElementById('new-task-distance').value = 0;
+    renderCustomCreator();
+}
+
+function renderSavedWorkouts() {
+    const container = document.getElementById('saved-workouts-list');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (savedWorkouts.length === 0) {
+        container.innerHTML = `<div class="empty-workouts">${t('noSavedWorkouts')}</div>`;
+        return;
+    }
+    
+    savedWorkouts.forEach((workout, index) => {
+        const workoutDiv = document.createElement('div');
+        workoutDiv.className = 'saved-workout-item';
+        workoutDiv.setAttribute('data-id', workout.id);
+        workoutDiv.innerHTML = `
+            <div class="saved-workout-icon">🏋️</div>
+            <div class="saved-workout-info">
+                <span class="saved-workout-name">${workout.name}</span>
+                <span class="saved-workout-meta">${workout.tasks.length} заданий • ${workout.goal} км</span>
+            </div>
+            <button class="saved-workout-delete" data-id="${workout.id}">✕</button>
+        `;
+        
+        workoutDiv.addEventListener('click', function(e) {
+            if (!e.target.classList.contains('saved-workout-delete')) {
+                startSavedWorkout(workout.id);
+            }
+        });
+        
+        container.appendChild(workoutDiv);
+    });
+    
+    document.querySelectorAll('.saved-workout-delete').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = parseInt(this.dataset.id);
+            deleteSavedWorkout(id);
+        });
+    });
+}
+
+function startSavedWorkout(id) {
+    const workout = savedWorkouts.find(w => w.id === id);
+    if (!workout) return;
+    
+    activeWorkout = {
+        ...workout,
+        steps: workout.tasks.map((task, index) => ({
+            id: index + 1,
+            text: task.text,
+            completed: false,
+            distance: task.distance || 0
+        }))
+    };
+    
+    renderActiveWorkout();
+}
+
+function renderActiveWorkout() {
+    if (!activeWorkout) {
+        document.getElementById('active-workout').style.display = 'none';
+        return;
+    }
+    
+    document.getElementById('active-workout').style.display = 'block';
+    document.getElementById('active-workout-name').textContent = activeWorkout.name;
+    document.getElementById('active-workout-goal').textContent = activeWorkout.goal + ' км';
+    
+    const stepsContainer = document.getElementById('active-workout-steps');
+    stepsContainer.innerHTML = '';
+    
+    let completedCount = 0;
+    
+    activeWorkout.steps.forEach((step, index) => {
+        if (step.completed) completedCount++;
+        
+        const stepDiv = document.createElement('div');
+        stepDiv.className = `workout-step-compact ${step.completed ? 'step-completed' : ''}`;
+        stepDiv.innerHTML = `
+            <input type="checkbox" class="workout-checkbox" data-index="${index}" ${step.completed ? 'checked' : ''}>
+            <span class="step-text">${step.text}</span>
+            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} км</span>` : ''}
+        `;
+        stepsContainer.appendChild(stepDiv);
+    });
+    
+    const progress = (completedCount / activeWorkout.steps.length) * 100;
+    document.getElementById('active-workout-progress').style.width = progress + '%';
+    document.getElementById('active-workout-percent').textContent = Math.round(progress) + '%';
+    
+    const allCompleted = completedCount === activeWorkout.steps.length;
+    document.getElementById('complete-workout-btn').disabled = !allCompleted;
+    
+    document.querySelectorAll('#active-workout-steps .workout-checkbox').forEach(cb => {
+        cb.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            activeWorkout.steps[index].completed = this.checked;
+            renderActiveWorkout();
+        });
+    });
+}
+
+function completeWorkout() {
+    if (!activeWorkout) return;
+    
+    // Считаем дистанцию
+    let totalDistance = 0;
+    activeWorkout.steps.forEach(step => {
+        if (step.completed) {
+            totalDistance += step.distance || 0;
+        }
+    });
+    
+    // Добавляем в историю
+    workoutHistory.push({
+        day: currentDay,
+        distance: totalDistance,
+        time: Math.round(totalDistance * 6), // Примерно 6 мин/км
+        calories: Math.round(totalDistance * 60), // Примерно 60 ккал/км
+        date: new Date().toISOString(),
+        name: activeWorkout.name
+    });
+    
+    totalWorkouts++;
+    totalDistance += totalDistance;
+    totalTime += Math.round(totalDistance * 6);
+    totalCalories += Math.round(totalDistance * 60);
+    
+    tg.showAlert(t('workoutCompleted'));
+    
+    activeWorkout = null;
+    renderActiveWorkout();
+    renderSavedWorkouts();
+    saveState();
+}
+
+function deleteSavedWorkout(id) {
+    savedWorkouts = savedWorkouts.filter(w => w.id !== id);
+    localStorage.setItem(STORAGE_KEYS.SAVED_WORKOUTS, JSON.stringify(savedWorkouts));
+    renderSavedWorkouts();
+    
+    if (activeWorkout && activeWorkout.id === id) {
+        activeWorkout = null;
+        renderActiveWorkout();
     }
 }
 
@@ -749,7 +994,7 @@ function renderFriends() {
             <div class="friend-avatar">${friend.avatar || '👤'}</div>
             <div class="friend-info">
                 <span class="friend-name">${friend.name}</span>
-                <span class="friend-stats">${friend.workouts} • ${friend.distance.toFixed(1)} км</span>
+                <span class="friend-stats">${friend.workouts || 0} • ${(friend.distance || 0).toFixed(1)} км</span>
             </div>
             <span class="friend-status ${isOnline ? 'online' : 'offline'}">${isOnline ? t('online') : t('offline')}</span>
             <button class="friend-remove" data-index="${index}">✕</button>
@@ -828,7 +1073,6 @@ function sendFriendRequest() {
     
     input.value = '';
     
-    renderSentRequests();
     renderFriendRequests();
     
     tg.showAlert(t('requestSentSuccess', cleanUsername));
@@ -877,10 +1121,6 @@ function removeFriend(index) {
     renderFriends();
     updateTeamProgress();
     tg.showAlert(t('friendRemoved', friend.name));
-}
-
-function renderSentRequests() {
-    // Упрощенно - не показываем исходящие в компактной версии
 }
 
 function updateTeamProgress() {
@@ -1160,7 +1400,7 @@ function updateStats() {
                     <div style="display: flex; flex-direction: column; gap: 4px;">
                         <div style="display: flex; justify-content: space-between;">
                             <span class="history-date">${formattedDate}</span>
-                            <span class="history-workout">${workout.name || `Day ${workout.day}`}</span>
+                            <span class="history-workout">${workout.name || `День ${workout.day}`}</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 12px;">
                             <span>${workout.distance} км</span>
@@ -1216,45 +1456,7 @@ function updateCreateButtonState() {
     const goal = parseFloat(goalInput?.value) || 0;
     const createBtn = document.getElementById('create-plan-btn');
     
-    if (goal > 0 && currentCustomTasks.length > 0) {
-        createBtn.disabled = false;
-    } else {
-        createBtn.disabled = true;
-    }
-}
-
-function createCustomWorkout() {
-    currentCustomTasks.forEach(task => {
-        additionalTasks.push({
-            id: Date.now() + Math.random(),
-            text: task.text,
-            distance: task.distance || 0
-        });
-    });
-    
-    additionalCompleted = new Array(additionalTasks.length).fill(false);
-    
-    tg.showPopup({
-        title: '✅',
-        message: t('tasksAdded', currentCustomTasks.length),
-        buttons: [{ type: 'close' }]
-    });
-    
-    currentCustomTasks = [];
-    const goalInput = document.getElementById('goal-distance');
-    const taskText = document.getElementById('new-task-text');
-    const taskDistance = document.getElementById('new-task-distance');
-    
-    if (goalInput) goalInput.value = 5;
-    if (taskText) taskText.value = '';
-    if (taskDistance) taskDistance.value = 0;
-    
-    saveState();
-    renderCustomCreator();
-    
-    if (currentSlide === 0) {
-        renderWorkout();
-    }
+    createBtn.disabled = !(goal > 0 && currentCustomTasks.length > 0);
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
@@ -1599,9 +1801,14 @@ function updateAllText() {
     const entryText = document.getElementById('entry-text');
     if (entryText) entryText.placeholder = t('entryPlaceholder');
     
-    // Создание заданий
+    // Создание тренировки
     const customTitle = document.querySelector('.custom-title');
     if (customTitle) customTitle.textContent = t('createTitle');
+    
+    const modeCreate = document.getElementById('mode-create');
+    const modeExecute = document.getElementById('mode-execute');
+    if (modeCreate) modeCreate.textContent = t('createMode');
+    if (modeExecute) modeExecute.textContent = t('executeMode');
     
     const goalCardH3 = document.querySelector('.goal-card h3');
     if (goalCardH3) goalCardH3.textContent = t('goal');
@@ -1609,11 +1816,20 @@ function updateAllText() {
     const goalInput = document.getElementById('goal-distance');
     if (goalInput) goalInput.placeholder = t('goalPlaceholder');
     
+    const tasksCreatorH3 = document.querySelector('.tasks-creator h3');
+    if (tasksCreatorH3) tasksCreatorH3.textContent = t('addTask');
+    
+    const taskTextInput = document.getElementById('new-task-text');
+    if (taskTextInput) taskTextInput.placeholder = t('taskPlaceholder');
+    
     const addTaskBtn = document.getElementById('add-task-btn');
     if (addTaskBtn) addTaskBtn.textContent = t('addTaskBtn');
     
     const createPlanBtn = document.getElementById('create-plan-btn');
     if (createPlanBtn) createPlanBtn.textContent = t('sendBtn');
+    
+    const completeWorkoutBtn = document.getElementById('complete-workout-btn');
+    if (completeWorkoutBtn) completeWorkoutBtn.textContent = t('completeWorkout');
     
     // Меню
     const menuTitles = document.querySelectorAll('.menu-title');
@@ -1644,7 +1860,7 @@ function updateAllText() {
     
     const versionItem = document.querySelectorAll('.contact-item')[1];
     if (versionItem) {
-        versionItem.innerHTML = `<span>📱 ${t('version')}</span><span class="contact-highlight">9.0.0</span>`;
+        versionItem.innerHTML = `<span>📱 ${t('version')}</span><span class="contact-highlight">10.0.0</span>`;
     }
     
     // Настройки в меню
@@ -1707,7 +1923,14 @@ window.switchPage = function(pageIndex) {
         updateTeamProgress();
     }
     if (pageIndex === 3) {
-        renderCustomCreator();
+        if (currentMode === 'create') {
+            renderCustomCreator();
+        } else {
+            renderSavedWorkouts();
+            if (activeWorkout) {
+                renderActiveWorkout();
+            }
+        }
     }
 };
 
@@ -1756,7 +1979,14 @@ window.setLanguage = function(lang) {
             renderDiary();
         }
     } else if (currentSlide === 3) {
-        renderCustomCreator();
+        if (currentMode === 'create') {
+            renderCustomCreator();
+        } else {
+            renderSavedWorkouts();
+            if (activeWorkout) {
+                renderActiveWorkout();
+            }
+        }
     }
 };
 
@@ -1782,8 +2012,40 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUI();
     
     // Табы
-    document.getElementById('tab-friends')?.addEventListener('click', () => switchTab('friends'));
-    document.getElementById('tab-diary')?.addEventListener('click', () => switchTab('diary'));
+    const tabFriends = document.getElementById('tab-friends');
+    const tabDiary = document.getElementById('tab-diary');
+    
+    if (tabFriends) {
+        tabFriends.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchTab('friends');
+        });
+    }
+    
+    if (tabDiary) {
+        tabDiary.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchTab('diary');
+        });
+    }
+    
+    // Режимы создания
+    const modeCreate = document.getElementById('mode-create');
+    const modeExecute = document.getElementById('mode-execute');
+    
+    if (modeCreate) {
+        modeCreate.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchMode('create');
+        });
+    }
+    
+    if (modeExecute) {
+        modeExecute.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchMode('execute');
+        });
+    }
     
     // Кнопка обновления рекомендации
     const refreshBtn = document.getElementById('refresh-recommendation');
@@ -1950,7 +2212,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const createPlanBtn = document.getElementById('create-plan-btn');
     if (createPlanBtn) {
-        createPlanBtn.addEventListener('click', createCustomWorkout);
+        createPlanBtn.addEventListener('click', saveWorkout);
+    }
+    
+    const completeWorkoutBtn = document.getElementById('complete-workout-btn');
+    if (completeWorkoutBtn) {
+        completeWorkoutBtn.addEventListener('click', completeWorkout);
     }
     
     // Меню
@@ -2001,6 +2268,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 friends = [];
                 friendRequests = [];
                 sentRequests = [];
+                savedWorkouts = [];
+                activeWorkout = null;
                 localStorage.clear();
                 updateUI();
                 updateStats();
