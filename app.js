@@ -56,12 +56,13 @@ const translations = {
         
         // Время (ИСПРАВЛЕНО)
         waitUntil4am: "⏰ Старт в 4:00",
-        waitHours: (h, m) => `⏳ Следующий день через ${h}ч ${m}м`,
+        waitHours: (h, m) => `⏳ Новый день через ${h}ч ${m}м`,
+        waitUntilNextDay: (h, m) => `⏳ Следующий день в 4:00 (осталось ${h}ч ${m}м)`,
         canStart: "✅ Можно начинать",
         dayExpired: "⏰ День истек",
         until23: "⏳ До 23:00",
         timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
-        dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется через 24 часа.",
+        dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется в 4:00 утра.",
         newDayAvailable: "🌟 Новый день доступен!",
         startAt4am: "⏰ Старт в 4:00 утра",
         
@@ -248,7 +249,7 @@ const translations = {
         onlyFrom4am: "⏰ Тренировки доступны с 4:00 до 23:00",
         onlyUntil23: "⏰ Только до 23:00!",
         completeSteps: "⚠️ Выполни все шаги!",
-        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• 24ч таймер\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
+        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
     },
     en: {
         // Common
@@ -260,11 +261,12 @@ const translations = {
         // Time (FIXED)
         waitUntil4am: "⏰ Start at 4:00 AM",
         waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
+        waitUntilNextDay: (h, m) => `⏳ Next day at 4:00 AM (${h}h ${m}m left)`,
         canStart: "✅ You can start",
         dayExpired: "⏰ Day expired",
         until23: "⏳ Until 11:00 PM",
         timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
-        dayExpiredMsg: "⏰ Workout expired! Next day in 24h.",
+        dayExpiredMsg: "⏰ Workout expired! Next day starts at 4:00 AM.",
         newDayAvailable: "🌟 New day available!",
         startAt4am: "⏰ Start at 4:00 AM",
         
@@ -451,7 +453,7 @@ const translations = {
         onlyFrom4am: "⏰ Workouts available from 4:00 AM to 11:00 PM",
         onlyUntil23: "⏰ Only until 11:00 PM!",
         completeSteps: "⚠️ Complete all steps!",
-        faqText: "❓ FAQ:\n\n• Start at 4:00 AM\n• Complete before 11:00 PM\n• 24h timer\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts"
+        faqText: "❓ FAQ:\n\n• Start at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts"
     }
 };
 
@@ -776,6 +778,7 @@ function t(key, ...args) {
 }
 
 // ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ВРЕМЕНИ ==========
+
 function getCurrentHour() {
     return new Date().getHours();
 }
@@ -788,12 +791,51 @@ function getCurrentTime() {
     return new Date().getTime();
 }
 
-// Можно начать день с 4:00 утра (включительно) до 23:00 (не включая 23:00)
+// Получить время следующего дня в 4:00 утра
+function getNextDay4am() {
+    const nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() + 1);
+    nextDay.setHours(4, 0, 0, 0);
+    return nextDay.getTime();
+}
+
+// Получить время сегодня в 4:00 утра
+function getToday4am() {
+    const today = new Date();
+    today.setHours(4, 0, 0, 0);
+    return today.getTime();
+}
+
+// Проверка, можно ли начать новый день (сейчас >= 4:00 утра следующего дня)
+function canStartNewDay() {
+    if (!dayCompletedTime) return true;
+    
+    const now = getCurrentTime();
+    const nextDay4am = getNextDay4am();
+    
+    return now >= nextDay4am;
+}
+
+// Получить оставшееся время до следующего дня в 4 утра
+function getTimeUntilNextDay4am() {
+    const now = getCurrentTime();
+    const nextDay4am = getNextDay4am();
+    
+    const diffMs = nextDay4am - now;
+    if (diffMs <= 0) return null;
+    
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    
+    return { hours, minutes };
+}
+
+// Можно начать день сегодня (с 4:00 до 23:00)
 function canStartDay() {
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
     
-    // Можно начать с 4:00 утра (включительно)
+    // Можно начать с 4:00 утра (включительно) до 23:00 (включительно)
     if (hour > 4 && hour < 23) {
         return true; // Дневное время
     } else if (hour === 4) {
@@ -819,42 +861,10 @@ function canCompleteDay() {
     return false; // После 23:00
 }
 
-// Можно начать новый день (прошло 24 часа после завершения)
-function canStartNewDay() {
-    if (!dayCompletedTime) return true;
-    
-    const now = getCurrentTime();
-    const completed = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completed) / (1000 * 60 * 60);
-    
-    return hoursPassed >= 24;
-}
-
-// Получить оставшееся время до нового дня
-function getTimeRemaining() {
-    if (!dayCompletedTime) return null;
-    
-    const now = getCurrentTime();
-    const completed = parseInt(dayCompletedTime);
-    const hoursPassed = (now - completed) / (1000 * 60 * 60);
-    
-    if (hoursPassed >= 24) return null;
-    
-    const remaining = 24 - hoursPassed;
-    const hours = Math.floor(remaining);
-    const minutes = Math.ceil((remaining - hours) * 60);
-    
-    return { hours, minutes };
-}
-
-// Проверка, истек ли текущий день (прошло 24 часа с начала)
+// Проверка, истек ли текущий день (после 23:00)
 function isDayExpired() {
-    if (!dayStartTime) return false;
-    const now = getCurrentTime();
-    const start = parseInt(dayStartTime);
-    const hoursPassed = (now - start) / (1000 * 60 * 60);
-    
-    return hoursPassed >= 24;
+    const hour = getCurrentHour();
+    return hour >= 23;
 }
 
 // Проверка доступности нового дня
@@ -2559,7 +2569,8 @@ function updateUI() {
         const start = parseInt(dayStartTime);
         const hoursPassed = (now - start) / (1000 * 60 * 60);
         
-        if (hoursPassed >= 24) {
+        // Если прошло больше 24 часов или наступило 4 утра следующего дня
+        if (hoursPassed >= 24 || now >= getNextDay4am()) {
             dayStarted = false;
             dayStartTime = null;
             dayCompletedTime = now.toString();
@@ -2595,14 +2606,14 @@ function updateUI() {
         const startBtn = document.getElementById('start-day-btn');
         
         if (dayCompletedTime && !canStart) {
-            const remaining = getTimeRemaining();
+            const remaining = getTimeUntilNextDay4am();
             if (timeInfo && remaining) {
-                timeInfo.textContent = t('waitHours', remaining.hours, remaining.minutes);
+                timeInfo.textContent = t('waitUntilNextDay', remaining.hours, remaining.minutes);
                 timeInfo.style.color = 'var(--warning)';
             }
             if (startBtn) {
                 startBtn.disabled = true;
-                startBtn.textContent = t('waitHours', remaining.hours, remaining.minutes);
+                startBtn.textContent = t('waitUntilNextDay', remaining.hours, remaining.minutes);
             }
         } else if (!canStartByTime) {
             if (timeInfo) {
@@ -2760,28 +2771,38 @@ function updateDeadlineInfo() {
     
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
-    const expired = isDayExpired();
+    const now = getCurrentTime();
+    const nextDay4am = getNextDay4am();
     
-    if (expired) {
+    // Если уже наступило 4 утра следующего дня
+    if (now >= nextDay4am) {
         deadlineInfo.textContent = t('dayExpiredMsg');
         deadlineInfo.style.color = 'var(--danger)';
-    } else if (hour >= 23 && minutes > 0) {
-        deadlineInfo.textContent = t('dayExpired');
-        deadlineInfo.style.color = 'var(--danger)';
-    } else if (hour === 23 && minutes === 0) {
-        deadlineInfo.textContent = t('until23') + ' (последняя минута!)';
-        deadlineInfo.style.color = 'var(--warning)';
-    } else {
-        const endOfDay = new Date();
-        endOfDay.setHours(23, 0, 0, 0);
-        const now = new Date();
-        const diffMs = endOfDay - now;
-        const diffMins = Math.floor(diffMs / 60000);
-        const hours = Math.floor(diffMins / 60);
-        const mins = diffMins % 60;
-        deadlineInfo.textContent = t('timeLeft', hours, mins);
-        deadlineInfo.style.color = 'var(--text-secondary)';
+        return;
     }
+    
+    // Проверяем время до 23:00
+    if (hour >= 23) {
+        if (hour === 23 && minutes === 0) {
+            deadlineInfo.textContent = t('until23') + ' (последняя минута!)';
+            deadlineInfo.style.color = 'var(--warning)';
+        } else {
+            deadlineInfo.textContent = t('dayExpired');
+            deadlineInfo.style.color = 'var(--danger)';
+        }
+        return;
+    }
+    
+    // Считаем время до 23:00
+    const endOfDay = new Date();
+    endOfDay.setHours(23, 0, 0, 0);
+    const diffMs = endOfDay - now;
+    const diffMins = Math.floor(diffMs / 60000);
+    const hours = Math.floor(diffMins / 60);
+    const mins = diffMins % 60;
+    
+    deadlineInfo.textContent = t('timeLeft', hours, mins);
+    deadlineInfo.style.color = 'var(--text-secondary)';
 }
 
 // ========== ОБНОВЛЕНИЕ ДАТЫ ==========
@@ -3297,7 +3318,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (startBtn) {
         startBtn.addEventListener('click', function() {
             if (dayCompletedTime && !canStartNewDay()) {
-                const remaining = getTimeRemaining();
+                const remaining = getTimeUntilNextDay4am();
                 if (remaining) {
                     tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
                 }
