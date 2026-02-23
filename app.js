@@ -54,8 +54,8 @@ const translations = {
         completeBtn: "✅ Завершить день",
         progress: "Прогресс",
         
-        // Время
-        waitUntil4am: "⏰ Жди 4 утра",
+        // Время (ИСПРАВЛЕНО)
+        waitUntil4am: "⏰ Старт в 4:00",
         waitHours: (h, m) => `⏳ Следующий день через ${h}ч ${m}м`,
         canStart: "✅ Можно начинать",
         dayExpired: "⏰ День истек",
@@ -63,6 +63,7 @@ const translations = {
         timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
         dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется через 24 часа.",
         newDayAvailable: "🌟 Новый день доступен!",
+        startAt4am: "⏰ Старт в 4:00 утра",
         
         // Тренировка
         mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
@@ -244,10 +245,10 @@ const translations = {
         enterTask: "Введите задание",
         tasksAdded: (count) => `✅ Добавлено заданий: ${count}`,
         waitMessage: (h, m) => `⏳ Подожди ${h}ч ${m}м`,
-        onlyFrom4am: "⏰ Только с 4 утра!",
+        onlyFrom4am: "⏰ Тренировки доступны с 4:00 до 23:00",
         onlyUntil23: "⏰ Только до 23:00!",
         completeSteps: "⚠️ Выполни все шаги!",
-        faqText: "❓ FAQ:\n\n• Начать день с 4 утра\n• Завершить до 23:00\n• 24ч таймер\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
+        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• 24ч таймер\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
     },
     en: {
         // Common
@@ -256,15 +257,16 @@ const translations = {
         completeBtn: "✅ Complete Day",
         progress: "Progress",
         
-        // Time
-        waitUntil4am: "⏰ Wait 4 AM",
+        // Time (FIXED)
+        waitUntil4am: "⏰ Start at 4:00 AM",
         waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
         canStart: "✅ You can start",
         dayExpired: "⏰ Day expired",
-        until23: "⏳ Until 11 PM",
+        until23: "⏳ Until 11:00 PM",
         timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
         dayExpiredMsg: "⏰ Workout expired! Next day in 24h.",
         newDayAvailable: "🌟 New day available!",
+        startAt4am: "⏰ Start at 4:00 AM",
         
         // Workout
         mainWorkout: "MAIN WORKOUT",
@@ -446,10 +448,10 @@ const translations = {
         enterTask: "Enter task",
         tasksAdded: (count) => `✅ Added: ${count} tasks`,
         waitMessage: (h, m) => `⏳ Wait ${h}h ${m}m`,
-        onlyFrom4am: "⏰ Only from 4 AM!",
-        onlyUntil23: "⏰ Only until 11 PM!",
+        onlyFrom4am: "⏰ Workouts available from 4:00 AM to 11:00 PM",
+        onlyUntil23: "⏰ Only until 11:00 PM!",
         completeSteps: "⚠️ Complete all steps!",
-        faqText: "❓ FAQ:\n\n• Start at 4 AM\n• Complete before 11 PM\n• 24h timer\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts"
+        faqText: "❓ FAQ:\n\n• Start at 4:00 AM\n• Complete before 11:00 PM\n• 24h timer\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts"
     }
 };
 
@@ -773,25 +775,51 @@ function t(key, ...args) {
     return text;
 }
 
-// ========== ФУНКЦИИ ВРЕМЕНИ ==========
+// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ВРЕМЕНИ ==========
 function getCurrentHour() {
     return new Date().getHours();
+}
+
+function getCurrentMinutes() {
+    return new Date().getMinutes();
 }
 
 function getCurrentTime() {
     return new Date().getTime();
 }
 
+// Можно начать день с 4:00 утра (включительно) до 23:00 (не включая 23:00)
 function canStartDay() {
     const hour = getCurrentHour();
-    return hour >= 4 && hour < 23;
+    const minutes = getCurrentMinutes();
+    
+    // Можно начать с 4:00 утра (включительно)
+    if (hour > 4 && hour < 23) {
+        return true; // Дневное время
+    } else if (hour === 4) {
+        return true; // Ровно 4 утра или позже (любые минуты)
+    } else if (hour === 23 && minutes === 0) {
+        return true; // Ровно 23:00 (еще можно начать)
+    }
+    
+    return false; // Вне допустимого времени
 }
 
+// Можно завершить день до 23:00 (включительно)
 function canCompleteDay() {
     const hour = getCurrentHour();
-    return hour < 23;
+    const minutes = getCurrentMinutes();
+    
+    if (hour < 23) {
+        return true; // До 23:00
+    } else if (hour === 23 && minutes === 0) {
+        return true; // Ровно 23:00
+    }
+    
+    return false; // После 23:00
 }
 
+// Можно начать новый день (прошло 24 часа после завершения)
 function canStartNewDay() {
     if (!dayCompletedTime) return true;
     
@@ -802,6 +830,7 @@ function canStartNewDay() {
     return hoursPassed >= 24;
 }
 
+// Получить оставшееся время до нового дня
 function getTimeRemaining() {
     if (!dayCompletedTime) return null;
     
@@ -818,6 +847,7 @@ function getTimeRemaining() {
     return { hours, minutes };
 }
 
+// Проверка, истек ли текущий день (прошло 24 часа с начала)
 function isDayExpired() {
     if (!dayStartTime) return false;
     const now = getCurrentTime();
@@ -827,6 +857,7 @@ function isDayExpired() {
     return hoursPassed >= 24;
 }
 
+// Проверка доступности нового дня
 function checkNewDayAvailability() {
     if (dayCompletedTime && canStartNewDay()) {
         dayCompletedTime = null;
@@ -2575,12 +2606,12 @@ function updateUI() {
             }
         } else if (!canStartByTime) {
             if (timeInfo) {
-                timeInfo.textContent = t('waitUntil4am');
+                timeInfo.textContent = t('startAt4am');
                 timeInfo.style.color = 'var(--warning)';
             }
             if (startBtn) {
                 startBtn.disabled = true;
-                startBtn.textContent = t('waitUntil4am');
+                startBtn.textContent = t('startAt4am');
             }
         } else {
             if (timeInfo) {
@@ -2728,19 +2759,27 @@ function updateDeadlineInfo() {
     if (!deadlineInfo || !dayStarted) return;
     
     const hour = getCurrentHour();
+    const minutes = getCurrentMinutes();
     const expired = isDayExpired();
     
     if (expired) {
         deadlineInfo.textContent = t('dayExpiredMsg');
         deadlineInfo.style.color = 'var(--danger)';
-    } else if (hour >= 23) {
+    } else if (hour >= 23 && minutes > 0) {
         deadlineInfo.textContent = t('dayExpired');
         deadlineInfo.style.color = 'var(--danger)';
+    } else if (hour === 23 && minutes === 0) {
+        deadlineInfo.textContent = t('until23') + ' (последняя минута!)';
+        deadlineInfo.style.color = 'var(--warning)';
     } else {
-        const timeLeft = (22 - hour) * 60 + (60 - new Date().getMinutes());
-        const hours = Math.floor(timeLeft / 60);
-        const minutes = timeLeft % 60;
-        deadlineInfo.textContent = t('timeLeft', hours, minutes);
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 0, 0, 0);
+        const now = new Date();
+        const diffMs = endOfDay - now;
+        const diffMins = Math.floor(diffMs / 60000);
+        const hours = Math.floor(diffMins / 60);
+        const mins = diffMins % 60;
+        deadlineInfo.textContent = t('timeLeft', hours, mins);
         deadlineInfo.style.color = 'var(--text-secondary)';
     }
 }
@@ -3177,9 +3216,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePushupsGoal();
     updateStrengthProgress();
     
-    // ===== ИСПРАВЛЕННЫЕ ОБРАБОТЧИКИ ДЛЯ КНОПОК =====
-    
-    // Кнопки переключения типа тренировки
+    // Обработчики для кнопок силовых
     document.querySelectorAll('.type-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -3188,7 +3225,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Кнопка добавления подхода для подтягиваний
     const addPullupsBtn = document.getElementById('add-pullups-set');
     if (addPullupsBtn) {
         addPullupsBtn.addEventListener('click', function(e) {
@@ -3198,7 +3234,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Кнопка добавления подхода для отжиманий
     const addPushupsBtn = document.getElementById('add-pushups-set');
     if (addPushupsBtn) {
         addPushupsBtn.addEventListener('click', function(e) {
@@ -3208,7 +3243,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Кнопка добавления круга для комплекса
     const addMixedBtn = document.getElementById('add-mixed-set');
     if (addMixedBtn) {
         addMixedBtn.addEventListener('click', function(e) {
@@ -3218,7 +3252,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Кнопка завершения силовой тренировки
     const completeStrengthBtn = document.getElementById('complete-strength-btn');
     if (completeStrengthBtn) {
         completeStrengthBtn.addEventListener('click', function(e) {
@@ -3229,7 +3262,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Обработчики для слайдеров цели
     const pullupsSlider = document.getElementById('pullups-goal-slider');
     if (pullupsSlider) {
         pullupsSlider.addEventListener('input', function() {
@@ -3253,8 +3285,6 @@ document.addEventListener('DOMContentLoaded', function() {
             saveState();
         });
     }
-    
-    // ===== ОСТАЛЬНЫЕ ОБРАБОТЧИКИ =====
     
     // Кнопка обновления рекомендации
     const refreshBtn = document.getElementById('refresh-recommendation');
@@ -3687,7 +3717,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Проверка заявок
     setInterval(checkIncomingRequests, 30000);
     
-    // Интервал обновления времени
+    // Интервал обновления времени (каждую минуту)
     setInterval(function() {
         if (dayStarted) {
             updateProgress();
