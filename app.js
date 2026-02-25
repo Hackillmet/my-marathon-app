@@ -48,13 +48,10 @@ const STORAGE_KEYS = {
 // ========== ПЕРЕВОДЫ ==========
 const translations = {
     ru: {
-        // Общие
         ready: "Готов к тренировке?",
         startBtn: "🏃 Начать бег",
         completeBtn: "✅ Завершить день",
         progress: "Прогресс",
-        
-        // Время (ИСПРАВЛЕНО)
         waitUntil4am: "⏰ Старт в 4:00",
         waitHours: (h, m) => `⏳ Новый день через ${h}ч ${m}м`,
         waitUntilNextDay: (h, m) => `⏳ Следующий день в 4:00 (осталось ${h}ч ${m}м)`,
@@ -65,21 +62,15 @@ const translations = {
         dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется в 4:00 утра.",
         newDayAvailable: "🌟 Новый день доступен!",
         startAt4am: "⏰ Старт в 4:00 утра",
-        
-        // Тренировка
         mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
         addedTasks: "➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ",
         easy: "Легкая",
         medium: "Средняя",
         hard: "Сложная",
         my: "Моя",
-        
-        // Завершение
         congrats: "🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!",
         youRan: "Ты пробежал(а):",
         home: "🏠 На главную",
-        
-        // Статистика
         stats: "📊 РАСШИРЕННАЯ СТАТИСТИКА",
         workouts: "Тренировок",
         totalKm: "Всего км",
@@ -93,24 +84,16 @@ const translations = {
         days: "дней",
         history: "ИСТОРИЯ ТРЕНИРОВОК",
         noWorkouts: "Пока нет тренировок",
-        
-        // Детали тренировки
         distance: "км",
         minutes: "мин",
         kcal: "ккал",
         pace: "мин/км",
-        
-        // Сравнение
         vsLastMonth: "vs прошлый месяц",
         better: "лучше",
         worse: "хуже",
         same: "так же",
-        
-        // AI рекомендации
         aiRecommendations: "🤖 AI-РЕКОМЕНДАЦИИ",
         refreshRecommendation: "🔄 Обновить",
-        
-        // Социальные функции
         friends: "👥 Друзья",
         diary: "📔 Дневник",
         myProfile: "Мой профиль",
@@ -129,8 +112,6 @@ const translations = {
         decline: "✗ Отклонить",
         teamChallenge: "🏆 КОМАНДНЫЙ ЗАЧЕТ",
         teamGoal: "км",
-        
-        // Сообщения для друзей
         enterUsername: "Введите username друга",
         cantAddSelf: "Нельзя добавить самого себя",
         requestSent: "Заявка уже отправлена",
@@ -141,8 +122,6 @@ const translations = {
         friendRemoved: (name) => `✕ Друг ${name} удален`,
         writeToTelegram: "💬 Написать",
         newRequest: "🔔 Новая заявка",
-        
-        // Приглашения
         inviteFriends: "🔗 Пригласить друзей",
         inviteText: (name) => `🏃 Привет! ${name} приглашает тебя в беговой марафон! Будем соревноваться и мотивировать друг друга 💪`,
         copyInvite: "📋 Копировать ссылку",
@@ -154,18 +133,11 @@ const translations = {
         sendInvite: "📤 Отправить приглашение",
         enterFriendUsername: "Введите username друга для приглашения",
         inviteSuccess: (name) => `✅ Приглашение отправлено пользователю @${name}`,
-        
-        // Таблица лидеров
         leaderboard: "🏆 ТАБЛИЦА ЛИДЕРОВ",
         myResults: "📊 МОИ РЕЗУЛЬТАТЫ",
         friendResults: "👥 РЕЗУЛЬТАТЫ ДРУЗЕЙ",
         rank: "Место",
         name: "Имя",
-        distance: "Дистанция",
-        workouts: "Тренировки",
-        time: "Время",
-        calories: "Калории",
-        pace: "Темп",
         thisWeek: "Эта неделя",
         thisMonth: "Этот месяц",
         allTime: "За все время",
@@ -176,8 +148,6 @@ const translations = {
         behind: "позади",
         shareProgress: "📤 Поделиться прогрессом",
         shared: "✅ Отправлено!",
-        
-        // Дневник
         newEntry: "➕ Новая запись",
         save: "Сохранить",
         cancel: "Отмена",
@@ -185,8 +155,6 @@ const translations = {
         entryPlaceholder: "Как прошла тренировка? Напиши свои мысли...",
         entryDeleted: "Запись удалена",
         entrySaved: "Запись сохранена",
-        
-        // Создание тренировки
         createTitle: "🎯 СОЗДАТЬ ТРЕНИРОВКУ",
         goal: "ЦЕЛЬ",
         goalPlaceholder: "км",
@@ -201,8 +169,6 @@ const translations = {
         workoutCompleted: "🎉 Тренировка завершена!",
         deleteWorkout: "✕",
         noTasks: "➕ Добавьте задания",
-        
-        // Силовые тренировки
         strengthTitle: "💪 СИЛОВАЯ ТРЕНИРОВКА",
         pullups: "ПОДТЯГИВАНИЯ",
         pushups: "ОТЖИМАНИЯ",
@@ -223,8 +189,6 @@ const translations = {
         completeStrength: "✅ Завершить силовую тренировку",
         strengthCompleted: "🎉 Силовая тренировка завершена!",
         maxRounds: "Максимум 5 кругов",
-        
-        // Меню
         marathon: "🏃 МАРАФОН",
         reset: "🔄 Сбросить",
         statsMenu: "📊 Статистика",
@@ -240,8 +204,6 @@ const translations = {
         contacts: "📞 КОНТАКТЫ",
         author: "👤 Автор:",
         version: "Версия:",
-        
-        // Сообщения
         confirmReset: "Сбросить весь прогресс?",
         enterTask: "Введите задание",
         tasksAdded: (count) => `✅ Добавлено заданий: ${count}`,
@@ -252,13 +214,10 @@ const translations = {
         faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
     },
     en: {
-        // Common
         ready: "Ready for workout?",
         startBtn: "🏃 Start Run",
         completeBtn: "✅ Complete Day",
         progress: "Progress",
-        
-        // Time (FIXED)
         waitUntil4am: "⏰ Start at 4:00 AM",
         waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
         waitUntilNextDay: (h, m) => `⏳ Next day at 4:00 AM (${h}h ${m}m left)`,
@@ -269,21 +228,15 @@ const translations = {
         dayExpiredMsg: "⏰ Workout expired! Next day starts at 4:00 AM.",
         newDayAvailable: "🌟 New day available!",
         startAt4am: "⏰ Start at 4:00 AM",
-        
-        // Workout
         mainWorkout: "MAIN WORKOUT",
         addedTasks: "➕ ADDED TASKS",
         easy: "Easy",
         medium: "Medium",
         hard: "Hard",
         my: "My",
-        
-        // Completion
         congrats: "🎉 WORKOUT COMPLETED!",
         youRan: "You ran:",
         home: "🏠 Home",
-        
-        // Statistics
         stats: "📊 EXTENDED STATISTICS",
         workouts: "Workouts",
         totalKm: "Total km",
@@ -297,24 +250,16 @@ const translations = {
         days: "days",
         history: "WORKOUT HISTORY",
         noWorkouts: "No workouts yet",
-        
-        // Workout details
         distance: "km",
         minutes: "min",
         kcal: "kcal",
         pace: "min/km",
-        
-        // Comparison
         vsLastMonth: "vs last month",
         better: "better",
         worse: "worse",
         same: "same",
-        
-        // AI recommendations
         aiRecommendations: "🤖 AI RECOMMENDATIONS",
         refreshRecommendation: "🔄 Refresh",
-        
-        // Social features
         friends: "👥 Friends",
         diary: "📔 Diary",
         myProfile: "My Profile",
@@ -333,8 +278,6 @@ const translations = {
         decline: "✗ Decline",
         teamChallenge: "🏆 TEAM CHALLENGE",
         teamGoal: "km",
-        
-        // Messages for friends
         enterUsername: "Enter username",
         cantAddSelf: "Cannot add yourself",
         requestSent: "Request already sent",
@@ -345,8 +288,6 @@ const translations = {
         friendRemoved: (name) => `✕ Friend ${name} removed`,
         writeToTelegram: "💬 Write",
         newRequest: "🔔 New request",
-        
-        // Invites
         inviteFriends: "🔗 Invite Friends",
         inviteText: (name) => `🏃 Hi! ${name} invites you to the running marathon! Let's compete and motivate each other 💪`,
         copyInvite: "📋 Copy link",
@@ -358,18 +299,11 @@ const translations = {
         sendInvite: "📤 Send invite",
         enterFriendUsername: "Enter friend's username to invite",
         inviteSuccess: (name) => `✅ Invitation sent to @${name}`,
-        
-        // Leaderboard
         leaderboard: "🏆 LEADERBOARD",
         myResults: "📊 MY RESULTS",
         friendResults: "👥 FRIENDS RESULTS",
         rank: "Rank",
         name: "Name",
-        distance: "Distance",
-        workouts: "Workouts",
-        time: "Time",
-        calories: "Calories",
-        pace: "Pace",
         thisWeek: "This week",
         thisMonth: "This month",
         allTime: "All time",
@@ -380,8 +314,6 @@ const translations = {
         behind: "behind",
         shareProgress: "📤 Share progress",
         shared: "✅ Shared!",
-        
-        // Diary
         newEntry: "➕ New entry",
         save: "Save",
         cancel: "Cancel",
@@ -389,8 +321,6 @@ const translations = {
         entryPlaceholder: "How was your workout? Write your thoughts...",
         entryDeleted: "Entry deleted",
         entrySaved: "Entry saved",
-        
-        // Create tasks
         createTitle: "🎯 CREATE WORKOUT",
         goal: "GOAL",
         goalPlaceholder: "km",
@@ -405,8 +335,6 @@ const translations = {
         workoutCompleted: "🎉 Workout completed!",
         deleteWorkout: "✕",
         noTasks: "➕ Add tasks",
-        
-        // Strength workouts
         strengthTitle: "💪 STRENGTH TRAINING",
         pullups: "PULL-UPS",
         pushups: "PUSH-UPS",
@@ -427,8 +355,6 @@ const translations = {
         completeStrength: "✅ Complete strength workout",
         strengthCompleted: "🎉 Strength workout completed!",
         maxRounds: "Maximum 5 rounds",
-        
-        // Menu
         marathon: "🏃 MARATHON",
         reset: "🔄 Reset",
         statsMenu: "📊 Statistics",
@@ -444,8 +370,6 @@ const translations = {
         contacts: "📞 CONTACTS",
         author: "👤 Author:",
         version: "Version:",
-        
-        // Messages
         confirmReset: "Reset all progress?",
         enterTask: "Enter task",
         tasksAdded: (count) => `✅ Added: ${count} tasks`,
@@ -667,49 +591,31 @@ let dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true' || fa
 let dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
 let dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
 let completedSteps = JSON.parse(localStorage.getItem(STORAGE_KEYS.COMPLETED_STEPS)) || [];
-
-// Дополнительные задания
 let additionalTasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADDITIONAL_TASKS)) || [];
 let additionalCompleted = JSON.parse(localStorage.getItem(STORAGE_KEYS.ADDITIONAL_COMPLETED)) || [];
-
-// Статистика
 let workoutHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKOUT_HISTORY)) || [];
 let totalDistance = parseFloat(localStorage.getItem(STORAGE_KEYS.TOTAL_DISTANCE)) || 0;
 let totalWorkouts = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_WORKOUTS)) || 0;
 let totalTime = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_TIME)) || 0;
 let totalCalories = parseInt(localStorage.getItem(STORAGE_KEYS.TOTAL_CALORIES)) || 0;
-
-// Дневник
 let diaryEntries = JSON.parse(localStorage.getItem(STORAGE_KEYS.DIARY_ENTRIES)) || [];
-
-// Текущие данные для создания тренировки
 let currentCustomTasks = [];
-
-// Сохраненные тренировки
 let savedWorkouts = JSON.parse(localStorage.getItem(STORAGE_KEYS.SAVED_WORKOUTS)) || [];
-
-// Активная тренировка для выполнения
 let activeWorkout = JSON.parse(localStorage.getItem(STORAGE_KEYS.ACTIVE_WORKOUT)) || null;
-
-// Друзья и заявки
 let friends = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIENDS)) || [];
 let friendRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.FRIEND_REQUESTS)) || [];
 let sentRequests = JSON.parse(localStorage.getItem(STORAGE_KEYS.SENT_REQUESTS)) || [];
 let teamGoal = parseInt(localStorage.getItem(STORAGE_KEYS.TEAM_GOAL)) || 100;
 let teamProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.TEAM_PROGRESS)) || 0;
-
-// Приглашения и бонусы
 let invitedFriends = JSON.parse(localStorage.getItem(STORAGE_KEYS.INVITED_FRIENDS)) || [];
 let bonusPoints = parseInt(localStorage.getItem(STORAGE_KEYS.BONUS_POINTS)) || 0;
 
-// Код приглашения
 let inviteCode = localStorage.getItem(STORAGE_KEYS.INVITE_CODE);
 if (!inviteCode) {
     inviteCode = 'user_' + userId + '_' + Date.now();
     localStorage.setItem(STORAGE_KEYS.INVITE_CODE, inviteCode);
 }
 
-// ========== НОВОЕ СОСТОЯНИЕ ДЛЯ СИЛОВЫХ ==========
 let strengthHistory = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_HISTORY)) || [];
 let totalPullups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_TOTAL_PULLUPS)) || 0;
 let totalPushups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_TOTAL_PUSHUPS)) || 0;
@@ -717,18 +623,9 @@ let strengthDays = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_TOTAL_DAY
 let bestPullups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_BEST_PULLUPS)) || 0;
 let bestPushups = parseInt(localStorage.getItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS)) || 0;
 
-// Текущая силовая тренировка
 let strengthToday = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_TODAY)) || {
-    pullups: {
-        goal: 30,
-        sets: [{ reps: 10, completed: false }],
-        completed: false
-    },
-    pushups: {
-        goal: 50,
-        sets: [{ reps: 15, completed: false }],
-        completed: false
-    },
+    pullups: { goal: 30, sets: [{ reps: 10, completed: false }], completed: false },
+    pushups: { goal: 50, sets: [{ reps: 15, completed: false }], completed: false },
     mixed: {
         completed: false,
         rounds: [
@@ -739,10 +636,8 @@ let strengthToday = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_TODAY)
     }
 };
 
-// Текущий тип тренировки
 let currentStrengthType = 'pullups';
 
-// Мотивационные цитаты для силы
 const strengthQuotes = [
     { ru: '"Сила не приходит от побед. Силу рождает борьба."', en: '"Strength does not come from winning. Your struggles develop your strengths."' },
     { ru: '"Ты сильнее, чем думаешь."', en: '"You are stronger than you think."' },
@@ -756,20 +651,15 @@ const strengthQuotes = [
     { ru: '"Отжимайся от проблем!"', en: '"Push up from problems!"' }
 ];
 
-// Язык
 let currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
-
-// Текущая вкладка
 let currentTab = 'friends';
-let resultsPeriod = 'allTime'; // allTime, thisWeek, thisMonth
+let resultsPeriod = 'allTime';
 
-// ========== ФУНКЦИЯ ПЕРЕВОДА ==========
 function t(key, ...args) {
     if (!translations[currentLanguage] || !translations[currentLanguage][key]) {
         console.warn(`Translation missing for key: ${key} in language: ${currentLanguage}`);
         return key;
     }
-    
     let text = translations[currentLanguage][key];
     if (typeof text === 'function') {
         return text(...args);
@@ -791,7 +681,12 @@ function getCurrentTime() {
     return new Date().getTime();
 }
 
-// Получить время следующего дня в 4:00 утра
+function getToday4am() {
+    const today = new Date();
+    today.setHours(4, 0, 0, 0);
+    return today.getTime();
+}
+
 function getNextDay4am() {
     const nextDay = new Date();
     nextDay.setDate(nextDay.getDate() + 1);
@@ -799,90 +694,82 @@ function getNextDay4am() {
     return nextDay.getTime();
 }
 
-// Получить время сегодня в 4:00 утра
-function getToday4am() {
-    const today = new Date();
-    today.setHours(4, 0, 0, 0);
-    return today.getTime();
-}
-
-// Проверка, можно ли начать новый день (сейчас >= 4:00 утра следующего дня)
+// ✅ ГЛАВНАЯ ФУНКЦИЯ: можно ли начать новый день?
 function canStartNewDay() {
-    if (!dayCompletedTime) return true;
-    
     const now = getCurrentTime();
-    const nextDay4am = getNextDay4am();
-    
-    return now >= nextDay4am;
+    const today4am = getToday4am();
+
+    // Если сейчас больше или равно 4 утра, новый день наступил
+    if (now >= today4am) {
+        // Если день не начат — можно стартовать
+        return true;
+    }
+
+    // Если сейчас меньше 4 утра — ждём следующий день
+    return false;
 }
 
-// Получить оставшееся время до следующего дня в 4 утра
-function getTimeUntilNextDay4am() {
-    const now = getCurrentTime();
-    const nextDay4am = getNextDay4am();
-    
-    const diffMs = nextDay4am - now;
-    if (diffMs <= 0) return null;
-    
-    const hours = Math.floor(diffMs / (1000 * 60 * 60));
-    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-    
-    return { hours, minutes };
-}
-
-// Можно начать день сегодня (с 4:00 до 23:00)
+// ✅ Можно ли начать день по времени (4:00 - 23:00)
 function canStartDay() {
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
-    
-    // Можно начать с 4:00 утра (включительно) до 23:00 (включительно)
-    if (hour > 4 && hour < 23) {
-        return true; // Дневное время
-    } else if (hour === 4) {
-        return true; // Ровно 4 утра или позже (любые минуты)
-    } else if (hour === 23 && minutes === 0) {
-        return true; // Ровно 23:00 (еще можно начать)
-    }
-    
-    return false; // Вне допустимого времени
+
+    if (hour > 4 && hour < 23) return true;
+    if (hour === 4) return true;
+    if (hour === 23 && minutes === 0) return true;
+
+    return false;
 }
 
-// Можно завершить день до 23:00 (включительно)
+// ✅ Можно ли завершить день (до 23:00)
 function canCompleteDay() {
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
-    
-    if (hour < 23) {
-        return true; // До 23:00
-    } else if (hour === 23 && minutes === 0) {
-        return true; // Ровно 23:00
-    }
-    
-    return false; // После 23:00
+
+    if (hour < 23) return true;
+    if (hour === 23 && minutes === 0) return true;
+
+    return false;
 }
 
-// Проверка, истек ли текущий день (после 23:00)
+// ✅ Проверка, истёк ли день (после 23:00)
 function isDayExpired() {
     const hour = getCurrentHour();
     return hour >= 23;
 }
 
-// Проверка доступности нового дня
+// ✅ Время до следующего дня в 4 утра
+function getTimeUntilNextDay4am() {
+    const now = getCurrentTime();
+    const nextDay4am = getNextDay4am();
+    const diffMs = nextDay4am - now;
+    if (diffMs <= 0) return null;
+    const hours = Math.floor(diffMs / (1000 * 60 * 60));
+    const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    return { hours, minutes };
+}
+
+// ✅ Проверка доступности нового дня и сброс, если наступило 4 утра
 function checkNewDayAvailability() {
-    if (dayCompletedTime && canStartNewDay()) {
+    const now = getCurrentTime();
+    const today4am = getToday4am();
+
+    // Если наступило 4 утра и день завершён — разблокируем
+    if (now >= today4am && dayCompletedTime) {
         dayCompletedTime = null;
         saveState();
+
         tg.showPopup({
             title: '🌟',
             message: t('newDayAvailable'),
             buttons: [{ type: 'close' }]
         });
+
         return true;
     }
     return false;
 }
 
-// ========== СОХРАНЕНИЕ ==========
 function saveState() {
     localStorage.setItem(STORAGE_KEYS.CURRENT_DAY, currentDay);
     localStorage.setItem(STORAGE_KEYS.DAY_STARTED, dayStarted);
@@ -905,8 +792,6 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
     localStorage.setItem(STORAGE_KEYS.INVITED_FRIENDS, JSON.stringify(invitedFriends));
     localStorage.setItem(STORAGE_KEYS.BONUS_POINTS, bonusPoints);
-    
-    // Сохраняем силовые данные
     localStorage.setItem(STORAGE_KEYS.STRENGTH_HISTORY, JSON.stringify(strengthHistory));
     localStorage.setItem(STORAGE_KEYS.STRENGTH_TOTAL_PULLUPS, totalPullups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_TOTAL_PUSHUPS, totalPushups);
@@ -914,39 +799,27 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PULLUPS, bestPullups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS, bestPushups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_TODAY, JSON.stringify(strengthToday));
-    
+
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
-// ========== ФУНКЦИИ ДЛЯ ДНЕВНИКА ==========
 function renderDiary() {
     const entriesList = document.getElementById('entries-list');
     if (!entriesList) return;
-    
     entriesList.innerHTML = '';
-    
     if (diaryEntries.length === 0) {
         entriesList.innerHTML = `<div class="empty-entries">${t('noEntries')}</div>`;
         return;
     }
-    
-    // Сортируем от новых к старым
     const sortedEntries = [...diaryEntries].sort((a, b) => new Date(b.date) - new Date(a.date));
-    
     sortedEntries.forEach(entry => {
         const entryDiv = document.createElement('div');
         entryDiv.className = 'entry-item';
-        
         const date = new Date(entry.date);
         const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
+            day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit'
         });
-        
         entryDiv.innerHTML = `
             <div class="entry-date">${formattedDate}</div>
             <div class="entry-content">${entry.text}</div>
@@ -954,8 +827,6 @@ function renderDiary() {
         `;
         entriesList.appendChild(entryDiv);
     });
-    
-    // Добавляем обработчики для кнопок удаления
     document.querySelectorAll('.entry-delete').forEach(btn => {
         btn.addEventListener('click', function() {
             const id = parseInt(this.dataset.id);
@@ -967,107 +838,66 @@ function renderDiary() {
     });
 }
 
-// ========== ФУНКЦИИ ДЛЯ ПРИГЛАШЕНИЙ ==========
-
-// Отправка приглашения другу через Telegram
 function inviteFriend() {
     const friendUsername = prompt(t('enterFriendUsername'), '@');
-    
     if (!friendUsername) return;
-    
     const cleanUsername = friendUsername.replace('@', '').trim();
-    
     if (!cleanUsername) {
         tg.showAlert(t('enterFriendUsername'));
         return;
     }
-    
     if (cleanUsername === userUsername) {
         tg.showAlert(t('cantAddSelf'));
         return;
     }
-    
-    // Проверяем, не является ли уже другом
     const alreadyFriend = friends.some(f => f.username === cleanUsername);
     if (alreadyFriend) {
         tg.showAlert(t('alreadyFriend'));
         return;
     }
-    
-    // Создаем сообщение с приглашением
     const inviteMessage = `${t('inviteText', userName)}\n\n` +
-                         `👤 От: ${userName} (@${userUsername})\n` +
-                         `🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
-                         `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n\n` +
-                         `👉 Нажми, чтобы открыть приложение: https://t.me/your_bot_name?start=${inviteCode}`;
-    
-    // Открываем диалог с другом в Telegram
+        `👤 От: ${userName} (@${userUsername})\n` +
+        `🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
+        `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n\n` +
+        `👉 Нажми, чтобы открыть приложение: https://t.me/your_bot_name?start=${inviteCode}`;
     tg.openTelegramLink(`https://t.me/${cleanUsername}?text=${encodeURIComponent(inviteMessage)}`);
-    
-    // Добавляем в список приглашенных
-    invitedFriends.push({
-        username: cleanUsername,
-        date: new Date().toISOString(),
-        joined: false
-    });
-    
-    // Добавляем бонусные очки
+    invitedFriends.push({ username: cleanUsername, date: new Date().toISOString(), joined: false });
     bonusPoints += 10;
     saveState();
-    
     renderInviteStats();
-    
     tg.showAlert(t('inviteSuccess', cleanUsername));
 }
 
-// Копирование реферальной ссылки
 function copyInviteLink() {
     const link = `https://t.me/your_bot_name?start=${inviteCode}`;
-    
-    // Копируем в буфер обмена
     const input = document.createElement('input');
     input.value = link;
     document.body.appendChild(input);
     input.select();
     document.execCommand('copy');
     document.body.removeChild(input);
-    
-    tg.showPopup({
-        title: '✅',
-        message: t('inviteCopied'),
-        buttons: [{ type: 'close' }]
-    });
+    tg.showPopup({ title: '✅', message: t('inviteCopied'), buttons: [{ type: 'close' }] });
 }
 
-// Поделиться прогрессом
 function shareProgress() {
     const message = `🏃 Мой прогресс в беговом марафоне:\n\n` +
-                   `📊 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
-                   `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
-                   `🔥 Калорий: ${totalCalories}\n\n` +
-                   `👥 Присоединяйся! https://t.me/your_bot_name?start=${inviteCode}`;
-    
+        `📊 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
+        `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
+        `🔥 Калорий: ${totalCalories}\n\n` +
+        `👥 Присоединяйся! https://t.me/your_bot_name?start=${inviteCode}`;
     tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(message)}`);
-    
-    tg.showPopup({
-        title: '✅',
-        message: t('shared'),
-        buttons: [{ type: 'close' }]
-    });
+    tg.showPopup({ title: '✅', message: t('shared'), buttons: [{ type: 'close' }] });
 }
 
-// Рендеринг статистики приглашений
 function renderInviteStats() {
     const invitedCountEl = document.getElementById('invited-count');
     const joinedCountEl = document.getElementById('joined-count');
     const bonusCountEl = document.getElementById('bonus-count');
-    
     if (invitedCountEl) invitedCountEl.textContent = invitedFriends.length;
     if (joinedCountEl) joinedCountEl.textContent = invitedFriends.filter(f => f.joined).length;
     if (bonusCountEl) bonusCountEl.textContent = bonusPoints;
 }
 
-// ========== ФУНКЦИИ ДЛЯ ДРУЗЕЙ ==========
 function updateUserProfile() {
     const userNameEl = document.getElementById('friends-user-name');
     const userStatsEl = document.getElementById('friends-total-distance');
@@ -1075,14 +905,11 @@ function updateUserProfile() {
     const userPaceEl = document.getElementById('friends-best-pace');
     const profileNameEl = document.getElementById('profile-mini-name');
     const profileStatsEl = document.getElementById('profile-mini-stats');
-    
     if (userNameEl) userNameEl.textContent = userName;
     if (userStatsEl) userStatsEl.textContent = totalDistance.toFixed(1);
     if (userWorkoutsEl) userWorkoutsEl.textContent = totalWorkouts;
-    
     const avgPace = totalDistance > 0 ? (totalTime / totalDistance).toFixed(1) : 0;
     if (userPaceEl) userPaceEl.textContent = avgPace;
-    
     if (profileNameEl) profileNameEl.textContent = userName;
     if (profileStatsEl) profileStatsEl.textContent = `${totalDistance.toFixed(1)} км • ${totalWorkouts} тренировок • 💪 ${totalPullups}`;
 }
@@ -1091,19 +918,14 @@ function renderFriendRequests() {
     const requestsCard = document.getElementById('friend-requests-card');
     const requestsList = document.getElementById('friend-requests-list');
     const requestsCount = document.getElementById('requests-count');
-    
     if (!requestsList) return;
-    
     if (friendRequests.length === 0) {
         if (requestsCard) requestsCard.style.display = 'none';
         return;
     }
-    
     if (requestsCard) requestsCard.style.display = 'block';
     if (requestsCount) requestsCount.textContent = friendRequests.length;
-    
     requestsList.innerHTML = '';
-    
     friendRequests.forEach((request, index) => {
         const requestItem = document.createElement('div');
         requestItem.className = 'friend-request-item';
@@ -1120,14 +942,12 @@ function renderFriendRequests() {
         `;
         requestsList.appendChild(requestItem);
     });
-    
     document.querySelectorAll('.friend-request-accept').forEach(btn => {
         btn.addEventListener('click', function() {
             const index = parseInt(this.dataset.index);
             acceptFriendRequest(index);
         });
     });
-    
     document.querySelectorAll('.friend-request-decline').forEach(btn => {
         btn.addEventListener('click', function() {
             const index = parseInt(this.dataset.index);
@@ -1139,106 +959,68 @@ function renderFriendRequests() {
 function sendFriendRequest() {
     const input = document.getElementById('friend-username');
     const username = input?.value.trim();
-    
     if (!username) {
         tg.showAlert(t('enterUsername'));
         return;
     }
-    
     const cleanUsername = username.replace('@', '');
-    
     if (cleanUsername === userUsername) {
         tg.showAlert(t('cantAddSelf'));
         return;
     }
-    
-    // Проверяем, не отправлена ли уже заявка
     const alreadySent = sentRequests.some(r => r.username === cleanUsername);
     if (alreadySent) {
         tg.showAlert(t('requestSent'));
         return;
     }
-    
-    // Проверяем, не является ли уже другом
     const alreadyFriend = friends.some(f => f.username === cleanUsername);
     if (alreadyFriend) {
         tg.showAlert(t('alreadyFriend'));
         return;
     }
-    
-    // Проверяем, есть ли входящая заявка от этого пользователя
     const incomingRequestIndex = friendRequests.findIndex(r => r.fromUserUsername === cleanUsername);
     if (incomingRequestIndex !== -1) {
         acceptFriendRequest(incomingRequestIndex);
         input.value = '';
         return;
     }
-    
-    // Создаем сообщение с заявкой
     const requestMessage = `👋 ${userName} (@${userUsername}) хочет добавить тебя в друзья в беговом марафоне!\n\n` +
-                          `📊 Его статистика:\n` +
-                          `🏃 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
-                          `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
-                          `🔥 Калорий: ${totalCalories}\n\n` +
-                          `👉 Открой приложение, чтобы принять заявку: https://t.me/your_bot_name`;
-    
-    // Открываем диалог с пользователем
+        `📊 Его статистика:\n` +
+        `🏃 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
+        `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
+        `🔥 Калорий: ${totalCalories}\n\n` +
+        `👉 Открой приложение, чтобы принять заявку: https://t.me/your_bot_name`;
     tg.openTelegramLink(`https://t.me/${cleanUsername}?text=${encodeURIComponent(requestMessage)}`);
-    
-    // Добавляем в отправленные заявки
-    const newRequest = {
-        id: Date.now(),
-        username: cleanUsername,
-        name: cleanUsername,
-        date: new Date().toISOString()
-    };
-    
+    const newRequest = { id: Date.now(), username: cleanUsername, name: cleanUsername, date: new Date().toISOString() };
     sentRequests.push(newRequest);
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
-    
     input.value = '';
-    
     tg.showAlert(t('requestSentSuccess', cleanUsername));
 }
 
 function acceptFriendRequest(index) {
     const request = friendRequests[index];
-    
     const newFriend = {
-        id: request.id,
-        name: request.fromUserName || request.name,
-        username: request.fromUserUsername || request.username,
-        avatar: request.avatar || '👤',
-        workouts: request.fromUserWorkouts || 0,
-        distance: request.fromUserDistance || 0,
-        time: request.fromUserTime || 0,
-        calories: request.fromUserCalories || 0,
+        id: request.id, name: request.fromUserName || request.name,
+        username: request.fromUserUsername || request.username, avatar: request.avatar || '👤',
+        workouts: request.fromUserWorkouts || 0, distance: request.fromUserDistance || 0,
+        time: request.fromUserTime || 0, calories: request.fromUserCalories || 0,
         addedDate: new Date().toISOString()
     };
-    
     friends.push(newFriend);
     friendRequests.splice(index, 1);
-    
-    // Удаляем из отправленных заявок
     const sentIndex = sentRequests.findIndex(r => r.username === newFriend.username);
-    if (sentIndex !== -1) {
-        sentRequests.splice(sentIndex, 1);
-    }
-    
+    if (sentIndex !== -1) sentRequests.splice(sentIndex, 1);
     localStorage.setItem(STORAGE_KEYS.FRIENDS, JSON.stringify(friends));
     localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
     localStorage.setItem(STORAGE_KEYS.SENT_REQUESTS, JSON.stringify(sentRequests));
-    
     renderFriendRequests();
     renderLeaderboard();
     renderFriendResults();
     updateTeamProgress();
-    
-    // Добавляем бонус за нового друга
     bonusPoints += 5;
     saveState();
     renderInviteStats();
-    
     tg.showAlert(t('requestAccepted', newFriend.name));
 }
 
@@ -1250,32 +1032,24 @@ function declineFriendRequest(index) {
     tg.showAlert(t('requestDeclined', request.fromUserName || request.name));
 }
 
-// ========== ФУНКЦИИ ДЛЯ ТАБЛИЦЫ ЛИДЕРОВ ==========
 function calculateStats(history, period) {
     const now = new Date();
     const startOfWeek = new Date(now);
     startOfWeek.setDate(now.getDate() - now.getDay());
     startOfWeek.setHours(0, 0, 0, 0);
-    
     const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    
     const filtered = history.filter(workout => {
         const workoutDate = new Date(workout.date);
-        
-        if (period === 'thisWeek') {
-            return workoutDate >= startOfWeek;
-        } else if (period === 'thisMonth') {
-            return workoutDate >= startOfMonth;
-        }
-        return true; // allTime
+        if (period === 'thisWeek') return workoutDate >= startOfWeek;
+        if (period === 'thisMonth') return workoutDate >= startOfMonth;
+        return true;
     });
-    
     return {
         distance: filtered.reduce((sum, w) => sum + w.distance, 0),
         workouts: filtered.length,
         time: filtered.reduce((sum, w) => sum + w.time, 0),
         calories: filtered.reduce((sum, w) => sum + w.calories, 0),
-        pace: filtered.reduce((sum, w) => sum + w.distance, 0) > 0 
+        pace: filtered.reduce((sum, w) => sum + w.distance, 0) > 0
             ? (filtered.reduce((sum, w) => sum + w.time, 0) / filtered.reduce((sum, w) => sum + w.distance, 0)).toFixed(1)
             : 0
     };
@@ -1283,10 +1057,7 @@ function calculateStats(history, period) {
 
 function getFriendResults() {
     const results = [];
-    
     friends.forEach(friend => {
-        // В реальном приложении здесь был бы запрос к серверу
-        // Для демо используем случайные данные
         const mockHistory = [];
         const mockWorkouts = Math.floor(Math.random() * 20) + 1;
         for (let i = 0; i < mockWorkouts; i++) {
@@ -1297,113 +1068,66 @@ function getFriendResults() {
                 date: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
             });
         }
-        
-        results.push({
-            ...friend,
-            history: mockHistory,
-            pullups: Math.floor(Math.random() * 100),
-            pushups: Math.floor(Math.random() * 200)
-        });
+        results.push({ ...friend, history: mockHistory, pullups: Math.floor(Math.random() * 100), pushups: Math.floor(Math.random() * 200) });
     });
-    
     return results;
 }
 
 function getLeaderboard() {
     const friendResults = getFriendResults();
-    
     const allUsers = [
-        // Текущий пользователь
-        {
-            userId: userId,
-            name: userName + ` (${t('you')})`,
-            username: userUsername,
-            avatar: '👤',
-            isYou: true,
-            ...calculateStats(workoutHistory, resultsPeriod),
-            pullups: totalPullups,
-            pushups: totalPushups
-        },
-        // Друзья
-        ...friendResults.map(friend => ({
-            ...friend,
-            ...calculateStats(friend.history || [], resultsPeriod),
-            isYou: false
-        }))
+        { userId: userId, name: userName + ` (${t('you')})`, username: userUsername, avatar: '👤', isYou: true, ...calculateStats(workoutHistory, resultsPeriod), pullups: totalPullups, pushups: totalPushups },
+        ...friendResults.map(friend => ({ ...friend, ...calculateStats(friend.history || [], resultsPeriod), isYou: false }))
     ];
-    
-    // Сортируем по дистанции (убывание)
     return allUsers.sort((a, b) => b.distance - a.distance);
 }
 
 function renderLeaderboard() {
     const container = document.getElementById('leaderboard-container');
     if (!container) return;
-    
     const leaderboard = getLeaderboard();
-    
     if (leaderboard.length === 0) {
         container.innerHTML = `<div class="empty-leaderboard">${t('noFriendsResults')}</div>`;
         return;
     }
-    
     let html = '';
-    
     leaderboard.forEach((user, index) => {
         const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
-        
         html += `
             <div class="leaderboard-row ${user.isYou ? 'you' : ''}">
                 <span class="rank">${medal}</span>
-                <span class="name">
-                    ${user.avatar} ${user.name}
-                </span>
+                <span class="name">${user.avatar} ${user.name}</span>
                 <span class="distance">${user.distance.toFixed(1)} км</span>
                 <span class="workouts">${user.workouts}</span>
                 <span class="pace">${user.pace} мин/км</span>
             </div>
         `;
     });
-    
     container.innerHTML = html;
 }
 
 function renderFriendResults() {
     const container = document.getElementById('friend-results-container');
     if (!container) return;
-    
     const friendResults = getFriendResults();
     const myStats = calculateStats(workoutHistory, resultsPeriod);
-    
     if (friendResults.length === 0) {
         container.innerHTML = `<div class="empty-results">${t('noFriendsResults')}</div>`;
         return;
     }
-    
     let html = '';
-    
-    // Сортируем друзей по дистанции
     friendResults.sort((a, b) => {
         const aStats = calculateStats(a.history || [], resultsPeriod);
         const bStats = calculateStats(b.history || [], resultsPeriod);
         return bStats.distance - aStats.distance;
     });
-    
     friendResults.forEach(friend => {
         const stats = calculateStats(friend.history || [], resultsPeriod);
         const vsDiff = myStats.distance - stats.distance;
-        
         let vsClass = 'equal';
         let vsText = '=';
-        
-        if (vsDiff > 0) {
-            vsClass = 'ahead';
-            vsText = `+${vsDiff.toFixed(1)} км`;
-        } else if (vsDiff < 0) {
-            vsClass = 'behind';
-            vsText = `${vsDiff.toFixed(1)} км`;
-        }
-        
+        if (vsDiff > 0) { vsClass = 'ahead'; vsText = `+${vsDiff.toFixed(1)} км`; }
+        else if (vsDiff < 0) { vsClass = 'behind'; vsText = `${vsDiff.toFixed(1)} км`; }
         html += `
             <div class="friend-stat-card">
                 <div class="friend-info">
@@ -1411,106 +1135,65 @@ function renderFriendResults() {
                     <span class="friend-name">${friend.name}</span>
                 </div>
                 <div class="friend-stats">
-                    <div class="stat-row">
-                        <span>${t('distance')}</span>
-                        <span class="stat-value">${stats.distance.toFixed(1)} км</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>${t('workouts')}</span>
-                        <span class="stat-value">${stats.workouts}</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>${t('pace')}</span>
-                        <span class="stat-value">${stats.pace} мин/км</span>
-                    </div>
-                    <div class="stat-row">
-                        <span>💪 Сила</span>
-                        <span class="stat-value">${friend.pullups || 0}/${friend.pushups || 0}</span>
-                    </div>
+                    <div class="stat-row"><span>${t('distance')}</span><span class="stat-value">${stats.distance.toFixed(1)} км</span></div>
+                    <div class="stat-row"><span>${t('workouts')}</span><span class="stat-value">${stats.workouts}</span></div>
+                    <div class="stat-row"><span>${t('pace')}</span><span class="stat-value">${stats.pace} мин/км</span></div>
+                    <div class="stat-row"><span>💪 Сила</span><span class="stat-value">${friend.pullups || 0}/${friend.pushups || 0}</span></div>
                 </div>
-                <div class="vs-row ${vsClass}">
-                    ${t('vs')}: ${vsText}
-                </div>
+                <div class="vs-row ${vsClass}">${t('vs')}: ${vsText}</div>
             </div>
         `;
     });
-    
     container.innerHTML = html;
 }
 
 function updateTeamProgress() {
     const teamProgressBar = document.getElementById('team-progress-bar');
     const teamProgressText = document.getElementById('team-progress-text');
-    
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
-    
     if (teamProgressBar) {
         const percent = Math.min(100, (teamProgress / teamGoal) * 100);
         teamProgressBar.style.width = percent + '%';
     }
-    
-    if (teamProgressText) {
-        teamProgressText.textContent = `${teamProgress.toFixed(1)}/${teamGoal} км`;
-    }
-    
+    if (teamProgressText) teamProgressText.textContent = `${teamProgress.toFixed(1)}/${teamGoal} км`;
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
 function checkIncomingRequests() {
-    // В реальном приложении здесь был бы запрос к серверу
-    // Для демо просто проверяем локальное хранилище
     const pendingKey = `pending_request_${userUsername}`;
     const pending = JSON.parse(localStorage.getItem(pendingKey)) || [];
-    
     if (pending.length > 0) {
         pending.forEach(req => {
             const exists = friendRequests.some(r => r.id === req.id);
             if (!exists) {
                 friendRequests.push(req);
                 tg.showPopup({
-                    title: '🔔',
-                    message: `${req.fromUserName} ${t('newRequest')}`,
-                    buttons: [
-                        { id: 'view', type: 'default', text: '👥 Перейти' },
-                        { type: 'close', text: 'Закрыть' }
-                    ]
+                    title: '🔔', message: `${req.fromUserName} ${t('newRequest')}`,
+                    buttons: [{ id: 'view', type: 'default', text: '👥 Перейти' }, { type: 'close', text: 'Закрыть' }]
                 }, (buttonId) => {
-                    if (buttonId === 'view') {
-                        switchPage(2);
-                        switchTab('friends');
-                    }
+                    if (buttonId === 'view') { switchPage(2); switchTab('friends'); }
                 });
             }
         });
-        
         localStorage.setItem(STORAGE_KEYS.FRIEND_REQUESTS, JSON.stringify(friendRequests));
         localStorage.removeItem(pendingKey);
     }
 }
 
-// ========== ФУНКЦИИ ДЛЯ AI-РЕКОМЕНДАЦИЙ ==========
 function calculateStreak() {
     if (workoutHistory.length === 0) return 0;
-    
     let streak = 1;
     const sorted = [...workoutHistory].sort((a, b) => new Date(b.date) - new Date(a.date));
     const today = new Date().toDateString();
     const lastWorkout = new Date(sorted[0].date).toDateString();
-    
     if (lastWorkout !== today) return 0;
-    
     for (let i = 1; i < sorted.length; i++) {
-        const prevDate = new Date(sorted[i-1].date);
+        const prevDate = new Date(sorted[i - 1].date);
         const currDate = new Date(sorted[i].date);
         const diffDays = Math.floor((prevDate - currDate) / (1000 * 60 * 60 * 24));
-        
-        if (diffDays === 1) {
-            streak++;
-        } else {
-            break;
-        }
+        if (diffDays === 1) streak++;
+        else break;
     }
-    
     return streak;
 }
 
@@ -1522,11 +1205,9 @@ function getUserLevel() {
 
 function needsRecovery() {
     if (workoutHistory.length < 3) return false;
-    
     const lastThree = workoutHistory.slice(-3);
     const avgDistance = lastThree.reduce((sum, w) => sum + w.distance, 0) / 3;
     const hadHardWorkouts = lastThree.some(w => w.distance > 5);
-    
     return hadHardWorkouts && avgDistance > 4;
 }
 
@@ -1535,45 +1216,29 @@ function getPersonalizedRecommendation() {
     const needRecovery = needsRecovery();
     const streak = calculateStreak();
     const lang = currentLanguage;
-    
-    // Иногда показываем советы по силовым
     if (Math.random() < 0.3 && totalPullups + totalPushups > 0) {
         const strengthIndex = Math.floor(Math.random() * recommendations.strength[lang].length);
         return recommendations.strength[lang][strengthIndex];
     }
-    
     if (Math.random() < 0.2 && totalWorkouts > 0) {
         const motiIndex = Math.floor(Math.random() * recommendations.motivation[lang].length);
         let motiText = recommendations.motivation[lang][motiIndex].text;
-        
         motiText = motiText.replace('{total}', totalDistance.toFixed(1));
         motiText = motiText.replace('{streak}', streak);
-        
-        const bestDistance = workoutHistory.length > 0 
-            ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1)
-            : 0;
+        const bestDistance = workoutHistory.length > 0 ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1) : 0;
         motiText = motiText.replace('{best}', bestDistance);
-        
-        const nextLevel = level === 'beginner' ? 5 - totalWorkouts : 
-                         level === 'intermediate' ? 20 - totalWorkouts : 0;
+        const nextLevel = level === 'beginner' ? 5 - totalWorkouts : level === 'intermediate' ? 20 - totalWorkouts : 0;
         motiText = motiText.replace('{toNextLevel}', nextLevel);
-        
-        return {
-            icon: recommendations.motivation[lang][motiIndex].icon,
-            text: motiText
-        };
+        return { icon: recommendations.motivation[lang][motiIndex].icon, text: motiText };
     }
-    
     if (Math.random() < 0.2) {
         const tipIndex = Math.floor(Math.random() * recommendations.tips[lang].length);
         return recommendations.tips[lang][tipIndex];
     }
-    
     if (needRecovery) {
         const recIndex = Math.floor(Math.random() * recommendations.recovery[lang].length);
         return recommendations.recovery[lang][recIndex];
     }
-    
     const levelRecs = recommendations[level][lang];
     const recIndex = Math.floor(Math.random() * levelRecs.length);
     return levelRecs[recIndex];
@@ -1583,25 +1248,17 @@ function updateRecommendation() {
     const rec = getPersonalizedRecommendation();
     const container = document.getElementById('recommendation-content');
     if (!container) return;
-    
-    container.innerHTML = `
-        <div class="recommendation-icon">${rec.icon}</div>
-        <div class="recommendation-text">${rec.text}</div>
-    `;
+    container.innerHTML = `<div class="recommendation-icon">${rec.icon}</div><div class="recommendation-text">${rec.text}</div>`;
 }
 
-// ========== ФУНКЦИИ ДЛЯ СОЗДАНИЯ И ВЫПОЛНЕНИЯ ТРЕНИРОВОК ==========
 function renderCustomCreator() {
     const container = document.getElementById('custom-tasks-list');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     if (currentCustomTasks.length === 0) {
         container.innerHTML = `<div class="empty-tasks">${t('noTasks')}</div>`;
         return;
     }
-    
     currentCustomTasks.forEach((task, index) => {
         const taskDiv = document.createElement('div');
         taskDiv.className = 'custom-task-item';
@@ -1612,7 +1269,6 @@ function renderCustomCreator() {
         `;
         container.appendChild(taskDiv);
     });
-    
     document.querySelectorAll('.custom-task-delete').forEach(btn => {
         btn.addEventListener('click', function() {
             const index = parseInt(this.dataset.index);
@@ -1621,7 +1277,6 @@ function renderCustomCreator() {
             updateCreateButtonState();
         });
     });
-    
     updateCreateButtonState();
 }
 
@@ -1629,10 +1284,7 @@ function updateCreateButtonState() {
     const goalInput = document.getElementById('goal-distance');
     const goal = parseFloat(goalInput?.value) || 0;
     const createBtn = document.getElementById('create-plan-btn');
-    
-    if (createBtn) {
-        createBtn.disabled = !(goal > 0 && currentCustomTasks.length > 0);
-    }
+    if (createBtn) createBtn.disabled = !(goal > 0 && currentCustomTasks.length > 0);
 }
 
 function saveWorkout() {
@@ -1640,10 +1292,8 @@ function saveWorkout() {
         tg.showAlert(t('enterTask'));
         return;
     }
-    
     const goalInput = document.getElementById('goal-distance');
     const goal = parseFloat(goalInput.value);
-    
     const newWorkout = {
         id: Date.now(),
         name: `🏋️ ${t('myWorkouts')} ${savedWorkouts.length + 1}`,
@@ -1658,25 +1308,20 @@ function saveWorkout() {
         date: new Date().toISOString(),
         completed: false
     };
-    
     savedWorkouts.push(newWorkout);
     localStorage.setItem(STORAGE_KEYS.SAVED_WORKOUTS, JSON.stringify(savedWorkouts));
-    
     activeWorkout = {
         id: newWorkout.id,
         name: newWorkout.name,
         goal: newWorkout.goal,
-        steps: newWorkout.steps.map(step => ({...step, completed: false}))
+        steps: newWorkout.steps.map(step => ({ ...step, completed: false }))
     };
     localStorage.setItem(STORAGE_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
-    
     tg.showAlert(t('workoutCompleted'));
-    
     currentCustomTasks = [];
     goalInput.value = 5;
     document.getElementById('new-task-text').value = '';
     document.getElementById('new-task-distance').value = 0;
-    
     renderCustomCreator();
     renderSavedWorkouts();
     renderActiveWorkout();
@@ -1685,31 +1330,23 @@ function saveWorkout() {
 function renderSavedWorkouts() {
     const container = document.getElementById('saved-workouts-list');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     if (savedWorkouts.length === 0) {
         container.innerHTML = `<div class="empty-workouts">${t('noWorkouts')}</div>`;
         return;
     }
-    
     const sortedWorkouts = [...savedWorkouts].reverse();
-    
     sortedWorkouts.forEach(workout => {
         const isActive = activeWorkout && activeWorkout.id === workout.id;
-        
         const workoutDiv = document.createElement('div');
         workoutDiv.className = `saved-workout-item ${isActive ? 'active' : ''}`;
         workoutDiv.setAttribute('data-id', workout.id);
-        
         let completedCount = 0;
         if (activeWorkout && activeWorkout.id === workout.id) {
             completedCount = activeWorkout.steps.filter(s => s.completed).length;
         }
-        
         const totalSteps = workout.tasks ? workout.tasks.length : workout.steps.length;
         const progressText = isActive ? ` (${completedCount}/${totalSteps})` : '';
-        
         workoutDiv.innerHTML = `
             <div class="saved-workout-icon">🏋️</div>
             <div class="saved-workout-info">
@@ -1721,10 +1358,8 @@ function renderSavedWorkouts() {
                 <button class="workout-delete-btn" data-id="${workout.id}">✕</button>
             </div>
         `;
-        
         container.appendChild(workoutDiv);
     });
-    
     document.querySelectorAll('.workout-start-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -1732,7 +1367,6 @@ function renderSavedWorkouts() {
             startWorkout(id);
         });
     });
-    
     document.querySelectorAll('.workout-delete-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -1745,22 +1379,19 @@ function renderSavedWorkouts() {
 function startWorkout(id) {
     const workout = savedWorkouts.find(w => w.id === id);
     if (!workout) return;
-    
     activeWorkout = {
         id: workout.id,
         name: workout.name,
         goal: workout.goal,
-        steps: workout.steps ? workout.steps.map(s => ({...s, completed: false})) : 
-                workout.tasks.map((task, index) => ({
-                    id: index + 1,
-                    text: task.text,
-                    completed: false,
-                    distance: task.distance || 0
-                }))
+        steps: workout.steps ? workout.steps.map(s => ({ ...s, completed: false })) :
+            workout.tasks.map((task, index) => ({
+                id: index + 1,
+                text: task.text,
+                completed: false,
+                distance: task.distance || 0
+            }))
     };
-    
     localStorage.setItem(STORAGE_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
-    
     renderSavedWorkouts();
     renderActiveWorkout();
 }
@@ -1768,12 +1399,10 @@ function startWorkout(id) {
 function deleteWorkout(id) {
     savedWorkouts = savedWorkouts.filter(w => w.id !== id);
     localStorage.setItem(STORAGE_KEYS.SAVED_WORKOUTS, JSON.stringify(savedWorkouts));
-    
     if (activeWorkout && activeWorkout.id === id) {
         activeWorkout = null;
         localStorage.removeItem(STORAGE_KEYS.ACTIVE_WORKOUT);
     }
-    
     renderSavedWorkouts();
     renderActiveWorkout();
 }
@@ -1786,24 +1415,17 @@ function renderActiveWorkout() {
     const progressFill = document.getElementById('active-workout-progress');
     const percentEl = document.getElementById('active-workout-percent');
     const completeBtn = document.getElementById('complete-workout-btn');
-    
     if (!container || !activeWorkout) {
         if (container) container.style.display = 'none';
         return;
     }
-    
     container.style.display = 'block';
-    
     nameEl.textContent = activeWorkout.name;
     goalEl.textContent = activeWorkout.goal + ' ' + t('distance');
-    
     stepsContainer.innerHTML = '';
-    
     let completedCount = 0;
-    
     activeWorkout.steps.forEach((step, index) => {
         if (step.completed) completedCount++;
-        
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step-compact ${step.completed ? 'step-completed' : ''}`;
         stepDiv.innerHTML = `
@@ -1813,13 +1435,10 @@ function renderActiveWorkout() {
         `;
         stepsContainer.appendChild(stepDiv);
     });
-    
     const progress = (completedCount / activeWorkout.steps.length) * 100;
     progressFill.style.width = progress + '%';
     percentEl.textContent = Math.round(progress) + '%';
-    
     completeBtn.disabled = completedCount !== activeWorkout.steps.length;
-    
     document.querySelectorAll('#active-workout-steps .workout-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -1833,14 +1452,10 @@ function renderActiveWorkout() {
 
 function completeWorkout() {
     if (!activeWorkout) return;
-    
     let actualDistance = 0;
     activeWorkout.steps.forEach(step => {
-        if (step.completed) {
-            actualDistance += step.distance || 0;
-        }
+        if (step.completed) actualDistance += step.distance || 0;
     });
-    
     workoutHistory.push({
         day: currentDay,
         distance: actualDistance,
@@ -1849,73 +1464,43 @@ function completeWorkout() {
         date: new Date().toISOString(),
         name: activeWorkout.name
     });
-    
     totalWorkouts++;
     totalDistance += actualDistance;
     totalTime += Math.round(actualDistance * 6);
     totalCalories += Math.round(actualDistance * 60);
-    
     saveState();
-    
-    tg.showPopup({
-        title: '🎉',
-        message: t('workoutCompleted'),
-        buttons: [{ type: 'close' }]
-    });
-    
+    tg.showPopup({ title: '🎉', message: t('workoutCompleted'), buttons: [{ type: 'close' }] });
     activeWorkout = null;
     localStorage.removeItem(STORAGE_KEYS.ACTIVE_WORKOUT);
-    
     renderActiveWorkout();
     renderSavedWorkouts();
 }
 
-// ========== ФУНКЦИИ ДЛЯ СИЛОВЫХ УПРАЖНЕНИЙ ==========
-
-// Переключение типа тренировки
 function switchStrengthType(type) {
     console.log('Переключение на тип:', type);
     currentStrengthType = type;
-    
-    // Обновляем активные кнопки
-    document.querySelectorAll('.type-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
+    document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.getElementById(`type-${type}`);
     if (activeBtn) activeBtn.classList.add('active');
-    
-    // Показываем нужную карточку
     const pullupsCard = document.getElementById('pullups-card');
     const pushupsCard = document.getElementById('pushups-card');
     const mixedCard = document.getElementById('mixed-card');
-    
     if (pullupsCard) pullupsCard.style.display = type === 'pullups' ? 'block' : 'none';
     if (pushupsCard) pushupsCard.style.display = type === 'pushups' ? 'block' : 'none';
     if (mixedCard) mixedCard.style.display = type === 'mixed' ? 'block' : 'none';
-    
-    // Обновляем интерфейс
-    if (type === 'pullups') {
-        renderPullupsSets();
-    } else if (type === 'pushups') {
-        renderPushupsSets();
-    } else if (type === 'mixed') {
-        renderMixedSets();
-    }
-    
+    if (type === 'pullups') renderPullupsSets();
+    else if (type === 'pushups') renderPushupsSets();
+    else if (type === 'mixed') renderMixedSets();
     updateStrengthProgress();
 }
 
-// Рендеринг сетов для подтягиваний
 function renderPullupsSets() {
     const container = document.getElementById('pullups-sets');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     if (!strengthToday.pullups.sets || strengthToday.pullups.sets.length === 0) {
         strengthToday.pullups.sets = [{ reps: 10, completed: false }];
     }
-    
     strengthToday.pullups.sets.forEach((set, index) => {
         const setCard = document.createElement('div');
         setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
@@ -1937,12 +1522,9 @@ function renderPullupsSets() {
         `;
         container.appendChild(setCard);
     });
-    
-    // Добавляем обработчики
     document.querySelectorAll('#pullups-sets .set-remove').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+            e.preventDefault(); e.stopPropagation();
             const index = parseInt(this.dataset.index);
             strengthToday.pullups.sets.splice(index, 1);
             renderPullupsSets();
@@ -1950,7 +1532,6 @@ function renderPullupsSets() {
             saveState();
         });
     });
-    
     document.querySelectorAll('#pullups-sets .set-reps-input').forEach(input => {
         input.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -1960,38 +1541,27 @@ function renderPullupsSets() {
             saveState();
         });
     });
-    
     document.querySelectorAll('#pullups-sets .set-complete-check').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
             strengthToday.pullups.sets[index].completed = this.checked;
-            
             const setCard = this.closest('.set-card');
-            if (this.checked) {
-                setCard.classList.add('completed');
-            } else {
-                setCard.classList.remove('completed');
-            }
-            
+            if (this.checked) setCard.classList.add('completed');
+            else setCard.classList.remove('completed');
             updatePullupsStats();
             saveState();
         });
     });
-    
     updatePullupsStats();
 }
 
-// Рендеринг сетов для отжиманий
 function renderPushupsSets() {
     const container = document.getElementById('pushups-sets');
     if (!container) return;
-    
     container.innerHTML = '';
-    
     if (!strengthToday.pushups.sets || strengthToday.pushups.sets.length === 0) {
         strengthToday.pushups.sets = [{ reps: 15, completed: false }];
     }
-    
     strengthToday.pushups.sets.forEach((set, index) => {
         const setCard = document.createElement('div');
         setCard.className = `set-card ${set.completed ? 'completed' : ''}`;
@@ -2013,12 +1583,9 @@ function renderPushupsSets() {
         `;
         container.appendChild(setCard);
     });
-    
-    // Добавляем обработчики
     document.querySelectorAll('#pushups-sets .set-remove').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
+            e.preventDefault(); e.stopPropagation();
             const index = parseInt(this.dataset.index);
             strengthToday.pushups.sets.splice(index, 1);
             renderPushupsSets();
@@ -2026,7 +1593,6 @@ function renderPushupsSets() {
             saveState();
         });
     });
-    
     document.querySelectorAll('#pushups-sets .set-reps-input').forEach(input => {
         input.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -2036,34 +1602,24 @@ function renderPushupsSets() {
             saveState();
         });
     });
-    
     document.querySelectorAll('#pushups-sets .set-complete-check').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
             strengthToday.pushups.sets[index].completed = this.checked;
-            
             const setCard = this.closest('.set-card');
-            if (this.checked) {
-                setCard.classList.add('completed');
-            } else {
-                setCard.classList.remove('completed');
-            }
-            
+            if (this.checked) setCard.classList.add('completed');
+            else setCard.classList.remove('completed');
             updatePushupsStats();
             saveState();
         });
     });
-    
     updatePushupsStats();
 }
 
-// Рендеринг комплексной тренировки
 function renderMixedSets() {
     const mixedWorkout = document.getElementById('mixed-workout');
     if (!mixedWorkout) return;
-    
     mixedWorkout.innerHTML = '';
-    
     strengthToday.mixed.rounds.forEach((round, index) => {
         const roundDiv = document.createElement('div');
         roundDiv.className = `mixed-exercise ${round.completed ? 'completed' : ''}`;
@@ -2089,64 +1645,39 @@ function renderMixedSets() {
         `;
         mixedWorkout.appendChild(roundDiv);
     });
-    
-    // Добавляем обработчики
     document.querySelectorAll('.mixed-item .item-input').forEach(input => {
         input.addEventListener('change', function() {
             const round = parseInt(this.dataset.round);
             const exercise = this.dataset.exercise;
             const value = parseInt(this.value) || 0;
-            
-            if (exercise === 'pullups') {
-                strengthToday.mixed.rounds[round].pullups = value;
-            } else {
-                strengthToday.mixed.rounds[round].pushups = value;
-            }
-            
+            if (exercise === 'pullups') strengthToday.mixed.rounds[round].pullups = value;
+            else strengthToday.mixed.rounds[round].pushups = value;
             updateMixedStats();
             saveState();
         });
     });
-    
     document.querySelectorAll('.mixed-item .item-check').forEach(checkbox => {
         checkbox.addEventListener('change', function() {
             const round = parseInt(this.dataset.round);
             const exercise = this.dataset.exercise;
             const mixedItem = this.closest('.mixed-item');
-            
-            if (exercise === 'pullups') {
-                strengthToday.mixed.rounds[round].pullupsCompleted = this.checked;
-            } else {
-                strengthToday.mixed.rounds[round].pushupsCompleted = this.checked;
-            }
-            
-            if (this.checked) {
-                mixedItem.classList.add('completed');
-            } else {
-                mixedItem.classList.remove('completed');
-            }
-            
-            // Проверяем, завершен ли весь круг
+            if (exercise === 'pullups') strengthToday.mixed.rounds[round].pullupsCompleted = this.checked;
+            else strengthToday.mixed.rounds[round].pushupsCompleted = this.checked;
+            if (this.checked) mixedItem.classList.add('completed');
+            else mixedItem.classList.remove('completed');
             const roundData = strengthToday.mixed.rounds[round];
             const allCompleted = roundData.pullupsCompleted && roundData.pushupsCompleted;
             roundData.completed = allCompleted;
-            
             const roundDiv = this.closest('.mixed-exercise');
-            if (allCompleted) {
-                roundDiv.classList.add('completed');
-            } else {
-                roundDiv.classList.remove('completed');
-            }
-            
+            if (allCompleted) roundDiv.classList.add('completed');
+            else roundDiv.classList.remove('completed');
             updateMixedStats();
             saveState();
         });
     });
-    
     updateMixedStats();
 }
 
-// Добавление нового подхода
 function addSet(type) {
     if (type === 'pullups') {
         strengthToday.pullups.sets.push({ reps: 8, completed: false });
@@ -2158,36 +1689,24 @@ function addSet(type) {
     saveState();
 }
 
-// Добавление нового круга в комплекс
 function addMixedSet() {
     if (strengthToday.mixed.rounds.length >= 5) {
         tg.showAlert(t('maxRounds'));
         return;
     }
-    
-    strengthToday.mixed.rounds.push({
-        pullups: 5,
-        pushups: 10,
-        pullupsCompleted: false,
-        pushupsCompleted: false,
-        completed: false
-    });
-    
+    strengthToday.mixed.rounds.push({ pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false });
     renderMixedSets();
     saveState();
 }
 
-// Обновление цели для подтягиваний
 function updatePullupsGoal() {
     const slider = document.getElementById('pullups-goal-slider');
     const valueSpan = document.getElementById('pullups-goal-value');
     const goalSpan = document.getElementById('pullups-goal');
-    
     if (slider && valueSpan && goalSpan) {
         slider.value = strengthToday.pullups.goal;
         valueSpan.textContent = strengthToday.pullups.goal;
         goalSpan.textContent = strengthToday.pullups.goal;
-        
         slider.addEventListener('input', function() {
             const value = this.value;
             valueSpan.textContent = value;
@@ -2199,17 +1718,14 @@ function updatePullupsGoal() {
     }
 }
 
-// Обновление цели для отжиманий
 function updatePushupsGoal() {
     const slider = document.getElementById('pushups-goal-slider');
     const valueSpan = document.getElementById('pushups-goal-value');
     const goalSpan = document.getElementById('pushups-goal');
-    
     if (slider && valueSpan && goalSpan) {
         slider.value = strengthToday.pushups.goal;
         valueSpan.textContent = strengthToday.pushups.goal;
         goalSpan.textContent = strengthToday.pushups.goal;
-        
         slider.addEventListener('input', function() {
             const value = this.value;
             valueSpan.textContent = value;
@@ -2221,227 +1737,126 @@ function updatePushupsGoal() {
     }
 }
 
-// Обновление статистики подтягиваний
 function updatePullupsStats() {
     const todaySpan = document.getElementById('pullups-today');
     const summaryPullups = document.getElementById('summary-pullups');
-    
-    const totalCompleted = strengthToday.pullups.sets
-        .filter(set => set.completed)
-        .reduce((sum, set) => sum + set.reps, 0);
-    
+    const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pullups.goal;
-    
-    if (todaySpan) {
-        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
-    }
-    
-    if (summaryPullups) {
-        summaryPullups.textContent = totalCompleted;
-    }
-    
+    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    if (summaryPullups) summaryPullups.textContent = totalCompleted;
     strengthToday.pullups.completed = totalCompleted >= goal;
-    
     updateStrengthProgress();
 }
 
-// Обновление статистики отжиманий
 function updatePushupsStats() {
     const todaySpan = document.getElementById('pushups-today');
     const summaryPushups = document.getElementById('summary-pushups');
-    
-    const totalCompleted = strengthToday.pushups.sets
-        .filter(set => set.completed)
-        .reduce((sum, set) => sum + set.reps, 0);
-    
+    const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pushups.goal;
-    
-    if (todaySpan) {
-        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
-    }
-    
-    if (summaryPushups) {
-        summaryPushups.textContent = totalCompleted;
-    }
-    
+    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    if (summaryPushups) summaryPushups.textContent = totalCompleted;
     strengthToday.pushups.completed = totalCompleted >= goal;
-    
     updateStrengthProgress();
 }
 
-// Обновление статистики комплексной тренировки
 function updateMixedStats() {
     const summaryPullups = document.getElementById('summary-pullups');
     const summaryPushups = document.getElementById('summary-pushups');
     const mixedToday = document.getElementById('mixed-today');
-    
-    let totalPullupsCompleted = 0;
-    let totalPushupsCompleted = 0;
-    let completedRounds = 0;
-    
+    let totalPullupsCompleted = 0, totalPushupsCompleted = 0, completedRounds = 0;
     strengthToday.mixed.rounds.forEach(round => {
         if (round.pullupsCompleted) totalPullupsCompleted += round.pullups;
         if (round.pushupsCompleted) totalPushupsCompleted += round.pushups;
         if (round.completed) completedRounds++;
     });
-    
     if (summaryPullups) summaryPullups.textContent = totalPullupsCompleted;
     if (summaryPushups) summaryPushups.textContent = totalPushupsCompleted;
     if (mixedToday) mixedToday.textContent = `${completedRounds}/${strengthToday.mixed.rounds.length} ${t('round')}`;
-    
     strengthToday.mixed.completed = completedRounds === strengthToday.mixed.rounds.length;
-    
     updateStrengthProgress();
 }
 
-// Обновление общего прогресса силы
 function updateStrengthProgress() {
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
     const completeBtn = document.getElementById('complete-strength-btn');
-    
-    let totalCompleted = 0;
-    let totalGoal = 0;
-    
+    let totalCompleted = 0, totalGoal = 0;
     if (currentStrengthType === 'pullups') {
-        const completed = strengthToday.pullups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
-        totalCompleted = completed;
+        totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalGoal = strengthToday.pullups.goal;
     } else if (currentStrengthType === 'pushups') {
-        const completed = strengthToday.pushups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
-        totalCompleted = completed;
+        totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalGoal = strengthToday.pushups.goal;
     } else if (currentStrengthType === 'mixed') {
         strengthToday.mixed.rounds.forEach(round => {
             if (round.pullupsCompleted) totalCompleted += round.pullups;
             if (round.pushupsCompleted) totalCompleted += round.pushups;
         });
-        strengthToday.mixed.rounds.forEach(round => {
-            totalGoal += round.pullups + round.pushups;
-        });
+        strengthToday.mixed.rounds.forEach(round => totalGoal += round.pullups + round.pushups);
     }
-    
     const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
-    
     if (progressBar) progressBar.style.width = percent + '%';
     if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
-    
-    // Проверяем, можно ли завершить тренировку
     let canComplete = false;
-    
-    if (currentStrengthType === 'pullups') {
-        canComplete = strengthToday.pullups.completed;
-    } else if (currentStrengthType === 'pushups') {
-        canComplete = strengthToday.pushups.completed;
-    } else if (currentStrengthType === 'mixed') {
-        canComplete = strengthToday.mixed.completed;
-    }
-    
+    if (currentStrengthType === 'pullups') canComplete = strengthToday.pullups.completed;
+    else if (currentStrengthType === 'pushups') canComplete = strengthToday.pushups.completed;
+    else if (currentStrengthType === 'mixed') canComplete = strengthToday.mixed.completed;
     if (completeBtn) completeBtn.disabled = !canComplete;
-    
-    // Обновляем калории (примерно 1 калория на 2 повторения)
     const calories = Math.round(totalCompleted * 0.5);
     const summaryCalories = document.getElementById('summary-calories');
     if (summaryCalories) summaryCalories.textContent = calories;
 }
 
-// Завершение силовой тренировки
 function completeStrengthWorkout() {
-    let totalPullupsToday = 0;
-    let totalPushupsToday = 0;
-    
+    let totalPullupsToday = 0, totalPushupsToday = 0;
     if (currentStrengthType === 'pullups') {
-        totalPullupsToday = strengthToday.pullups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
+        totalPullupsToday = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     } else if (currentStrengthType === 'pushups') {
-        totalPushupsToday = strengthToday.pushups.sets
-            .filter(set => set.completed)
-            .reduce((sum, set) => sum + set.reps, 0);
+        totalPushupsToday = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     } else if (currentStrengthType === 'mixed') {
         strengthToday.mixed.rounds.forEach(round => {
             if (round.pullupsCompleted) totalPullupsToday += round.pullups;
             if (round.pushupsCompleted) totalPushupsToday += round.pushups;
         });
     }
-    
-    // Обновляем общую статистику
     totalPullups += totalPullupsToday;
     totalPushups += totalPushupsToday;
     strengthDays++;
-    
     if (totalPullupsToday > bestPullups) bestPullups = totalPullupsToday;
     if (totalPushupsToday > bestPushups) bestPushups = totalPushupsToday;
-    
-    // Добавляем в историю
-    strengthHistory.push({
-        date: new Date().toISOString(),
-        pullups: totalPullupsToday,
-        pushups: totalPushupsToday,
-        type: currentStrengthType
-    });
-    
-    // Сбрасываем сегодняшнюю тренировку
+    strengthHistory.push({ date: new Date().toISOString(), pullups: totalPullupsToday, pushups: totalPushupsToday, type: currentStrengthType });
     strengthToday = {
-        pullups: {
-            goal: 30,
-            sets: [{ reps: 10, completed: false }],
-            completed: false
-        },
-        pushups: {
-            goal: 50,
-            sets: [{ reps: 15, completed: false }],
-            completed: false
-        },
-        mixed: {
-            completed: false,
-            rounds: [
-                { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
-                { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
-                { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
-            ]
-        }
+        pullups: { goal: 30, sets: [{ reps: 10, completed: false }], completed: false },
+        pushups: { goal: 50, sets: [{ reps: 15, completed: false }], completed: false },
+        mixed: { completed: false, rounds: [
+            { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+            { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+            { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
+        ] }
     };
-    
     saveState();
-    
-    // Обновляем UI
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
     updateStrengthProgress();
     updateStrengthStats();
-    
-    // Показываем новую мотивационную цитату
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
     const quoteEl = document.getElementById('strength-quote');
     if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
-    
-    tg.showPopup({
-        title: '🎉',
-        message: t('strengthCompleted'),
-        buttons: [{ type: 'close' }]
-    });
+    tg.showPopup({ title: '🎉', message: t('strengthCompleted'), buttons: [{ type: 'close' }] });
 }
 
-// Обновление статистики силы в общем разделе
 function updateStrengthStats() {
     const totalPullupsEl = document.getElementById('total-pullups');
     const totalPushupsEl = document.getElementById('total-pushups');
     const strengthDaysEl = document.getElementById('total-strength-days');
     const bestPullupsEl = document.getElementById('best-pullups');
-    
     if (totalPullupsEl) totalPullupsEl.textContent = totalPullups;
     if (totalPushupsEl) totalPushupsEl.textContent = totalPushups;
     if (strengthDaysEl) strengthDaysEl.textContent = strengthDays;
     if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
-// ========== СТАТИСТИКА ==========
 function updateStats() {
     const totalWorkoutsEl = document.getElementById('total-workouts');
     const totalDistanceEl = document.getElementById('total-distance');
@@ -2454,7 +1869,6 @@ function updateStats() {
     const weekCurrentEl = document.getElementById('week-current');
     const weekProgressEl = document.getElementById('week-progress');
     const comparisonEl = document.getElementById('month-comparison');
-    
     if (totalWorkoutsEl) totalWorkoutsEl.textContent = totalWorkouts;
     if (totalDistanceEl) totalDistanceEl.textContent = totalDistance.toFixed(1) + ' ' + t('distance');
     if (totalTimeEl) {
@@ -2463,75 +1877,49 @@ function updateStats() {
         totalTimeEl.textContent = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes} ${t('minutes')}`;
     }
     if (totalCaloriesEl) totalCaloriesEl.textContent = totalCalories + ' ' + t('kcal');
-    
     const avgDistance = totalWorkouts > 0 ? (totalDistance / totalWorkouts).toFixed(1) : 0;
     if (avgDistanceEl) avgDistanceEl.textContent = avgDistance + ' ' + t('distance');
-    
-    const bestDistance = workoutHistory.length > 0 
-        ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1)
-        : 0;
+    const bestDistance = workoutHistory.length > 0 ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1) : 0;
     if (bestDistanceEl) bestDistanceEl.textContent = bestDistance + ' ' + t('distance');
-    
     let avgPace = 0;
-    if (totalDistance > 0) {
-        avgPace = (totalTime / totalDistance).toFixed(1);
-    }
+    if (totalDistance > 0) avgPace = (totalTime / totalDistance).toFixed(1);
     if (avgPaceEl) avgPaceEl.textContent = avgPace + ' ' + t('pace');
-    
     const avgCalories = totalWorkouts > 0 ? Math.round(totalCalories / totalWorkouts) : 0;
     if (avgCaloriesEl) avgCaloriesEl.textContent = avgCalories + ' ' + t('kcal');
-    
     if (weekCurrentEl) weekCurrentEl.textContent = currentDay - 1;
     const weekProgress = ((currentDay - 1) / 30) * 100;
     if (weekProgressEl) weekProgressEl.style.width = `${weekProgress}%`;
-    
     if (comparisonEl) {
         const now = new Date();
         const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
         const firstDayOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-        
         const thisMonth = workoutHistory.filter(w => new Date(w.date) >= firstDayOfMonth);
         const lastMonth = workoutHistory.filter(w => {
             const date = new Date(w.date);
             return date >= firstDayOfLastMonth && date < firstDayOfMonth;
         });
-        
         const thisMonthDistance = thisMonth.reduce((sum, w) => sum + w.distance, 0);
         const lastMonthDistance = lastMonth.reduce((sum, w) => sum + w.distance, 0);
-        
         let comparisonText = '';
-        if (lastMonthDistance === 0) {
-            comparisonText = `📊 ${t('vsLastMonth')}: —`;
-        } else {
+        if (lastMonthDistance === 0) comparisonText = `📊 ${t('vsLastMonth')}: —`;
+        else {
             const diff = ((thisMonthDistance - lastMonthDistance) / lastMonthDistance * 100).toFixed(0);
-            if (diff > 0) {
-                comparisonText = `📈 ${t('vsLastMonth')}: +${diff}% ${t('better')}`;
-            } else if (diff < 0) {
-                comparisonText = `📉 ${t('vsLastMonth')}: ${diff}% ${t('worse')}`;
-            } else {
-                comparisonText = `📊 ${t('vsLastMonth')}: ${t('same')}`;
-            }
+            if (diff > 0) comparisonText = `📈 ${t('vsLastMonth')}: +${diff}% ${t('better')}`;
+            else if (diff < 0) comparisonText = `📉 ${t('vsLastMonth')}: ${diff}% ${t('worse')}`;
+            else comparisonText = `📊 ${t('vsLastMonth')}: ${t('same')}`;
         }
         comparisonEl.textContent = comparisonText;
     }
-    
     const historyList = document.getElementById('history-list');
     if (historyList) {
         historyList.innerHTML = '';
-        
-        if (workoutHistory.length === 0) {
-            historyList.innerHTML = `<div class="empty-history">${t('noWorkouts')}</div>`;
-        } else {
+        if (workoutHistory.length === 0) historyList.innerHTML = `<div class="empty-history">${t('noWorkouts')}</div>`;
+        else {
             const recent = [...workoutHistory].reverse().slice(0, 10);
             recent.forEach(workout => {
                 const date = new Date(workout.date);
-                const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
-                    day: 'numeric',
-                    month: 'short'
-                });
-                
+                const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', { day: 'numeric', month: 'short' });
                 const pace = (workout.time / workout.distance).toFixed(1);
-                
                 const item = document.createElement('div');
                 item.className = 'history-item';
                 item.innerHTML = `
@@ -2552,24 +1940,19 @@ function updateStats() {
             });
         }
     }
-    
-    // Обновляем силовую статистику
     updateStrengthStats();
 }
 
-// ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
 function updateUI() {
     const startDayNumber = document.getElementById('start-day-number');
     const currentDayEl = document.getElementById('current-day');
     if (startDayNumber) startDayNumber.textContent = currentDay;
     if (currentDayEl) currentDayEl.textContent = currentDay;
-    
+
     if (dayStarted && dayStartTime) {
         const now = getCurrentTime();
         const start = parseInt(dayStartTime);
         const hoursPassed = (now - start) / (1000 * 60 * 60);
-        
-        // Если прошло больше 24 часов или наступило 4 утра следующего дня
         if (hoursPassed >= 24 || now >= getNextDay4am()) {
             dayStarted = false;
             dayStartTime = null;
@@ -2580,15 +1963,15 @@ function updateUI() {
             tg.showAlert(t('dayExpiredMsg'));
         }
     }
-    
+
     checkNewDayAvailability();
-    
+
     const startScreen = document.getElementById('start-screen');
     const marathonScreen = document.getElementById('marathon-screen');
     const congratsScreen = document.getElementById('congrats');
-    
+
     if (!startScreen || !marathonScreen || !congratsScreen) return;
-    
+
     if (dayStarted) {
         startScreen.style.display = 'none';
         marathonScreen.style.display = 'block';
@@ -2599,13 +1982,13 @@ function updateUI() {
         startScreen.style.display = 'block';
         marathonScreen.style.display = 'none';
         congratsScreen.style.display = 'none';
-        
+
         const canStart = canStartNewDay();
         const canStartByTime = canStartDay();
         const timeInfo = document.getElementById('time-info');
         const startBtn = document.getElementById('start-day-btn');
-        
-        if (dayCompletedTime && !canStart) {
+
+        if (!canStart) {
             const remaining = getTimeUntilNextDay4am();
             if (timeInfo && remaining) {
                 timeInfo.textContent = t('waitUntilNextDay', remaining.hours, remaining.minutes);
@@ -2613,7 +1996,7 @@ function updateUI() {
             }
             if (startBtn) {
                 startBtn.disabled = true;
-                startBtn.textContent = t('waitUntilNextDay', remaining.hours, remaining.minutes);
+                startBtn.textContent = t('waitUntilNextDay', remaining?.hours || 0, remaining?.minutes || 0);
             }
         } else if (!canStartByTime) {
             if (timeInfo) {
@@ -2639,32 +2022,22 @@ function updateUI() {
 
 function renderWorkout() {
     const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
-    
     const workoutName = document.getElementById('workout-name');
     const workoutDifficulty = document.getElementById('workout-difficulty');
-    
-    if (workoutName) {
-        workoutName.textContent = currentLanguage === 'ru' ? workout.name_ru : workout.name;
-    }
-    
+    if (workoutName) workoutName.textContent = currentLanguage === 'ru' ? workout.name_ru : workout.name;
     if (workoutDifficulty) {
         let difficultyText = '';
         if (workout.difficulty === 'easy') difficultyText = t('easy');
         else if (workout.difficulty === 'medium') difficultyText = t('medium');
         else difficultyText = t('hard');
-        
         workoutDifficulty.textContent = difficultyText;
         workoutDifficulty.className = `workout-difficulty difficulty-${workout.difficulty}`;
     }
-    
     const stepsContainer = document.getElementById('workout-steps');
     if (!stepsContainer) return;
-    
     stepsContainer.innerHTML = '';
-    
     workout.steps.forEach((step, index) => {
         const stepText = currentLanguage === 'ru' ? step.text_ru : step.text;
-        
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step ${completedSteps[index] ? 'step-completed' : ''}`;
         stepDiv.innerHTML = `
@@ -2674,15 +2047,12 @@ function renderWorkout() {
         `;
         stepsContainer.appendChild(stepDiv);
     });
-    
     const additionalSection = document.getElementById('additional-tasks-section');
     const additionalContainer = document.getElementById('additional-steps');
-    
     if (additionalTasks.length > 0) {
         if (additionalSection) additionalSection.style.display = 'block';
         if (additionalContainer) {
             additionalContainer.innerHTML = '';
-            
             additionalTasks.forEach((task, index) => {
                 const stepDiv = document.createElement('div');
                 stepDiv.className = `workout-step ${additionalCompleted[index] ? 'step-completed' : ''} extra-step`;
@@ -2697,91 +2067,59 @@ function renderWorkout() {
     } else {
         if (additionalSection) additionalSection.style.display = 'none';
     }
-    
     document.querySelectorAll('.workout-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
             const type = this.dataset.type;
-            
-            if (type === 'main') {
-                completedSteps[index] = this.checked;
-            } else {
-                additionalCompleted[index] = this.checked;
-            }
-            
+            if (type === 'main') completedSteps[index] = this.checked;
+            else additionalCompleted[index] = this.checked;
             saveState();
             updateProgress();
-            
             const stepDiv = this.closest('.workout-step');
-            if (this.checked) {
-                stepDiv.classList.add('step-completed');
-            } else {
-                stepDiv.classList.remove('step-completed');
-            }
+            if (this.checked) stepDiv.classList.add('step-completed');
+            else stepDiv.classList.remove('step-completed');
         });
     });
-    
     updateProgress();
 }
 
 function updateProgress() {
     const mainCompleted = completedSteps.filter(v => v).length;
     const mainTotal = completedSteps.length;
-    
     const extraCompleted = additionalCompleted.filter(v => v).length;
     const extraTotal = additionalCompleted.length;
-    
     const totalCompleted = mainCompleted + extraCompleted;
     const total = mainTotal + extraTotal;
-    
     const progress = total > 0 ? (totalCompleted / total) * 100 : 0;
-    
     const workoutFill = document.getElementById('workout-fill');
     const workoutPercent = document.getElementById('workout-percent');
     const completeBtn = document.getElementById('complete-day-btn');
-    
     if (workoutFill) workoutFill.style.width = progress + '%';
     if (workoutPercent) workoutPercent.textContent = Math.round(progress) + '%';
-    
     const allCompleted = totalCompleted === total;
     const canComplete = canCompleteDay();
     const expired = isDayExpired();
-    
     if (expired) {
-        if (completeBtn) {
-            completeBtn.disabled = true;
-            completeBtn.textContent = t('dayExpired');
-        }
+        if (completeBtn) { completeBtn.disabled = true; completeBtn.textContent = t('dayExpired'); }
     } else if (!canComplete) {
-        if (completeBtn) {
-            completeBtn.disabled = true;
-            completeBtn.textContent = t('until23');
-        }
+        if (completeBtn) { completeBtn.disabled = true; completeBtn.textContent = t('until23'); }
     } else {
-        if (completeBtn) {
-            completeBtn.disabled = !allCompleted;
-            completeBtn.textContent = t('completeBtn');
-        }
+        if (completeBtn) { completeBtn.disabled = !allCompleted; completeBtn.textContent = t('completeBtn'); }
     }
 }
 
 function updateDeadlineInfo() {
     const deadlineInfo = document.getElementById('deadline-info');
     if (!deadlineInfo || !dayStarted) return;
-    
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
     const now = getCurrentTime();
     const nextDay4am = getNextDay4am();
-    
-    // Если уже наступило 4 утра следующего дня
     if (now >= nextDay4am) {
         deadlineInfo.textContent = t('dayExpiredMsg');
         deadlineInfo.style.color = 'var(--danger)';
         return;
     }
-    
-    // Проверяем время до 23:00
     if (hour >= 23) {
         if (hour === 23 && minutes === 0) {
             deadlineInfo.textContent = t('until23') + ' (последняя минута!)';
@@ -2792,46 +2130,30 @@ function updateDeadlineInfo() {
         }
         return;
     }
-    
-    // Считаем время до 23:00
     const endOfDay = new Date();
     endOfDay.setHours(23, 0, 0, 0);
     const diffMs = endOfDay - now;
     const diffMins = Math.floor(diffMs / 60000);
     const hours = Math.floor(diffMins / 60);
     const mins = diffMins % 60;
-    
     deadlineInfo.textContent = t('timeLeft', hours, mins);
     deadlineInfo.style.color = 'var(--text-secondary)';
 }
 
-// ========== ОБНОВЛЕНИЕ ДАТЫ ==========
 function updateDate() {
     const now = new Date();
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
     const dateEl = document.getElementById('current-date');
-    if (dateEl) {
-        dateEl.textContent = now.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', options);
-    }
+    if (dateEl) dateEl.textContent = now.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', options);
 }
 
-// ========== ОБНОВЛЕНИЕ ТЕКСТА ==========
 function updateAllText() {
-    // Стартовый экран
     const startMessage = document.getElementById('start-message');
     if (startMessage) startMessage.textContent = t('ready');
-    
     const startBtn = document.getElementById('start-day-btn');
-    if (startBtn && !dayStarted && !dayCompletedTime) {
-        startBtn.textContent = t('startBtn');
-    }
-    
+    if (startBtn && !dayStarted && !dayCompletedTime) startBtn.textContent = t('startBtn');
     const completeBtn = document.getElementById('complete-day-btn');
-    if (completeBtn && !completeBtn.disabled) {
-        completeBtn.textContent = t('completeBtn');
-    }
-    
-    // Заголовки
+    if (completeBtn && !completeBtn.disabled) completeBtn.textContent = t('completeBtn');
     const balanceTitle = document.querySelector('.balance-title');
     if (balanceTitle) {
         const daySpan = balanceTitle.querySelector('span');
@@ -2840,26 +2162,16 @@ function updateAllText() {
             balanceTitle.appendChild(daySpan);
         }
     }
-    
     const additionalHeader = document.querySelector('.additional-header h3');
-    if (additionalHeader) {
-        additionalHeader.textContent = t('addedTasks');
-    }
-    
-    // Экран завершения
+    if (additionalHeader) additionalHeader.textContent = t('addedTasks');
     const congratsH2 = document.querySelector('#congrats h2');
     if (congratsH2) congratsH2.textContent = t('congrats');
-    
     const congratsP = document.querySelector('#congrats p');
     if (congratsP) congratsP.textContent = t('youRan');
-    
     const continueBtn = document.getElementById('continue-btn');
     if (continueBtn) continueBtn.textContent = t('home');
-    
-    // Статистика
     const statsTitle = document.querySelector('.stats-title');
     if (statsTitle) statsTitle.textContent = t('stats');
-    
     const statLabels = document.querySelectorAll('.stat-card .stat-label');
     if (statLabels[0]) statLabels[0].textContent = t('workouts');
     if (statLabels[1]) statLabels[1].textContent = t('totalKm');
@@ -2869,96 +2181,58 @@ function updateAllText() {
     if (statLabels[5]) statLabels[5].textContent = t('best');
     if (statLabels[6]) statLabels[6].textContent = t('avgPace');
     if (statLabels[7]) statLabels[7].textContent = t('caloriesPerWorkout');
-    
     const weeklyCardH3 = document.querySelector('.weekly-card h3');
     if (weeklyCardH3) weeklyCardH3.textContent = t('progress_');
-    
     const recentCardH3 = document.querySelector('.recent-card h3');
     if (recentCardH3) recentCardH3.textContent = t('history');
-    
-    // AI рекомендации
     const recommendationsTitle = document.querySelector('.recommendations-card h3');
     if (recommendationsTitle) recommendationsTitle.textContent = t('aiRecommendations');
-    
     const refreshBtn = document.getElementById('refresh-recommendation');
     if (refreshBtn) refreshBtn.textContent = t('refreshRecommendation');
-    
-    // Табы
     const tabFriends = document.getElementById('tab-friends');
     const tabDiary = document.getElementById('tab-diary');
     if (tabFriends) tabFriends.textContent = t('friends');
     if (tabDiary) tabDiary.textContent = t('diary');
-    
-    // Друзья
     const inviteBtn = document.getElementById('invite-friends-btn');
-    if (inviteBtn) {
-        inviteBtn.innerHTML = `<span class="btn-icon">📤</span><span class="btn-text">${t('sendInvite')}</span>`;
-    }
-    
+    if (inviteBtn) inviteBtn.innerHTML = `<span class="btn-icon">📤</span><span class="btn-text">${t('sendInvite')}</span>`;
     const copyBtn = document.getElementById('copy-invite-btn');
-    if (copyBtn) {
-        copyBtn.setAttribute('title', t('copyInvite'));
-    }
-    
+    if (copyBtn) copyBtn.setAttribute('title', t('copyInvite'));
     const shareBtn = document.getElementById('share-progress-btn');
-    if (shareBtn) {
-        shareBtn.setAttribute('title', t('shareProgress'));
-    }
-    
+    if (shareBtn) shareBtn.setAttribute('title', t('shareProgress'));
     const addFriendInput = document.getElementById('friend-username');
     if (addFriendInput) addFriendInput.placeholder = t('friendPlaceholder');
-    
     const sendRequestBtn = document.getElementById('send-request-btn');
     if (sendRequestBtn) sendRequestBtn.setAttribute('title', t('addFriend'));
-    
     const requestsTitle = document.querySelector('.requests-header h3');
     if (requestsTitle) requestsTitle.textContent = t('requests');
-    
-    // Дневник
     const addEntryBtn = document.getElementById('add-entry-btn');
     if (addEntryBtn) addEntryBtn.innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
-    
     const saveEntryBtn = document.getElementById('save-entry-btn');
     if (saveEntryBtn) saveEntryBtn.textContent = t('save');
-    
     const cancelEntryBtn = document.getElementById('cancel-entry-btn');
     if (cancelEntryBtn) cancelEntryBtn.textContent = t('cancel');
-    
     const entryText = document.getElementById('entry-text');
     if (entryText) entryText.placeholder = t('entryPlaceholder');
-    
-    // Создание тренировки
     const customTitle = document.querySelector('.custom-title');
     if (customTitle) customTitle.textContent = t('createTitle');
-    
     const goalCardH3 = document.querySelector('.goal-card h3');
     if (goalCardH3) goalCardH3.textContent = t('goal');
-    
     const goalInput = document.getElementById('goal-distance');
     if (goalInput) goalInput.placeholder = t('goalPlaceholder');
-    
     const tasksCreatorH3 = document.querySelector('.tasks-creator h3');
     if (tasksCreatorH3) tasksCreatorH3.textContent = t('addTask');
-    
     const taskTextInput = document.getElementById('new-task-text');
     if (taskTextInput) taskTextInput.placeholder = t('taskPlaceholder');
-    
     const addTaskBtn = document.getElementById('add-task-btn');
     if (addTaskBtn) addTaskBtn.textContent = t('addTaskBtn');
-    
     const saveWorkoutBtn = document.getElementById('create-plan-btn');
     if (saveWorkoutBtn) saveWorkoutBtn.textContent = t('saveWorkoutBtn');
-    
     const savedWorkoutsTitle = document.querySelector('.saved-workouts-title');
     if (savedWorkoutsTitle) savedWorkoutsTitle.textContent = t('myWorkouts');
-    
     const completeWorkoutBtn = document.getElementById('complete-workout-btn');
     if (completeWorkoutBtn) completeWorkoutBtn.textContent = t('completeWorkout');
-    
-    // Силовые тренировки
     const strengthTitle = document.querySelector('.strength-title');
     if (strengthTitle) strengthTitle.textContent = t('strengthTitle');
-    
     const pullupsCard = document.getElementById('pullups-card');
     if (pullupsCard) {
         const title = pullupsCard.querySelector('.exercise-title h3');
@@ -2966,7 +2240,6 @@ function updateAllText() {
         if (title) title.textContent = t('pullups');
         if (subtitle) subtitle.textContent = t('pullupsSub');
     }
-    
     const pushupsCard = document.getElementById('pushups-card');
     if (pushupsCard) {
         const title = pushupsCard.querySelector('.exercise-title h3');
@@ -2974,7 +2247,6 @@ function updateAllText() {
         if (title) title.textContent = t('pushups');
         if (subtitle) subtitle.textContent = t('pushupsSub');
     }
-    
     const mixedCard = document.getElementById('mixed-card');
     if (mixedCard) {
         const title = mixedCard.querySelector('.exercise-title h3');
@@ -2982,75 +2254,47 @@ function updateAllText() {
         if (title) title.textContent = t('mixed');
         if (subtitle) subtitle.textContent = t('mixedSub');
     }
-    
     const goalSliders = document.querySelectorAll('.goal-slider label');
-    goalSliders.forEach(label => {
-        label.textContent = t('goal_');
-    });
-    
+    goalSliders.forEach(label => label.textContent = t('goal_'));
     const addSetBtns = document.querySelectorAll('.add-set-btn');
-    addSetBtns.forEach(btn => {
-        btn.innerHTML = `<span class="btn-icon">➕</span><span class="btn-text">${t('addSet')}</span>`;
-    });
-    
+    addSetBtns.forEach(btn => btn.innerHTML = `<span class="btn-icon">➕</span><span class="btn-text">${t('addSet')}</span>`);
     const addMixedBtn = document.getElementById('add-mixed-set');
-    if (addMixedBtn) {
-        addMixedBtn.innerHTML = `<span class="btn-icon">➕</span><span class="btn-text">${t('addRound')}</span>`;
-    }
-    
+    if (addMixedBtn) addMixedBtn.innerHTML = `<span class="btn-icon">➕</span><span class="btn-text">${t('addRound')}</span>`;
     const completeStrengthBtn = document.getElementById('complete-strength-btn');
-    if (completeStrengthBtn) {
-        completeStrengthBtn.textContent = t('completeStrength');
-    }
-    
+    if (completeStrengthBtn) completeStrengthBtn.textContent = t('completeStrength');
     const summaryLabels = document.querySelectorAll('.summary-label');
     if (summaryLabels[0]) summaryLabels[0].textContent = t('summaryPullups');
     if (summaryLabels[1]) summaryLabels[1].textContent = t('summaryPushups');
     if (summaryLabels[2]) summaryLabels[2].textContent = t('summaryCalories');
-    
-    // Меню
     const menuTitles = document.querySelectorAll('.menu-title');
     if (menuTitles[0]) menuTitles[0].textContent = t('marathon');
     if (menuTitles[1]) menuTitles[1].textContent = t('settings');
     if (menuTitles[2]) menuTitles[2].textContent = t('help');
     if (menuTitles[3]) menuTitles[3].textContent = t('contacts');
-    
     const resetMenuItem = document.getElementById('reset-marathon');
     if (resetMenuItem) resetMenuItem.innerHTML = `🔄 ${t('reset')} ${t('marathon').toLowerCase()}`;
-    
     const statsMenuItem = document.getElementById('stats-menu');
     if (statsMenuItem) statsMenuItem.innerHTML = `📊 ${t('statsMenu')}`;
-    
     const supportMenuItem = document.getElementById('support');
     if (supportMenuItem) supportMenuItem.innerHTML = `💬 ${t('support')}`;
-    
     const telegramMenuItem = document.getElementById('telegram-support');
     if (telegramMenuItem) telegramMenuItem.innerHTML = `📱 ${t('contact')} @frontendchikk`;
-    
     const faqMenuItem = document.getElementById('faq');
     if (faqMenuItem) faqMenuItem.innerHTML = `❓ ${t('faq')}`;
-    
-    // Настройки в меню
     const themeLabel = document.querySelector('.theme-selector span');
     if (themeLabel) themeLabel.textContent = `${t('theme')}:`;
-    
     const themeDark = document.getElementById('theme-dark-menu');
     const themeLight = document.getElementById('theme-light-menu');
     if (themeDark) themeDark.textContent = t('dark');
     if (themeLight) themeLight.textContent = t('light');
-    
     const langLabel = document.querySelector('.language-selector span');
     if (langLabel) langLabel.textContent = `${t('language')}:`;
-    
     const langRu = document.getElementById('lang-ru-menu');
     const langEn = document.getElementById('lang-en-menu');
     if (langRu) langRu.textContent = '🇷🇺 Русский';
     if (langEn) langEn.textContent = '🇬🇧 English';
-    
-    if (dayStarted) {
-        renderWorkout();
-    }
-    
+
+    if (dayStarted) renderWorkout();
     updateRecommendation();
     updateUserProfile();
     renderInviteStats();
@@ -3060,30 +2304,22 @@ function updateAllText() {
     updateTeamProgress();
     renderSavedWorkouts();
     renderActiveWorkout();
-    
-    // Обновляем силовые
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
     updateStrengthProgress();
-    
-    // Мотивационная цитата
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
     const quoteEl = document.getElementById('strength-quote');
     if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
 }
 
-// ========== ПЕРЕКЛЮЧЕНИЕ ТАБОВ ==========
 function switchTab(tabName) {
     currentTab = tabName;
-    
     const friendsTab = document.getElementById('friends-tab');
     const diaryTab = document.getElementById('diary-tab');
     const friendsBtn = document.getElementById('tab-friends');
     const diaryBtn = document.getElementById('tab-diary');
-    
     if (!friendsTab || !diaryTab || !friendsBtn || !diaryBtn) return;
-    
     if (tabName === 'friends') {
         friendsTab.classList.add('active');
         diaryTab.classList.remove('active');
@@ -3102,30 +2338,16 @@ function switchTab(tabName) {
     }
 }
 
-// ========== НАВИГАЦИЯ ==========
 let currentSlide = 0;
 window.switchPage = function(pageIndex) {
     const slides = document.querySelectorAll('.slide');
     const navButtons = document.querySelectorAll('.nav-btn');
     const container = document.getElementById('slidesContainer');
-    
     if (!container || slides.length === 0) return;
-    
-    container.scrollTo({
-        left: pageIndex * container.clientWidth,
-        behavior: 'smooth'
-    });
-    
-    navButtons.forEach((btn, index) => {
-        btn.classList.toggle('active', index === pageIndex);
-    });
-    
+    container.scrollTo({ left: pageIndex * container.clientWidth, behavior: 'smooth' });
+    navButtons.forEach((btn, index) => btn.classList.toggle('active', index === pageIndex));
     currentSlide = pageIndex;
-    
-    if (pageIndex === 1) {
-        updateStats();
-        updateRecommendation();
-    }
+    if (pageIndex === 1) { updateStats(); updateRecommendation(); }
     if (pageIndex === 2) {
         switchTab('friends');
         updateUserProfile();
@@ -3135,92 +2357,54 @@ window.switchPage = function(pageIndex) {
         renderFriendResults();
         updateTeamProgress();
     }
-    if (pageIndex === 3) {
-        renderCustomCreator();
-        renderSavedWorkouts();
-        renderActiveWorkout();
-    }
-    if (pageIndex === 4) {
-        renderPullupsSets();
-        renderPushupsSets();
-        renderMixedSets();
-        updateStrengthProgress();
-    }
+    if (pageIndex === 3) { renderCustomCreator(); renderSavedWorkouts(); renderActiveWorkout(); }
+    if (pageIndex === 4) { renderPullupsSets(); renderPushupsSets(); renderMixedSets(); updateStrengthProgress(); }
 };
 
-// ========== ТЕМЫ ==========
 window.setTheme = function(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEYS.THEME, theme);
-    
     const themeDark = document.getElementById('theme-dark-menu');
     const themeLight = document.getElementById('theme-light-menu');
-    
     if (themeDark) themeDark.classList.toggle('active', theme === 'dark');
     if (themeLight) themeLight.classList.toggle('active', theme === 'light');
 };
 
-// ========== ЯЗЫК ==========
 window.setLanguage = function(lang) {
     currentLanguage = lang;
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
-    
     const langRu = document.getElementById('lang-ru-menu');
     const langEn = document.getElementById('lang-en-menu');
-    
     if (langRu) langRu.classList.toggle('active', lang === 'ru');
     if (langEn) langEn.classList.toggle('active', lang === 'en');
-    
     updateAllText();
     updateDate();
     updateStats();
-    
-    if (currentSlide === 0) {
-        if (dayStarted) {
-            renderWorkout();
-        } else {
-            updateUI();
-        }
-    } else if (currentSlide === 1) {
-        updateStats();
-        updateRecommendation();
-    } else if (currentSlide === 2) {
+    if (currentSlide === 0) { if (dayStarted) renderWorkout(); else updateUI(); }
+    else if (currentSlide === 1) { updateStats(); updateRecommendation(); }
+    else if (currentSlide === 2) {
         updateUserProfile();
         renderInviteStats();
         renderFriendRequests();
         renderLeaderboard();
         renderFriendResults();
         updateTeamProgress();
-        if (currentTab === 'diary') {
-            renderDiary();
-        }
-    } else if (currentSlide === 3) {
-        renderCustomCreator();
-        renderSavedWorkouts();
-        renderActiveWorkout();
-    } else if (currentSlide === 4) {
-        renderPullupsSets();
-        renderPushupsSets();
-        renderMixedSets();
-        updateStrengthProgress();
+        if (currentTab === 'diary') renderDiary();
     }
+    else if (currentSlide === 3) { renderCustomCreator(); renderSavedWorkouts(); renderActiveWorkout(); }
+    else if (currentSlide === 4) { renderPullupsSets(); renderPushupsSets(); renderMixedSets(); updateStrengthProgress(); }
 };
 
-// ========== ИНИЦИАЛИЗАЦИЯ ==========
 document.addEventListener('DOMContentLoaded', function() {
     console.log('Страница загружена');
-    
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) || 'dark';
     setTheme(savedTheme);
-    
     const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
     currentLanguage = savedLang;
-    
     const langRu = document.getElementById('lang-ru-menu');
     const langEn = document.getElementById('lang-en-menu');
     if (langRu) langRu.classList.toggle('active', savedLang === 'ru');
     if (langEn) langEn.classList.toggle('active', savedLang === 'en');
-    
     updateDate();
     updateStats();
     renderDiary();
@@ -3228,141 +2412,86 @@ document.addEventListener('DOMContentLoaded', function() {
     updateUI();
     renderSavedWorkouts();
     renderActiveWorkout();
-    
-    // Инициализация силовых
+
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
     updatePullupsGoal();
     updatePushupsGoal();
     updateStrengthProgress();
-    
-    // Обработчики для кнопок силовых
+
     document.querySelectorAll('.type-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
-            const type = this.dataset.type;
-            switchStrengthType(type);
+            switchStrengthType(this.dataset.type);
         });
     });
-    
+
     const addPullupsBtn = document.getElementById('add-pullups-set');
-    if (addPullupsBtn) {
-        addPullupsBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            addSet('pullups');
-        });
-    }
-    
+    if (addPullupsBtn) addPullupsBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); addSet('pullups'); });
+
     const addPushupsBtn = document.getElementById('add-pushups-set');
-    if (addPushupsBtn) {
-        addPushupsBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            addSet('pushups');
-        });
-    }
-    
+    if (addPushupsBtn) addPushupsBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); addSet('pushups'); });
+
     const addMixedBtn = document.getElementById('add-mixed-set');
-    if (addMixedBtn) {
-        addMixedBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            addMixedSet();
-        });
-    }
-    
+    if (addMixedBtn) addMixedBtn.addEventListener('click', function(e) { e.preventDefault(); e.stopPropagation(); addMixedSet(); });
+
     const completeStrengthBtn = document.getElementById('complete-strength-btn');
-    if (completeStrengthBtn) {
-        completeStrengthBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            if (!this.disabled) {
-                completeStrengthWorkout();
-            }
-        });
-    }
-    
+    if (completeStrengthBtn) completeStrengthBtn.addEventListener('click', function(e) { e.preventDefault(); if (!this.disabled) completeStrengthWorkout(); });
+
     const pullupsSlider = document.getElementById('pullups-goal-slider');
-    if (pullupsSlider) {
-        pullupsSlider.addEventListener('input', function() {
-            const value = this.value;
-            document.getElementById('pullups-goal-value').textContent = value;
-            document.getElementById('pullups-goal').textContent = value;
-            strengthToday.pullups.goal = parseInt(value);
-            updatePullupsStats();
-            saveState();
-        });
-    }
-    
+    if (pullupsSlider) pullupsSlider.addEventListener('input', function() {
+        const value = this.value;
+        document.getElementById('pullups-goal-value').textContent = value;
+        document.getElementById('pullups-goal').textContent = value;
+        strengthToday.pullups.goal = parseInt(value);
+        updatePullupsStats();
+        saveState();
+    });
+
     const pushupsSlider = document.getElementById('pushups-goal-slider');
-    if (pushupsSlider) {
-        pushupsSlider.addEventListener('input', function() {
-            const value = this.value;
-            document.getElementById('pushups-goal-value').textContent = value;
-            document.getElementById('pushups-goal').textContent = value;
-            strengthToday.pushups.goal = parseInt(value);
-            updatePushupsStats();
-            saveState();
-        });
-    }
-    
-    // Кнопка обновления рекомендации
+    if (pushupsSlider) pushupsSlider.addEventListener('input', function() {
+        const value = this.value;
+        document.getElementById('pushups-goal-value').textContent = value;
+        document.getElementById('pushups-goal').textContent = value;
+        strengthToday.pushups.goal = parseInt(value);
+        updatePushupsStats();
+        saveState();
+    });
+
     const refreshBtn = document.getElementById('refresh-recommendation');
-    if (refreshBtn) {
-        refreshBtn.addEventListener('click', updateRecommendation);
-    }
-    
-    // Кнопка "Начать бег"
+    if (refreshBtn) refreshBtn.addEventListener('click', updateRecommendation);
+
     const startBtn = document.getElementById('start-day-btn');
     if (startBtn) {
         startBtn.addEventListener('click', function() {
             if (dayCompletedTime && !canStartNewDay()) {
                 const remaining = getTimeUntilNextDay4am();
-                if (remaining) {
-                    tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
-                }
+                if (remaining) tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
                 return;
             }
-            
             if (!canStartDay()) {
                 tg.showAlert(t('onlyFrom4am'));
                 return;
             }
-            
             dayStarted = true;
             dayStartTime = getCurrentTime().toString();
             dayCompletedTime = null;
-            
             const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
             completedSteps = new Array(workout.steps.length).fill(false);
             additionalCompleted = new Array(additionalTasks.length).fill(false);
-            
             saveState();
             updateUI();
         });
     }
-    
-    // Кнопка "Завершить день"
+
     const completeBtn = document.getElementById('complete-day-btn');
     if (completeBtn) {
         completeBtn.addEventListener('click', function() {
-            if (!canCompleteDay()) {
-                tg.showAlert(t('onlyUntil23'));
-                return;
-            }
-            
-            if (isDayExpired()) {
-                tg.showAlert(t('dayExpiredMsg'));
-                return;
-            }
-            
+            if (!canCompleteDay()) { tg.showAlert(t('onlyUntil23')); return; }
+            if (isDayExpired()) { tg.showAlert(t('dayExpiredMsg')); return; }
             const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
-            
-            let actualDistance = 0;
-            let actualTime = 0;
-            let actualCalories = 0;
-            
+            let actualDistance = 0, actualTime = 0, actualCalories = 0;
             workout.steps.forEach((step, index) => {
                 if (completedSteps[index]) {
                     actualDistance += step.distance || 0;
@@ -3370,7 +2499,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     actualCalories += step.calories || 0;
                 }
             });
-            
             additionalTasks.forEach((task, index) => {
                 if (additionalCompleted[index]) {
                     actualDistance += task.distance || 0;
@@ -3378,7 +2506,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     actualCalories += 30;
                 }
             });
-            
             workoutHistory.push({
                 day: currentDay,
                 distance: actualDistance,
@@ -3387,121 +2514,76 @@ document.addEventListener('DOMContentLoaded', function() {
                 date: new Date().toISOString(),
                 name: (currentLanguage === 'ru' ? workout.name_ru : workout.name) + (additionalTasks.length > 0 ? ' + доп.' : '')
             });
-            
             totalDistance += actualDistance;
             totalWorkouts++;
             totalTime += actualTime;
             totalCalories += actualCalories;
-            
             additionalTasks = [];
             additionalCompleted = [];
-            
             const finalDistance = document.getElementById('final-distance');
             if (finalDistance) finalDistance.textContent = actualDistance.toFixed(1);
-            
             const marathonScreen = document.getElementById('marathon-screen');
             const congratsScreen = document.getElementById('congrats');
-            
             if (marathonScreen) marathonScreen.style.display = 'none';
             if (congratsScreen) congratsScreen.style.display = 'block';
-            
             dayStarted = false;
             dayCompletedTime = getCurrentTime().toString();
             dayStartTime = null;
             currentDay++;
             completedSteps = [];
-            
             saveState();
             updateStats();
             updateUserProfile();
             updateTeamProgress();
         });
     }
-    
-    // Кнопка "Продолжить"
+
     const continueBtn = document.getElementById('continue-btn');
-    if (continueBtn) {
-        continueBtn.addEventListener('click', function() {
-            const congratsScreen = document.getElementById('congrats');
-            if (congratsScreen) congratsScreen.style.display = 'none';
-            updateUI();
-        });
-    }
-    
-    // Кнопки приглашений
+    if (continueBtn) continueBtn.addEventListener('click', function() {
+        const congratsScreen = document.getElementById('congrats');
+        if (congratsScreen) congratsScreen.style.display = 'none';
+        updateUI();
+    });
+
     const inviteBtn = document.getElementById('invite-friends-btn');
-    if (inviteBtn) {
-        inviteBtn.addEventListener('click', inviteFriend);
-    }
-    
+    if (inviteBtn) inviteBtn.addEventListener('click', inviteFriend);
+
     const copyBtn = document.getElementById('copy-invite-btn');
-    if (copyBtn) {
-        copyBtn.addEventListener('click', copyInviteLink);
-    }
-    
+    if (copyBtn) copyBtn.addEventListener('click', copyInviteLink);
+
     const shareBtn = document.getElementById('share-progress-btn');
-    if (shareBtn) {
-        shareBtn.addEventListener('click', shareProgress);
-    }
-    
-    // Кнопка отправки заявки в друзья
+    if (shareBtn) shareBtn.addEventListener('click', shareProgress);
+
     const sendRequestBtn = document.getElementById('send-request-btn');
-    if (sendRequestBtn) {
-        sendRequestBtn.addEventListener('click', sendFriendRequest);
-    }
-    
-    // Добавление друга по Enter
+    if (sendRequestBtn) sendRequestBtn.addEventListener('click', sendFriendRequest);
+
     const friendInput = document.getElementById('friend-username');
-    if (friendInput) {
-        friendInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendFriendRequest();
-            }
-        });
-    }
-    
-    // Кнопка создания задания
+    if (friendInput) friendInput.addEventListener('keypress', function(e) { if (e.key === 'Enter') sendFriendRequest(); });
+
     const addTaskBtn = document.getElementById('add-task-btn');
     if (addTaskBtn) {
         addTaskBtn.addEventListener('click', function() {
             const taskText = document.getElementById('new-task-text')?.value.trim();
             const taskDistance = parseFloat(document.getElementById('new-task-distance')?.value) || 0;
-            
-            if (!taskText) {
-                tg.showAlert(t('enterTask'));
-                return;
-            }
-            
-            currentCustomTasks.push({
-                text: taskText,
-                distance: taskDistance
-            });
-            
+            if (!taskText) { tg.showAlert(t('enterTask')); return; }
+            currentCustomTasks.push({ text: taskText, distance: taskDistance });
             const taskTextInput = document.getElementById('new-task-text');
             const taskDistanceInput = document.getElementById('new-task-distance');
             if (taskTextInput) taskTextInput.value = '';
             if (taskDistanceInput) taskDistanceInput.value = 0;
-            
             renderCustomCreator();
         });
     }
-    
+
     const goalInput = document.getElementById('goal-distance');
-    if (goalInput) {
-        goalInput.addEventListener('input', updateCreateButtonState);
-    }
-    
+    if (goalInput) goalInput.addEventListener('input', updateCreateButtonState);
+
     const saveWorkoutBtn = document.getElementById('create-plan-btn');
-    if (saveWorkoutBtn) {
-        saveWorkoutBtn.addEventListener('click', saveWorkout);
-    }
-    
+    if (saveWorkoutBtn) saveWorkoutBtn.addEventListener('click', saveWorkout);
+
     const completeWorkoutBtn = document.getElementById('complete-workout-btn');
-    if (completeWorkoutBtn) {
-        completeWorkoutBtn.addEventListener('click', completeWorkout);
-    }
-    
-    // Меню
+    if (completeWorkoutBtn) completeWorkoutBtn.addEventListener('click', completeWorkout);
+
     const menuBtn = document.getElementById('menu-btn');
     if (menuBtn) {
         menuBtn.addEventListener('click', function() {
@@ -3517,7 +2599,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     document.addEventListener('click', function(e) {
         const menu = document.getElementById('menu-dropdown');
         const btn = document.getElementById('menu-btn');
@@ -3526,8 +2608,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.classList.remove('active');
         }
     });
-    
-    // Пункты меню
+
     const resetBtn = document.getElementById('reset-marathon');
     if (resetBtn) {
         resetBtn.addEventListener('click', function(e) {
@@ -3553,34 +2634,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 activeWorkout = null;
                 invitedFriends = [];
                 bonusPoints = 0;
-                
-                // Сброс силовых
                 totalPullups = 0;
                 totalPushups = 0;
                 strengthDays = 0;
                 bestPullups = 0;
                 bestPushups = 0;
                 strengthToday = {
-                    pullups: {
-                        goal: 30,
-                        sets: [{ reps: 10, completed: false }],
-                        completed: false
-                    },
-                    pushups: {
-                        goal: 50,
-                        sets: [{ reps: 15, completed: false }],
-                        completed: false
-                    },
-                    mixed: {
-                        completed: false,
-                        rounds: [
-                            { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
-                            { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
-                            { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
-                        ]
-                    }
+                    pullups: { goal: 30, sets: [{ reps: 10, completed: false }], completed: false },
+                    pushups: { goal: 50, sets: [{ reps: 15, completed: false }], completed: false },
+                    mixed: { completed: false, rounds: [
+                        { pullups: 10, pushups: 20, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                        { pullups: 8, pushups: 15, pullupsCompleted: false, pushupsCompleted: false, completed: false },
+                        { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
+                    ] }
                 };
-                
                 localStorage.clear();
                 updateUI();
                 updateStats();
@@ -3594,13 +2661,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderLeaderboard();
                 renderFriendResults();
                 updateTeamProgress();
-                
-                // Обновляем силовые
                 renderPullupsSets();
                 renderPushupsSets();
                 renderMixedSets();
                 updateStrengthProgress();
-                
                 const menu = document.getElementById('menu-dropdown');
                 const menuBtn = document.getElementById('menu-btn');
                 if (menu) menu.style.display = 'none';
@@ -3608,123 +2672,59 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+
     const statsMenu = document.getElementById('stats-menu');
-    if (statsMenu) {
-        statsMenu.addEventListener('click', function(e) {
-            e.preventDefault();
-            switchPage(1);
-            const menu = document.getElementById('menu-dropdown');
-            const menuBtn = document.getElementById('menu-btn');
-            if (menu) menu.style.display = 'none';
-            if (menuBtn) menuBtn.classList.remove('active');
-        });
-    }
-    
+    if (statsMenu) statsMenu.addEventListener('click', function(e) { e.preventDefault(); switchPage(1); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+
     const supportBtn = document.getElementById('support');
-    if (supportBtn) {
-        supportBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            tg.showAlert(`💬 ${t('support')}: @frontendchikk`);
-            const menu = document.getElementById('menu-dropdown');
-            const menuBtn = document.getElementById('menu-btn');
-            if (menu) menu.style.display = 'none';
-            if (menuBtn) menuBtn.classList.remove('active');
-        });
-    }
-    
+    if (supportBtn) supportBtn.addEventListener('click', function(e) { e.preventDefault(); tg.showAlert(`💬 ${t('support')}: @frontendchikk`); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+
     const telegramBtn = document.getElementById('telegram-support');
-    if (telegramBtn) {
-        telegramBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            tg.openTelegramLink('https://t.me/frontendchikk');
-            const menu = document.getElementById('menu-dropdown');
-            const menuBtn = document.getElementById('menu-btn');
-            if (menu) menu.style.display = 'none';
-            if (menuBtn) menuBtn.classList.remove('active');
-        });
-    }
-    
+    if (telegramBtn) telegramBtn.addEventListener('click', function(e) { e.preventDefault(); tg.openTelegramLink('https://t.me/frontendchikk'); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+
     const faqBtn = document.getElementById('faq');
-    if (faqBtn) {
-        faqBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            tg.showAlert(t('faqText'));
-            const menu = document.getElementById('menu-dropdown');
-            const menuBtn = document.getElementById('menu-btn');
-            if (menu) menu.style.display = 'none';
-            if (menuBtn) menuBtn.classList.remove('active');
-        });
-    }
-    
-    // Дневник
+    if (faqBtn) faqBtn.addEventListener('click', function(e) { e.preventDefault(); tg.showAlert(t('faqText')); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+
     const addEntryBtn = document.getElementById('add-entry-btn');
-    if (addEntryBtn) {
-        addEntryBtn.addEventListener('click', function() {
-            const form = document.getElementById('add-entry-form');
-            const btn = document.getElementById('add-entry-btn');
-            if (form) form.style.display = 'block';
-            if (btn) btn.style.display = 'none';
-        });
-    }
-    
+    if (addEntryBtn) addEntryBtn.addEventListener('click', function() {
+        const form = document.getElementById('add-entry-form');
+        const btn = document.getElementById('add-entry-btn');
+        if (form) form.style.display = 'block';
+        if (btn) btn.style.display = 'none';
+    });
+
     const saveEntryBtn = document.getElementById('save-entry-btn');
-    if (saveEntryBtn) {
-        saveEntryBtn.addEventListener('click', function() {
-            const text = document.getElementById('entry-text')?.value.trim();
-            if (text) {
-                diaryEntries.push({
-                    id: Date.now(),
-                    text: text,
-                    date: new Date().toISOString()
-                });
-                localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
-                renderDiary();
-                tg.showAlert(t('entrySaved'));
-                
-                const textarea = document.getElementById('entry-text');
-                const form = document.getElementById('add-entry-form');
-                const btn = document.getElementById('add-entry-btn');
-                
-                if (textarea) textarea.value = '';
-                if (form) form.style.display = 'none';
-                if (btn) btn.style.display = 'flex';
-            }
-        });
-    }
-    
-    const cancelEntryBtn = document.getElementById('cancel-entry-btn');
-    if (cancelEntryBtn) {
-        cancelEntryBtn.addEventListener('click', function() {
+    if (saveEntryBtn) saveEntryBtn.addEventListener('click', function() {
+        const text = document.getElementById('entry-text')?.value.trim();
+        if (text) {
+            diaryEntries.push({ id: Date.now(), text: text, date: new Date().toISOString() });
+            localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
+            renderDiary();
+            tg.showAlert(t('entrySaved'));
             const textarea = document.getElementById('entry-text');
             const form = document.getElementById('add-entry-form');
             const btn = document.getElementById('add-entry-btn');
-            
             if (textarea) textarea.value = '';
             if (form) form.style.display = 'none';
             if (btn) btn.style.display = 'flex';
-        });
-    }
-    
-    // Табы
+        }
+    });
+
+    const cancelEntryBtn = document.getElementById('cancel-entry-btn');
+    if (cancelEntryBtn) cancelEntryBtn.addEventListener('click', function() {
+        const textarea = document.getElementById('entry-text');
+        const form = document.getElementById('add-entry-form');
+        const btn = document.getElementById('add-entry-btn');
+        if (textarea) textarea.value = '';
+        if (form) form.style.display = 'none';
+        if (btn) btn.style.display = 'flex';
+    });
+
     const tabFriends = document.getElementById('tab-friends');
     const tabDiary = document.getElementById('tab-diary');
-    
-    if (tabFriends) {
-        tabFriends.addEventListener('click', function(e) {
-            e.preventDefault();
-            switchTab('friends');
-        });
-    }
-    
-    if (tabDiary) {
-        tabDiary.addEventListener('click', function(e) {
-            e.preventDefault();
-            switchTab('diary');
-        });
-    }
-    
-    // Обработчики для периода в таблице лидеров
+    if (tabFriends) tabFriends.addEventListener('click', function(e) { e.preventDefault(); switchTab('friends'); });
+    if (tabDiary) tabDiary.addEventListener('click', function(e) { e.preventDefault(); switchTab('diary'); });
+
     document.querySelectorAll('.period-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
@@ -3734,20 +2734,13 @@ document.addEventListener('DOMContentLoaded', function() {
             renderFriendResults();
         });
     });
-    
-    // Проверка заявок
+
     setInterval(checkIncomingRequests, 30000);
-    
-    // Интервал обновления времени (каждую минуту)
     setInterval(function() {
-        if (dayStarted) {
-            updateProgress();
-            updateDeadlineInfo();
-        } else {
-            updateUI();
-        }
+        if (dayStarted) { updateProgress(); updateDeadlineInfo(); }
+        else updateUI();
         updateDate();
     }, 60000);
-    
+
     tg.ready();
 });
