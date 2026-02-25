@@ -1,54 +1,80 @@
 /* CSS переменные для тем */
 :root {
-    --bg-primary: #000000;
-    --bg-secondary: #0a0a0a;
-    --bg-card: #111111;
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-card: #1a1a1a;
     --border-color: #2a2a2a;
-    --accent: #333333;
+    --accent: #2c2c2c;
     --text-primary: #ffffff;
-    --text-secondary: #888888;
-    --icon-inactive: #666666;
-    --icon-active: #0066ff;
-    --blue: #0066ff;
-    --blue-hover: #0052cc;
-    --blue-light: rgba(0, 102, 255, 0.1);
+    --text-secondary: #a0a0a0;
+    --icon-inactive: #555555;
+    --icon-active: #4a90e2;
+    --blue: #4a90e2;
+    --blue-hover: #357abd;
+    --blue-light: rgba(74, 144, 226, 0.15);
     --warning: #ffaa00;
-    --danger: #ff4444;
-    --danger-light: rgba(255, 68, 68, 0.1);
-    --success: #00cc88;
-    --success-light: rgba(0, 204, 136, 0.1);
-    --friend-online: #00cc88;
-    --friend-offline: #888888;
-    --gold: #ffd700;
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
-    --purple: #8a2be2;
-    --orange: #ff6b6b;
-    --teal: #4ecdc4;
-    --mint: #a8e6cf;
+    --danger: #ff6b6b;
+    --danger-light: rgba(255, 107, 107, 0.15);
+    --success: #2ecc71;
+    --success-light: rgba(46, 204, 113, 0.15);
+    --friend-online: #2ecc71;
+    --friend-offline: #7f8c8d;
+    --gold: #f1c40f;
+    --silver: #bdc3c7;
+    --bronze: #e67e22;
+    --purple: #9b59b6;
+    --orange: #e67e22;
+    --teal: #1abc9c;
+    --mint: #2ecc71;
+    
+    /* Градиенты */
+    --gradient-blue: linear-gradient(135deg, #4a90e2, #7c4dff);
+    --gradient-green: linear-gradient(135deg, #2ecc71, #27ae60);
+    --gradient-orange: linear-gradient(135deg, #e67e22, #d35400);
+    --gradient-purple: linear-gradient(135deg, #9b59b6, #8e44ad);
+    --gradient-card: linear-gradient(145deg, #1a1a1a, #222222);
+    
+    /* Тени */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 15px rgba(74, 144, 226, 0.3);
 }
 
 /* Светлая тема */
 [data-theme="light"] {
-    --bg-primary: #f5f5f5;
+    --bg-primary: #f8fafc;
     --bg-secondary: #ffffff;
     --bg-card: #ffffff;
-    --border-color: #dddddd;
-    --accent: #e0e0e0;
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --icon-inactive: #999999;
-    --icon-active: #0066ff;
-    --blue: #0066ff;
-    --blue-hover: #0052cc;
-    --blue-light: rgba(0, 102, 255, 0.1);
-    --warning: #ff9900;
-    --danger: #ff3333;
-    --danger-light: rgba(255, 51, 51, 0.1);
-    --success: #00aa66;
-    --success-light: rgba(0, 170, 102, 0.1);
-    --friend-online: #00aa66;
-    --friend-offline: #999999;
+    --border-color: #e2e8f0;
+    --accent: #e2e8f0;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --icon-inactive: #94a3b8;
+    --icon-active: #4a90e2;
+    --blue: #4a90e2;
+    --blue-hover: #357abd;
+    --blue-light: rgba(74, 144, 226, 0.1);
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --danger-light: rgba(239, 68, 68, 0.1);
+    --success: #10b981;
+    --success-light: rgba(16, 185, 129, 0.1);
+    --friend-online: #10b981;
+    --friend-offline: #94a3b8;
+    
+    /* Градиенты для светлой темы */
+    --gradient-blue: linear-gradient(135deg, #4a90e2, #7c4dff);
+    --gradient-green: linear-gradient(135deg, #10b981, #059669);
+    --gradient-orange: linear-gradient(135deg, #f59e0b, #d97706);
+    --gradient-purple: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    --gradient-card: linear-gradient(145deg, #ffffff, #f8fafc);
+    
+    /* Тени для светлой темы */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 15px rgba(74, 144, 226, 0.2);
 }
 
 * {
@@ -59,18 +85,52 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
     min-height: 100vh;
     background: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
+    line-height: 1.5;
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 12px;
-    padding-bottom: 80px;
+    padding: 16px;
+    padding-bottom: 90px;
+    animation: fadeIn 0.4s ease;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
 }
 
 /* Шапка */
@@ -78,15 +138,23 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
-    margin-bottom: 6px;
+    padding: 12px 0;
+    margin-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 20px;
+    font-weight: 800;
     letter-spacing: 0.5px;
+    background: var(--gradient-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.logo span {
+    -webkit-text-fill-color: initial;
 }
 
 .logo-white {
@@ -99,19 +167,32 @@ body {
 
 /* Кнопка меню */
 .menu-btn {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    background: transparent;
-    border: none;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     cursor: pointer;
-    padding: 4px 0;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-md);
+}
+
+.menu-btn:active {
+    transform: scale(0.95);
 }
 
 .menu-btn span {
-    width: 100%;
+    width: 20px;
     height: 2px;
     background: var(--icon-inactive);
     border-radius: 2px;
@@ -123,7 +204,7 @@ body {
 }
 
 .menu-btn.active span:nth-child(1) {
-    transform: rotate(45deg) translate(4px, 4px);
+    transform: rotate(45deg) translate(5px, 5px);
 }
 
 .menu-btn.active span:nth-child(2) {
@@ -131,68 +212,65 @@ body {
 }
 
 .menu-btn.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(4px, -4px);
+    transform: rotate(-45deg) translate(5px, -5px);
 }
 
 /* Меню */
 .menu-dropdown {
     position: absolute;
-    top: 65px;
-    right: 12px;
+    top: 80px;
+    right: 16px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px;
-    min-width: 260px;
+    border-radius: 20px;
+    padding: 20px;
+    min-width: 280px;
     z-index: 1000;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-lg);
     animation: slideDown 0.2s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    backdrop-filter: blur(10px);
 }
 
 .menu-section {
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+}
+
+.menu-section:last-child {
+    margin-bottom: 0;
 }
 
 .menu-title {
     color: var(--text-secondary);
     font-size: 12px;
+    font-weight: 600;
     letter-spacing: 0.5px;
-    margin-bottom: 6px;
-    padding-left: 8px;
+    margin-bottom: 8px;
+    padding-left: 12px;
     text-transform: uppercase;
 }
 
 .menu-item {
     display: block;
-    padding: 12px 16px;
+    padding: 14px 16px;
     color: var(--text-primary);
     text-decoration: none;
     font-size: 14px;
-    border-radius: 8px;
-    margin-bottom: 2px;
+    font-weight: 500;
+    border-radius: 14px;
+    margin-bottom: 4px;
     transition: all 0.2s ease;
 }
 
 .menu-item:active {
-    background: var(--accent);
+    background: var(--blue-light);
     color: var(--blue);
+    transform: translateX(5px);
 }
 
 .contact-info {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 10px;
+    border-radius: 16px;
+    padding: 12px;
     border: 1px solid var(--border-color);
 }
 
@@ -205,14 +283,15 @@ body {
 
 .contact-highlight {
     color: var(--blue);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 /* Дата */
 .date-header {
     text-align: right;
-    margin-bottom: 12px;
-    font-size: 13px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 500;
     color: var(--text-secondary);
     padding: 4px 0;
 }
@@ -224,6 +303,7 @@ body {
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     margin-bottom: 20px;
+    border-radius: 24px;
 }
 
 .slide {
@@ -233,56 +313,68 @@ body {
 
 /* Стартовый экран */
 .start-screen {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 40px 16px;
+    background: var(--gradient-card);
+    border-radius: 24px;
+    padding: 48px 20px;
     text-align: center;
     border: 1px solid var(--border-color);
     animation: fadeIn 0.3s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    box-shadow: var(--shadow-md);
 }
 
 .start-content h2 {
-    font-size: 36px;
+    font-size: 42px;
     color: var(--blue);
     margin-bottom: 8px;
     font-weight: 300;
+    text-shadow: var(--shadow-glow);
 }
 
 .start-content p {
     font-size: 16px;
     color: var(--text-secondary);
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 /* Кнопка начать бег */
 .start-day-btn {
-    background: var(--text-primary);
-    color: var(--bg-primary);
+    background: var(--gradient-blue);
+    color: white;
     border: none;
     padding: 18px 32px;
     font-size: 18px;
     font-weight: 600;
-    border-radius: 14px;
+    border-radius: 50px;
     cursor: pointer;
     width: 100%;
-    max-width: 320px;
+    max-width: 280px;
     margin: 20px auto;
     display: block;
     transition: all 0.2s ease;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.start-day-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.start-day-btn:hover::before {
+    left: 100%;
 }
 
 .start-day-btn:active:not(:disabled) {
-    background: var(--blue);
-    color: white;
     transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-sm);
 }
 
 .start-day-btn:disabled {
@@ -292,13 +384,18 @@ body {
     box-shadow: none;
 }
 
+.start-day-btn:not(:disabled) {
+    animation: pulse 2s infinite;
+}
+
 /* Баланс/прогресс */
 .balance-section {
-    background: var(--bg-card);
-    border-radius: 16px;
+    background: var(--gradient-card);
+    border-radius: 24px;
     padding: 20px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
 }
 
 .balance-title {
@@ -306,13 +403,15 @@ body {
     color: var(--blue);
     margin-bottom: 16px;
     font-size: 18px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .balance-title span {
-    font-weight: bold;
+    font-weight: 800;
     font-size: 24px;
     margin-left: 8px;
+    color: var(--success);
 }
 
 .balance-item {
@@ -329,43 +428,46 @@ body {
 }
 
 .balance-icon {
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .balance-percent {
     margin-left: auto;
     color: var(--blue);
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .progress-bar {
     width: 100%;
-    height: 6px;
+    height: 10px;
     background: var(--bg-primary);
-    border-radius: 3px;
+    border-radius: 10px;
     overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .progress-fill {
     height: 100%;
-    transition: width 0.2s linear;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 10px;
 }
 
 .mind-fill {
-    background: var(--blue);
+    background: var(--gradient-blue);
 }
 
 .team-fill {
-    background: linear-gradient(90deg, var(--blue), var(--purple));
+    background: var(--gradient-purple);
 }
 
 /* Карточка тренировки */
 .workout-card {
-    background: var(--bg-primary);
-    border-radius: 16px;
+    background: var(--gradient-card);
+    border-radius: 24px;
     padding: 20px;
     margin-bottom: 10px;
     border: 2px solid var(--blue);
+    box-shadow: var(--shadow-md);
 }
 
 .workout-header {
@@ -378,31 +480,32 @@ body {
 }
 
 .workout-name {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 700;
     color: var(--blue);
 }
 
 .workout-difficulty {
-    padding: 6px 14px;
-    border-radius: 20px;
+    padding: 6px 16px;
+    border-radius: 30px;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .difficulty-easy {
-    background: rgba(0, 255, 0, 0.1);
-    color: #00cc88;
+    background: var(--success-light);
+    color: var(--success);
 }
 
 .difficulty-medium {
-    background: rgba(255, 165, 0, 0.1);
-    color: #ffaa00;
+    background: rgba(241, 196, 15, 0.1);
+    color: #f1c40f;
 }
 
 .difficulty-hard {
-    background: rgba(255, 0, 0, 0.1);
-    color: #ff4444;
+    background: var(--danger-light);
+    color: var(--danger);
 }
 
 /* Шаги тренировки */
@@ -416,10 +519,16 @@ body {
     display: flex;
     align-items: center;
     padding: 16px;
-    background: var(--bg-card);
-    border-radius: 12px;
+    background: var(--bg-primary);
+    border-radius: 18px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
+    animation: slideIn 0.2s ease;
+}
+
+.workout-step:hover {
+    transform: translateX(5px);
+    border-color: var(--blue);
 }
 
 .workout-step.step-completed {
@@ -428,16 +537,18 @@ body {
 }
 
 .workout-checkbox {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     margin-right: 15px;
     cursor: pointer;
     accent-color: var(--blue);
+    border-radius: 8px;
 }
 
 .step-text {
     flex: 1;
     font-size: 15px;
+    font-weight: 500;
 }
 
 .step-completed .step-text {
@@ -448,39 +559,54 @@ body {
 .step-distance {
     font-size: 14px;
     color: var(--blue);
-    font-weight: 500;
+    font-weight: 600;
     margin-left: 10px;
     padding: 4px 12px;
-    background: var(--bg-primary);
-    border-radius: 20px;
+    background: var(--bg-card);
+    border-radius: 30px;
 }
 
 /* Кнопка завершить день */
 .complete-day-btn {
     width: 100%;
     padding: 18px;
-    background: var(--text-primary);
-    color: var(--bg-primary);
+    background: var(--gradient-green);
+    color: white;
     border: none;
-    border-radius: 14px;
+    border-radius: 50px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     margin-top: 20px;
     transition: all 0.2s ease;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+}
+
+.complete-day-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.complete-day-btn:hover::before {
+    left: 100%;
 }
 
 .complete-day-btn:active:not(:disabled) {
-    background: var(--blue);
-    color: white;
     transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-sm);
 }
 
 .complete-day-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     cursor: not-allowed;
     background: var(--text-secondary);
     box-shadow: none;
@@ -492,69 +618,63 @@ body {
     margin-top: 16px;
     padding: 12px;
     background: var(--bg-primary);
-    border-radius: 12px;
+    border-radius: 16px;
     border: 1px solid var(--border-color);
     text-align: center;
+    font-weight: 500;
 }
 
 /* Экран завершения */
 .congrats {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 40px 16px;
+    background: var(--gradient-card);
+    border-radius: 24px;
+    padding: 48px 20px;
     text-align: center;
     border: 1px solid var(--border-color);
     animation: popIn 0.3s ease;
-}
-
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    box-shadow: var(--shadow-lg);
 }
 
 .congrats h2 {
-    font-size: 28px;
+    font-size: 32px;
     color: var(--success);
     margin-bottom: 16px;
+    font-weight: 700;
 }
 
 .congrats p {
     font-size: 16px;
     color: var(--text-secondary);
-    margin-bottom: 16px;
+    margin-bottom: 24px;
 }
 
 .final-balance div {
     background: var(--bg-primary);
-    padding: 16px 32px;
-    border-radius: 14px;
+    padding: 20px 40px;
+    border-radius: 50px;
     border: 2px solid var(--blue);
     color: var(--blue);
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 700;
     display: inline-block;
     margin: 16px 0;
+    box-shadow: var(--shadow-glow);
 }
 
 /* ===== СТИЛИ ДЛЯ ДОБАВЛЕННЫХ ЗАДАНИЙ ===== */
 .additional-header {
-    margin: 20px 0 10px 0;
+    margin: 24px 0 12px 0;
     padding: 0 5px;
 }
 
 .additional-header h3 {
     color: var(--blue);
     font-size: 14px;
+    font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
     position: relative;
-    padding-left: 10px;
+    padding-left: 12px;
 }
 
 .additional-header h3::before {
@@ -563,10 +683,10 @@ body {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 3px;
-    height: 14px;
-    background: var(--blue);
-    border-radius: 3px;
+    width: 4px;
+    height: 16px;
+    background: var(--gradient-blue);
+    border-radius: 4px;
 }
 
 .additional-steps {
@@ -594,98 +714,114 @@ body {
 
 /* ===== СТАТИСТИКА ===== */
 .stats-section {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 20px;
+    background: var(--gradient-card);
+    border-radius: 24px;
+    padding: 24px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
 }
 
 .stats-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 20px;
+    margin-bottom: 24px;
+    font-size: 22px;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
 }
 
 .stat-card {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 14px;
+    border-radius: 18px;
+    padding: 16px;
     text-align: center;
     border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--blue);
 }
 
 .stat-value {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
     color: var(--blue);
     display: block;
     line-height: 1.3;
 }
 
 .stat-label {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-secondary);
+    font-weight: 500;
 }
 
 .weekly-card {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 18px;
+    padding: 20px;
     margin-bottom: 16px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .weekly-card h3 {
     color: var(--text-secondary);
     font-size: 14px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .week-numbers {
     text-align: center;
-    margin-top: 8px;
+    margin-top: 12px;
     font-size: 14px;
     color: var(--text-secondary);
 }
 
 .week-numbers span:first-child {
     color: var(--blue);
-    font-weight: bold;
-    font-size: 18px;
+    font-weight: 700;
+    font-size: 20px;
 }
 
 .comparison-card {
     background: var(--bg-primary);
-    border-radius: 12px;
+    border-radius: 18px;
     padding: 16px;
     margin: 16px 0;
     border: 1px solid var(--border-color);
     text-align: center;
     font-size: 14px;
     color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
 }
 
 .recent-card {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 18px;
+    padding: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .recent-card h3 {
     color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 16px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
@@ -696,10 +832,16 @@ body {
 }
 
 .history-item {
-    padding: 12px;
+    padding: 16px;
     background: var(--bg-card);
-    border-radius: 8px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.history-item:hover {
+    transform: translateX(5px);
+    border-color: var(--blue);
 }
 
 .history-item div {
@@ -713,34 +855,35 @@ body {
 
 .history-workout {
     color: var(--blue);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 13px;
 }
 
 .empty-history {
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     color: var(--text-secondary);
     font-size: 14px;
     background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px dashed var(--border-color);
+    border-radius: 14px;
+    border: 2px dashed var(--border-color);
 }
 
 /* ===== AI-РЕКОМЕНДАЦИИ ===== */
 .recommendations-card {
-    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
-    border-radius: 16px;
-    padding: 20px;
-    margin: 20px 0;
+    background: var(--gradient-blue);
+    border-radius: 24px;
+    padding: 24px;
+    margin: 24px 0;
     color: white;
     animation: slideIn 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .recommendations-card h3 {
-    font-size: 16px;
-    margin-bottom: 12px;
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: 600;
     letter-spacing: 1px;
     opacity: 0.9;
     display: flex;
@@ -750,25 +893,26 @@ body {
 
 .recommendations-card h3::before {
     content: '🤖';
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .recommendation-content {
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.6;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     min-height: 80px;
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: 16px;
     background: rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 12px;
+    padding: 20px;
+    border-radius: 18px;
+    backdrop-filter: blur(10px);
 }
 
 .recommendation-icon {
-    font-size: 28px;
-    min-width: 40px;
+    font-size: 32px;
+    min-width: 48px;
     text-align: center;
 }
 
@@ -779,11 +923,11 @@ body {
 .refresh-recommendation {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 30px;
-    padding: 10px 20px;
+    border-radius: 40px;
+    padding: 14px 24px;
     color: white;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
@@ -791,6 +935,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    backdrop-filter: blur(10px);
 }
 
 .refresh-recommendation:active {
@@ -800,85 +945,84 @@ body {
 
 .refresh-recommendation::before {
     content: '🔄';
-    font-size: 16px;
-}
-
-[data-theme="light"] .recommendations-card {
-    color: white;
+    font-size: 18px;
 }
 
 /* ===== НОВЫЙ ДИЗАЙН ДЛЯ ДРУЗЕЙ ===== */
 .combined-section {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 16px;
+    background: var(--gradient-card);
+    border-radius: 24px;
+    padding: 20px;
     border: 1px solid var(--border-color);
     margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
 }
 
 .section-tabs {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     background: var(--bg-primary);
-    padding: 4px;
-    border-radius: 12px;
+    padding: 6px;
+    border-radius: 16px;
 }
 
 .tab-btn {
     flex: 1;
     background: transparent;
     border: none;
-    padding: 12px;
+    padding: 14px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: all 0.2s ease;
 }
 
 .tab-btn.active {
-    background: var(--blue);
+    background: var(--gradient-blue);
     color: white;
+    box-shadow: var(--shadow-md);
 }
 
 .tab-content {
     display: none;
+    animation: fadeIn 0.3s ease;
 }
 
 .tab-content.active {
     display: block;
-    animation: fadeIn 0.3s ease;
 }
 
 /* Приветственный баннер */
 .friends-welcome-card {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 16px;
+    background: var(--gradient-blue);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
     color: white;
-    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .welcome-content {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 20px;
+    margin-bottom: 20px;
 }
 
 .welcome-avatar {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
-    border: 2px solid white;
+    font-size: 36px;
+    border: 3px solid white;
+    box-shadow: var(--shadow-md);
 }
 
 .welcome-info {
@@ -886,13 +1030,14 @@ body {
 }
 
 .welcome-info h3 {
-    font-size: 18px;
+    font-size: 20px;
     margin-bottom: 8px;
+    font-weight: 700;
 }
 
 .welcome-stats {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 
 .welcome-stat {
@@ -900,8 +1045,8 @@ body {
 }
 
 .welcome-stat .stat-value {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 700;
     color: white;
     display: block;
 }
@@ -910,66 +1055,71 @@ body {
     font-size: 11px;
     opacity: 0.8;
     color: white;
+    font-weight: 500;
 }
 
 .welcome-progress {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 12px;
+    border-radius: 16px;
+    padding: 16px;
+    backdrop-filter: blur(10px);
 }
 
 .progress-label {
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* Блок приглашений */
 .invite-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .invite-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .invite-header h3 {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .invite-badge {
-    background: linear-gradient(135deg, var(--gold), #ffa500);
-    color: #000;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
+    background: var(--gradient-orange);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .invite-buttons {
     display: flex;
     gap: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .invite-btn {
     flex: 1;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
+    background: var(--gradient-blue);
     border: none;
-    border-radius: 12px;
-    padding: 14px;
+    border-radius: 16px;
+    padding: 16px;
     color: white;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
@@ -977,34 +1127,37 @@ body {
     justify-content: center;
     gap: 8px;
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .invite-btn:active {
     transform: scale(0.98);
-    opacity: 0.9;
+    box-shadow: var(--shadow-sm);
 }
 
 .copy-btn, .share-progress-btn {
-    width: 48px;
+    width: 52px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 16px;
     color: var(--text-primary);
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .copy-btn:active, .share-progress-btn:active {
     background: var(--blue);
     color: white;
+    transform: scale(0.95);
 }
 
 .invite-stats {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
-    padding-top: 10px;
+    padding-top: 16px;
     border-top: 1px solid var(--border-color);
 }
 
@@ -1013,84 +1166,91 @@ body {
 }
 
 .invite-stat .stat-value {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--blue);
     display: block;
 }
 
 .invite-stat .stat-label {
-    font-size: 10px;
+    font-size: 11px;
     color: var(--text-secondary);
+    font-weight: 500;
 }
 
 /* Таблица лидеров */
 .leaderboard-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .leaderboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
     flex-wrap: wrap;
     gap: 10px;
 }
 
 .leaderboard-header h3 {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .period-selector {
     display: flex;
-    gap: 5px;
+    gap: 6px;
     background: var(--bg-card);
-    padding: 3px;
-    border-radius: 8px;
+    padding: 4px;
+    border-radius: 12px;
 }
 
 .period-btn {
     background: transparent;
     border: none;
-    padding: 6px 10px;
-    font-size: 11px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--text-secondary);
-    border-radius: 6px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .period-btn.active {
-    background: var(--blue);
+    background: var(--gradient-blue);
     color: white;
 }
 
 .leaderboard-content {
-    max-height: 300px;
+    max-height: 350px;
     overflow-y: auto;
+    padding-right: 4px;
 }
 
 .leaderboard-row {
     display: flex;
     align-items: center;
-    padding: 12px;
+    padding: 14px;
     background: var(--bg-card);
-    border-radius: 10px;
-    margin-bottom: 6px;
-    gap: 10px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+    gap: 12px;
     transition: all 0.2s ease;
+    border: 1px solid transparent;
 }
 
 .leaderboard-row:hover {
     transform: translateX(5px);
-    background: var(--blue-light);
+    border-color: var(--blue);
+    box-shadow: var(--shadow-sm);
 }
 
 .leaderboard-row.you {
@@ -1099,9 +1259,9 @@ body {
 }
 
 .rank {
-    width: 40px;
-    font-size: 16px;
-    font-weight: bold;
+    width: 45px;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--gold);
     text-align: center;
 }
@@ -1112,119 +1272,128 @@ body {
     align-items: center;
     gap: 8px;
     font-size: 14px;
+    font-weight: 500;
 }
 
 .you-badge {
     background: var(--blue);
     color: white;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-size: 9px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
 }
 
 .distance {
-    width: 60px;
+    width: 70px;
     font-weight: 600;
     color: var(--success);
-    font-size: 13px;
+    font-size: 14px;
     text-align: right;
 }
 
 .workouts {
-    width: 40px;
+    width: 45px;
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
 }
 
 .pace {
-    width: 60px;
+    width: 70px;
     color: var(--warning);
-    font-size: 12px;
+    font-size: 13px;
     text-align: right;
 }
 
 /* Результаты друзей */
 .friends-results-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .results-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .results-header h3 {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .results-count {
     background: var(--blue);
     color: white;
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .results-list {
-    max-height: 400px;
+    max-height: 450px;
     overflow-y: auto;
+    padding-right: 4px;
 }
 
 .friend-stat-card {
     background: var(--bg-card);
-    border-radius: 16px;
-    padding: 15px;
-    margin-bottom: 10px;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 12px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .friend-stat-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 102, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--blue);
 }
 
 .friend-info {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 15px;
+    margin-bottom: 15px;
 }
 
 .friend-avatar {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
+    width: 55px;
+    height: 55px;
+    background: var(--gradient-blue);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 28px;
     color: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .friend-name {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
 }
 
 .friend-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding: 12px;
     background: var(--bg-primary);
-    border-radius: 12px;
+    border-radius: 16px;
 }
 
 .stat-row {
@@ -1237,19 +1406,21 @@ body {
 .stat-row span:first-child {
     font-size: 11px;
     color: var(--text-secondary);
-    margin-bottom: 2px;
+    margin-bottom: 4px;
+    font-weight: 500;
 }
 
 .stat-row .stat-value {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--blue);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .vs-row {
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 12px;
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
     text-align: center;
 }
 
@@ -1270,58 +1441,61 @@ body {
 
 /* Заявки в друзья */
 .requests-card {
-    background: linear-gradient(135deg, var(--warning), #ff8c00);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    background: var(--gradient-orange);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     color: white;
+    box-shadow: var(--shadow-lg);
 }
 
 .requests-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .requests-header h3 {
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .requests-badge {
     background: white;
     color: var(--warning);
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .requests-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .friend-request-item {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 15px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .friend-request-avatar {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 22px;
 }
 
 .friend-request-info {
@@ -1329,108 +1503,125 @@ body {
 }
 
 .friend-request-name {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     display: block;
 }
 
 .friend-request-username {
-    font-size: 11px;
+    font-size: 12px;
     opacity: 0.8;
 }
 
 .friend-request-actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
 .friend-request-accept {
     background: white;
     border: none;
-    border-radius: 20px;
-    padding: 6px 16px;
+    border-radius: 30px;
+    padding: 8px 18px;
     color: var(--warning);
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.friend-request-accept:active {
+    transform: scale(0.95);
 }
 
 .friend-request-decline {
     background: transparent;
     border: 1px solid white;
-    border-radius: 20px;
-    padding: 6px 16px;
+    border-radius: 30px;
+    padding: 8px 18px;
     color: white;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.friend-request-decline:active {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(0.95);
 }
 
 /* Добавление друга */
 .add-friend-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .add-friend-form {
     display: flex;
-    gap: 8px;
+    gap: 10px;
 }
 
 .add-friend-form input {
     flex: 1;
-    padding: 14px;
+    padding: 16px;
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 15px;
+    transition: all 0.2s ease;
 }
 
 .add-friend-form input:focus {
     border-color: var(--blue);
     outline: none;
+    box-shadow: var(--shadow-glow);
 }
 
 .send-request-btn {
-    width: 48px;
-    background: var(--blue);
+    width: 60px;
+    background: var(--gradient-blue);
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     color: white;
-    font-size: 20px;
+    font-size: 24px;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .send-request-btn:active {
     transform: scale(0.95);
-    background: var(--blue-hover);
 }
 
 /* Мини-профиль */
 .profile-mini-card {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 12px;
+    border-radius: 18px;
+    padding: 15px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .profile-mini-avatar {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-blue);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 24px;
     color: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .profile-mini-info {
@@ -1438,23 +1629,30 @@ body {
 }
 
 .profile-mini-name {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     display: block;
+    margin-bottom: 4px;
 }
 
 .profile-mini-stats {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--text-secondary);
 }
 
 .profile-mini-share {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 12px;
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-size: 14px;
     cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.profile-mini-share:active {
+    background: var(--blue);
+    color: white;
 }
 
 /* Пустые состояния */
@@ -1463,63 +1661,91 @@ body {
 .empty-leaderboard,
 .empty-results {
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 15px;
     background: var(--bg-card);
-    border-radius: 12px;
-    border: 1px dashed var(--border-color);
+    border-radius: 18px;
+    border: 2px dashed var(--border-color);
 }
 
 /* Компактный дневник */
 .diary-section-compact {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 }
 
 .add-entry-btn {
     background: var(--bg-primary);
     border: 2px dashed var(--border-color);
-    border-radius: 12px;
-    padding: 12px;
-    font-size: 14px;
+    border-radius: 18px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.add-entry-btn:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+}
+
+.add-entry-btn:active {
+    transform: scale(0.98);
 }
 
 .entry-item {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 12px;
+    border-radius: 18px;
+    padding: 18px;
     border: 1px solid var(--border-color);
     position: relative;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.entry-item:hover {
+    transform: translateX(5px);
+    border-color: var(--blue);
 }
 
 .entry-date {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--blue);
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .entry-content {
-    font-size: 13px;
-    line-height: 1.4;
+    font-size: 14px;
+    line-height: 1.5;
+    padding-right: 30px;
 }
 
 .entry-delete {
     position: absolute;
-    top: 8px;
-    right: 8px;
+    top: 15px;
+    right: 15px;
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.entry-delete:active {
+    color: var(--danger);
+    background: var(--danger-light);
 }
 
 /* Настройки в меню */
@@ -1528,14 +1754,15 @@ body {
 }
 
 .theme-selector, .language-selector {
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .theme-selector span, .language-selector span {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .theme-buttons-menu, .lang-buttons-menu {
@@ -1545,151 +1772,163 @@ body {
 
 .theme-btn-small, .lang-btn-small {
     flex: 1;
-    padding: 8px;
+    padding: 12px;
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
-    border-radius: 6px;
+    border-radius: 12px;
     color: var(--text-primary);
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s ease;
 }
 
 .theme-btn-small.active, .lang-btn-small.active {
-    background: var(--blue);
+    background: var(--gradient-blue);
     color: white;
-    border-color: var(--blue);
+    border-color: transparent;
 }
 
 /* ===== СОЗДАНИЕ ТРЕНИРОВКИ ===== */
 .custom-workout-section {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 20px;
+    background: var(--gradient-card);
+    border-radius: 24px;
+    padding: 24px;
     border: 1px solid var(--border-color);
     margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
 }
 
 .custom-title {
     text-align: center;
     color: var(--blue);
     margin-bottom: 24px;
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: 700;
     letter-spacing: 1px;
 }
 
 .goal-card {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 20px;
+    padding: 20px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .goal-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 12px;
+    font-size: 15px;
+    margin-bottom: 16px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .goal-input {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
 }
 
 .goal-input input {
     flex: 1;
-    max-width: 200px;
-    padding: 14px;
+    max-width: 220px;
+    padding: 16px;
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
     color: var(--text-primary);
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     text-align: center;
+    transition: all 0.2s ease;
 }
 
 .goal-input input:focus {
     border-color: var(--blue);
     outline: none;
+    box-shadow: var(--shadow-glow);
 }
 
 .goal-input span {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--text-secondary);
-    min-width: 40px;
+    min-width: 45px;
 }
 
 .tasks-creator {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: 20px;
+    padding: 20px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .tasks-creator h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 16px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .add-task-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
     align-items: center;
 }
 
 .add-task-form input {
     width: 100%;
-    max-width: 300px;
-    padding: 12px;
+    max-width: 320px;
+    padding: 16px;
     background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 15px;
+    transition: all 0.2s ease;
 }
 
 .add-task-form input:focus {
     border-color: var(--blue);
     outline: none;
+    box-shadow: var(--shadow-glow);
 }
 
 .task-distance-input {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
 }
 
 .task-distance-input input {
     flex: 1;
-    max-width: 150px;
+    max-width: 160px;
     text-align: center;
 }
 
 .task-distance-input span {
     color: var(--text-secondary);
-    font-size: 14px;
-    min-width: 30px;
+    font-size: 15px;
+    min-width: 35px;
 }
 
 .add-task-btn {
     width: 100%;
-    max-width: 300px;
-    padding: 14px;
+    max-width: 320px;
+    padding: 16px;
     background: var(--bg-card);
     color: var(--blue);
     border: 2px dashed var(--border-color);
-    border-radius: 12px;
-    font-size: 15px;
+    border-radius: 16px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1704,9 +1943,9 @@ body {
 #custom-tasks-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     min-height: 100px;
-    max-height: 300px;
+    max-height: 350px;
     overflow-y: auto;
     width: 100%;
     align-items: center;
@@ -1715,29 +1954,30 @@ body {
 .custom-task-item {
     display: flex;
     align-items: center;
-    padding: 12px;
+    padding: 16px;
     background: var(--bg-card);
-    border-radius: 8px;
+    border-radius: 16px;
     border: 1px solid var(--border-color);
     animation: slideIn 0.2s ease;
     width: 100%;
-    max-width: 400px;
-    gap: 10px;
+    max-width: 420px;
+    gap: 12px;
 }
 
 .custom-task-text {
     flex: 1;
-    font-size: 14px;
+    font-size: 15px;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight: 500;
 }
 
 .custom-task-distance {
     color: var(--blue);
     font-weight: 600;
-    min-width: 70px;
+    min-width: 80px;
     text-align: right;
     white-space: nowrap;
 }
@@ -1746,52 +1986,54 @@ body {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 6px 10px;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    border-radius: 10px;
 }
 
 .custom-task-delete:active {
     color: var(--danger);
+    background: var(--danger-light);
     transform: rotate(90deg);
 }
 
 .empty-tasks {
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 15px;
     background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px dashed var(--border-color);
+    border-radius: 18px;
+    border: 2px dashed var(--border-color);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
 }
 
 .create-plan-btn {
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     padding: 18px;
-    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
+    background: var(--gradient-blue);
     color: white;
     border: none;
-    border-radius: 14px;
+    border-radius: 50px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-md);
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .create-plan-btn:active:not(:disabled) {
     transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.4);
+    box-shadow: var(--shadow-sm);
 }
 
 .create-plan-btn:disabled {
@@ -1803,54 +2045,57 @@ body {
 
 /* ===== СОХРАНЕННЫЕ ТРЕНИРОВКИ ===== */
 .saved-workouts-section {
-    margin-top: 25px;
-    padding-top: 20px;
+    margin-top: 30px;
+    padding-top: 24px;
     border-top: 1px solid var(--border-color);
 }
 
 .saved-workouts-title {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 15px;
+    font-size: 15px;
+    margin-bottom: 20px;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
 .saved-workouts-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 300px;
+    gap: 12px;
+    max-height: 350px;
     overflow-y: auto;
     margin-bottom: 20px;
 }
 
 .saved-workout-item {
     background: var(--bg-primary);
-    border-radius: 12px;
-    padding: 15px;
+    border-radius: 18px;
+    padding: 18px;
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 18px;
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .saved-workout-item.active {
     border: 2px solid var(--blue);
-    background: rgba(0, 102, 255, 0.05);
+    background: var(--blue-light);
 }
 
 .saved-workout-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--blue) 0%, #00c6ff 100%);
-    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-blue);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 24px;
     color: white;
     flex-shrink: 0;
+    box-shadow: var(--shadow-sm);
 }
 
 .saved-workout-info {
@@ -1859,32 +2104,32 @@ body {
 }
 
 .saved-workout-name {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .saved-workout-meta {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-secondary);
 }
 
 .saved-workout-actions {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-shrink: 0;
 }
 
 .workout-start-btn, .workout-delete-btn {
-    width: 36px;
-    height: 36px;
+    width: 45px;
+    height: 45px;
     border: none;
-    border-radius: 8px;
-    font-size: 18px;
+    border-radius: 14px;
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -1893,14 +2138,16 @@ body {
 }
 
 .workout-start-btn {
-    background: var(--success);
+    background: var(--gradient-green);
     color: white;
+    box-shadow: var(--shadow-sm);
 }
 
 .workout-delete-btn {
     background: var(--bg-card);
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
 }
 
 .workout-start-btn:active, .workout-delete-btn:active {
@@ -1909,79 +2156,82 @@ body {
 
 .empty-workouts {
     text-align: center;
-    padding: 30px;
+    padding: 40px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 15px;
     background: var(--bg-card);
-    border-radius: 8px;
-    border: 1px dashed var(--border-color);
+    border-radius: 18px;
+    border: 2px dashed var(--border-color);
 }
 
 /* ===== АКТИВНАЯ ТРЕНИРОВКА ===== */
 .active-workout {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 24px;
+    padding: 24px;
     border: 2px solid var(--blue);
-    margin-top: 20px;
+    margin-top: 24px;
     animation: slideIn 0.3s ease;
+    box-shadow: var(--shadow-lg);
 }
 
 .active-workout-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .active-workout-header h3 {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--blue);
+    font-weight: 700;
 }
 
 .active-workout-goal {
     background: var(--bg-card);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--success);
+    border: 1px solid var(--border-color);
 }
 
 .active-workout-progress {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
 .active-workout-progress .progress-bar {
     flex: 1;
-    height: 8px;
+    height: 12px;
 }
 
 .progress-percent {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--blue);
-    min-width: 45px;
+    min-width: 50px;
 }
 
 .active-workout-steps {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    max-height: 300px;
+    gap: 12px;
+    margin-bottom: 24px;
+    max-height: 350px;
     overflow-y: auto;
 }
 
 .workout-step-compact {
     display: flex;
     align-items: center;
-    padding: 12px;
+    padding: 16px;
     background: var(--bg-card);
-    border-radius: 8px;
+    border-radius: 16px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
 }
@@ -1992,16 +2242,17 @@ body {
 }
 
 .workout-step-compact .workout-checkbox {
-    width: 22px;
-    height: 22px;
-    margin-right: 12px;
+    width: 24px;
+    height: 24px;
+    margin-right: 15px;
     cursor: pointer;
     accent-color: var(--blue);
 }
 
 .workout-step-compact .step-text {
     flex: 1;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .workout-step-compact.step-completed .step-text {
@@ -2010,75 +2261,78 @@ body {
 }
 
 .workout-step-compact .step-distance {
-    font-size: 12px;
+    font-size: 14px;
     color: var(--blue);
-    font-weight: 500;
+    font-weight: 600;
     margin-left: 10px;
-    padding: 2px 8px;
+    padding: 4px 10px;
     background: var(--bg-primary);
     border-radius: 20px;
 }
 
 .complete-workout-btn {
     width: 100%;
-    padding: 16px;
-    background: var(--text-primary);
-    color: var(--bg-primary);
+    padding: 18px;
+    background: var(--gradient-green);
+    color: white;
     border: none;
-    border-radius: 14px;
-    font-size: 16px;
+    border-radius: 50px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-md);
 }
 
 .complete-workout-btn:active:not(:disabled) {
-    background: var(--blue);
-    color: white;
     transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
 }
 
 .complete-workout-btn:disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     cursor: not-allowed;
+    background: var(--text-secondary);
+    box-shadow: none;
 }
 
 /* ===== НОВЫЕ СТИЛИ ДЛЯ СИЛОВЫХ УПРАЖНЕНИЙ ===== */
 
 /* Основной контейнер */
 .strength-section {
-    background: var(--bg-card);
+    background: var(--gradient-card);
     border-radius: 24px;
-    padding: 20px 16px;
+    padding: 24px 20px;
     border: 1px solid var(--border-color);
     margin-bottom: 20px;
+    box-shadow: var(--shadow-md);
 }
 
 .strength-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 24px;
+    font-size: 26px;
     font-weight: 700;
     letter-spacing: 1px;
-    text-shadow: 0 2px 10px rgba(0, 102, 255, 0.3);
+    text-shadow: var(--shadow-glow);
 }
 
 /* Карточка прогресса */
 .strength-progress-card {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    background: var(--gradient-blue);
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
     color: white;
-    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-lg);
 }
 
 .progress-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }
 
 .progress-title {
@@ -2088,24 +2342,24 @@ body {
 }
 
 .progress-percent {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 28px;
+    font-weight: 700;
     background: rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
-    border-radius: 30px;
+    padding: 6px 16px;
+    border-radius: 40px;
 }
 
 .strength-fill {
     background: white;
-    height: 8px;
-    border-radius: 4px;
+    height: 10px;
+    border-radius: 10px;
 }
 
-/* Селектор типа тренировки - КРУПНЫЕ КНОПКИ */
+/* Селектор типа тренировки */
 .workout-type-selector {
     display: flex;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     background: var(--bg-primary);
     padding: 8px;
     border-radius: 20px;
@@ -2115,8 +2369,8 @@ body {
     flex: 1;
     background: transparent;
     border: none;
-    padding: 16px 8px;
-    border-radius: 16px;
+    padding: 18px 8px;
+    border-radius: 18px;
     color: var(--text-secondary);
     font-size: 15px;
     font-weight: 600;
@@ -2125,19 +2379,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    gap: 8px;
+    box-shadow: var(--shadow-sm);
 }
 
 .type-btn.active {
-    background: var(--blue);
+    background: var(--gradient-blue);
     color: white;
     transform: scale(1.02);
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 .type-icon {
-    font-size: 28px;
+    font-size: 32px;
 }
 
 .type-name {
@@ -2149,47 +2403,48 @@ body {
 .exercise-card {
     background: var(--bg-primary);
     border-radius: 24px;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
     border: 2px solid transparent;
     transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
 }
 
 .exercise-card#pullups-card {
     border-color: var(--orange);
-    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
+    box-shadow: 0 5px 20px rgba(230, 126, 34, 0.2);
 }
 
 .exercise-card#pushups-card {
     border-color: var(--teal);
-    box-shadow: 0 5px 20px rgba(78, 205, 196, 0.2);
+    box-shadow: 0 5px 20px rgba(26, 188, 156, 0.2);
 }
 
 .exercise-card#mixed-card {
     border-color: var(--mint);
-    box-shadow: 0 5px 20px rgba(168, 230, 207, 0.2);
+    box-shadow: 0 5px 20px rgba(46, 204, 113, 0.2);
 }
 
 .exercise-header {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .exercise-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
-    border-radius: 20px;
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-blue);
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 36px;
     color: white;
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.3);
+    box-shadow: var(--shadow-md);
 }
 
 .exercise-title {
@@ -2197,30 +2452,30 @@ body {
 }
 
 .exercise-title h3 {
-    font-size: 20px;
-    margin-bottom: 4px;
+    font-size: 22px;
+    margin-bottom: 6px;
     font-weight: 700;
 }
 
 .exercise-subtitle {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-secondary);
 }
 
 .exercise-stats {
     background: var(--bg-card);
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 40px;
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 700;
     color: var(--blue);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Настройка цели - УЛУЧШЕННЫЙ ДИЗАЙН */
+/* Настройка цели */
 .goal-settings {
-    margin-bottom: 20px;
-    padding: 16px;
+    margin-bottom: 24px;
+    padding: 20px;
     background: var(--bg-card);
     border-radius: 20px;
 }
@@ -2228,11 +2483,11 @@ body {
 .goal-slider {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 }
 
 .goal-slider label {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-secondary);
 }
@@ -2240,25 +2495,25 @@ body {
 .slider-container {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .slider-container input[type="range"] {
     flex: 1;
-    height: 8px;
+    height: 10px;
     -webkit-appearance: none;
     background: linear-gradient(90deg, var(--blue) 0%, var(--purple) 100%);
-    border-radius: 4px;
+    border-radius: 10px;
     outline: none;
 }
 
 .slider-container input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     background: white;
     border-radius: 50%;
-    box-shadow: 0 2px 10px rgba(0, 102, 255, 0.5);
+    box-shadow: var(--shadow-md);
     cursor: pointer;
     border: 3px solid var(--blue);
     transition: all 0.2s ease;
@@ -2266,38 +2521,40 @@ body {
 
 .slider-container input[type="range"]::-webkit-slider-thumb:hover {
     transform: scale(1.1);
+    box-shadow: var(--shadow-glow);
 }
 
 .goal-value {
-    min-width: 60px;
-    font-size: 24px;
-    font-weight: bold;
+    min-width: 70px;
+    font-size: 28px;
+    font-weight: 700;
     color: var(--blue);
     text-align: center;
     background: var(--bg-primary);
-    padding: 8px 12px;
-    border-radius: 30px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 16px;
+    border-radius: 40px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Контейнер для сетов */
 .sets-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 20px;
-    max-height: 350px;
+    max-height: 400px;
     overflow-y: auto;
-    padding-right: 4px;
+    padding-right: 6px;
 }
 
 /* Карточка подхода */
 .set-card {
     background: var(--bg-card);
-    border-radius: 20px;
-    padding: 16px;
+    border-radius: 22px;
+    padding: 18px;
     border: 1px solid var(--border-color);
     animation: slideIn 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .set-card.completed {
@@ -2309,37 +2566,37 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 .set-number {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--blue);
     background: var(--bg-primary);
-    padding: 6px 14px;
-    border-radius: 30px;
+    padding: 8px 18px;
+    border-radius: 40px;
 }
 
 .set-remove {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 20px;
+    font-size: 22px;
     cursor: pointer;
-    padding: 8px 12px;
-    border-radius: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
     transition: all 0.2s ease;
 }
 
-.set-remove:hover {
+.set-remove:active {
     color: var(--danger);
     background: var(--danger-light);
 }
 
 .set-inputs {
     display: flex;
-    gap: 15px;
+    gap: 20px;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -2348,24 +2605,24 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
     background: var(--bg-primary);
-    padding: 10px 16px;
-    border-radius: 16px;
+    padding: 12px 20px;
+    border-radius: 18px;
 }
 
 .set-reps label {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 .set-reps input {
-    width: 80px;
-    padding: 10px;
+    width: 90px;
+    padding: 12px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 14px;
     color: var(--text-primary);
     font-size: 18px;
     font-weight: 600;
@@ -2376,6 +2633,7 @@ body {
 .set-reps input:focus {
     border-color: var(--blue);
     outline: none;
+    box-shadow: var(--shadow-glow);
 }
 
 .set-reps input:disabled {
@@ -2386,11 +2644,11 @@ body {
 .set-complete {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     cursor: pointer;
-    padding: 8px 16px;
+    padding: 10px 20px;
     background: var(--bg-primary);
-    border-radius: 30px;
+    border-radius: 40px;
     transition: all 0.2s ease;
 }
 
@@ -2399,74 +2657,75 @@ body {
 }
 
 .set-complete input[type="checkbox"] {
-    width: 24px;
-    height: 24px;
+    width: 26px;
+    height: 26px;
     cursor: pointer;
     accent-color: var(--success);
 }
 
 .set-complete span {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--text-secondary);
 }
 
 .set-card.completed .set-reps input {
-    background: rgba(0, 204, 136, 0.1);
+    background: rgba(46, 204, 113, 0.1);
     color: var(--success);
     border-color: var(--success);
 }
 
-/* Кнопка добавления подхода - УЛУЧШЕННАЯ */
+/* Кнопка добавления подхода */
 .add-set-btn, .add-mixed-set-btn {
     width: 100%;
-    padding: 18px;
-    background: linear-gradient(135deg, var(--blue), var(--purple));
+    padding: 20px;
+    background: var(--gradient-blue);
     border: none;
-    border-radius: 20px;
+    border-radius: 50px;
     color: white;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3);
+    gap: 12px;
+    box-shadow: var(--shadow-md);
 }
 
 .add-set-btn:active, .add-mixed-set-btn:active {
     transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 102, 255, 0.4);
+    box-shadow: var(--shadow-sm);
 }
 
 .add-set-btn .btn-icon, .add-mixed-set-btn .btn-icon {
-    font-size: 22px;
+    font-size: 24px;
 }
 
 .add-set-btn .btn-text, .add-mixed-set-btn .btn-text {
-    font-size: 16px;
+    font-size: 17px;
 }
 
 /* Комплексная тренировка */
 .mixed-workout {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
     margin-bottom: 20px;
-    max-height: 400px;
+    max-height: 450px;
     overflow-y: auto;
-    padding-right: 4px;
+    padding-right: 6px;
 }
 
 .mixed-exercise {
     background: var(--bg-card);
-    border-radius: 20px;
-    padding: 16px;
+    border-radius: 22px;
+    padding: 18px;
     border: 2px solid var(--border-color);
     transition: all 0.2s ease;
+    box-shadow: var(--shadow-sm);
 }
 
 .mixed-exercise.completed {
@@ -2478,19 +2737,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .mixed-name {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 700;
     color: var(--blue);
 }
 
 .mixed-check {
-    font-size: 24px;
+    font-size: 26px;
     color: var(--success);
     opacity: 0.3;
     transition: opacity 0.2s ease;
@@ -2503,16 +2762,16 @@ body {
 .mixed-items {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 .mixed-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px;
+    gap: 15px;
+    padding: 14px;
     background: var(--bg-primary);
-    border-radius: 16px;
+    border-radius: 18px;
     transition: all 0.2s ease;
 }
 
@@ -2522,18 +2781,18 @@ body {
 
 .item-name {
     flex: 1;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
 }
 
 .item-input {
-    width: 80px;
-    padding: 10px;
+    width: 90px;
+    padding: 12px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 14px;
     color: var(--text-primary);
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     text-align: center;
 }
@@ -2541,6 +2800,7 @@ body {
 .item-input:focus {
     border-color: var(--blue);
     outline: none;
+    box-shadow: var(--shadow-glow);
 }
 
 .item-input:disabled {
@@ -2548,14 +2808,14 @@ body {
 }
 
 .item-unit {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-secondary);
-    min-width: 35px;
+    min-width: 40px;
 }
 
 .item-check {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     cursor: pointer;
     accent-color: var(--success);
 }
@@ -2564,12 +2824,12 @@ body {
 .strength-summary {
     display: flex;
     justify-content: space-around;
-    padding: 20px;
+    padding: 24px;
     background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
     border-radius: 24px;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
     border: 1px solid var(--border-color);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-md);
 }
 
 .summary-item {
@@ -2578,39 +2838,39 @@ body {
 
 .summary-label {
     display: block;
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-secondary);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: 500;
 }
 
 .summary-value {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 700;
     color: var(--blue);
-    text-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+    text-shadow: var(--shadow-glow);
 }
 
 /* Кнопка завершения */
 .complete-strength-btn {
     width: 100%;
-    padding: 20px;
-    background: linear-gradient(135deg, var(--success), #00cc88);
+    padding: 22px;
+    background: var(--gradient-green);
     color: white;
     border: none;
-    border-radius: 24px;
+    border-radius: 50px;
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0, 204, 136, 0.3);
-    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-lg);
+    letter-spacing: 1px;
 }
 
 .complete-strength-btn:active:not(:disabled) {
     transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 204, 136, 0.4);
+    box-shadow: var(--shadow-md);
 }
 
 .complete-strength-btn:disabled {
@@ -2623,25 +2883,26 @@ body {
 /* Мотивационная цитата */
 .strength-quote {
     text-align: center;
-    padding: 20px;
-    font-size: 16px;
+    padding: 24px;
+    font-size: 18px;
     font-style: italic;
     color: var(--text-secondary);
     border-top: 1px solid var(--border-color);
     background: var(--bg-primary);
-    border-radius: 16px;
+    border-radius: 20px;
+    font-weight: 500;
 }
 
 /* Статистика в общем разделе */
 .strength-stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
 }
 
 .strength-stat {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
+    background: var(--gradient-blue);
     color: white;
 }
 
@@ -2650,7 +2911,7 @@ body {
 }
 
 .strength-stat .stat-label {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Нижняя навигация */
@@ -2663,37 +2924,39 @@ body {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-around;
-    padding: 8px 12px;
+    padding: 12px 16px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 100;
     max-width: 600px;
     margin: 0 auto;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .nav-btn {
     flex: 1;
-    max-width: 70px;
+    max-width: 80px;
     background: transparent;
     border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    padding: 6px;
-    border-radius: 10px;
+    gap: 6px;
+    padding: 8px;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .nav-icon {
-    font-size: 20px;
+    font-size: 24px;
     color: var(--icon-inactive);
     transition: all 0.2s ease;
 }
 
 .nav-text {
-    font-size: 10px;
+    font-size: 11px;
+    font-weight: 500;
     color: var(--icon-inactive);
     transition: all 0.2s ease;
 }
@@ -2705,34 +2968,6 @@ body {
 
 .nav-btn.active .nav-text {
     color: var(--icon-active);
-}
-
-/* Анимации */
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes popIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
 }
 
 /* Адаптация */
@@ -2772,28 +3007,28 @@ body {
     }
     
     .leaderboard-row {
-        font-size: 12px;
+        font-size: 13px;
     }
     
     .rank {
-        width: 30px;
+        width: 35px;
     }
     
     .distance, .pace {
-        width: 50px;
+        width: 60px;
     }
     
     .workouts {
-        width: 30px;
+        width: 35px;
     }
     
     .friend-stat-card {
-        padding: 12px;
+        padding: 14px;
     }
     
     .friend-stats {
         grid-template-columns: repeat(3, 1fr);
-        gap: 5px;
+        gap: 8px;
     }
     
     .friend-request-item {
@@ -2810,30 +3045,8 @@ body {
         justify-content: center;
     }
     
-    .workout-type-selector {
-        gap: 6px;
-        padding: 6px;
-    }
-    
-    .type-btn {
-        padding: 12px 4px;
-    }
-    
-    .type-icon {
-        font-size: 24px;
-    }
-    
-    .type-name {
-        font-size: 11px;
-    }
-    
-    .exercise-header {
-        flex-wrap: wrap;
-    }
-    
-    .exercise-stats {
-        width: 100%;
-        text-align: center;
+    .goal-slider {
+        gap: 12px;
     }
     
     .slider-container {
@@ -2866,20 +3079,28 @@ body {
     }
     
     .item-input {
-        width: 70px;
+        width: 80px;
     }
     
     .strength-summary {
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 20px;
+    }
+    
+    .workout-type-selector {
+        flex-wrap: wrap;
+    }
+    
+    .type-btn {
+        min-width: 90px;
     }
     
     .nav-text {
-        font-size: 8px;
+        font-size: 9px;
     }
     
     .nav-icon {
-        font-size: 18px;
+        font-size: 22px;
     }
     
     .saved-workout-item {
