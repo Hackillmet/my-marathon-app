@@ -667,7 +667,7 @@ function t(key, ...args) {
     return text;
 }
 
-// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ВРЕМЕНИ ==========
+// ========== ИСПРАВЛЕННАЯ ЛОГИКА ВРЕМЕНИ ==========
 
 function getCurrentHour() {
     return new Date().getHours();
@@ -681,32 +681,36 @@ function getCurrentTime() {
     return new Date().getTime();
 }
 
+// Получить время СЕГОДНЯ в 4:00 утра
 function getToday4am() {
     const today = new Date();
     today.setHours(4, 0, 0, 0);
     return today.getTime();
 }
 
-function getNextDay4am() {
-    const nextDay = new Date();
-    nextDay.setDate(nextDay.getDate() + 1);
-    nextDay.setHours(4, 0, 0, 0);
-    return nextDay.getTime();
+// Получить время ЗАВТРА в 4:00 утра
+function getTomorrow4am() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(4, 0, 0, 0);
+    return tomorrow.getTime();
 }
 
-// ✅ ГЛАВНАЯ ФУНКЦИЯ: можно ли начать новый день?
+// ✅ Можно ли начать новый день?
 function canStartNewDay() {
+    // Если день ещё не завершён — можно начинать
+    if (!dayCompletedTime) return true;
+
     const now = getCurrentTime();
-    const today4am = getToday4am();
+    const completedDay = new Date(parseInt(dayCompletedTime));
+    
+    // Создаём дату следующего дня в 4:00 утра после завершения
+    const nextDay4am = new Date(completedDay);
+    nextDay4am.setDate(nextDay4am.getDate() + 1);
+    nextDay4am.setHours(4, 0, 0, 0);
 
-    // Если сейчас больше или равно 4 утра, новый день наступил
-    if (now >= today4am) {
-        // Если день не начат — можно стартовать
-        return true;
-    }
-
-    // Если сейчас меньше 4 утра — ждём следующий день
-    return false;
+    // Можно начать только если сейчас >= следующего дня 4 утра
+    return now >= nextDay4am.getTime();
 }
 
 // ✅ Можно ли начать день по времени (4:00 - 23:00)
@@ -738,24 +742,38 @@ function isDayExpired() {
     return hour >= 23;
 }
 
-// ✅ Время до следующего дня в 4 утра
+// ✅ Время до следующего дня в 4 утра (после завершения)
 function getTimeUntilNextDay4am() {
+    if (!dayCompletedTime) return null;
+
     const now = getCurrentTime();
-    const nextDay4am = getNextDay4am();
-    const diffMs = nextDay4am - now;
+    const completedDay = new Date(parseInt(dayCompletedTime));
+    
+    const nextDay4am = new Date(completedDay);
+    nextDay4am.setDate(nextDay4am.getDate() + 1);
+    nextDay4am.setHours(4, 0, 0, 0);
+
+    const diffMs = nextDay4am.getTime() - now;
     if (diffMs <= 0) return null;
+
     const hours = Math.floor(diffMs / (1000 * 60 * 60));
     const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    
     return { hours, minutes };
 }
 
-// ✅ Проверка доступности нового дня и сброс, если наступило 4 утра
+// ✅ Проверка доступности нового дня
 function checkNewDayAvailability() {
-    const now = getCurrentTime();
-    const today4am = getToday4am();
+    if (!dayCompletedTime) return false;
 
-    // Если наступило 4 утра и день завершён — разблокируем
-    if (now >= today4am && dayCompletedTime) {
+    const now = getCurrentTime();
+    const completedDay = new Date(parseInt(dayCompletedTime));
+    
+    const nextDay4am = new Date(completedDay);
+    nextDay4am.setDate(nextDay4am.getDate() + 1);
+    nextDay4am.setHours(4, 0, 0, 0);
+
+    if (now >= nextDay4am.getTime()) {
         dayCompletedTime = null;
         saveState();
 
@@ -1953,7 +1971,13 @@ function updateUI() {
         const now = getCurrentTime();
         const start = parseInt(dayStartTime);
         const hoursPassed = (now - start) / (1000 * 60 * 60);
-        if (hoursPassed >= 24 || now >= getNextDay4am()) {
+        
+        const completedDay = new Date(parseInt(dayStartTime));
+        const nextDay4am = new Date(completedDay);
+        nextDay4am.setDate(nextDay4am.getDate() + 1);
+        nextDay4am.setHours(4, 0, 0, 0);
+
+        if (hoursPassed >= 24 || now >= nextDay4am.getTime()) {
             dayStarted = false;
             dayStartTime = null;
             dayCompletedTime = now.toString();
@@ -2114,8 +2138,12 @@ function updateDeadlineInfo() {
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
     const now = getCurrentTime();
-    const nextDay4am = getNextDay4am();
-    if (now >= nextDay4am) {
+    const completedDay = new Date(parseInt(dayStartTime));
+    const nextDay4am = new Date(completedDay);
+    nextDay4am.setDate(nextDay4am.getDate() + 1);
+    nextDay4am.setHours(4, 0, 0, 0);
+
+    if (now >= nextDay4am.getTime()) {
         deadlineInfo.textContent = t('dayExpiredMsg');
         deadlineInfo.style.color = 'var(--danger)';
         return;
