@@ -6,6 +6,10 @@ const userId = tg.initDataUnsafe?.user?.id || 'local_user';
 const userName = tg.initDataUnsafe?.user?.first_name || 'Пользователь';
 const userUsername = tg.initDataUnsafe?.user?.username || 'user';
 
+// ========== ДАТА СТАРТА МАРАФОНА ==========
+// Установи здесь дату начала марафона (например, 1 июня 2025)
+const MARATHON_START_DATE = new Date(2025, 5, 1); // Год, месяц (0-11), день
+
 // ========== КЛЮЧИ ДЛЯ ХРАНЕНИЯ ==========
 const STORAGE_KEYS = {
     CURRENT_DAY: 'current_day',
@@ -585,8 +589,36 @@ const recommendations = {
     }
 };
 
+// ========== ФУНКЦИЯ ДЛЯ РАСЧЁТА ДНЯ МАРАФОНА ПО КАЛЕНДАРЮ ==========
+function getCurrentMarathonDay() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // обрезаем время до начала дня
+
+    const start = new Date(MARATHON_START_DATE);
+    start.setHours(0, 0, 0, 0);
+
+    // Разница в днях
+    const diffTime = today - start;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    // Если сегодня до старта — возвращаем 1
+    if (diffDays < 0) return 1;
+
+    // Иначе номер дня = разница + 1
+    return diffDays + 1;
+}
+
 // ========== СОСТОЯНИЕ ==========
-let currentDay = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_DAY)) || 1;
+// Определяем текущий день по календарю
+let currentDay = (function() {
+    const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_DAY);
+    if (saved) {
+        return parseInt(saved);
+    } else {
+        return getCurrentMarathonDay();
+    }
+})();
+
 let dayStarted = localStorage.getItem(STORAGE_KEYS.DAY_STARTED) === 'true' || false;
 let dayStartTime = localStorage.getItem(STORAGE_KEYS.DAY_START_TIME);
 let dayCompletedTime = localStorage.getItem(STORAGE_KEYS.DAY_COMPLETED_TIME);
