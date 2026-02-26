@@ -259,6 +259,9 @@ const translations = {
         author: "👤 Автор:",
         version: "Версия:",
         
+        // FAQ текст
+        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки\n• Прогресс-фото",
+        
         // Сообщения
         confirmReset: "Сбросить весь прогресс?",
         enterTask: "Введите задание",
@@ -267,7 +270,10 @@ const translations = {
         onlyFrom4am: "⏰ Тренировки доступны с 4:00 до 23:00",
         onlyUntil23: "⏰ Только до 23:00!",
         completeSteps: "⚠️ Выполни все шаги!",
-        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки\n• Прогресс-фото"
+        
+        // Кнопки в заявках
+        goToFriends: "👥 Перейти к друзьям",
+        close: "Закрыть"
     },
     en: {
         // Common
@@ -475,6 +481,9 @@ const translations = {
         author: "👤 Author:",
         version: "Version:",
         
+        // FAQ text
+        faqText: "❓ FAQ:\n\n• Start day at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 ready workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts\n• Progress photos",
+        
         // Messages
         confirmReset: "Reset all progress?",
         enterTask: "Enter task",
@@ -483,7 +492,10 @@ const translations = {
         onlyFrom4am: "⏰ Workouts available from 4:00 AM to 11:00 PM",
         onlyUntil23: "⏰ Only until 11:00 PM!",
         completeSteps: "⚠️ Complete all steps!",
-        faqText: "❓ FAQ:\n\n• Start at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts\n• Progress photos"
+        
+        // Buttons in requests
+        goToFriends: "👥 Go to friends",
+        close: "Close"
     }
 };
 
@@ -1323,10 +1335,17 @@ function checkIncomingRequests() {
             if (!exists) {
                 friendRequests.push(req);
                 tg.showPopup({
-                    title: '🔔', message: `${req.fromUserName} ${t('newRequest')}`,
-                    buttons: [{ id: 'view', type: 'default', text: '👥 Go to friends' }, { type: 'close', text: 'Close' }]
+                    title: '🔔',
+                    message: `${req.fromUserName} ${t('newRequest')}`,
+                    buttons: [
+                        { id: 'view', type: 'default', text: t('goToFriends') },
+                        { type: 'close', text: t('close') }
+                    ]
                 }, (buttonId) => {
-                    if (buttonId === 'view') { switchPage(2); switchTab('friends'); }
+                    if (buttonId === 'view') {
+                        switchPage(2);
+                        switchTab('friends');
+                    }
                 });
             }
         });
@@ -1376,9 +1395,19 @@ function getPersonalizedRecommendation() {
     if (progressPhotos.length > 0 && Math.random() < 0.2) {
         const change = (currentWeight - startWeight).toFixed(1);
         if (change < 0) {
-            return { icon: "🎉", text: lang === 'ru' ? `Ты сбросил ${Math.abs(change)} кг! Отличный результат!` : `You lost ${Math.abs(change)} kg! Great result!` };
+            return {
+                icon: "🎉",
+                text: lang === 'ru' 
+                    ? `Ты сбросил ${Math.abs(change)} кг! Отличный результат!`
+                    : `You lost ${Math.abs(change)} kg! Great result!`
+            };
         } else if (change > 0) {
-            return { icon: "💪", text: lang === 'ru' ? `Набор массы +${change} кг. Так держать!` : `Mass gain +${change} kg. Keep it up!` };
+            return {
+                icon: "💪",
+                text: lang === 'ru'
+                    ? `Набор массы +${change} кг. Так держать!`
+                    : `Mass gain +${change} kg. Keep it up!`
+            };
         }
     }
     
@@ -2288,7 +2317,7 @@ function renderWeightChart() {
     
     if (progressPhotos.length < 2) {
         if (placeholder) placeholder.style.display = 'block';
-        placeholder.innerHTML = currentLanguage === 'ru' ? 'Добавьте фото с весом, чтобы увидеть график' : 'Add photos with weight to see chart';
+        if (placeholder) placeholder.innerHTML = t('chartPlaceholder');
         chartContainer.innerHTML = '';
         return;
     }
@@ -2818,9 +2847,6 @@ function updateAllText() {
     // Прогресс-фото
     const progressTitle = document.querySelector('.progress-photo-title');
     if (progressTitle) progressTitle.textContent = t('progressTitle');
-    
-    const startWeightLabel = document.querySelector('.weight-stat-card .weight-stat-label');
-    if (startWeightLabel) startWeightLabel.textContent = t('startWeight');
     
     const addPhotoCardH3 = document.querySelector('.add-photo-card h3');
     if (addPhotoCardH3) addPhotoCardH3.textContent = t('addPhoto');
