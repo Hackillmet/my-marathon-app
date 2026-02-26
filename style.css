@@ -84,40 +84,40 @@ body {
     background: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
-    line-height: 1.5;
+    line-height: 1.4;
 }
 
 .container {
     max-width: 600px;
     margin: 0 auto;
-    padding: 12px;
-    padding-bottom: 90px;
+    padding: 10px;
+    padding-bottom: 80px;
 }
 
 /* Анимации */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
+    from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
+    from { opacity: 0; transform: translateX(-8px); }
     to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes popIn {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.03); }
     100% { transform: scale(1); }
 }
 
@@ -126,14 +126,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 0;
-    margin-bottom: 12px;
+    padding: 10px 0;
+    margin-bottom: 10px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .logo {
-    font-size: 20px;
-    font-weight: 800;
+    font-size: 18px;
+    font-weight: 700;
     letter-spacing: 0.5px;
 }
 
@@ -147,16 +147,16 @@ body {
 
 /* Кнопка меню */
 .menu-btn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
@@ -167,7 +167,7 @@ body {
 }
 
 .menu-btn span {
-    width: 20px;
+    width: 18px;
     height: 2px;
     background: var(--icon-inactive);
     border-radius: 2px;
@@ -179,7 +179,7 @@ body {
 }
 
 .menu-btn.active span:nth-child(1) {
-    transform: rotate(45deg) translate(5px, 5px);
+    transform: rotate(45deg) translate(4px, 4px);
 }
 
 .menu-btn.active span:nth-child(2) {
@@ -187,19 +187,19 @@ body {
 }
 
 .menu-btn.active span:nth-child(3) {
-    transform: rotate(-45deg) translate(5px, -5px);
+    transform: rotate(-45deg) translate(4px, -4px);
 }
 
 /* Меню */
 .menu-dropdown {
     position: absolute;
-    top: 80px;
-    right: 12px;
+    top: 70px;
+    right: 10px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 20px;
-    padding: 20px;
-    min-width: 280px;
+    border-radius: 18px;
+    padding: 16px;
+    min-width: 260px;
     z-index: 1000;
     box-shadow: var(--shadow-lg);
     animation: slideDown 0.2s ease;
@@ -207,7 +207,7 @@ body {
 }
 
 .menu-section {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .menu-section:last-child {
@@ -216,44 +216,44 @@ body {
 
 .menu-title {
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    margin-bottom: 8px;
-    padding-left: 12px;
+    margin-bottom: 6px;
+    padding-left: 10px;
     text-transform: uppercase;
 }
 
 .menu-item {
     display: block;
-    padding: 14px 16px;
+    padding: 12px 14px;
     color: var(--text-primary);
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
-    border-radius: 14px;
-    margin-bottom: 4px;
+    border-radius: 12px;
+    margin-bottom: 2px;
     transition: all 0.2s ease;
 }
 
 .menu-item:active {
     background: var(--blue-light);
     color: var(--blue);
-    transform: translateX(5px);
+    transform: translateX(4px);
 }
 
 .contact-info {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 12px;
+    border-radius: 14px;
+    padding: 10px;
     border: 1px solid var(--border-color);
 }
 
 .contact-item {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
-    font-size: 13px;
+    padding: 6px 0;
+    font-size: 12px;
 }
 
 .contact-highlight {
@@ -264,11 +264,11 @@ body {
 /* Дата */
 .date-header {
     text-align: right;
-    margin-bottom: 16px;
-    font-size: 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
     font-weight: 500;
     color: var(--text-secondary);
-    padding: 4px 0;
+    padding: 2px 0;
 }
 
 /* Контейнер слайдов */
@@ -277,8 +277,8 @@ body {
     overflow-x: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    margin-bottom: 20px;
-    border-radius: 24px;
+    margin-bottom: 16px;
+    border-radius: 20px;
 }
 
 .slide {
@@ -289,8 +289,8 @@ body {
 /* Стартовый экран */
 .start-screen {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 48px 20px;
+    border-radius: 20px;
+    padding: 40px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
     animation: fadeIn 0.3s ease;
@@ -298,17 +298,17 @@ body {
 }
 
 .start-content h2 {
-    font-size: 42px;
+    font-size: 38px;
     color: var(--blue);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 300;
     text-shadow: var(--shadow-glow);
 }
 
 .start-content p {
-    font-size: 16px;
+    font-size: 15px;
     color: var(--text-secondary);
-    margin-bottom: 32px;
+    margin-bottom: 28px;
 }
 
 /* Кнопка начать бег */
@@ -316,14 +316,14 @@ body {
     background: var(--gradient-blue);
     color: white;
     border: none;
-    padding: 18px 32px;
-    font-size: 18px;
+    padding: 16px 28px;
+    font-size: 16px;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 40px;
     cursor: pointer;
     width: 100%;
-    max-width: 320px;
-    margin: 20px auto;
+    max-width: 280px;
+    margin: 16px auto;
     display: block;
     transition: all 0.2s ease;
     letter-spacing: 0.5px;
@@ -366,9 +366,9 @@ body {
 /* Баланс/прогресс */
 .balance-section {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
@@ -376,34 +376,34 @@ body {
 .balance-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 16px;
-    font-size: 18px;
+    margin-bottom: 12px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
 .balance-title span {
-    font-weight: 800;
-    font-size: 24px;
-    margin-left: 8px;
+    font-weight: 700;
+    font-size: 22px;
+    margin-left: 6px;
     color: var(--success);
 }
 
 .balance-item {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .balance-label {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-    font-size: 14px;
+    gap: 6px;
+    margin-bottom: 6px;
+    font-size: 13px;
     color: var(--text-secondary);
 }
 
 .balance-icon {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .balance-percent {
@@ -414,9 +414,9 @@ body {
 
 .progress-bar {
     width: 100%;
-    height: 10px;
+    height: 8px;
     background: var(--bg-primary);
-    border-radius: 10px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -424,7 +424,7 @@ body {
 .progress-fill {
     height: 100%;
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .mind-fill {
@@ -438,9 +438,9 @@ body {
 /* Карточка тренировки */
 .workout-card {
     background: var(--bg-primary);
-    border-radius: 24px;
-    padding: 20px;
-    margin-bottom: 10px;
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 8px;
     border: 2px solid var(--blue);
     box-shadow: var(--shadow-md);
 }
@@ -449,21 +449,21 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .workout-name {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--blue);
 }
 
 .workout-difficulty {
-    padding: 6px 16px;
-    border-radius: 30px;
-    font-size: 13px;
+    padding: 4px 12px;
+    border-radius: 24px;
+    font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
 }
@@ -487,22 +487,22 @@ body {
 .workout-steps {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .workout-step {
     display: flex;
     align-items: center;
-    padding: 16px;
+    padding: 14px;
     background: var(--bg-card);
-    border-radius: 18px;
+    border-radius: 16px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
     animation: slideIn 0.2s ease;
 }
 
 .workout-step:hover {
-    transform: translateX(5px);
+    transform: translateX(4px);
     border-color: var(--blue);
 }
 
@@ -512,17 +512,17 @@ body {
 }
 
 .workout-checkbox {
-    width: 26px;
-    height: 26px;
-    margin-right: 15px;
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
     cursor: pointer;
     accent-color: var(--blue);
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .step-text {
     flex: 1;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -532,27 +532,27 @@ body {
 }
 
 .step-distance {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--blue);
     font-weight: 600;
-    margin-left: 10px;
-    padding: 4px 12px;
+    margin-left: 8px;
+    padding: 4px 10px;
     background: var(--bg-primary);
-    border-radius: 30px;
+    border-radius: 24px;
 }
 
 /* Кнопка завершить день */
 .complete-day-btn {
     width: 100%;
-    padding: 18px;
+    padding: 16px;
     background: var(--gradient-green);
     color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 18px;
+    border-radius: 40px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 16px;
     transition: all 0.2s ease;
     letter-spacing: 0.5px;
     box-shadow: var(--shadow-md);
@@ -589,11 +589,11 @@ body {
 
 /* Информация о времени */
 .time-info, .deadline-info {
-    font-size: 14px;
-    margin-top: 16px;
-    padding: 12px;
+    font-size: 13px;
+    margin-top: 12px;
+    padding: 10px;
     background: var(--bg-primary);
-    border-radius: 16px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
     text-align: center;
     font-weight: 500;
@@ -602,8 +602,8 @@ body {
 /* Экран завершения */
 .congrats {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 48px 20px;
+    border-radius: 20px;
+    padding: 40px 16px;
     text-align: center;
     border: 1px solid var(--border-color);
     animation: popIn 0.3s ease;
@@ -611,45 +611,45 @@ body {
 }
 
 .congrats h2 {
-    font-size: 32px;
+    font-size: 28px;
     color: var(--success);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     font-weight: 700;
 }
 
 .congrats p {
-    font-size: 16px;
+    font-size: 15px;
     color: var(--text-secondary);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .final-balance div {
     background: var(--bg-primary);
-    padding: 20px 40px;
-    border-radius: 50px;
+    padding: 16px 32px;
+    border-radius: 40px;
     border: 2px solid var(--blue);
     color: var(--blue);
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     display: inline-block;
-    margin: 16px 0;
+    margin: 12px 0;
     box-shadow: var(--shadow-glow);
 }
 
 /* ===== СТИЛИ ДЛЯ ДОБАВЛЕННЫХ ЗАДАНИЙ ===== */
 .additional-header {
-    margin: 24px 0 12px 0;
-    padding: 0 5px;
+    margin: 20px 0 8px 0;
+    padding: 0 4px;
 }
 
 .additional-header h3 {
     color: var(--blue);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
     position: relative;
-    padding-left: 12px;
+    padding-left: 10px;
 }
 
 .additional-header h3::before {
@@ -658,23 +658,23 @@ body {
     left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 4px;
-    height: 16px;
+    width: 3px;
+    height: 14px;
     background: var(--gradient-blue);
-    border-radius: 4px;
+    border-radius: 3px;
 }
 
 .additional-steps {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 15px;
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
 .additional-steps .workout-step {
     background: var(--bg-card);
     border: 1px solid var(--blue);
-    border-left: 4px solid var(--blue);
+    border-left: 3px solid var(--blue);
 }
 
 .additional-steps .workout-step.step-completed {
@@ -684,14 +684,14 @@ body {
 }
 
 .extra-step {
-    border-left: 4px solid var(--blue) !important;
+    border-left: 3px solid var(--blue) !important;
 }
 
 /* ===== СТАТИСТИКА ===== */
 .stats-section {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 20px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
 }
@@ -699,8 +699,8 @@ body {
 .stats-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 24px;
-    font-size: 22px;
+    margin-bottom: 20px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 1px;
 }
@@ -708,14 +708,14 @@ body {
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .stat-card {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 14px;
     text-align: center;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
@@ -729,73 +729,73 @@ body {
 }
 
 .stat-value {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: var(--blue);
     display: block;
-    line-height: 1.3;
+    line-height: 1.2;
 }
 
 .stat-label {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 .weekly-card {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 16px;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .weekly-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 16px;
+    font-size: 13px;
+    margin-bottom: 12px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
 .week-numbers {
     text-align: center;
-    margin-top: 12px;
-    font-size: 14px;
+    margin-top: 8px;
+    font-size: 13px;
     color: var(--text-secondary);
 }
 
 .week-numbers span:first-child {
     color: var(--blue);
     font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .comparison-card {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin: 16px 0;
+    border-radius: 16px;
+    padding: 14px;
+    margin: 12px 0;
     border: 1px solid var(--border-color);
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     box-shadow: var(--shadow-sm);
 }
 
 .recent-card {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .recent-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 16px;
+    font-size: 13px;
+    margin-bottom: 12px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -803,87 +803,87 @@ body {
 .history-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .history-item {
-    padding: 16px;
+    padding: 12px;
     background: var(--bg-card);
-    border-radius: 14px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
 }
 
 .history-item:hover {
-    transform: translateX(5px);
+    transform: translateX(4px);
     border-color: var(--blue);
 }
 
 .history-date {
     color: var(--text-secondary);
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .history-workout {
     color: var(--blue);
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
 }
 
 .empty-history {
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     background: var(--bg-card);
-    border-radius: 14px;
+    border-radius: 12px;
     border: 2px dashed var(--border-color);
 }
 
 /* ===== AI-РЕКОМЕНДАЦИИ ===== */
 .recommendations-card {
     background: var(--gradient-blue);
-    border-radius: 24px;
-    padding: 24px;
-    margin: 24px 0;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
     color: white;
     animation: slideIn 0.3s ease;
     box-shadow: var(--shadow-lg);
 }
 
 .recommendations-card h3 {
-    font-size: 18px;
-    margin-bottom: 16px;
+    font-size: 16px;
+    margin-bottom: 12px;
     font-weight: 600;
     letter-spacing: 1px;
     opacity: 0.9;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .recommendations-card h3::before {
     content: '🤖';
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .recommendation-content {
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 20px;
-    min-height: 80px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    min-height: 70px;
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 12px;
     background: rgba(255, 255, 255, 0.1);
-    padding: 20px;
-    border-radius: 18px;
+    padding: 16px;
+    border-radius: 16px;
     backdrop-filter: blur(10px);
 }
 
 .recommendation-icon {
-    font-size: 32px;
-    min-width: 48px;
+    font-size: 28px;
+    min-width: 40px;
     text-align: center;
 }
 
@@ -894,10 +894,10 @@ body {
 .refresh-recommendation {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 40px;
-    padding: 14px 24px;
+    border-radius: 30px;
+    padding: 12px 20px;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -905,7 +905,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     backdrop-filter: blur(10px);
 }
 
@@ -917,29 +917,29 @@ body {
 /* ===== НОВЫЙ ДИЗАЙН ДЛЯ ДРУЗЕЙ ===== */
 .combined-section {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 20px;
+    border-radius: 20px;
+    padding: 16px;
     border: 1px solid var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow-md);
 }
 
 .section-tabs {
     display: flex;
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 20px;
     background: var(--bg-primary);
-    padding: 6px;
-    border-radius: 16px;
+    padding: 4px;
+    border-radius: 14px;
 }
 
 .tab-btn {
     flex: 1;
     background: transparent;
     border: none;
-    padding: 14px;
+    padding: 12px;
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     border-radius: 12px;
@@ -964,9 +964,9 @@ body {
 /* Приветственный баннер */
 .friends-welcome-card {
     background: var(--gradient-blue);
-    border-radius: 24px;
-    padding: 24px;
-    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 16px;
     color: white;
     box-shadow: var(--shadow-lg);
 }
@@ -974,20 +974,20 @@ body {
 .welcome-content {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .welcome-avatar {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
-    border: 3px solid white;
+    font-size: 32px;
+    border: 2px solid white;
     box-shadow: var(--shadow-md);
 }
 
@@ -996,14 +996,14 @@ body {
 }
 
 .welcome-info h3 {
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 18px;
+    margin-bottom: 6px;
     font-weight: 700;
 }
 
 .welcome-stats {
     display: flex;
-    gap: 20px;
+    gap: 16px;
 }
 
 .welcome-stat {
@@ -1011,14 +1011,14 @@ body {
 }
 
 .welcome-stat .stat-value {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
     color: white;
     display: block;
 }
 
 .welcome-stat .stat-label {
-    font-size: 11px;
+    font-size: 10px;
     opacity: 0.8;
     color: white;
     font-weight: 500;
@@ -1026,25 +1026,25 @@ body {
 
 .welcome-progress {
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: 14px;
+    padding: 12px;
     backdrop-filter: blur(10px);
 }
 
 .progress-label {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: 6px;
+    font-size: 12px;
     font-weight: 500;
 }
 
 /* Блок приглашений */
 .invite-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
@@ -1053,11 +1053,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .invite-header h3 {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 600;
     letter-spacing: 1px;
@@ -1066,32 +1066,32 @@ body {
 .invite-badge {
     background: var(--gradient-orange);
     color: white;
-    padding: 6px 12px;
-    border-radius: 30px;
-    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 24px;
+    font-size: 11px;
     font-weight: 600;
 }
 
 .invite-buttons {
     display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 6px;
+    margin-bottom: 12px;
 }
 
 .invite-btn {
     flex: 1;
     background: var(--gradient-blue);
     border: none;
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: 14px;
+    padding: 14px;
     color: white;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
 }
@@ -1102,12 +1102,12 @@ body {
 }
 
 .copy-btn, .share-progress-btn {
-    width: 52px;
+    width: 48px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 14px;
     color: var(--text-primary);
-    font-size: 22px;
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
@@ -1121,9 +1121,9 @@ body {
 
 .invite-stats {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     justify-content: center;
-    padding-top: 16px;
+    padding-top: 12px;
     border-top: 1px solid var(--border-color);
 }
 
@@ -1132,14 +1132,14 @@ body {
 }
 
 .invite-stat .stat-value {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--blue);
     display: block;
 }
 
 .invite-stat .stat-label {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-secondary);
     font-weight: 500;
 }
@@ -1147,9 +1147,9 @@ body {
 /* Таблица лидеров */
 .leaderboard-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
@@ -1158,13 +1158,13 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 .leaderboard-header h3 {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 600;
     letter-spacing: 1px;
@@ -1172,20 +1172,20 @@ body {
 
 .period-selector {
     display: flex;
-    gap: 6px;
+    gap: 4px;
     background: var(--bg-card);
-    padding: 4px;
-    border-radius: 12px;
+    padding: 3px;
+    border-radius: 10px;
 }
 
 .period-btn {
     background: transparent;
     border: none;
-    padding: 8px 12px;
-    font-size: 12px;
+    padding: 6px 10px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--text-secondary);
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -1196,7 +1196,7 @@ body {
 }
 
 .leaderboard-content {
-    max-height: 350px;
+    max-height: 300px;
     overflow-y: auto;
     padding-right: 4px;
 }
@@ -1204,17 +1204,17 @@ body {
 .leaderboard-row {
     display: flex;
     align-items: center;
-    padding: 14px;
+    padding: 12px;
     background: var(--bg-card);
-    border-radius: 14px;
-    margin-bottom: 8px;
-    gap: 12px;
+    border-radius: 12px;
+    margin-bottom: 6px;
+    gap: 10px;
     transition: all 0.2s ease;
     border: 1px solid transparent;
 }
 
 .leaderboard-row:hover {
-    transform: translateX(5px);
+    transform: translateX(4px);
     border-color: var(--blue);
     box-shadow: var(--shadow-sm);
 }
@@ -1225,8 +1225,8 @@ body {
 }
 
 .rank {
-    width: 45px;
-    font-size: 18px;
+    width: 40px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--gold);
     text-align: center;
@@ -1236,48 +1236,48 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: 6px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 .you-badge {
     background: var(--blue);
     color: white;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 9px;
     font-weight: 600;
 }
 
 .distance {
-    width: 70px;
+    width: 60px;
     font-weight: 600;
     color: var(--success);
-    font-size: 14px;
+    font-size: 12px;
     text-align: right;
 }
 
 .workouts {
-    width: 45px;
+    width: 40px;
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 11px;
     text-align: center;
 }
 
 .pace {
-    width: 70px;
+    width: 60px;
     color: var(--warning);
-    font-size: 13px;
+    font-size: 11px;
     text-align: right;
 }
 
 /* Результаты друзей */
 .friends-results-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
@@ -1286,11 +1286,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .results-header h3 {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 600;
     letter-spacing: 1px;
@@ -1299,30 +1299,30 @@ body {
 .results-count {
     background: var(--blue);
     color: white;
-    padding: 4px 10px;
-    border-radius: 30px;
-    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 24px;
+    font-size: 11px;
     font-weight: 600;
 }
 
 .results-list {
-    max-height: 450px;
+    max-height: 400px;
     overflow-y: auto;
     padding-right: 4px;
 }
 
 .friend-stat-card {
     background: var(--bg-card);
-    border-radius: 20px;
-    padding: 18px;
-    margin-bottom: 12px;
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 10px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
 }
 
 .friend-stat-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: var(--blue);
 }
@@ -1330,36 +1330,36 @@ body {
 .friend-info {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 12px;
 }
 
 .friend-avatar {
-    width: 55px;
-    height: 55px;
+    width: 48px;
+    height: 48px;
     background: var(--gradient-blue);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 24px;
     color: white;
     box-shadow: var(--shadow-sm);
 }
 
 .friend-name {
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 600;
 }
 
 .friend-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 12px;
-    padding: 12px;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 8px;
     background: var(--bg-primary);
-    border-radius: 16px;
+    border-radius: 14px;
 }
 
 .stat-row {
@@ -1370,22 +1370,22 @@ body {
 }
 
 .stat-row span:first-child {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-secondary);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     font-weight: 500;
 }
 
 .stat-row .stat-value {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--blue);
     font-weight: 700;
 }
 
 .vs-row {
-    padding: 10px;
-    border-radius: 12px;
-    font-size: 13px;
+    padding: 8px;
+    border-radius: 10px;
+    font-size: 12px;
     font-weight: 600;
     text-align: center;
 }
@@ -1408,9 +1408,9 @@ body {
 /* Заявки в друзья */
 .requests-card {
     background: var(--gradient-orange);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     color: white;
     box-shadow: var(--shadow-lg);
 }
@@ -1419,11 +1419,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .requests-header h3 {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -1431,37 +1431,37 @@ body {
 .requests-badge {
     background: white;
     color: var(--warning);
-    padding: 4px 10px;
-    border-radius: 30px;
-    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 24px;
+    font-size: 11px;
     font-weight: 600;
 }
 
 .requests-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 }
 
 .friend-request-item {
     background: rgba(255, 255, 255, 0.15);
-    border-radius: 16px;
-    padding: 15px;
+    border-radius: 14px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     backdrop-filter: blur(10px);
 }
 
 .friend-request-avatar {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .friend-request-info {
@@ -1469,28 +1469,28 @@ body {
 }
 
 .friend-request-name {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     display: block;
 }
 
 .friend-request-username {
-    font-size: 12px;
+    font-size: 11px;
     opacity: 0.8;
 }
 
 .friend-request-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .friend-request-accept {
     background: white;
     border: none;
-    border-radius: 30px;
-    padding: 8px 18px;
+    border-radius: 24px;
+    padding: 6px 14px;
     color: var(--warning);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1503,10 +1503,10 @@ body {
 .friend-request-decline {
     background: transparent;
     border: 1px solid white;
-    border-radius: 30px;
-    padding: 8px 18px;
+    border-radius: 24px;
+    padding: 6px 14px;
     color: white;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1520,26 +1520,26 @@ body {
 /* Добавление друга */
 .add-friend-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .add-friend-form {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .add-friend-form input {
     flex: 1;
-    padding: 16px;
+    padding: 14px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 14px;
     color: var(--text-primary);
-    font-size: 15px;
+    font-size: 14px;
     transition: all 0.2s ease;
 }
 
@@ -1550,12 +1550,12 @@ body {
 }
 
 .send-request-btn {
-    width: 60px;
+    width: 52px;
     background: var(--gradient-blue);
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
@@ -1568,24 +1568,24 @@ body {
 /* Мини-профиль */
 .profile-mini-card {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 15px;
+    border-radius: 16px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .profile-mini-avatar {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     background: var(--gradient-blue);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     color: white;
     box-shadow: var(--shadow-sm);
 }
@@ -1595,23 +1595,23 @@ body {
 }
 
 .profile-mini-name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .profile-mini-stats {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-secondary);
 }
 
 .profile-mini-share {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 30px;
-    padding: 8px 16px;
-    font-size: 14px;
+    border-radius: 24px;
+    padding: 6px 12px;
+    font-size: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -1627,11 +1627,11 @@ body {
 .empty-leaderboard,
 .empty-results {
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: 14px;
     background: var(--bg-card);
-    border-radius: 18px;
+    border-radius: 16px;
     border: 2px dashed var(--border-color);
 }
 
@@ -1639,21 +1639,21 @@ body {
 .diary-section-compact {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .add-entry-btn {
     background: var(--bg-primary);
     border: 2px dashed var(--border-color);
-    border-radius: 18px;
-    padding: 16px;
-    font-size: 15px;
+    border-radius: 16px;
+    padding: 14px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     color: var(--text-secondary);
     transition: all 0.2s ease;
 }
@@ -1666,8 +1666,8 @@ body {
 
 .entry-item {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 18px;
+    border-radius: 16px;
+    padding: 14px;
     border: 1px solid var(--border-color);
     position: relative;
     box-shadow: var(--shadow-sm);
@@ -1675,34 +1675,34 @@ body {
 }
 
 .entry-item:hover {
-    transform: translateX(5px);
+    transform: translateX(4px);
     border-color: var(--blue);
 }
 
 .entry-date {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--blue);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 500;
 }
 
 .entry-content {
-    font-size: 14px;
-    line-height: 1.5;
-    padding-right: 30px;
+    font-size: 13px;
+    line-height: 1.4;
+    padding-right: 24px;
 }
 
 .entry-delete {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 12px;
+    right: 12px;
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
-    padding: 8px;
-    border-radius: 10px;
+    padding: 6px;
+    border-radius: 8px;
     transition: all 0.2s ease;
 }
 
@@ -1713,34 +1713,34 @@ body {
 
 /* Настройки в меню */
 .settings-menu {
-    padding: 8px;
+    padding: 6px;
 }
 
 .theme-selector, .language-selector {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .theme-selector span, .language-selector span {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 500;
 }
 
 .theme-buttons-menu, .lang-buttons-menu {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 .theme-btn-small, .lang-btn-small {
     flex: 1;
-    padding: 12px;
+    padding: 10px;
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 10px;
     color: var(--text-primary);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1755,35 +1755,35 @@ body {
 /* ===== СОЗДАНИЕ ТРЕНИРОВКИ ===== */
 .custom-workout-section {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 20px;
     border: 1px solid var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow-md);
 }
 
 .custom-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 24px;
-    font-size: 22px;
+    margin-bottom: 20px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .goal-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .goal-card h3 {
     color: var(--text-secondary);
-    font-size: 15px;
-    margin-bottom: 16px;
+    font-size: 13px;
+    margin-bottom: 12px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -1791,19 +1791,19 @@ body {
 .goal-input {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
 }
 
 .goal-input input {
     flex: 1;
-    max-width: 220px;
-    padding: 16px;
+    max-width: 200px;
+    padding: 14px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 14px;
     color: var(--text-primary);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     text-align: center;
     transition: all 0.2s ease;
@@ -1816,24 +1816,24 @@ body {
 }
 
 .goal-input span {
-    font-size: 18px;
+    font-size: 16px;
     color: var(--text-secondary);
-    min-width: 45px;
+    min-width: 40px;
 }
 
 .tasks-creator {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .tasks-creator h3 {
     color: var(--text-secondary);
-    font-size: 15px;
-    margin-bottom: 20px;
+    font-size: 13px;
+    margin-bottom: 16px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -1841,20 +1841,20 @@ body {
 .add-task-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 16px;
     align-items: center;
 }
 
 .add-task-form input {
     width: 100%;
-    max-width: 320px;
-    padding: 16px;
+    max-width: 280px;
+    padding: 14px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 16px;
+    border-radius: 14px;
     color: var(--text-primary);
-    font-size: 15px;
+    font-size: 14px;
     transition: all 0.2s ease;
 }
 
@@ -1867,31 +1867,31 @@ body {
 .task-distance-input {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     justify-content: center;
 }
 
 .task-distance-input input {
     flex: 1;
-    max-width: 160px;
+    max-width: 140px;
     text-align: center;
 }
 
 .task-distance-input span {
     color: var(--text-secondary);
-    font-size: 15px;
-    min-width: 35px;
+    font-size: 14px;
+    min-width: 30px;
 }
 
 .add-task-btn {
     width: 100%;
-    max-width: 320px;
-    padding: 16px;
+    max-width: 280px;
+    padding: 14px;
     background: var(--bg-card);
     color: var(--blue);
     border: 2px dashed var(--border-color);
-    border-radius: 16px;
-    font-size: 16px;
+    border-radius: 14px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1906,9 +1906,9 @@ body {
 #custom-tasks-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    min-height: 100px;
-    max-height: 350px;
+    gap: 8px;
+    min-height: 80px;
+    max-height: 300px;
     overflow-y: auto;
     width: 100%;
     align-items: center;
@@ -1917,19 +1917,19 @@ body {
 .custom-task-item {
     display: flex;
     align-items: center;
-    padding: 16px;
+    padding: 12px;
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
     animation: slideIn 0.2s ease;
     width: 100%;
-    max-width: 420px;
-    gap: 12px;
+    max-width: 380px;
+    gap: 10px;
 }
 
 .custom-task-text {
     flex: 1;
-    font-size: 15px;
+    font-size: 14px;
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1940,7 +1940,7 @@ body {
 .custom-task-distance {
     color: var(--blue);
     font-weight: 600;
-    min-width: 80px;
+    min-width: 70px;
     text-align: right;
     white-space: nowrap;
 }
@@ -1949,12 +1949,12 @@ body {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 20px;
+    font-size: 18px;
     cursor: pointer;
-    padding: 6px 10px;
+    padding: 4px 8px;
     transition: all 0.2s ease;
     flex-shrink: 0;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
 .custom-task-delete:active {
@@ -1965,25 +1965,25 @@ body {
 
 .empty-tasks {
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: 14px;
     background: var(--bg-card);
-    border-radius: 18px;
+    border-radius: 16px;
     border: 2px dashed var(--border-color);
     width: 100%;
-    max-width: 420px;
+    max-width: 380px;
 }
 
 .create-plan-btn {
     width: 100%;
-    max-width: 420px;
-    padding: 18px;
+    max-width: 380px;
+    padding: 16px;
     background: var(--gradient-blue);
     color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 18px;
+    border-radius: 40px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -1991,7 +1991,7 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .create-plan-btn:active:not(:disabled) {
@@ -2008,15 +2008,15 @@ body {
 
 /* ===== СОХРАНЕННЫЕ ТРЕНИРОВКИ ===== */
 .saved-workouts-section {
-    margin-top: 30px;
-    padding-top: 24px;
+    margin-top: 24px;
+    padding-top: 20px;
     border-top: 1px solid var(--border-color);
 }
 
 .saved-workouts-title {
     color: var(--text-secondary);
-    font-size: 15px;
-    margin-bottom: 20px;
+    font-size: 13px;
+    margin-bottom: 16px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -2024,20 +2024,20 @@ body {
 .saved-workouts-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-height: 350px;
+    gap: 10px;
+    max-height: 300px;
     overflow-y: auto;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .saved-workout-item {
     background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 18px;
+    border-radius: 16px;
+    padding: 14px;
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    gap: 18px;
+    gap: 14px;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
 }
@@ -2048,14 +2048,14 @@ body {
 }
 
 .saved-workout-icon {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     background: var(--gradient-blue);
-    border-radius: 16px;
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     color: white;
     flex-shrink: 0;
     box-shadow: var(--shadow-sm);
@@ -2067,32 +2067,32 @@ body {
 }
 
 .saved-workout-name {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .saved-workout-meta {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-secondary);
 }
 
 .saved-workout-actions {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .workout-start-btn, .workout-delete-btn {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     border: none;
-    border-radius: 14px;
-    font-size: 20px;
+    border-radius: 12px;
+    font-size: 18px;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
@@ -2119,21 +2119,21 @@ body {
 
 .empty-workouts {
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: 14px;
     background: var(--bg-card);
-    border-radius: 18px;
+    border-radius: 16px;
     border: 2px dashed var(--border-color);
 }
 
 /* ===== АКТИВНАЯ ТРЕНИРОВКА ===== */
 .active-workout {
     background: var(--bg-primary);
-    border-radius: 24px;
-    padding: 24px;
+    border-radius: 20px;
+    padding: 20px;
     border: 2px solid var(--blue);
-    margin-top: 24px;
+    margin-top: 20px;
     animation: slideIn 0.3s ease;
     box-shadow: var(--shadow-lg);
 }
@@ -2142,20 +2142,20 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .active-workout-header h3 {
-    font-size: 20px;
+    font-size: 18px;
     color: var(--blue);
     font-weight: 700;
 }
 
 .active-workout-goal {
     background: var(--bg-card);
-    padding: 8px 16px;
-    border-radius: 30px;
-    font-size: 16px;
+    padding: 6px 14px;
+    border-radius: 24px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--success);
     border: 1px solid var(--border-color);
@@ -2164,37 +2164,37 @@ body {
 .active-workout-progress {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 24px;
+    gap: 12px;
+    margin-bottom: 20px;
 }
 
 .active-workout-progress .progress-bar {
     flex: 1;
-    height: 12px;
+    height: 10px;
 }
 
 .progress-percent {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--blue);
-    min-width: 50px;
+    min-width: 45px;
 }
 
 .active-workout-steps {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 24px;
-    max-height: 350px;
+    gap: 10px;
+    margin-bottom: 20px;
+    max-height: 300px;
     overflow-y: auto;
 }
 
 .workout-step-compact {
     display: flex;
     align-items: center;
-    padding: 16px;
+    padding: 14px;
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 14px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
 }
@@ -2205,16 +2205,16 @@ body {
 }
 
 .workout-step-compact .workout-checkbox {
-    width: 24px;
-    height: 24px;
-    margin-right: 15px;
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
     cursor: pointer;
     accent-color: var(--blue);
 }
 
 .workout-step-compact .step-text {
     flex: 1;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
 }
 
@@ -2224,23 +2224,23 @@ body {
 }
 
 .workout-step-compact .step-distance {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--blue);
     font-weight: 600;
-    margin-left: 10px;
-    padding: 4px 10px;
+    margin-left: 8px;
+    padding: 2px 8px;
     background: var(--bg-primary);
-    border-radius: 20px;
+    border-radius: 16px;
 }
 
 .complete-workout-btn {
     width: 100%;
-    padding: 18px;
+    padding: 16px;
     background: var(--gradient-green);
     color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 18px;
+    border-radius: 40px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2264,18 +2264,18 @@ body {
 /* Основной контейнер */
 .strength-section {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 24px 20px;
+    border-radius: 20px;
+    padding: 20px 16px;
     border: 1px solid var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     box-shadow: var(--shadow-md);
 }
 
 .strength-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 24px;
-    font-size: 26px;
+    margin-bottom: 20px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: var(--shadow-glow);
@@ -2284,9 +2284,9 @@ body {
 /* Карточка прогресса */
 .strength-progress-card {
     background: var(--gradient-blue);
-    border-radius: 24px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     color: white;
     box-shadow: var(--shadow-lg);
 }
@@ -2295,54 +2295,54 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .progress-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     opacity: 0.9;
 }
 
 .progress-percent {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     background: rgba(255, 255, 255, 0.2);
-    padding: 6px 16px;
-    border-radius: 40px;
+    padding: 4px 12px;
+    border-radius: 30px;
 }
 
 .strength-fill {
     background: white;
-    height: 10px;
-    border-radius: 10px;
+    height: 8px;
+    border-radius: 8px;
 }
 
 /* Селектор типа тренировки */
 .workout-type-selector {
     display: flex;
-    gap: 10px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 20px;
     background: var(--bg-primary);
-    padding: 8px;
-    border-radius: 20px;
+    padding: 6px;
+    border-radius: 18px;
 }
 
 .type-btn {
     flex: 1;
     background: transparent;
     border: none;
-    padding: 18px 8px;
-    border-radius: 18px;
+    padding: 14px 6px;
+    border-radius: 14px;
     color: var(--text-secondary);
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     box-shadow: var(--shadow-sm);
 }
 
@@ -2354,20 +2354,20 @@ body {
 }
 
 .type-icon {
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .type-name {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
 }
 
 /* Карточка упражнения */
 .exercise-card {
     background: var(--bg-primary);
-    border-radius: 24px;
-    padding: 24px;
-    margin-bottom: 24px;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
     border: 2px solid transparent;
     transition: all 0.3s ease;
     box-shadow: var(--shadow-md);
@@ -2391,21 +2391,21 @@ body {
 .exercise-header {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 24px;
-    padding-bottom: 20px;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .exercise-icon {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background: var(--gradient-blue);
-    border-radius: 24px;
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
+    font-size: 32px;
     color: white;
     box-shadow: var(--shadow-md);
 }
@@ -2415,42 +2415,42 @@ body {
 }
 
 .exercise-title h3 {
-    font-size: 22px;
-    margin-bottom: 6px;
+    font-size: 18px;
+    margin-bottom: 4px;
     font-weight: 700;
 }
 
 .exercise-subtitle {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--text-secondary);
 }
 
 .exercise-stats {
     background: var(--bg-card);
-    padding: 12px 24px;
-    border-radius: 40px;
-    font-size: 24px;
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--blue);
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Настройка цели */
 .goal-settings {
-    margin-bottom: 24px;
-    padding: 20px;
+    margin-bottom: 20px;
+    padding: 16px;
     background: var(--bg-card);
-    border-radius: 20px;
+    border-radius: 18px;
 }
 
 .goal-slider {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .goal-slider label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text-secondary);
 }
@@ -2458,22 +2458,22 @@ body {
 .slider-container {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
 }
 
 .slider-container input[type="range"] {
     flex: 1;
-    height: 10px;
+    height: 8px;
     -webkit-appearance: none;
     background: var(--gradient-blue);
-    border-radius: 10px;
+    border-radius: 8px;
     outline: none;
 }
 
 .slider-container input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     background: white;
     border-radius: 50%;
     box-shadow: var(--shadow-md);
@@ -2488,33 +2488,33 @@ body {
 }
 
 .goal-value {
-    min-width: 70px;
-    font-size: 28px;
+    min-width: 60px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--blue);
     text-align: center;
     background: var(--bg-primary);
-    padding: 10px 16px;
-    border-radius: 40px;
-    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 8px 12px;
+    border-radius: 30px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Контейнер для сетов */
 .sets-container {
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-bottom: 20px;
-    max-height: 400px;
+    gap: 10px;
+    margin-bottom: 16px;
+    max-height: 350px;
     overflow-y: auto;
-    padding-right: 6px;
+    padding-right: 4px;
 }
 
 /* Карточка подхода */
 .set-card {
     background: var(--bg-card);
-    border-radius: 22px;
-    padding: 18px;
+    border-radius: 18px;
+    padding: 14px;
     border: 1px solid var(--border-color);
     animation: slideIn 0.2s ease;
     box-shadow: var(--shadow-sm);
@@ -2529,26 +2529,26 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 10px;
 }
 
 .set-number {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--blue);
     background: var(--bg-primary);
-    padding: 8px 18px;
-    border-radius: 40px;
+    padding: 4px 12px;
+    border-radius: 30px;
 }
 
 .set-remove {
     background: none;
     border: none;
     color: var(--text-secondary);
-    font-size: 22px;
+    font-size: 20px;
     cursor: pointer;
-    padding: 10px 14px;
-    border-radius: 14px;
+    padding: 6px 10px;
+    border-radius: 10px;
     transition: all 0.2s ease;
 }
 
@@ -2559,7 +2559,7 @@ body {
 
 .set-inputs {
     display: flex;
-    gap: 20px;
+    gap: 16px;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -2568,26 +2568,26 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     background: var(--bg-primary);
-    padding: 12px 20px;
-    border-radius: 18px;
+    padding: 8px 14px;
+    border-radius: 14px;
 }
 
 .set-reps label {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 .set-reps input {
-    width: 90px;
-    padding: 12px;
+    width: 80px;
+    padding: 8px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: 12px;
     color: var(--text-primary);
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     text-align: center;
     transition: all 0.2s ease;
@@ -2607,11 +2607,11 @@ body {
 .set-complete {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 6px 14px;
     background: var(--bg-primary);
-    border-radius: 40px;
+    border-radius: 30px;
     transition: all 0.2s ease;
 }
 
@@ -2620,14 +2620,14 @@ body {
 }
 
 .set-complete input[type="checkbox"] {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     cursor: pointer;
     accent-color: var(--success);
 }
 
 .set-complete span {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     color: var(--text-secondary);
 }
@@ -2641,20 +2641,20 @@ body {
 /* Кнопка добавления подхода */
 .add-set-btn, .add-mixed-set-btn {
     width: 100%;
-    padding: 20px;
+    padding: 16px;
     background: var(--gradient-blue);
     border: none;
-    border-radius: 50px;
+    border-radius: 40px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 8px;
     box-shadow: var(--shadow-md);
 }
 
@@ -2664,28 +2664,28 @@ body {
 }
 
 .add-set-btn .btn-icon, .add-mixed-set-btn .btn-icon {
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .add-set-btn .btn-text, .add-mixed-set-btn .btn-text {
-    font-size: 17px;
+    font-size: 14px;
 }
 
 /* Комплексная тренировка */
 .mixed-workout {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    margin-bottom: 20px;
-    max-height: 450px;
+    gap: 14px;
+    margin-bottom: 16px;
+    max-height: 400px;
     overflow-y: auto;
-    padding-right: 6px;
+    padding-right: 4px;
 }
 
 .mixed-exercise {
     background: var(--bg-card);
-    border-radius: 22px;
-    padding: 18px;
+    border-radius: 18px;
+    padding: 14px;
     border: 2px solid var(--border-color);
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
@@ -2700,19 +2700,19 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
     border-bottom: 1px solid var(--border-color);
 }
 
 .mixed-name {
-    font-size: 19px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--blue);
 }
 
 .mixed-check {
-    font-size: 26px;
+    font-size: 22px;
     color: var(--success);
     opacity: 0.3;
     transition: opacity 0.2s ease;
@@ -2725,16 +2725,16 @@ body {
 .mixed-items {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 10px;
 }
 
 .mixed-item {
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 14px;
+    gap: 12px;
+    padding: 10px;
     background: var(--bg-primary);
-    border-radius: 18px;
+    border-radius: 14px;
     transition: all 0.2s ease;
 }
 
@@ -2744,18 +2744,18 @@ body {
 
 .item-name {
     flex: 1;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
 }
 
 .item-input {
-    width: 90px;
-    padding: 12px;
+    width: 70px;
+    padding: 8px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: 12px;
     color: var(--text-primary);
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
     text-align: center;
 }
@@ -2771,14 +2771,14 @@ body {
 }
 
 .item-unit {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--text-secondary);
-    min-width: 40px;
+    min-width: 35px;
 }
 
 .item-check {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
     accent-color: var(--success);
 }
@@ -2787,10 +2787,10 @@ body {
 .strength-summary {
     display: flex;
     justify-content: space-around;
-    padding: 24px;
+    padding: 20px;
     background: linear-gradient(135deg, var(--bg-primary), var(--bg-card));
-    border-radius: 24px;
-    margin-bottom: 24px;
+    border-radius: 20px;
+    margin-bottom: 20px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-md);
 }
@@ -2801,14 +2801,14 @@ body {
 
 .summary-label {
     display: block;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--text-secondary);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     font-weight: 500;
 }
 
 .summary-value {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
     color: var(--blue);
     text-shadow: var(--shadow-glow);
@@ -2817,16 +2817,16 @@ body {
 /* Кнопка завершения */
 .complete-strength-btn {
     width: 100%;
-    padding: 22px;
+    padding: 18px;
     background: var(--gradient-green);
     color: white;
     border: none;
-    border-radius: 50px;
-    font-size: 20px;
+    border-radius: 40px;
+    font-size: 18px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     box-shadow: var(--shadow-lg);
     letter-spacing: 1px;
 }
@@ -2846,13 +2846,13 @@ body {
 /* Мотивационная цитата */
 .strength-quote {
     text-align: center;
-    padding: 24px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 16px;
     font-style: italic;
     color: var(--text-secondary);
     border-top: 1px solid var(--border-color);
     background: var(--bg-primary);
-    border-radius: 20px;
+    border-radius: 18px;
     font-weight: 500;
 }
 
@@ -2860,8 +2860,8 @@ body {
 .strength-stats-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 16px;
 }
 
 .strength-stat {
@@ -2881,17 +2881,17 @@ body {
 
 .progress-photo-section {
     background: var(--bg-card);
-    border-radius: 24px;
-    padding: 20px 16px;
+    border-radius: 20px;
+    padding: 16px;
     border: 1px solid var(--border-color);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .progress-photo-title {
     text-align: center;
     color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 16px;
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: 1px;
     text-shadow: var(--shadow-glow);
@@ -2901,14 +2901,14 @@ body {
 .weight-stats-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .weight-stat-card {
     background: var(--gradient-blue);
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: 14px;
+    padding: 12px;
     text-align: center;
     color: white;
     box-shadow: var(--shadow-md);
@@ -2916,44 +2916,44 @@ body {
 
 .weight-stat-label {
     display: block;
-    font-size: 12px;
+    font-size: 11px;
     opacity: 0.9;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .weight-stat-value {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
 }
 
 /* График веса */
 .weight-chart-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .weight-chart-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 16px;
+    font-size: 13px;
+    margin-bottom: 12px;
     font-weight: 600;
     letter-spacing: 1px;
 }
 
 .weight-chart {
-    min-height: 150px;
+    min-height: 120px;
     position: relative;
 }
 
 .chart-placeholder {
     text-align: center;
-    padding: 40px 20px;
+    padding: 30px 16px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     background: var(--bg-card);
     border-radius: 12px;
     border: 2px dashed var(--border-color);
@@ -2962,17 +2962,17 @@ body {
 /* Добавление фото */
 .add-photo-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 20px;
+    border-radius: 18px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
 .add-photo-card h3 {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 20px;
+    font-size: 13px;
+    margin-bottom: 16px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -2980,28 +2980,28 @@ body {
 .add-photo-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 .weight-input-group, .date-input-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .weight-input-group label, .date-input-group label {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
     font-weight: 500;
 }
 
 .weight-input-group input, .date-input-group input {
-    padding: 14px;
+    padding: 12px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: 12px;
     color: var(--text-primary);
-    font-size: 16px;
+    font-size: 15px;
     transition: all 0.2s ease;
 }
 
@@ -3014,16 +3014,16 @@ body {
 .select-photo-btn {
     background: var(--gradient-blue);
     border: none;
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: 14px;
+    padding: 14px;
     color: white;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
     transition: all 0.2s ease;
     box-shadow: var(--shadow-md);
 }
@@ -3034,12 +3034,12 @@ body {
 }
 
 .select-photo-btn .btn-icon {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .photo-preview {
     position: relative;
-    border-radius: 16px;
+    border-radius: 14px;
     overflow: hidden;
     border: 2px solid var(--blue);
     box-shadow: var(--shadow-md);
@@ -3053,15 +3053,15 @@ body {
 
 .remove-photo-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 36px;
-    height: 36px;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
     background: rgba(0, 0, 0, 0.6);
     border: none;
     border-radius: 50%;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -3078,10 +3078,10 @@ body {
 .save-photo-btn {
     background: var(--gradient-green);
     border: none;
-    border-radius: 50px;
-    padding: 18px;
+    border-radius: 40px;
+    padding: 16px;
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -3103,8 +3103,8 @@ body {
 /* История фото */
 .photo-history-card {
     background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 18px;
+    padding: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
@@ -3113,12 +3113,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .photo-history-header h3 {
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: 1px;
 }
@@ -3126,25 +3126,25 @@ body {
 .photo-count {
     background: var(--blue);
     color: white;
-    padding: 4px 10px;
-    border-radius: 30px;
-    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 24px;
+    font-size: 11px;
     font-weight: 600;
 }
 
 .photo-list {
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    max-height: 400px;
+    gap: 12px;
+    max-height: 350px;
     overflow-y: auto;
     padding-right: 4px;
 }
 
 .photo-item {
     background: var(--bg-card);
-    border-radius: 18px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 14px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
     box-shadow: var(--shadow-sm);
@@ -3160,11 +3160,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .photo-date {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--blue);
 }
@@ -3172,16 +3172,16 @@ body {
 .photo-weight {
     background: var(--gradient-green);
     color: white;
-    padding: 6px 14px;
-    border-radius: 30px;
-    font-size: 14px;
+    padding: 4px 12px;
+    border-radius: 24px;
+    font-size: 12px;
     font-weight: 600;
 }
 
 .photo-item-img {
     width: 100%;
-    border-radius: 14px;
-    margin-bottom: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
     border: 1px solid var(--border-color);
     cursor: pointer;
     transition: all 0.2s ease;
@@ -3200,15 +3200,15 @@ body {
 .photo-delete-btn {
     background: var(--bg-primary);
     border: 1px solid var(--border-color);
-    border-radius: 30px;
-    padding: 8px 16px;
+    border-radius: 24px;
+    padding: 6px 14px;
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     transition: all 0.2s ease;
 }
 
@@ -3220,11 +3220,11 @@ body {
 
 .empty-photos {
     text-align: center;
-    padding: 40px;
+    padding: 30px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 14px;
     border: 2px dashed var(--border-color);
 }
 
@@ -3235,33 +3235,33 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     z-index: 2000;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 16px;
     animation: fadeIn 0.2s ease;
 }
 
 .photo-modal img {
     max-width: 100%;
     max-height: 80vh;
-    border-radius: 16px;
+    border-radius: 14px;
     box-shadow: var(--shadow-lg);
 }
 
 .photo-modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 48px;
-    height: 48px;
+    top: 16px;
+    right: 16px;
+    width: 44px;
+    height: 44px;
     background: rgba(255, 255, 255, 0.2);
     border: none;
     border-radius: 50%;
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -3280,7 +3280,7 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .weight-stat {
@@ -3299,14 +3299,14 @@ body {
 /* Простой график */
 .simple-chart {
     position: relative;
-    height: 150px;
-    margin: 20px 0;
+    height: 120px;
+    margin: 16px 0;
 }
 
 .chart-point {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background: var(--blue);
     border: 3px solid white;
     border-radius: 50%;
@@ -3315,7 +3315,7 @@ body {
     z-index: 2;
     box-shadow: var(--shadow-md);
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3327,16 +3327,16 @@ body {
 }
 
 .chart-point::after {
-    content: attr(data-weight) ' кг';
+    content: attr(data-weight) ' kg';
     position: absolute;
-    top: -30px;
+    top: -24px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--bg-card);
     color: var(--text-primary);
     padding: 4px 8px;
-    border-radius: 8px;
-    font-size: 11px;
+    border-radius: 6px;
+    font-size: 10px;
     white-space: nowrap;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -3367,38 +3367,38 @@ body {
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-around;
-    padding: 12px 8px;
+    padding: 8px 4px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     z-index: 100;
     max-width: 600px;
     margin: 0 auto;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .nav-btn {
     flex: 1;
-    max-width: 70px;
+    max-width: 64px;
     background: transparent;
     border: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-    padding: 8px 4px;
-    border-radius: 12px;
+    padding: 6px 2px;
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .nav-icon {
-    font-size: 22px;
+    font-size: 20px;
     color: var(--icon-inactive);
     transition: all 0.2s ease;
 }
 
 .nav-text {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 500;
     color: var(--icon-inactive);
     transition: all 0.2s ease;
@@ -3450,28 +3450,28 @@ body {
     }
     
     .leaderboard-row {
-        font-size: 12px;
+        font-size: 11px;
     }
     
     .rank {
-        width: 30px;
+        width: 28px;
     }
     
     .distance, .pace {
-        width: 50px;
+        width: 45px;
     }
     
     .workouts {
-        width: 30px;
+        width: 28px;
     }
     
     .friend-stat-card {
-        padding: 12px;
+        padding: 10px;
     }
     
     .friend-stats {
         grid-template-columns: repeat(3, 1fr);
-        gap: 5px;
+        gap: 4px;
     }
     
     .friend-request-item {
@@ -3489,20 +3489,20 @@ body {
     }
     
     .workout-type-selector {
-        gap: 6px;
-        padding: 6px;
+        gap: 4px;
+        padding: 4px;
     }
     
     .type-btn {
-        padding: 12px 4px;
+        padding: 10px 4px;
     }
     
     .type-icon {
-        font-size: 24px;
+        font-size: 22px;
     }
     
     .type-name {
-        font-size: 11px;
+        font-size: 10px;
     }
     
     .exercise-header {
@@ -3532,7 +3532,7 @@ body {
     }
     
     .set-reps input {
-        width: 100px;
+        width: 80px;
     }
     
     .set-complete {
@@ -3544,12 +3544,12 @@ body {
     }
     
     .item-input {
-        width: 70px;
+        width: 60px;
     }
     
     .strength-summary {
         flex-wrap: wrap;
-        gap: 15px;
+        gap: 12px;
     }
     
     .nav-text {
@@ -3557,7 +3557,7 @@ body {
     }
     
     .nav-icon {
-        font-size: 20px;
+        font-size: 18px;
     }
     
     .saved-workout-item {
