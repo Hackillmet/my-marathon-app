@@ -7,8 +7,7 @@ const userName = tg.initDataUnsafe?.user?.first_name || 'Пользовател�
 const userUsername = tg.initDataUnsafe?.user?.username || 'user';
 
 // ========== ДАТА СТАРТА МАРАФОНА ==========
-// Установи здесь дату начала марафона (например, 1 июня 2025)
-const MARATHON_START_DATE = new Date(2025, 5, 1); // Год, месяц (0-11), день
+const MARATHON_START_DATE = new Date(2025, 5, 1); // 1 июня 2025
 
 // ========== КЛЮЧИ ДЛЯ ХРАНЕНИЯ ==========
 const STORAGE_KEYS = {
@@ -46,7 +45,11 @@ const STORAGE_KEYS = {
     STRENGTH_TOTAL_DAYS: 'strength_total_days',
     STRENGTH_BEST_PULLUPS: 'strength_best_pullups',
     STRENGTH_BEST_PUSHUPS: 'strength_best_pushups',
-    STRENGTH_TODAY: 'strength_today'
+    STRENGTH_TODAY: 'strength_today',
+    // НОВЫЕ КЛЮЧИ ДЛЯ ПРОГРЕСС-ФОТО
+    PROGRESS_PHOTOS: 'progress_photos',
+    START_WEIGHT: 'start_weight',
+    CURRENT_WEIGHT: 'current_weight'
 };
 
 // ========== ПЕРЕВОДЫ ==========
@@ -215,7 +218,7 @@ const translations = {
         onlyFrom4am: "⏰ Тренировки доступны с 4:00 до 23:00",
         onlyUntil23: "⏰ Только до 23:00!",
         completeSteps: "⚠️ Выполни все шаги!",
-        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки"
+        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Друзья и команда\n• AI рекомендации\n• Силовые тренировки\n• Прогресс-фото"
     },
     en: {
         ready: "Ready for workout?",
@@ -381,7 +384,7 @@ const translations = {
         onlyFrom4am: "⏰ Workouts available from 4:00 AM to 11:00 PM",
         onlyUntil23: "⏰ Only until 11:00 PM!",
         completeSteps: "⚠️ Complete all steps!",
-        faqText: "❓ FAQ:\n\n• Start at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts"
+        faqText: "❓ FAQ:\n\n• Start at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 workouts\n• Custom tasks\n• Friends & team\n• AI recommendations\n• Strength workouts\n• Progress photos"
     }
 };
 
@@ -592,24 +595,19 @@ const recommendations = {
 // ========== ФУНКЦИЯ ДЛЯ РАСЧЁТА ДНЯ МАРАФОНА ПО КАЛЕНДАРЮ ==========
 function getCurrentMarathonDay() {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // обрезаем время до начала дня
+    today.setHours(0, 0, 0, 0);
 
     const start = new Date(MARATHON_START_DATE);
     start.setHours(0, 0, 0, 0);
 
-    // Разница в днях
     const diffTime = today - start;
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    // Если сегодня до старта — возвращаем 1
     if (diffDays < 0) return 1;
-
-    // Иначе номер дня = разница + 1
     return diffDays + 1;
 }
 
 // ========== СОСТОЯНИЕ ==========
-// Определяем текущий день по календарю
 let currentDay = (function() {
     const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_DAY);
     if (saved) {
@@ -668,6 +666,15 @@ let strengthToday = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_TODAY)
     }
 };
 
+// ========== НОВОЕ СОСТОЯНИЕ ДЛЯ ПРОГРЕСС-ФОТО ==========
+let progressPhotos = JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS_PHOTOS)) || [];
+let startWeight = parseFloat(localStorage.getItem(STORAGE_KEYS.START_WEIGHT)) || 0;
+let currentWeight = parseFloat(localStorage.getItem(STORAGE_KEYS.CURRENT_WEIGHT)) || 0;
+
+// Временные данные для нового фото
+let selectedPhotoFile = null;
+let selectedPhotoBase64 = null;
+
 let currentStrengthType = 'pullups';
 
 const strengthQuotes = [
@@ -699,8 +706,7 @@ function t(key, ...args) {
     return text;
 }
 
-// ========== ИСПРАВЛЕННАЯ ЛОГИКА ВРЕМЕНИ ==========
-
+// ========== ФУНКЦИИ ВРЕМЕНИ ==========
 function getCurrentHour() {
     return new Date().getHours();
 }
@@ -713,14 +719,12 @@ function getCurrentTime() {
     return new Date().getTime();
 }
 
-// Получить время СЕГОДНЯ в 4:00 утра
 function getToday4am() {
     const today = new Date();
     today.setHours(4, 0, 0, 0);
     return today.getTime();
 }
 
-// Получить время ЗАВТРА в 4:00 утра
 function getTomorrow4am() {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -728,24 +732,19 @@ function getTomorrow4am() {
     return tomorrow.getTime();
 }
 
-// ✅ Можно ли начать новый день?
 function canStartNewDay() {
-    // Если день ещё не завершён — можно начинать
     if (!dayCompletedTime) return true;
 
     const now = getCurrentTime();
     const completedDay = new Date(parseInt(dayCompletedTime));
     
-    // Создаём дату следующего дня в 4:00 утра после завершения
     const nextDay4am = new Date(completedDay);
     nextDay4am.setDate(nextDay4am.getDate() + 1);
     nextDay4am.setHours(4, 0, 0, 0);
 
-    // Можно начать только если сейчас >= следующего дня 4 утра
     return now >= nextDay4am.getTime();
 }
 
-// ✅ Можно ли начать день по времени (4:00 - 23:00)
 function canStartDay() {
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
@@ -757,7 +756,6 @@ function canStartDay() {
     return false;
 }
 
-// ✅ Можно ли завершить день (до 23:00)
 function canCompleteDay() {
     const hour = getCurrentHour();
     const minutes = getCurrentMinutes();
@@ -768,13 +766,11 @@ function canCompleteDay() {
     return false;
 }
 
-// ✅ Проверка, истёк ли день (после 23:00)
 function isDayExpired() {
     const hour = getCurrentHour();
     return hour >= 23;
 }
 
-// ✅ Время до следующего дня в 4 утра (после завершения)
 function getTimeUntilNextDay4am() {
     if (!dayCompletedTime) return null;
 
@@ -794,7 +790,6 @@ function getTimeUntilNextDay4am() {
     return { hours, minutes };
 }
 
-// ✅ Проверка доступности нового дня
 function checkNewDayAvailability() {
     if (!dayCompletedTime) return false;
 
@@ -849,11 +844,17 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PULLUPS, bestPullups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS, bestPushups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_TODAY, JSON.stringify(strengthToday));
+    
+    // Сохраняем прогресс-фото
+    localStorage.setItem(STORAGE_KEYS.PROGRESS_PHOTOS, JSON.stringify(progressPhotos));
+    localStorage.setItem(STORAGE_KEYS.START_WEIGHT, startWeight);
+    localStorage.setItem(STORAGE_KEYS.CURRENT_WEIGHT, currentWeight);
 
     teamProgress = totalDistance + friends.reduce((sum, f) => sum + (f.distance || 0), 0);
     localStorage.setItem(STORAGE_KEYS.TEAM_PROGRESS, teamProgress);
 }
 
+// ========== ФУНКЦИИ ДЛЯ ДНЕВНИКА ==========
 function renderDiary() {
     const entriesList = document.getElementById('entries-list');
     if (!entriesList) return;
@@ -908,7 +909,8 @@ function inviteFriend() {
     const inviteMessage = `${t('inviteText', userName)}\n\n` +
         `👤 От: ${userName} (@${userUsername})\n` +
         `🏃 Мой прогресс: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
-        `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n\n` +
+        `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
+        `📸 Фото прогресса: ${progressPhotos.length}\n\n` +
         `👉 Нажми, чтобы открыть приложение: https://t.me/your_bot_name?start=${inviteCode}`;
     tg.openTelegramLink(`https://t.me/${cleanUsername}?text=${encodeURIComponent(inviteMessage)}`);
     invitedFriends.push({ username: cleanUsername, date: new Date().toISOString(), joined: false });
@@ -933,6 +935,8 @@ function shareProgress() {
     const message = `🏃 Мой прогресс в беговом марафоне:\n\n` +
         `📊 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
         `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
+        `📸 Фото прогресса: ${progressPhotos.length}\n` +
+        `⚖️ Вес: ${startWeight.toFixed(1)} → ${currentWeight.toFixed(1)} кг\n` +
         `🔥 Калорий: ${totalCalories}\n\n` +
         `👥 Присоединяйся! https://t.me/your_bot_name?start=${inviteCode}`;
     tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(message)}`);
@@ -961,7 +965,7 @@ function updateUserProfile() {
     const avgPace = totalDistance > 0 ? (totalTime / totalDistance).toFixed(1) : 0;
     if (userPaceEl) userPaceEl.textContent = avgPace;
     if (profileNameEl) profileNameEl.textContent = userName;
-    if (profileStatsEl) profileStatsEl.textContent = `${totalDistance.toFixed(1)} км • ${totalWorkouts} тренировок • 💪 ${totalPullups}`;
+    if (profileStatsEl) profileStatsEl.textContent = `${totalDistance.toFixed(1)} км • ${totalWorkouts} тренировок • 💪 ${totalPullups} • 📸 ${progressPhotos.length}`;
 }
 
 function renderFriendRequests() {
@@ -1038,6 +1042,7 @@ function sendFriendRequest() {
         `📊 Его статистика:\n` +
         `🏃 Бег: ${totalDistance.toFixed(1)} км, ${totalWorkouts} тренировок\n` +
         `💪 Сила: ${totalPullups} подтягиваний, ${totalPushups} отжиманий\n` +
+        `📸 Фото прогресса: ${progressPhotos.length}\n` +
         `🔥 Калорий: ${totalCalories}\n\n` +
         `👉 Открой приложение, чтобы принять заявку: https://t.me/your_bot_name`;
     tg.openTelegramLink(`https://t.me/${cleanUsername}?text=${encodeURIComponent(requestMessage)}`);
@@ -1126,7 +1131,7 @@ function getFriendResults() {
 function getLeaderboard() {
     const friendResults = getFriendResults();
     const allUsers = [
-        { userId: userId, name: userName + ` (${t('you')})`, username: userUsername, avatar: '👤', isYou: true, ...calculateStats(workoutHistory, resultsPeriod), pullups: totalPullups, pushups: totalPushups },
+        { userId: userId, name: userName + ` (${t('you')})`, username: userUsername, avatar: '👤', isYou: true, ...calculateStats(workoutHistory, resultsPeriod), pullups: totalPullups, pushups: totalPushups, photos: progressPhotos.length },
         ...friendResults.map(friend => ({ ...friend, ...calculateStats(friend.history || [], resultsPeriod), isYou: false }))
     ];
     return allUsers.sort((a, b) => b.distance - a.distance);
@@ -1189,6 +1194,7 @@ function renderFriendResults() {
                     <div class="stat-row"><span>${t('workouts')}</span><span class="stat-value">${stats.workouts}</span></div>
                     <div class="stat-row"><span>${t('pace')}</span><span class="stat-value">${stats.pace} мин/км</span></div>
                     <div class="stat-row"><span>💪 Сила</span><span class="stat-value">${friend.pullups || 0}/${friend.pushups || 0}</span></div>
+                    <div class="stat-row"><span>📸 Фото</span><span class="stat-value">${friend.photos || 0}</span></div>
                 </div>
                 <div class="vs-row ${vsClass}">${t('vs')}: ${vsText}</div>
             </div>
@@ -1266,6 +1272,17 @@ function getPersonalizedRecommendation() {
     const needRecovery = needsRecovery();
     const streak = calculateStreak();
     const lang = currentLanguage;
+    
+    // Советы по весу и фото
+    if (progressPhotos.length > 0 && Math.random() < 0.2) {
+        const change = (currentWeight - startWeight).toFixed(1);
+        if (change < 0) {
+            return { icon: "🎉", text: `Ты сбросил ${Math.abs(change)} кг! Отличный результат!` };
+        } else if (change > 0) {
+            return { icon: "💪", text: `Набор массы +${change} кг. Так держать!` };
+        }
+    }
+    
     if (Math.random() < 0.3 && totalPullups + totalPushups > 0) {
         const strengthIndex = Math.floor(Math.random() * recommendations.strength[lang].length);
         return recommendations.strength[lang][strengthIndex];
@@ -1907,6 +1924,311 @@ function updateStrengthStats() {
     if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
+// ========== ФУНКЦИИ ДЛЯ ПРОГРЕСС-ФОТО ==========
+
+function initPhotoDate() {
+    const dateInput = document.getElementById('photo-date');
+    if (dateInput) {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+}
+
+function selectPhoto() {
+    tg.showPopup({
+        title: '📸 Выберите фото',
+        message: 'Выберите фото из галереи',
+        buttons: [
+            { id: 'gallery', type: 'default', text: '📁 Галерея' },
+            { type: 'cancel', text: 'Отмена' }
+        ]
+    }, (buttonId) => {
+        if (buttonId === 'gallery') {
+            simulatePhotoSelection();
+        }
+    });
+}
+
+function simulatePhotoSelection() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 200;
+    canvas.height = 200;
+    const ctx = canvas.getContext('2d');
+    
+    const gradient = ctx.createLinearGradient(0, 0, 200, 200);
+    gradient.addColorStop(0, '#0066ff');
+    gradient.addColorStop(1, '#8a2be2');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 200, 200);
+    
+    ctx.font = 'bold 80px Arial';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('📸', 100, 100);
+    
+    ctx.font = '20px Arial';
+    ctx.fillText('Демо-фото', 100, 170);
+    
+    selectedPhotoBase64 = canvas.toDataURL('image/png');
+    selectedPhotoFile = { name: 'photo.png' };
+    
+    const preview = document.getElementById('photo-preview');
+    const previewImg = document.getElementById('preview-img');
+    if (preview && previewImg) {
+        previewImg.src = selectedPhotoBase64;
+        preview.style.display = 'block';
+    }
+    
+    const saveBtn = document.getElementById('save-photo-btn');
+    if (saveBtn) saveBtn.disabled = false;
+    
+    tg.showAlert('📸 Демо-фото создано');
+}
+
+function saveProgressPhoto() {
+    const weightInput = document.getElementById('photo-weight');
+    const dateInput = document.getElementById('photo-date');
+    
+    const weight = parseFloat(weightInput.value);
+    const date = dateInput.value;
+    
+    if (!selectedPhotoBase64) {
+        tg.showAlert('Сначала выберите фото');
+        return;
+    }
+    
+    if (isNaN(weight) || weight <= 0) {
+        tg.showAlert('Введите корректный вес');
+        return;
+    }
+    
+    if (!date) {
+        tg.showAlert('Выберите дату');
+        return;
+    }
+    
+    const newPhoto = {
+        id: Date.now(),
+        weight: weight,
+        date: date,
+        photo: selectedPhotoBase64,
+        timestamp: new Date(date).getTime()
+    };
+    
+    progressPhotos.push(newPhoto);
+    
+    progressPhotos.sort((a, b) => a.timestamp - b.timestamp);
+    
+    if (progressPhotos.length > 0) {
+        startWeight = progressPhotos[0].weight;
+        currentWeight = progressPhotos[progressPhotos.length - 1].weight;
+    }
+    
+    saveProgressState();
+    
+    selectedPhotoBase64 = null;
+    selectedPhotoFile = null;
+    weightInput.value = currentWeight || 70;
+    initPhotoDate();
+    
+    const preview = document.getElementById('photo-preview');
+    const saveBtn = document.getElementById('save-photo-btn');
+    if (preview) preview.style.display = 'none';
+    if (saveBtn) saveBtn.disabled = true;
+    
+    renderProgressPhotos();
+    updateWeightStats();
+    renderWeightChart();
+    
+    tg.showAlert('✅ Фото сохранено');
+}
+
+function saveProgressState() {
+    localStorage.setItem(STORAGE_KEYS.PROGRESS_PHOTOS, JSON.stringify(progressPhotos));
+    localStorage.setItem(STORAGE_KEYS.START_WEIGHT, startWeight);
+    localStorage.setItem(STORAGE_KEYS.CURRENT_WEIGHT, currentWeight);
+}
+
+function updateWeightStats() {
+    const startWeightEl = document.getElementById('start-weight');
+    const currentWeightEl = document.getElementById('current-weight');
+    const weightChangeEl = document.getElementById('weight-change');
+    const totalPhotosEl = document.getElementById('total-photos');
+    
+    if (startWeightEl) startWeightEl.textContent = startWeight.toFixed(1);
+    if (currentWeightEl) currentWeightEl.textContent = currentWeight.toFixed(1);
+    
+    const change = (currentWeight - startWeight).toFixed(1);
+    if (weightChangeEl) {
+        weightChangeEl.textContent = (change > 0 ? '+' : '') + change;
+        weightChangeEl.style.color = change < 0 ? 'var(--success)' : change > 0 ? 'var(--danger)' : 'var(--text-secondary)';
+    }
+    
+    if (totalPhotosEl) totalPhotosEl.textContent = progressPhotos.length;
+    
+    const progressStartWeight = document.getElementById('progress-start-weight');
+    const progressCurrentWeight = document.getElementById('progress-current-weight');
+    const progressWeightChange = document.getElementById('progress-weight-change');
+    const photoCount = document.getElementById('photo-count');
+    
+    if (progressStartWeight) progressStartWeight.textContent = startWeight.toFixed(1) + ' кг';
+    if (progressCurrentWeight) progressCurrentWeight.textContent = currentWeight.toFixed(1) + ' кг';
+    
+    const changeText = (change > 0 ? '+' : '') + change + ' кг';
+    if (progressWeightChange) {
+        progressWeightChange.textContent = changeText;
+        progressWeightChange.style.color = change < 0 ? 'var(--success)' : change > 0 ? 'var(--danger)' : 'var(--text-secondary)';
+    }
+    
+    if (photoCount) photoCount.textContent = progressPhotos.length;
+}
+
+function renderProgressPhotos() {
+    const container = document.getElementById('photo-list');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (progressPhotos.length === 0) {
+        container.innerHTML = '<div class="empty-photos">📸 Пока нет фото. Добавьте первое!</div>';
+        return;
+    }
+    
+    const sortedPhotos = [...progressPhotos].reverse();
+    
+    sortedPhotos.forEach(photo => {
+        const photoDate = new Date(photo.date);
+        const formattedDate = photoDate.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        
+        const photoItem = document.createElement('div');
+        photoItem.className = 'photo-item';
+        photoItem.innerHTML = `
+            <div class="photo-item-header">
+                <span class="photo-date">${formattedDate}</span>
+                <span class="photo-weight">${photo.weight} кг</span>
+            </div>
+            <img src="${photo.photo}" class="photo-item-img" alt="Progress photo" data-id="${photo.id}">
+            <div class="photo-item-actions">
+                <button class="photo-delete-btn" data-id="${photo.id}">
+                    <span>🗑️</span> Удалить
+                </button>
+            </div>
+        `;
+        container.appendChild(photoItem);
+    });
+    
+    document.querySelectorAll('.photo-item-img').forEach(img => {
+        img.addEventListener('click', function() {
+            const src = this.src;
+            showPhotoModal(src);
+        });
+    });
+    
+    document.querySelectorAll('.photo-delete-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = parseInt(this.dataset.id);
+            deleteProgressPhoto(id);
+        });
+    });
+}
+
+function showPhotoModal(src) {
+    const modal = document.createElement('div');
+    modal.className = 'photo-modal';
+    modal.innerHTML = `
+        <img src="${src}" alt="Full size">
+        <button class="photo-modal-close">✕</button>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal || e.target.classList.contains('photo-modal-close')) {
+            modal.remove();
+        }
+    });
+}
+
+function deleteProgressPhoto(id) {
+    if (!confirm('Удалить это фото?')) return;
+    
+    progressPhotos = progressPhotos.filter(p => p.id !== id);
+    
+    if (progressPhotos.length > 0) {
+        progressPhotos.sort((a, b) => a.timestamp - b.timestamp);
+        startWeight = progressPhotos[0].weight;
+        currentWeight = progressPhotos[progressPhotos.length - 1].weight;
+    } else {
+        startWeight = 0;
+        currentWeight = 0;
+    }
+    
+    saveProgressState();
+    renderProgressPhotos();
+    updateWeightStats();
+    renderWeightChart();
+    
+    tg.showAlert('🗑️ Фото удалено');
+}
+
+function renderWeightChart() {
+    const chartContainer = document.getElementById('weight-chart');
+    const placeholder = document.getElementById('chart-placeholder');
+    
+    if (!chartContainer) return;
+    
+    if (progressPhotos.length < 2) {
+        if (placeholder) placeholder.style.display = 'block';
+        chartContainer.innerHTML = '';
+        return;
+    }
+    
+    if (placeholder) placeholder.style.display = 'none';
+    
+    const sorted = [...progressPhotos].sort((a, b) => a.timestamp - b.timestamp);
+    
+    const weights = sorted.map(p => p.weight);
+    const minWeight = Math.min(...weights) - 2;
+    const maxWeight = Math.max(...weights) + 2;
+    const range = maxWeight - minWeight;
+    
+    let chartHtml = '<div class="simple-chart">';
+    
+    const chartWidth = 100;
+    const pointSpacing = chartWidth / (sorted.length - 1);
+    
+    sorted.forEach((photo, index) => {
+        const y = ((photo.weight - minWeight) / range) * 100;
+        const x = index * pointSpacing;
+        
+        chartHtml += `<div class="chart-point" style="left: ${x}%; bottom: ${y}%;" data-weight="${photo.weight}" data-date="${new Date(photo.date).toLocaleDateString()}">●</div>`;
+    });
+    
+    chartHtml += '<div class="chart-line"></div>';
+    chartHtml += '</div>';
+    
+    chartContainer.innerHTML = chartHtml;
+}
+
+function resetProgressPhotos() {
+    progressPhotos = [];
+    startWeight = 0;
+    currentWeight = 0;
+    selectedPhotoBase64 = null;
+    selectedPhotoFile = null;
+    saveProgressState();
+}
+
+// ========== СТАТИСТИКА ==========
 function updateStats() {
     const totalWorkoutsEl = document.getElementById('total-workouts');
     const totalDistanceEl = document.getElementById('total-distance');
@@ -1919,6 +2241,7 @@ function updateStats() {
     const weekCurrentEl = document.getElementById('week-current');
     const weekProgressEl = document.getElementById('week-progress');
     const comparisonEl = document.getElementById('month-comparison');
+    
     if (totalWorkoutsEl) totalWorkoutsEl.textContent = totalWorkouts;
     if (totalDistanceEl) totalDistanceEl.textContent = totalDistance.toFixed(1) + ' ' + t('distance');
     if (totalTimeEl) {
@@ -1927,18 +2250,24 @@ function updateStats() {
         totalTimeEl.textContent = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes} ${t('minutes')}`;
     }
     if (totalCaloriesEl) totalCaloriesEl.textContent = totalCalories + ' ' + t('kcal');
+    
     const avgDistance = totalWorkouts > 0 ? (totalDistance / totalWorkouts).toFixed(1) : 0;
     if (avgDistanceEl) avgDistanceEl.textContent = avgDistance + ' ' + t('distance');
+    
     const bestDistance = workoutHistory.length > 0 ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1) : 0;
     if (bestDistanceEl) bestDistanceEl.textContent = bestDistance + ' ' + t('distance');
+    
     let avgPace = 0;
     if (totalDistance > 0) avgPace = (totalTime / totalDistance).toFixed(1);
     if (avgPaceEl) avgPaceEl.textContent = avgPace + ' ' + t('pace');
+    
     const avgCalories = totalWorkouts > 0 ? Math.round(totalCalories / totalWorkouts) : 0;
     if (avgCaloriesEl) avgCaloriesEl.textContent = avgCalories + ' ' + t('kcal');
+    
     if (weekCurrentEl) weekCurrentEl.textContent = currentDay - 1;
     const weekProgress = ((currentDay - 1) / 30) * 100;
     if (weekProgressEl) weekProgressEl.style.width = `${weekProgress}%`;
+    
     if (comparisonEl) {
         const now = new Date();
         const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
@@ -1960,6 +2289,7 @@ function updateStats() {
         }
         comparisonEl.textContent = comparisonText;
     }
+    
     const historyList = document.getElementById('history-list');
     if (historyList) {
         historyList.innerHTML = '';
@@ -1990,9 +2320,12 @@ function updateStats() {
             });
         }
     }
+    
     updateStrengthStats();
+    updateWeightStats();
 }
 
+// ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
 function updateUI() {
     const startDayNumber = document.getElementById('start-day-number');
     const currentDayEl = document.getElementById('current-day');
@@ -2368,6 +2701,9 @@ function updateAllText() {
     renderPushupsSets();
     renderMixedSets();
     updateStrengthProgress();
+    renderProgressPhotos();
+    updateWeightStats();
+    renderWeightChart();
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
     const quoteEl = document.getElementById('strength-quote');
     if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
@@ -2419,6 +2755,7 @@ window.switchPage = function(pageIndex) {
     }
     if (pageIndex === 3) { renderCustomCreator(); renderSavedWorkouts(); renderActiveWorkout(); }
     if (pageIndex === 4) { renderPullupsSets(); renderPushupsSets(); renderMixedSets(); updateStrengthProgress(); }
+    if (pageIndex === 5) { renderProgressPhotos(); updateWeightStats(); renderWeightChart(); }
 };
 
 window.setTheme = function(theme) {
@@ -2453,6 +2790,7 @@ window.setLanguage = function(lang) {
     }
     else if (currentSlide === 3) { renderCustomCreator(); renderSavedWorkouts(); renderActiveWorkout(); }
     else if (currentSlide === 4) { renderPullupsSets(); renderPushupsSets(); renderMixedSets(); updateStrengthProgress(); }
+    else if (currentSlide === 5) { renderProgressPhotos(); updateWeightStats(); renderWeightChart(); }
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -2479,6 +2817,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePullupsGoal();
     updatePushupsGoal();
     updateStrengthProgress();
+    
+    // Инициализация прогресс-фото
+    initPhotoDate();
+    renderProgressPhotos();
+    updateWeightStats();
+    renderWeightChart();
 
     document.querySelectorAll('.type-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -2643,6 +2987,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const completeWorkoutBtn = document.getElementById('complete-workout-btn');
     if (completeWorkoutBtn) completeWorkoutBtn.addEventListener('click', completeWorkout);
+    
+    // Обработчики для прогресс-фото
+    const selectPhotoBtn = document.getElementById('select-photo-btn');
+    if (selectPhotoBtn) selectPhotoBtn.addEventListener('click', selectPhoto);
+    
+    const savePhotoBtn = document.getElementById('save-photo-btn');
+    if (savePhotoBtn) savePhotoBtn.addEventListener('click', saveProgressPhoto);
+    
+    const removePhotoBtn = document.getElementById('remove-photo-btn');
+    if (removePhotoBtn) {
+        removePhotoBtn.addEventListener('click', function() {
+            selectedPhotoBase64 = null;
+            selectedPhotoFile = null;
+            document.getElementById('photo-preview').style.display = 'none';
+            document.getElementById('save-photo-btn').disabled = true;
+        });
+    }
 
     const menuBtn = document.getElementById('menu-btn');
     if (menuBtn) {
@@ -2708,6 +3069,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         { pullups: 5, pushups: 10, pullupsCompleted: false, pushupsCompleted: false, completed: false }
                     ] }
                 };
+                resetProgressPhotos();
                 localStorage.clear();
                 updateUI();
                 updateStats();
@@ -2725,6 +3087,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderPushupsSets();
                 renderMixedSets();
                 updateStrengthProgress();
+                renderProgressPhotos();
+                updateWeightStats();
+                renderWeightChart();
                 const menu = document.getElementById('menu-dropdown');
                 const menuBtn = document.getElementById('menu-btn');
                 if (menu) menu.style.display = 'none';
