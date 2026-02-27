@@ -11,10 +11,6 @@ const MARATHON_START_DATE = new Date(2025, 5, 1); // 1 июня 2025
 
 // ========== КЛЮЧИ ДЛЯ ХРАНЕНИЯ ==========
 const STORAGE_KEYS = {
-    QUOTES: 'quotes',
-    FAVORITE_QUOTES: 'favorite_quotes',
-    LAST_QUOTE_DATE: 'last_quote_date',
-    LAST_QUOTE_ID: 'last_quote_id'
     CURRENT_DAY: 'current_day',
     DAY_STARTED: 'day_started',
     DAY_START_TIME: 'day_start_time',
@@ -502,21 +498,6 @@ const translations = {
         close: "Close"
     }
 };
-// ========== КОЛЛЕКЦИЯ ЦИТАТ ==========
-const QUOTES_COLLECTION = [
-    // Русские
-    { ru: "Бег - это лучшая медитация", en: "Running is the best meditation", author: "Харуки Мураками" },
-    { ru: "Нет плохой погоды, есть плохая экипировка", en: "There's no bad weather, only bad gear", author: "Стив Префонтейн" },
-    { ru: "Ты не обязан быть быстрым. Ты обязан быть упорным", en: "You don't have to be fast. You have to be persistent", author: "Элиуд Кипчоге" },
-    { ru: "Боль временна. Гордость вечна", en: "Pain is temporary. Pride is forever", author: "Майкл Джонсон" },
-    { ru: "Самое сложное - это начать. Потом становится легче", en: "The hardest part is starting. Then it gets easier", author: "Усэйн Болт" },
-    { ru: "Бегун - это не тот, кто быстро бежит, а тот, кто не останавливается", en: "A runner is not the one who runs fast, but the one who doesn't stop", author: "Владимир Куц" },
-    { ru: "Каждый километр делает тебя сильнее", en: "Every kilometer makes you stronger", author: "Майкл Фелпс" },
-    { ru: "Если тебе тяжело, значит ты растешь", en: "If it's hard, you're growing", author: "Арнольд Шварценеггер" },
-    { ru: "Сегодня больно, завтра чемпион", en: "Today hurts, tomorrow champion", author: "Мохаммед Али" },
-    { ru: "Не сравнивай себя с другими. Сравнивай себя вчерашнего", en: "Don't compare yourself to others. Compare yourself to yesterday", author: "Джеймс Клир" },
-    { ru: "Ты сильнее, чем думаешь", en: "You're stronger than you think", author: "Дэвид Гоггинс" },
-    { ru: "Делай сегодня то, что другие не хотят, завтра будешь жить так, как другие не могут", en: "Do today what others won't, tomorrow you'll live like others can't", author: "Джаред Ле
 
 // ========== БАЗОВЫЕ ТРЕНИРОВКИ (30 ДНЕЙ) ==========
 const BASE_WORKOUTS = {
