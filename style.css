@@ -1,4 +1,4 @@
-/* CSS переменные для тем */
+/* ========== CSS ПЕРЕМЕННЫЕ ========== */
 :root {
     --bg-primary: #000000;
     --bg-secondary: #0a0a0a;
@@ -27,7 +27,6 @@
     --teal: #4ecdc4;
     --mint: #a8e6cf;
     
-    /* Градиенты и тени */
     --gradient-blue: linear-gradient(135deg, #0066ff, #8a2be2);
     --gradient-green: linear-gradient(135deg, #00cc88, #00aa66);
     --gradient-orange: linear-gradient(135deg, #ffaa00, #ff8c00);
@@ -38,7 +37,41 @@
     --shadow-glow: 0 0 15px rgba(0, 102, 255, 0.3);
 }
 
-/* Светлая тема */
+/* ========== КОСМИЧЕСКАЯ ТЕМА ========== */
+[data-theme="cosmos"] {
+    --bg-primary: #030514;
+    --bg-secondary: #0a1a2f;
+    --bg-card: #0d1b3a;
+    --border-color: #2a3f6e;
+    --accent: #1e3a6b;
+    --text-primary: #ffffff;
+    --text-secondary: #aaccff;
+    --icon-inactive: #4a6a9a;
+    --icon-active: #00ffff;
+    --blue: #4d7eff;
+    --blue-hover: #7aa2ff;
+    --blue-light: rgba(77, 126, 255, 0.2);
+    --warning: #ffcc00;
+    --danger: #ff5555;
+    --success: #00ffaa;
+    --purple: #b184ff;
+    --pink: #ff71ce;
+    --cyan: #00ffff;
+    --neon-blue: #00f3ff;
+    --neon-purple: #bc13fe;
+    
+    --gradient-blue: linear-gradient(135deg, #4d7eff, #bc13fe);
+    --gradient-green: linear-gradient(135deg, #00ffaa, #00cc88);
+    --gradient-orange: linear-gradient(135deg, #ffaa00, #ff5500);
+    --gradient-purple: linear-gradient(135deg, #bc13fe, #4d7eff);
+    --gradient-cosmos: linear-gradient(135deg, #030514, #1a2f4a, #2a1e4a);
+    --shadow-sm: 0 2px 8px rgba(0, 255, 255, 0.2);
+    --shadow-md: 0 4px 12px rgba(188, 19, 254, 0.3);
+    --shadow-lg: 0 8px 24px rgba(0, 243, 255, 0.4);
+    --shadow-glow: 0 0 20px #00ffff;
+}
+
+/* ========== СВЕТЛАЯ ТЕМА ========== */
 [data-theme="light"] {
     --bg-primary: #f5f5f5;
     --bg-secondary: #ffffff;
@@ -60,7 +93,6 @@
     --friend-online: #00aa66;
     --friend-offline: #999999;
     
-    /* Градиенты для светлой темы */
     --gradient-blue: linear-gradient(135deg, #0066ff, #7c4dff);
     --gradient-green: linear-gradient(135deg, #00aa66, #008844);
     --gradient-orange: linear-gradient(135deg, #ff9900, #ff6600);
@@ -71,6 +103,7 @@
     --shadow-glow: 0 0 15px rgba(0, 102, 255, 0.2);
 }
 
+/* ========== ОБЩИЕ СТИЛИ ========== */
 * {
     margin: 0;
     padding: 0;
@@ -85,6 +118,50 @@ body {
     color: var(--text-primary);
     transition: background-color 0.3s ease, color 0.3s ease;
     line-height: 1.4;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ========== КОСМИЧЕСКИЙ ФОН ========== */
+body[data-theme="cosmos"]::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 30%, #1a2f4a 0%, #030514 70%);
+    z-index: -2;
+}
+
+body[data-theme="cosmos"]::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(2px 2px at 10px 20px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 30px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 80px 40px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 150px 120px, #ffd700, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 250px 300px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 350px 180px, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 450px 90px, #4d7eff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 550px 250px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 650px 150px, #fff, rgba(0,0,0,0)),
+        radial-gradient(4px 4px at 750px 350px, #bc13fe, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 800px 800px;
+    opacity: 0.5;
+    animation: stars 60s linear infinite;
+    z-index: -1;
+}
+
+@keyframes stars {
+    from { transform: translateY(0); }
+    to { transform: translateY(-800px); }
 }
 
 .container {
@@ -92,9 +169,11 @@ body {
     margin: 0 auto;
     padding: 10px;
     padding-bottom: 80px;
+    position: relative;
+    z-index: 1;
 }
 
-/* Анимации */
+/* ========== АНИМАЦИИ ========== */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
@@ -121,7 +200,99 @@ body {
     100% { transform: scale(1); }
 }
 
-/* Шапка */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 5px var(--cyan); }
+    50% { box-shadow: 0 0 20px var(--cyan), 0 0 30px var(--purple); }
+    100% { box-shadow: 0 0 5px var(--cyan); }
+}
+
+/* ========== 3D-АВАТАРКА ========== */
+.avatar-3d-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    perspective: 1000px;
+}
+
+.avatar-3d {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.5s;
+}
+
+.avatar-3d:hover {
+    transform: rotateY(180deg);
+}
+
+.avatar-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    background: var(--gradient-cosmos);
+    border: 2px solid var(--cyan);
+    box-shadow: var(--shadow-glow);
+}
+
+.avatar-face.front {
+    transform: rotateY(0deg);
+    background: radial-gradient(circle at 30% 30%, var(--cyan), var(--purple));
+}
+
+.avatar-face.back {
+    transform: rotateY(180deg);
+    background: radial-gradient(circle at 70% 70%, var(--neon-purple), var(--neon-blue));
+    font-size: 30px;
+    color: white;
+}
+
+.avatar-level-ring {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--cyan);
+    border-right-color: var(--purple);
+    animation: spin 3s linear infinite;
+}
+
+.muscle-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--muscle-x, 50%) var(--muscle-y, 50%), 
+                rgba(255, 255, 255, 0.3) 0%, 
+                transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+/* ========== ШАПКА ========== */
 .site-header {
     display: flex;
     justify-content: space-between;
@@ -145,7 +316,7 @@ body {
     color: var(--blue);
 }
 
-/* Кнопка меню */
+/* ========== КНОПКА МЕНЮ ========== */
 .menu-btn {
     width: 36px;
     height: 36px;
@@ -190,7 +361,7 @@ body {
     transform: rotate(-45deg) translate(4px, -4px);
 }
 
-/* Меню */
+/* ========== МЕНЮ ========== */
 .menu-dropdown {
     position: absolute;
     top: 70px;
@@ -261,7 +432,7 @@ body {
     font-weight: 600;
 }
 
-/* Дата */
+/* ========== ДАТА ========== */
 .date-header {
     text-align: right;
     margin-bottom: 12px;
@@ -271,7 +442,7 @@ body {
     padding: 2px 0;
 }
 
-/* Контейнер слайдов */
+/* ========== КОНТЕЙНЕР СЛАЙДОВ ========== */
 .slides-container {
     display: flex;
     overflow-x: hidden;
@@ -286,7 +457,7 @@ body {
     scroll-snap-align: start;
 }
 
-/* Стартовый экран */
+/* ========== СТАРТОВЫЙ ЭКРАН ========== */
 .start-screen {
     background: var(--bg-card);
     border-radius: 20px;
@@ -311,7 +482,6 @@ body {
     margin-bottom: 28px;
 }
 
-/* Кнопка начать бег */
 .start-day-btn {
     background: var(--gradient-blue);
     color: white;
@@ -363,7 +533,7 @@ body {
     animation: pulse 2s infinite;
 }
 
-/* Баланс/прогресс */
+/* ========== ПРОГРЕСС ========== */
 .balance-section {
     background: var(--bg-card);
     border-radius: 20px;
@@ -435,7 +605,7 @@ body {
     background: var(--gradient-purple);
 }
 
-/* Карточка тренировки */
+/* ========== КАРТОЧКА ТРЕНИРОВКИ ========== */
 .workout-card {
     background: var(--bg-primary);
     border-radius: 20px;
@@ -483,7 +653,7 @@ body {
     color: var(--danger);
 }
 
-/* Шаги тренировки */
+/* ========== ШАГИ ТРЕНИРОВКИ ========== */
 .workout-steps {
     display: flex;
     flex-direction: column;
@@ -541,7 +711,7 @@ body {
     border-radius: 24px;
 }
 
-/* Кнопка завершить день */
+/* ========== КНОПКА ЗАВЕРШЕНИЯ ========== */
 .complete-day-btn {
     width: 100%;
     padding: 16px;
@@ -587,7 +757,7 @@ body {
     box-shadow: none;
 }
 
-/* Информация о времени */
+/* ========== ИНФОРМАЦИЯ О ВРЕМЕНИ ========== */
 .time-info, .deadline-info {
     font-size: 13px;
     margin-top: 12px;
@@ -599,7 +769,7 @@ body {
     font-weight: 500;
 }
 
-/* Экран завершения */
+/* ========== ЭКРАН ЗАВЕРШЕНИЯ ========== */
 .congrats {
     background: var(--bg-card);
     border-radius: 20px;
@@ -636,7 +806,7 @@ body {
     box-shadow: var(--shadow-glow);
 }
 
-/* ===== СТИЛИ ДЛЯ ДОБАВЛЕННЫХ ЗАДАНИЙ ===== */
+/* ========== ДОБАВЛЕННЫЕ ЗАДАНИЯ ========== */
 .additional-header {
     margin: 20px 0 8px 0;
     padding: 0 4px;
@@ -687,7 +857,7 @@ body {
     border-left: 3px solid var(--blue) !important;
 }
 
-/* ===== СТАТИСТИКА ===== */
+/* ========== СТАТИСТИКА ========== */
 .stats-section {
     background: var(--bg-card);
     border-radius: 20px;
@@ -840,7 +1010,7 @@ body {
     border: 2px dashed var(--border-color);
 }
 
-/* ===== AI-РЕКОМЕНДАЦИИ ===== */
+/* ========== AI-РЕКОМЕНДАЦИИ ========== */
 .recommendations-card {
     background: var(--gradient-blue);
     border-radius: 20px;
@@ -914,36 +1084,36 @@ body {
     transform: scale(0.98);
 }
 
-/* ===== НОВЫЙ ДИЗАЙН ДЛЯ ДРУЗЕЙ ===== */
+/* ========== СТИЛИ ДЛЯ ДРУЗЕЙ И ДНЕВНИКА ========== */
 .combined-section {
     background: var(--bg-card);
-    border-radius: 20px;
+    border-radius: 24px;
     padding: 16px;
     border: 1px solid var(--border-color);
-    margin-bottom: 16px;
     box-shadow: var(--shadow-md);
 }
 
 .section-tabs {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     margin-bottom: 20px;
     background: var(--bg-primary);
     padding: 4px;
-    border-radius: 14px;
+    border-radius: 16px;
 }
 
 .tab-btn {
     flex: 1;
     background: transparent;
     border: none;
-    padding: 12px;
+    padding: 12px 6px;
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     border-radius: 12px;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .tab-btn.active {
@@ -961,24 +1131,24 @@ body {
     display: block;
 }
 
-/* Приветственный баннер */
-.friends-welcome-card {
+/* ========== ПРОФИЛЬ ========== */
+.my-profile-card {
     background: var(--gradient-blue);
     border-radius: 20px;
-    padding: 20px;
+    padding: 16px;
     margin-bottom: 16px;
     color: white;
     box-shadow: var(--shadow-lg);
 }
 
-.welcome-content {
+.profile-header {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 16px;
 }
 
-.welcome-avatar {
+.profile-avatar {
     width: 60px;
     height: 60px;
     background: rgba(255, 255, 255, 0.2);
@@ -986,352 +1156,143 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 30px;
     border: 2px solid white;
     box-shadow: var(--shadow-md);
 }
 
-.welcome-info {
+.profile-info {
     flex: 1;
 }
 
-.welcome-info h3 {
-    font-size: 18px;
-    margin-bottom: 6px;
-    font-weight: 700;
-}
-
-.welcome-stats {
-    display: flex;
-    gap: 16px;
-}
-
-.welcome-stat {
-    text-align: center;
-}
-
-.welcome-stat .stat-value {
+.profile-info h3 {
     font-size: 18px;
     font-weight: 700;
-    color: white;
-    display: block;
+    margin-bottom: 4px;
 }
 
-.welcome-stat .stat-label {
-    font-size: 10px;
-    opacity: 0.8;
-    color: white;
-    font-weight: 500;
+.profile-username {
+    font-size: 12px;
+    opacity: 0.9;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    display: inline-block;
 }
 
-.welcome-progress {
+.my-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 12px;
     backdrop-filter: blur(10px);
 }
 
-.progress-label {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 6px;
-    font-size: 12px;
-    font-weight: 500;
-}
-
-/* Блок приглашений */
-.invite-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.invite-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.invite-header h3 {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.invite-badge {
-    background: var(--gradient-orange);
-    color: white;
-    padding: 4px 10px;
-    border-radius: 24px;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.invite-buttons {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 12px;
-}
-
-.invite-btn {
-    flex: 1;
-    background: var(--gradient-blue);
-    border: none;
-    border-radius: 14px;
-    padding: 14px;
-    color: white;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.invite-btn:active {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.copy-btn, .share-progress-btn {
-    width: 48px;
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    color: var(--text-primary);
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.copy-btn:active, .share-progress-btn:active {
-    background: var(--blue);
-    color: white;
-    transform: scale(0.95);
-}
-
-.invite-stats {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    padding-top: 12px;
-    border-top: 1px solid var(--border-color);
-}
-
-.invite-stat {
+.stat-block {
     text-align: center;
 }
 
-.invite-stat .stat-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--blue);
+.stat-block .stat-value {
     display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    line-height: 1.2;
 }
 
-.invite-stat .stat-label {
-    font-size: 10px;
-    color: var(--text-secondary);
-    font-weight: 500;
+.stat-block .stat-label {
+    font-size: 9px;
+    opacity: 0.8;
+    color: white;
 }
 
-/* Таблица лидеров */
-.leaderboard-card {
+/* ========== КАРТОЧКА ДРУЗЕЙ ========== */
+.friends-list-card {
     background: var(--bg-primary);
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid var(--border-color);
     box-shadow: var(--shadow-sm);
 }
 
-.leaderboard-header {
+.card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.card-header h3 {
+    font-size: 15px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
     gap: 8px;
 }
 
-.leaderboard-header h3 {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.period-selector {
-    display: flex;
-    gap: 4px;
-    background: var(--bg-card);
-    padding: 3px;
-    border-radius: 10px;
-}
-
-.period-btn {
-    background: transparent;
-    border: none;
-    padding: 6px 10px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.period-btn.active {
-    background: var(--gradient-blue);
-    color: white;
-}
-
-.leaderboard-content {
-    max-height: 300px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-.leaderboard-row {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    margin-bottom: 6px;
-    gap: 10px;
-    transition: all 0.2s ease;
-    border: 1px solid transparent;
-}
-
-.leaderboard-row:hover {
-    transform: translateX(4px);
-    border-color: var(--blue);
-    box-shadow: var(--shadow-sm);
-}
-
-.leaderboard-row.you {
-    background: var(--blue-light);
-    border: 1px solid var(--blue);
-}
-
-.rank {
-    width: 40px;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--gold);
-    text-align: center;
-}
-
-.name {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.you-badge {
+.badge {
     background: var(--blue);
     color: white;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-size: 9px;
+    padding: 3px 10px;
+    border-radius: 30px;
+    font-size: 11px;
     font-weight: 600;
 }
 
-.distance {
-    width: 60px;
-    font-weight: 600;
-    color: var(--success);
-    font-size: 12px;
-    text-align: right;
-}
-
-.workouts {
-    width: 40px;
-    color: var(--text-secondary);
-    font-size: 11px;
-    text-align: center;
-}
-
-.pace {
-    width: 60px;
-    color: var(--warning);
-    font-size: 11px;
-    text-align: right;
-}
-
-/* Результаты друзей */
-.friends-results-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
+.refresh-btn {
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
+    border-radius: 10px;
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: all 0.2s ease;
 }
 
-.results-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.results-header h3 {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.results-count {
+.refresh-btn:active {
+    transform: rotate(180deg);
     background: var(--blue);
     color: white;
-    padding: 3px 8px;
-    border-radius: 24px;
-    font-size: 11px;
-    font-weight: 600;
 }
 
-.results-list {
+.friends-container {
     max-height: 400px;
     overflow-y: auto;
     padding-right: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.friend-stat-card {
+/* ========== КАРТОЧКА ДРУГА ========== */
+.friend-card {
     background: var(--bg-card);
     border-radius: 18px;
     padding: 14px;
-    margin-bottom: 10px;
     border: 1px solid var(--border-color);
     transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
+    animation: slideIn 0.2s ease;
 }
 
-.friend-stat-card:hover {
+.friend-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
     border-color: var(--blue);
 }
 
-.friend-info {
+.friend-header {
     display: flex;
     align-items: center;
     gap: 12px;
     margin-bottom: 12px;
+    position: relative;
 }
 
 .friend-avatar {
@@ -1342,99 +1303,182 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     color: white;
-    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.friend-info {
+    flex: 1;
 }
 
 .friend-name {
     font-size: 15px;
     font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
 }
 
-.friend-stats {
+.friend-username {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.friend-stats-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     padding: 8px;
     background: var(--bg-primary);
     border-radius: 14px;
 }
 
-.stat-row {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.friend-stat-item {
     text-align: center;
 }
 
-.stat-row span:first-child {
-    font-size: 10px;
-    color: var(--text-secondary);
-    margin-bottom: 2px;
-    font-weight: 500;
-}
-
-.stat-row .stat-value {
-    font-size: 14px;
-    color: var(--blue);
+.friend-stat-value {
+    display: block;
+    font-size: 16px;
     font-weight: 700;
+    color: var(--blue);
 }
 
-.vs-row {
+.friend-stat-label {
+    font-size: 9px;
+    color: var(--text-secondary);
+}
+
+.comparison-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 8px;
-    border-radius: 10px;
+    background: var(--bg-primary);
+    border-radius: 12px;
     font-size: 12px;
-    font-weight: 600;
-    text-align: center;
 }
 
-.vs-row.ahead {
-    background: var(--success-light);
+.comparison-label {
+    color: var(--text-secondary);
+    min-width: 40px;
+}
+
+.comparison-bar-container {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.comparison-bar {
+    height: 100%;
+    background: var(--gradient-blue);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+}
+
+.comparison-value {
+    font-weight: 600;
+    min-width: 45px;
+    text-align: right;
+}
+
+.comparison-value.ahead {
     color: var(--success);
 }
 
-.vs-row.behind {
+.comparison-value.behind {
+    color: var(--danger);
+}
+
+.friend-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.friend-action-btn {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.message-btn {
+    background: var(--blue-light);
+    color: var(--blue);
+}
+
+.remove-btn {
     background: var(--danger-light);
     color: var(--danger);
 }
 
-.vs-row.equal {
-    background: var(--bg-card);
-    color: var(--text-secondary);
+.friend-action-btn:active {
+    transform: scale(0.95);
 }
 
-/* Заявки в друзья */
+/* ========== ПУСТЫЕ СОСТОЯНИЯ ========== */
+.empty-friends {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 2px dashed var(--border-color);
+}
+
+.empty-friends span {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.loading-friends {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.loading-friends::after {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    border: 2px solid var(--border-color);
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* ========== ЗАЯВКИ ========== */
 .requests-card {
     background: var(--gradient-orange);
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 16px;
     margin-bottom: 16px;
     color: white;
     box-shadow: var(--shadow-lg);
+    animation: slideDown 0.3s ease;
 }
 
-.requests-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.requests-header h3 {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.requests-badge {
-    background: white;
-    color: var(--warning);
-    padding: 3px 8px;
-    border-radius: 24px;
-    font-size: 11px;
-    font-weight: 600;
+.requests-card .card-header h3 {
+    color: white;
 }
 
 .requests-list {
@@ -1444,7 +1488,7 @@ body {
 }
 
 .friend-request-item {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     border-radius: 14px;
     padding: 12px;
     display: flex;
@@ -1481,58 +1525,46 @@ body {
 
 .friend-request-actions {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 .friend-request-accept {
     background: white;
     border: none;
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 6px 14px;
     color: var(--warning);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.friend-request-accept:active {
-    transform: scale(0.95);
 }
 
 .friend-request-decline {
     background: transparent;
     border: 1px solid white;
-    border-radius: 24px;
+    border-radius: 20px;
     padding: 6px 14px;
     color: white;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
-.friend-request-decline:active {
-    background: rgba(255, 255, 255, 0.1);
-    transform: scale(0.95);
-}
-
-/* Добавление друга */
-.add-friend-card {
+/* ========== ПОИСК ========== */
+.search-card {
     background: var(--bg-primary);
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
 }
 
-.add-friend-form {
+.search-box {
     display: flex;
     gap: 8px;
 }
 
-.add-friend-form input {
+.search-box input {
     flex: 1;
     padding: 14px;
     background: var(--bg-card);
@@ -1540,728 +1572,424 @@ body {
     border-radius: 14px;
     color: var(--text-primary);
     font-size: 14px;
-    transition: all 0.2s ease;
 }
 
-.add-friend-form input:focus {
+.search-box input:focus {
     border-color: var(--blue);
     outline: none;
     box-shadow: var(--shadow-glow);
 }
 
-.send-request-btn {
+.search-btn {
     width: 52px;
     background: var(--gradient-blue);
     border: none;
     border-radius: 14px;
     color: white;
-    font-size: 22px;
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
 }
 
-.send-request-btn:active {
+.search-btn:active {
     transform: scale(0.95);
 }
 
-/* Мини-профиль */
-.profile-mini-card {
+.search-results-card {
     background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
 }
 
-.profile-mini-avatar {
-    width: 44px;
-    height: 44px;
-    background: var(--gradient-blue);
-    border-radius: 50%;
+/* ========== ПРИГЛАШЕНИЯ ========== */
+.invite-card {
+    background: var(--bg-primary);
+    border-radius: 20px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.invite-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.invite-text {
+    color: var(--text-secondary);
+    font-size: 13px;
+    text-align: center;
+}
+
+.invite-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.invite-btn {
+    flex: 1;
+    background: var(--gradient-green);
+    border: none;
+    border-radius: 14px;
+    padding: 14px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 22px;
-    color: white;
-    box-shadow: var(--shadow-sm);
+    gap: 6px;
 }
 
-.profile-mini-info {
-    flex: 1;
-}
-
-.profile-mini-name {
-    font-size: 14px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 2px;
-}
-
-.profile-mini-stats {
-    font-size: 11px;
-    color: var(--text-secondary);
-}
-
-.profile-mini-share {
+.copy-btn {
+    width: 52px;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 6px 12px;
-    font-size: 12px;
+    border-radius: 14px;
+    color: var(--text-primary);
+    font-size: 20px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.profile-mini-share:active {
+.copy-btn:active {
     background: var(--blue);
     color: white;
 }
 
-/* Пустые состояния */
-.empty-friends,
-.empty-requests,
-.empty-leaderboard,
-.empty-results {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    background: var(--bg-card);
-    border-radius: 16px;
-    border: 2px dashed var(--border-color);
+.invite-stats {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
 }
 
-/* Компактный дневник */
-.diary-section-compact {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.invite-stat {
+    text-align: center;
+}
+
+.invite-stat .stat-value {
+    font-size: 16px;
+    color: var(--blue);
+}
+
+.invite-stat .stat-label {
+    font-size: 10px;
+}
+
+/* ========== ДНЕВНИК ========== */
+.diary-section {
+    padding: 4px 0;
 }
 
 .add-entry-btn {
-    background: var(--bg-primary);
-    border: 2px dashed var(--border-color);
+    width: 100%;
+    background: var(--gradient-blue);
+    border: none;
     border-radius: 16px;
-    padding: 14px;
-    font-size: 14px;
+    padding: 16px;
+    color: white;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: var(--text-secondary);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-md);
     transition: all 0.2s ease;
 }
 
 .add-entry-btn:active {
-    border-color: var(--blue);
-    color: var(--blue);
     transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
+}
+
+.plus-icon {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.add-entry-form {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+    animation: slideDown 0.2s ease;
+}
+
+.add-entry-form textarea {
+    width: 100%;
+    padding: 14px;
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    color: var(--text-primary);
+    font-size: 14px;
+    resize: vertical;
+    margin-bottom: 12px;
+    font-family: inherit;
+}
+
+.add-entry-form textarea:focus {
+    border-color: var(--blue);
+    outline: none;
+    box-shadow: var(--shadow-glow);
+}
+
+.form-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-primary, .btn-secondary {
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: var(--gradient-green);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-primary:active, .btn-secondary:active {
+    transform: scale(0.97);
+}
+
+.entries-container {
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .entry-item {
-    background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 14px;
+    background: var(--bg-card);
+    border-radius: 18px;
+    padding: 16px;
     border: 1px solid var(--border-color);
     position: relative;
+    animation: fadeIn 0.2s ease;
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease;
 }
 
 .entry-item:hover {
-    transform: translateX(4px);
     border-color: var(--blue);
 }
 
 .entry-date {
-    font-size: 11px;
+    font-size: 12px;
     color: var(--blue);
-    margin-bottom: 6px;
-    font-weight: 500;
+    margin-bottom: 8px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .entry-content {
-    font-size: 13px;
-    line-height: 1.4;
-    padding-right: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    padding-right: 30px;
 }
 
 .entry-delete {
     position: absolute;
     top: 12px;
     right: 12px;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 16px;
-    cursor: pointer;
-    padding: 6px;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.2s ease;
 }
 
 .entry-delete:active {
-    color: var(--danger);
     background: var(--danger-light);
+    color: var(--danger);
+    border-color: var(--danger);
 }
 
-/* Настройки в меню */
-.settings-menu {
-    padding: 6px;
-}
-
-.theme-selector, .language-selector {
-    margin-bottom: 12px;
-}
-
-.theme-selector span, .language-selector span {
-    display: block;
-    font-size: 12px;
+.empty-entries {
+    text-align: center;
+    padding: 40px 20px;
     color: var(--text-secondary);
-    margin-bottom: 6px;
-    font-weight: 500;
+    font-size: 14px;
+    background: var(--bg-card);
+    border-radius: 18px;
+    border: 2px dashed var(--border-color);
 }
 
-.theme-buttons-menu, .lang-buttons-menu {
+.empty-entries::before {
+    content: '📝';
+    font-size: 40px;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+/* ========== ТОП БЕГУНОВ ========== */
+.period-selector {
     display: flex;
     gap: 6px;
+    margin-bottom: 16px;
+    background: var(--bg-primary);
+    padding: 4px;
+    border-radius: 14px;
 }
 
-.theme-btn-small, .lang-btn-small {
+.period-btn {
     flex: 1;
+    background: transparent;
+    border: none;
     padding: 10px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
     border-radius: 10px;
-    color: var(--text-primary);
-    font-size: 12px;
-    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
-.theme-btn-small.active, .lang-btn-small.active {
+.period-btn.active {
     background: var(--gradient-blue);
     color: white;
-    border-color: transparent;
 }
 
-/* ===== СОЗДАНИЕ ТРЕНИРОВКИ ===== */
-.custom-workout-section {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-md);
-}
-
-.custom-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.goal-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.goal-card h3 {
-    color: var(--text-secondary);
-    font-size: 13px;
-    margin-bottom: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.goal-input {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-}
-
-.goal-input input {
-    flex: 1;
-    max-width: 200px;
-    padding: 14px;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 14px;
-    color: var(--text-primary);
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    transition: all 0.2s ease;
-}
-
-.goal-input input:focus {
-    border-color: var(--blue);
-    outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.goal-input span {
-    font-size: 16px;
-    color: var(--text-secondary);
-    min-width: 40px;
-}
-
-.tasks-creator {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.tasks-creator h3 {
-    color: var(--text-secondary);
-    font-size: 13px;
-    margin-bottom: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.add-task-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 16px;
-    align-items: center;
-}
-
-.add-task-form input {
-    width: 100%;
-    max-width: 280px;
-    padding: 14px;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 14px;
-    color: var(--text-primary);
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.add-task-form input:focus {
-    border-color: var(--blue);
-    outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.task-distance-input {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-}
-
-.task-distance-input input {
-    flex: 1;
-    max-width: 140px;
-    text-align: center;
-}
-
-.task-distance-input span {
-    color: var(--text-secondary);
-    font-size: 14px;
-    min-width: 30px;
-}
-
-.add-task-btn {
-    width: 100%;
-    max-width: 280px;
-    padding: 14px;
-    background: var(--bg-card);
-    color: var(--blue);
-    border: 2px dashed var(--border-color);
-    border-radius: 14px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.add-task-btn:active {
-    border-color: var(--blue);
-    background: var(--blue);
-    color: white;
-}
-
-#custom-tasks-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-height: 80px;
-    max-height: 300px;
-    overflow-y: auto;
-    width: 100%;
-    align-items: center;
-}
-
-.custom-task-item {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background: var(--bg-card);
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
-    animation: slideIn 0.2s ease;
-    width: 100%;
-    max-width: 380px;
-    gap: 10px;
-}
-
-.custom-task-text {
-    flex: 1;
-    font-size: 14px;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: 500;
-}
-
-.custom-task-distance {
-    color: var(--blue);
-    font-weight: 600;
-    min-width: 70px;
-    text-align: right;
-    white-space: nowrap;
-}
-
-.custom-task-delete {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 4px 8px;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    border-radius: 8px;
-}
-
-.custom-task-delete:active {
-    color: var(--danger);
-    background: var(--danger-light);
-    transform: rotate(90deg);
-}
-
-.empty-tasks {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    background: var(--bg-card);
-    border-radius: 16px;
-    border: 2px dashed var(--border-color);
-    width: 100%;
-    max-width: 380px;
-}
-
-.create-plan-btn {
-    width: 100%;
-    max-width: 380px;
-    padding: 16px;
-    background: var(--gradient-blue);
-    color: white;
-    border: none;
-    border-radius: 40px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-md);
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 20px;
-}
-
-.create-plan-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.create-plan-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--text-secondary);
-    box-shadow: none;
-}
-
-/* ===== СОХРАНЕННЫЕ ТРЕНИРОВКИ ===== */
-.saved-workouts-section {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.saved-workouts-title {
-    color: var(--text-secondary);
-    font-size: 13px;
-    margin-bottom: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.saved-workouts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-height: 300px;
-    overflow-y: auto;
-    margin-bottom: 16px;
-}
-
-.saved-workout-item {
-    background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.saved-workout-item.active {
-    border: 2px solid var(--blue);
-    background: var(--blue-light);
-}
-
-.saved-workout-icon {
-    width: 44px;
-    height: 44px;
-    background: var(--gradient-blue);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    color: white;
-    flex-shrink: 0;
-    box-shadow: var(--shadow-sm);
-}
-
-.saved-workout-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.saved-workout-name {
-    font-size: 14px;
-    font-weight: 600;
-    display: block;
-    margin-bottom: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.saved-workout-meta {
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.saved-workout-actions {
-    display: flex;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-.workout-start-btn, .workout-delete-btn {
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 12px;
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.workout-start-btn {
-    background: var(--gradient-green);
-    color: white;
-    box-shadow: var(--shadow-sm);
-}
-
-.workout-delete-btn {
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.workout-start-btn:active, .workout-delete-btn:active {
-    transform: scale(0.95);
-}
-
-.empty-workouts {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    background: var(--bg-card);
-    border-radius: 16px;
-    border: 2px dashed var(--border-color);
-}
-
-/* ===== АКТИВНАЯ ТРЕНИРОВКА ===== */
-.active-workout {
+.leaderboard-card {
     background: var(--bg-primary);
     border-radius: 20px;
-    padding: 20px;
-    border: 2px solid var(--blue);
-    margin-top: 20px;
-    animation: slideIn 0.3s ease;
-    box-shadow: var(--shadow-lg);
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
 }
 
-.active-workout-header {
+.leaderboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
 }
 
-.active-workout-header h3 {
-    font-size: 18px;
-    color: var(--blue);
-    font-weight: 700;
-}
-
-.active-workout-goal {
-    background: var(--bg-card);
-    padding: 6px 14px;
-    border-radius: 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--success);
-    border: 1px solid var(--border-color);
-}
-
-.active-workout-progress {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.active-workout-progress .progress-bar {
-    flex: 1;
-    height: 10px;
-}
-
-.progress-percent {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--blue);
-    min-width: 45px;
-}
-
-.active-workout-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.workout-step-compact {
-    display: flex;
-    align-items: center;
-    padding: 14px;
-    background: var(--bg-card);
-    border-radius: 14px;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-}
-
-.workout-step-compact.step-completed {
-    background: var(--success-light);
-    border-color: var(--success);
-}
-
-.workout-step-compact .workout-checkbox {
-    width: 22px;
-    height: 22px;
-    margin-right: 12px;
-    cursor: pointer;
-    accent-color: var(--blue);
-}
-
-.workout-step-compact .step-text {
-    flex: 1;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.workout-step-compact.step-completed .step-text {
-    text-decoration: line-through;
+.leaderboard-header h3 {
+    font-size: 15px;
     color: var(--text-secondary);
 }
 
-.workout-step-compact .step-distance {
-    font-size: 12px;
-    color: var(--blue);
-    font-weight: 600;
-    margin-left: 8px;
-    padding: 2px 8px;
-    background: var(--bg-primary);
-    border-radius: 16px;
+.update-time {
+    font-size: 10px;
+    color: var(--text-secondary);
 }
 
-.complete-workout-btn {
-    width: 100%;
-    padding: 16px;
-    background: var(--gradient-green);
-    color: white;
-    border: none;
-    border-radius: 40px;
+.leaderboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-card);
+    border-radius: 14px;
+    gap: 10px;
+}
+
+.leaderboard-item.you {
+    background: var(--blue-light);
+    border: 1px solid var(--blue);
+}
+
+.rank {
+    width: 30px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.rank.gold {
+    color: var(--gold);
+}
+
+.rank.silver {
+    color: var(--silver);
+}
+
+.rank.bronze {
+    color: var(--bronze);
+}
+
+.user-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--gradient-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
+    color: white;
+}
+
+.user-name {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.user-distance {
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-md);
+    color: var(--blue);
+    min-width: 50px;
+    text-align: right;
 }
 
-.complete-workout-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
+.my-rank-card {
+    background: var(--gradient-blue);
+    border-radius: 16px;
+    padding: 16px;
+    color: white;
+    text-align: center;
 }
 
-.complete-workout-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    background: var(--text-secondary);
-    box-shadow: none;
-}
-
-/* ===== НОВЫЕ СТИЛИ ДЛЯ СИЛОВЫХ УПРАЖНЕНИЙ ===== */
-
-/* Основной контейнер */
+/* ========== СИЛОВЫЕ ТРЕНИРОВКИ ========== */
 .strength-section {
     background: var(--bg-card);
     border-radius: 20px;
@@ -2281,7 +2009,6 @@ body {
     text-shadow: var(--shadow-glow);
 }
 
-/* Карточка прогресса */
 .strength-progress-card {
     background: var(--gradient-blue);
     border-radius: 20px;
@@ -2318,7 +2045,6 @@ body {
     border-radius: 8px;
 }
 
-/* Селектор типа тренировки */
 .workout-type-selector {
     display: flex;
     gap: 8px;
@@ -2343,7 +2069,6 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    box-shadow: var(--shadow-sm);
 }
 
 .type-btn.active {
@@ -2362,7 +2087,6 @@ body {
     font-weight: 600;
 }
 
-/* Карточка упражнения */
 .exercise-card {
     background: var(--bg-primary);
     border-radius: 20px;
@@ -2375,17 +2099,14 @@ body {
 
 .exercise-card#pullups-card {
     border-color: var(--orange);
-    box-shadow: 0 5px 20px rgba(255, 107, 107, 0.2);
 }
 
 .exercise-card#pushups-card {
     border-color: var(--teal);
-    box-shadow: 0 5px 20px rgba(78, 205, 196, 0.2);
 }
 
 .exercise-card#mixed-card {
     border-color: var(--mint);
-    box-shadow: 0 5px 20px rgba(168, 230, 207, 0.2);
 }
 
 .exercise-header {
@@ -2435,7 +2156,6 @@ body {
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Настройка цели */
 .goal-settings {
     margin-bottom: 20px;
     padding: 16px;
@@ -2482,11 +2202,6 @@ body {
     transition: all 0.2s ease;
 }
 
-.slider-container input[type="range"]::-webkit-slider-thumb:hover {
-    transform: scale(1.1);
-    box-shadow: var(--shadow-glow);
-}
-
 .goal-value {
     min-width: 60px;
     font-size: 24px;
@@ -2496,10 +2211,8 @@ body {
     background: var(--bg-primary);
     padding: 8px 12px;
     border-radius: 30px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Контейнер для сетов */
 .sets-container {
     display: flex;
     flex-direction: column;
@@ -2507,17 +2220,14 @@ body {
     margin-bottom: 16px;
     max-height: 350px;
     overflow-y: auto;
-    padding-right: 4px;
 }
 
-/* Карточка подхода */
 .set-card {
     background: var(--bg-card);
     border-radius: 18px;
     padding: 14px;
     border: 1px solid var(--border-color);
     animation: slideIn 0.2s ease;
-    box-shadow: var(--shadow-sm);
 }
 
 .set-card.completed {
@@ -2590,18 +2300,11 @@ body {
     font-size: 16px;
     font-weight: 600;
     text-align: center;
-    transition: all 0.2s ease;
 }
 
 .set-reps input:focus {
     border-color: var(--blue);
     outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.set-reps input:disabled {
-    opacity: 0.6;
-    background: var(--bg-card);
 }
 
 .set-complete {
@@ -2612,11 +2315,6 @@ body {
     padding: 6px 14px;
     background: var(--bg-primary);
     border-radius: 30px;
-    transition: all 0.2s ease;
-}
-
-.set-complete:hover {
-    background: var(--blue-light);
 }
 
 .set-complete input[type="checkbox"] {
@@ -2626,20 +2324,7 @@ body {
     accent-color: var(--success);
 }
 
-.set-complete span {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text-secondary);
-}
-
-.set-card.completed .set-reps input {
-    background: rgba(0, 204, 136, 0.1);
-    color: var(--success);
-    border-color: var(--success);
-}
-
-/* Кнопка добавления подхода */
-.add-set-btn, .add-mixed-set-btn {
+.add-set-btn {
     width: 100%;
     padding: 16px;
     background: var(--gradient-blue);
@@ -2655,135 +2340,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: var(--shadow-md);
 }
 
-.add-set-btn:active, .add-mixed-set-btn:active {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.add-set-btn .btn-icon, .add-mixed-set-btn .btn-icon {
-    font-size: 20px;
-}
-
-.add-set-btn .btn-text, .add-mixed-set-btn .btn-text {
-    font-size: 14px;
-}
-
-/* Комплексная тренировка */
-.mixed-workout {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 16px;
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-.mixed-exercise {
-    background: var(--bg-card);
-    border-radius: 18px;
-    padding: 14px;
-    border: 2px solid var(--border-color);
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.mixed-exercise.completed {
-    border-color: var(--success);
-    background: var(--success-light);
-}
-
-.mixed-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.mixed-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--blue);
-}
-
-.mixed-check {
-    font-size: 22px;
-    color: var(--success);
-    opacity: 0.3;
-    transition: opacity 0.2s ease;
-}
-
-.mixed-exercise.completed .mixed-check {
-    opacity: 1;
-}
-
-.mixed-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.mixed-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px;
-    background: var(--bg-primary);
-    border-radius: 14px;
-    transition: all 0.2s ease;
-}
-
-.mixed-item.completed {
-    background: var(--success-light);
-}
-
-.item-name {
-    flex: 1;
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.item-input {
-    width: 70px;
-    padding: 8px;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.item-input:focus {
-    border-color: var(--blue);
-    outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.item-input:disabled {
-    opacity: 0.6;
-}
-
-.item-unit {
-    font-size: 12px;
-    color: var(--text-secondary);
-    min-width: 35px;
-}
-
-.item-check {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    accent-color: var(--success);
-}
-
-/* Статистика за день */
 .strength-summary {
     display: flex;
     justify-content: space-around;
@@ -2792,7 +2350,6 @@ body {
     border-radius: 20px;
     margin-bottom: 20px;
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-md);
 }
 
 .summary-item {
@@ -2811,10 +2368,8 @@ body {
     font-size: 28px;
     font-weight: 700;
     color: var(--blue);
-    text-shadow: var(--shadow-glow);
 }
 
-/* Кнопка завершения */
 .complete-strength-btn {
     width: 100%;
     padding: 18px;
@@ -2828,22 +2383,8 @@ body {
     transition: all 0.2s ease;
     margin-bottom: 20px;
     box-shadow: var(--shadow-lg);
-    letter-spacing: 1px;
 }
 
-.complete-strength-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-md);
-}
-
-.complete-strength-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--text-secondary);
-    box-shadow: none;
-}
-
-/* Мотивационная цитата */
 .strength-quote {
     text-align: center;
     padding: 20px;
@@ -2853,511 +2394,402 @@ body {
     border-top: 1px solid var(--border-color);
     background: var(--bg-primary);
     border-radius: 18px;
-    font-weight: 500;
 }
 
-/* Статистика в общем разделе */
-.strength-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
+/* ========== КОСМИЧЕСКИЕ ЭЛЕМЕНТЫ ========== */
+.cosmos-planet {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--neon-blue), var(--neon-purple));
+    box-shadow: 0 0 50px var(--neon-blue);
+    opacity: 0.3;
+    z-index: 0;
+    animation: float 10s ease-in-out infinite;
 }
 
-.strength-stat {
-    background: var(--gradient-blue);
-    color: white;
+.cosmos-planet.small {
+    width: 50px;
+    height: 50px;
+    top: 10%;
+    right: 5%;
 }
 
-.strength-stat .stat-value {
-    color: white;
+.cosmos-planet.medium {
+    width: 100px;
+    height: 100px;
+    bottom: 10%;
+    left: -20px;
 }
 
-.strength-stat .stat-label {
-    color: rgba(255, 255, 255, 0.9);
+.cosmos-planet.large {
+    width: 150px;
+    height: 150px;
+    top: 20%;
+    left: -30px;
 }
 
-/* ===== НОВЫЕ СТИЛИ ДЛЯ ПРОГРЕСС-ФОТО ===== */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle 2s ease-in-out infinite;
+}
 
-.progress-photo-section {
+@keyframes twinkle {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+/* ========== СОЗДАНИЕ ТРЕНИРОВКИ ========== */
+.custom-workout-section {
     background: var(--bg-card);
     border-radius: 20px;
-    padding: 16px;
+    padding: 20px;
     border: 1px solid var(--border-color);
     margin-bottom: 16px;
-}
-
-.progress-photo-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 16px;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-shadow: var(--shadow-glow);
-}
-
-/* Статистика веса */
-.weight-stats-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.weight-stat-card {
-    background: var(--gradient-blue);
-    border-radius: 14px;
-    padding: 12px;
-    text-align: center;
-    color: white;
     box-shadow: var(--shadow-md);
 }
 
-.weight-stat-label {
-    display: block;
-    font-size: 11px;
-    opacity: 0.9;
-    margin-bottom: 6px;
-}
-
-.weight-stat-value {
+.custom-title {
+    text-align: center;
+    color: var(--blue);
+    margin-bottom: 20px;
     font-size: 20px;
     font-weight: 700;
+    letter-spacing: 1px;
 }
 
-/* График веса */
-.weight-chart-card {
+.goal-card {
     background: var(--bg-primary);
     border-radius: 18px;
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
 }
 
-.weight-chart-card h3 {
+.goal-card h3 {
     color: var(--text-secondary);
     font-size: 13px;
     margin-bottom: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
 }
 
-.weight-chart {
-    min-height: 120px;
-    position: relative;
-}
-
-.chart-placeholder {
-    text-align: center;
-    padding: 30px 16px;
-    color: var(--text-secondary);
-    font-size: 13px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 2px dashed var(--border-color);
-}
-
-/* Добавление фото */
-.add-photo-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.add-photo-card h3 {
-    color: var(--text-secondary);
-    font-size: 13px;
-    margin-bottom: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.add-photo-form {
+.goal-input {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
 }
 
-.weight-input-group, .date-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.weight-input-group label, .date-input-group label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.weight-input-group input, .date-input-group input {
-    padding: 12px;
+.goal-input input {
+    flex: 1;
+    max-width: 200px;
+    padding: 14px;
     background: var(--bg-card);
     border: 2px solid var(--border-color);
-    border-radius: 12px;
+    border-radius: 14px;
     color: var(--text-primary);
-    font-size: 15px;
-    transition: all 0.2s ease;
-}
-
-.weight-input-group input:focus, .date-input-group input:focus {
-    border-color: var(--blue);
-    outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.select-photo-btn {
-    background: var(--gradient-blue);
-    border: none;
-    border-radius: 14px;
-    padding: 14px;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-md);
-}
-
-.select-photo-btn:active {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.select-photo-btn .btn-icon {
     font-size: 18px;
-}
-
-.photo-preview {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 2px solid var(--blue);
-    box-shadow: var(--shadow-md);
-}
-
-.photo-preview img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.remove-photo-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0.6);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-    transition: all 0.2s ease;
-}
-
-.remove-photo-btn:active {
-    background: var(--danger);
-    transform: scale(0.95);
-}
-
-.save-photo-btn {
-    background: var(--gradient-green);
-    border: none;
-    border-radius: 40px;
-    padding: 16px;
-    color: white;
-    font-size: 16px;
     font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-md);
+    text-align: center;
 }
 
-.save-photo-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.save-photo-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--text-secondary);
-    box-shadow: none;
-}
-
-/* История фото */
-.photo-history-card {
+.tasks-creator {
     background: var(--bg-primary);
     border-radius: 18px;
     padding: 16px;
+    margin-bottom: 16px;
     border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
 }
 
-.photo-history-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.photo-history-header h3 {
+.tasks-creator h3 {
     color: var(--text-secondary);
     font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
+    margin-bottom: 16px;
 }
 
-.photo-count {
-    background: var(--blue);
-    color: white;
-    padding: 3px 8px;
-    border-radius: 24px;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.photo-list {
+.add-task-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-height: 350px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-.photo-item {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.photo-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--blue);
-}
-
-.photo-item-header {
-    display: flex;
-    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 16px;
     align-items: center;
-    margin-bottom: 10px;
 }
 
-.photo-date {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--blue);
-}
-
-.photo-weight {
-    background: var(--gradient-green);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 24px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.photo-item-img {
+.add-task-form input {
     width: 100%;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
+    max-width: 280px;
+    padding: 14px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 14px;
+    color: var(--text-primary);
+    font-size: 14px;
 }
 
-.photo-item-img:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-md);
-}
-
-.photo-item-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.photo-delete-btn {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 6px 14px;
-    color: var(--text-secondary);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
+.task-distance-input {
     display: flex;
     align-items: center;
-    gap: 4px;
-    transition: all 0.2s ease;
+    gap: 8px;
+    justify-content: center;
 }
 
-.photo-delete-btn:active {
-    background: var(--danger-light);
-    color: var(--danger);
-    border-color: var(--danger);
+.task-distance-input input {
+    flex: 1;
+    max-width: 140px;
+    text-align: center;
 }
 
-.empty-photos {
+.add-task-btn {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px;
+    background: var(--bg-card);
+    color: var(--blue);
+    border: 2px dashed var(--border-color);
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.custom-task-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background: var(--bg-card);
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 8px;
+    gap: 10px;
+}
+
+.custom-task-text {
+    flex: 1;
+    font-size: 14px;
+}
+
+.custom-task-distance {
+    color: var(--blue);
+    font-weight: 600;
+    min-width: 70px;
+    text-align: right;
+}
+
+.custom-task-delete {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 18px;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.empty-tasks {
     text-align: center;
     padding: 30px;
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 14px;
     background: var(--bg-card);
-    border-radius: 14px;
+    border-radius: 16px;
     border: 2px dashed var(--border-color);
 }
 
-/* Модальное окно для просмотра фото */
-.photo-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 2000;
+.create-plan-btn {
+    width: 100%;
+    max-width: 380px;
+    padding: 16px;
+    background: var(--gradient-blue);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.saved-workouts-section {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.saved-workouts-title {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.saved-workouts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.saved-workout-item {
+    background: var(--bg-primary);
+    border-radius: 16px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.saved-workout-item.active {
+    border: 2px solid var(--blue);
+    background: var(--blue-light);
+}
+
+.saved-workout-icon {
+    width: 44px;
+    height: 44px;
+    background: var(--gradient-blue);
+    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
-    animation: fadeIn 0.2s ease;
-}
-
-.photo-modal img {
-    max-width: 100%;
-    max-height: 80vh;
-    border-radius: 14px;
-    box-shadow: var(--shadow-lg);
-}
-
-.photo-modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 44px;
-    height: 44px;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 50%;
-    color: white;
     font-size: 22px;
+    color: white;
+}
+
+.saved-workout-info {
+    flex: 1;
+}
+
+.saved-workout-name {
+    font-size: 14px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.saved-workout-meta {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.saved-workout-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.workout-start-btn, .workout-delete-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
 }
 
-.photo-modal-close:active {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(0.95);
-}
-
-/* Статистика веса в общем разделе */
-.weight-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
-}
-
-.weight-stat {
+.workout-start-btn {
     background: var(--gradient-green);
     color: white;
 }
 
-.weight-stat .stat-value {
-    color: white;
-}
-
-.weight-stat .stat-label {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* Простой график */
-.simple-chart {
-    position: relative;
-    height: 120px;
-    margin: 16px 0;
-}
-
-.chart-point {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background: var(--blue);
-    border: 3px solid white;
-    border-radius: 50%;
-    transform: translate(-50%, 50%);
-    cursor: pointer;
-    z-index: 2;
-    box-shadow: var(--shadow-md);
-    color: white;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.chart-point:hover {
-    transform: translate(-50%, 50%) scale(1.2);
-    background: var(--success);
-}
-
-.chart-point::after {
-    content: attr(data-weight) ' kg';
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    transform: translateX(-50%);
+.workout-delete-btn {
     background: var(--bg-card);
-    color: var(--text-primary);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 10px;
-    white-space: nowrap;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    color: var(--text-secondary);
     border: 1px solid var(--border-color);
 }
 
-.chart-point:hover::after {
-    opacity: 1;
+.empty-workouts {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 2px dashed var(--border-color);
 }
 
-.chart-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--blue), var(--purple));
-    z-index: 1;
+.active-workout {
+    background: var(--bg-primary);
+    border-radius: 20px;
+    padding: 20px;
+    border: 2px solid var(--blue);
+    margin-top: 20px;
+    animation: slideIn 0.3s ease;
 }
 
-/* Нижняя навигация */
+.active-workout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.active-workout-header h3 {
+    font-size: 18px;
+    color: var(--blue);
+    font-weight: 700;
+}
+
+.active-workout-goal {
+    background: var(--bg-card);
+    padding: 6px 14px;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--success);
+}
+
+.active-workout-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.active-workout-progress .progress-bar {
+    flex: 1;
+    height: 10px;
+}
+
+.active-workout-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.workout-step-compact {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    background: var(--bg-card);
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+}
+
+.workout-step-compact.step-completed {
+    background: var(--success-light);
+    border-color: var(--success);
+}
+
+.complete-workout-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--gradient-green);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ========== НИЖНЯЯ НАВИГАЦИЯ ========== */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -3369,7 +2801,6 @@ body {
     justify-content: space-around;
     padding: 8px 4px;
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     z-index: 100;
     max-width: 600px;
     margin: 0 auto;
@@ -3388,20 +2819,17 @@ body {
     padding: 6px 2px;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
 }
 
 .nav-icon {
     font-size: 20px;
     color: var(--icon-inactive);
-    transition: all 0.2s ease;
 }
 
 .nav-text {
     font-size: 9px;
     font-weight: 500;
     color: var(--icon-inactive);
-    transition: all 0.2s ease;
 }
 
 .nav-btn.active .nav-icon {
@@ -3413,96 +2841,68 @@ body {
     color: var(--icon-active);
 }
 
-/* Адаптация */
+/* ========== КОСМИЧЕСКИЙ РЕЖИМ ДЛЯ НАВИГАЦИИ ========== */
+[data-theme="cosmos"] .nav-btn.active .nav-icon {
+    color: var(--cyan);
+    text-shadow: 0 0 10px var(--cyan);
+    animation: glow 2s ease-in-out infinite;
+}
+
+[data-theme="cosmos"] .nav-btn.active .nav-text {
+    color: var(--cyan);
+}
+
+[data-theme="cosmos"] .start-day-btn,
+[data-theme="cosmos"] .complete-day-btn,
+[data-theme="cosmos"] .add-set-btn {
+    background: var(--gradient-cosmos);
+    border: 1px solid var(--cyan);
+    box-shadow: 0 0 15px var(--cyan);
+}
+
+/* ========== АДАПТАЦИЯ ========== */
 @media (max-width: 480px) {
-    .welcome-content {
+    .my-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .section-tabs {
+        gap: 4px;
+    }
+    
+    .tab-btn {
+        padding: 10px 4px;
+        font-size: 12px;
+    }
+    
+    .profile-header {
         flex-direction: column;
         text-align: center;
     }
     
-    .welcome-stats {
-        justify-content: center;
+    .friend-stats-grid {
+        grid-template-columns: 1fr;
     }
     
     .invite-buttons {
-        flex-wrap: wrap;
-    }
-    
-    .invite-btn {
-        width: 100%;
-    }
-    
-    .copy-btn, .share-progress-btn {
-        width: calc(50% - 4px);
-    }
-    
-    .leaderboard-header {
         flex-direction: column;
-        align-items: flex-start;
+    }
+    
+    .copy-btn {
+        width: 100%;
     }
     
     .period-selector {
-        width: 100%;
-    }
-    
-    .period-btn {
-        flex: 1;
-    }
-    
-    .leaderboard-row {
-        font-size: 11px;
-    }
-    
-    .rank {
-        width: 28px;
-    }
-    
-    .distance, .pace {
-        width: 45px;
-    }
-    
-    .workouts {
-        width: 28px;
-    }
-    
-    .friend-stat-card {
-        padding: 10px;
-    }
-    
-    .friend-stats {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 4px;
-    }
-    
-    .friend-request-item {
         flex-direction: column;
-        text-align: center;
-    }
-    
-    .friend-request-info {
-        text-align: center;
-    }
-    
-    .friend-request-actions {
-        width: 100%;
-        justify-content: center;
     }
     
     .workout-type-selector {
-        gap: 4px;
-        padding: 4px;
+        flex-direction: column;
     }
     
     .type-btn {
-        padding: 10px 4px;
-    }
-    
-    .type-icon {
-        font-size: 22px;
-    }
-    
-    .type-name {
-        font-size: 10px;
+        flex-direction: row;
+        justify-content: center;
     }
     
     .exercise-header {
@@ -3514,58 +2914,21 @@ body {
         text-align: center;
     }
     
-    .slider-container {
-        flex-direction: column;
-    }
-    
-    .goal-value {
-        width: 100%;
-    }
-    
     .set-inputs {
         flex-direction: column;
-        align-items: stretch;
     }
     
     .set-reps {
-        justify-content: space-between;
-    }
-    
-    .set-reps input {
-        width: 80px;
-    }
-    
-    .set-complete {
-        justify-content: center;
-    }
-    
-    .mixed-item {
-        flex-wrap: wrap;
-    }
-    
-    .item-input {
-        width: 60px;
+        width: 100%;
     }
     
     .strength-summary {
         flex-wrap: wrap;
-        gap: 12px;
+        gap: 16px;
     }
     
-    .nav-text {
-        font-size: 8px;
-    }
-    
-    .nav-icon {
-        font-size: 18px;
-    }
-    
-    .saved-workout-item {
-        flex-wrap: wrap;
-    }
-    
-    .saved-workout-actions {
-        width: 100%;
-        justify-content: flex-end;
+    .avatar-3d-container {
+        width: 80px;
+        height: 80px;
     }
 }
