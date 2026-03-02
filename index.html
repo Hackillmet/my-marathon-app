@@ -242,13 +242,13 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 3: ДНЕВНИК И ПЕРСОНАЖИ (ОБНОВЛЕННЫЙ) -->
+            <!-- СЛАЙД 3: ПЕРСОНАЖИ И ДНЕВНИК -->
             <div class="slide" id="slide3">
                 <div class="combined-section">
                     <!-- КАРТОЧКА ПЕРСОНАЖА -->
                     <div class="character-card" id="character-card">
                         <div class="character-header">
-                            <div class="character-avatar" id="character-avatar">🏃</div>
+                            <div class="character-avatar" id="character-avatar">👟</div>
                             <div class="character-info">
                                 <h3 id="character-name">Новичок</h3>
                                 <p id="character-description">Твой первый шаг к здоровому образу жизни</p>
@@ -269,7 +269,7 @@
                             </div>
                         </div>
                         
-                        <!-- Награда за следующий уровень -->
+                        <!-- Следующий уровень -->
                         <div class="next-reward" id="next-reward">
                             <span>🔓 Следующий уровень:</span>
                             <span id="next-character-name">Бегун (25 км)</span>
@@ -521,79 +521,9 @@
                     </div>
                 </div>
             </div>
-
-            <!-- СЛАЙД 6: ПРОГРЕСС-ФОТО (НОВЫЙ) -->
-            <div class="slide" id="slide6">
-                <div class="progress-photo-section">
-                    <h2 class="progress-photo-title">📸 ПРОГРЕСС-ФОТО</h2>
-                    
-                    <!-- Статистика веса -->
-                    <div class="weight-stats-cards">
-                        <div class="weight-stat-card">
-                            <span class="weight-stat-label">Стартовый вес</span>
-                            <span class="weight-stat-value" id="progress-start-weight">0 kg</span>
-                        </div>
-                        <div class="weight-stat-card">
-                            <span class="weight-stat-label">Текущий вес</span>
-                            <span class="weight-stat-value" id="progress-current-weight">0 kg</span>
-                        </div>
-                        <div class="weight-stat-card">
-                            <span class="weight-stat-label">Изменение</span>
-                            <span class="weight-stat-value" id="progress-weight-change">0 kg</span>
-                        </div>
-                    </div>
-
-                    <!-- График веса -->
-                    <div class="weight-chart-card">
-                        <h3>📈 ДИНАМИКА ВЕСА</h3>
-                        <div class="weight-chart" id="weight-chart">
-                            <div class="chart-placeholder" id="chart-placeholder">
-                                Добавьте фото с весом, чтобы увидеть график
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Добавление фото -->
-                    <div class="add-photo-card">
-                        <h3>➕ ДОБАВИТЬ ФОТО</h3>
-                        <div class="add-photo-form">
-                            <div class="weight-input-group">
-                                <label>Вес (кг):</label>
-                                <input type="number" id="photo-weight" step="0.1" min="30" max="200" value="70">
-                            </div>
-                            <div class="date-input-group">
-                                <label>Дата:</label>
-                                <input type="date" id="photo-date">
-                            </div>
-                            <button class="select-photo-btn" id="select-photo-btn">
-                                <span class="btn-icon">📷</span>
-                                <span class="btn-text">Выбрать фото</span>
-                            </button>
-                            <div class="photo-preview" id="photo-preview" style="display: none;">
-                                <img id="preview-img" src="" alt="Preview">
-                                <button class="remove-photo-btn" id="remove-photo-btn">✕</button>
-                            </div>
-                            <button class="save-photo-btn" id="save-photo-btn" disabled>
-                                💾 Сохранить
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- История фото -->
-                    <div class="photo-history-card">
-                        <div class="photo-history-header">
-                            <h3>📚 ИСТОРИЯ ФОТО</h3>
-                            <span class="photo-count" id="photo-count">0</span>
-                        </div>
-                        <div class="photo-list" id="photo-list">
-                            <!-- Сюда будут загружаться фото -->
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Нижняя навигация (6 кнопок) -->
+        <!-- Нижняя навигация (5 кнопок) -->
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-run" onclick="switchPage(0)">
                 <span class="nav-icon">🏃</span>
@@ -614,10 +544,6 @@
             <button class="nav-btn" id="nav-strength" onclick="switchPage(4)">
                 <span class="nav-icon">💪</span>
                 <span class="nav-text">Сила</span>
-            </button>
-            <button class="nav-btn" id="nav-photo" onclick="switchPage(5)">
-                <span class="nav-icon">📸</span>
-                <span class="nav-text">Фото</span>
             </button>
         </div>
     </div>
