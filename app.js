@@ -35,9 +35,6 @@ const STORAGE_KEYS = {
     STRENGTH_BEST_PULLUPS: 'strength_best_pullups',
     STRENGTH_BEST_PUSHUPS: 'strength_best_pushups',
     STRENGTH_TODAY: 'strength_today',
-    PROGRESS_PHOTOS: 'progress_photos',
-    START_WEIGHT: 'start_weight',
-    CURRENT_WEIGHT: 'current_weight',
     
     // КЛЮЧИ ДЛЯ ПЕРСОНАЖЕЙ
     CURRENT_CHARACTER: 'current_character',
@@ -59,7 +56,7 @@ const CHARACTERS = {
             ru: "Твой первый шаг к здоровому образу жизни",
             en: "Your first step to a healthy lifestyle"
         },
-        image: "👟",
+        emoji: "👟",
         goal: 15, // км за неделю
         reward: {
             ru: "🔥 Разблокирован Бегун!",
@@ -77,7 +74,7 @@ const CHARACTERS = {
             ru: "Ты уже чувствуешь силу в ногах",
             en: "You already feel the power in your legs"
         },
-        image: "🏃",
+        emoji: "🏃",
         goal: 25, // км за неделю
         reward: {
             ru: "🌟 Разблокирован Спортсмен!",
@@ -95,7 +92,7 @@ const CHARACTERS = {
             ru: "Тренировки вошли в привычку",
             en: "Workouts have become a habit"
         },
-        image: "🎯",
+        emoji: "🎯",
         goal: 35, // км за неделю
         reward: {
             ru: "💫 Разблокирован Марафонец!",
@@ -113,7 +110,7 @@ const CHARACTERS = {
             ru: "Длинные дистанции - твоя стихия",
             en: "Long distances are your element"
         },
-        image: "🌟",
+        emoji: "🌟",
         goal: 50, // км за неделю
         reward: {
             ru: "👑 Разблокирован Легенда!",
@@ -131,7 +128,7 @@ const CHARACTERS = {
             ru: "Ты достиг высшего уровня!",
             en: "You've reached the highest level!"
         },
-        image: "🏅",
+        emoji: "🏅",
         goal: 75, // км за неделю
         reward: {
             ru: "⭐ Максимальный уровень!",
@@ -263,23 +260,6 @@ const translations = {
         strengthCompleted: "🎉 Силовая тренировка завершена!",
         maxRounds: "Максимум 5 кругов",
         
-        // Прогресс-фото
-        progressTitle: "📸 ПРОГРЕСС-ФОТО",
-        startWeight: "Стартовый вес",
-        currentWeight: "Текущий вес",
-        weightChange: "Изменение",
-        totalPhotos: "Всего фото",
-        addPhoto: "➕ ДОБАВИТЬ ФОТО",
-        weight: "Вес (кг):",
-        date: "Дата:",
-        selectPhoto: "📷 Выбрать фото",
-        save: "💾 Сохранить",
-        photoHistory: "📚 ИСТОРИЯ ФОТО",
-        noPhotos: "📸 Пока нет фото. Добавьте первое!",
-        delete: "Удалить",
-        weightChart: "📈 ДИНАМИКА ВЕСА",
-        chartPlaceholder: "Добавьте фото с весом, чтобы увидеть график",
-        
         // Меню
         marathon: "🏃 МАРАФОН",
         reset: "🔄 Сбросить",
@@ -298,7 +278,7 @@ const translations = {
         version: "Версия:",
         
         // FAQ текст
-        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Система персонажей\n• AI рекомендации\n• Силовые тренировки\n• Прогресс-фото",
+        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Система персонажей\n• AI рекомендации\n• Силовые тренировки",
         
         // Сообщения
         confirmReset: "Сбросить весь прогресс?",
@@ -429,23 +409,6 @@ const translations = {
         strengthCompleted: "🎉 Strength workout completed!",
         maxRounds: "Maximum 5 rounds",
         
-        // Progress photos
-        progressTitle: "📸 PROGRESS PHOTOS",
-        startWeight: "Start weight",
-        currentWeight: "Current weight",
-        weightChange: "Change",
-        totalPhotos: "Total photos",
-        addPhoto: "➕ ADD PHOTO",
-        weight: "Weight (kg):",
-        date: "Date:",
-        selectPhoto: "📷 Select photo",
-        save: "💾 Save",
-        photoHistory: "📚 PHOTO HISTORY",
-        noPhotos: "📸 No photos yet. Add your first!",
-        delete: "Delete",
-        weightChart: "📈 WEIGHT CHART",
-        chartPlaceholder: "Add photos with weight to see chart",
-        
         // Menu
         marathon: "🏃 MARATHON",
         reset: "🔄 Reset",
@@ -464,7 +427,7 @@ const translations = {
         version: "Version:",
         
         // FAQ text
-        faqText: "❓ FAQ:\n\n• Start day at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 ready workouts\n• Custom tasks\n• Character system\n• AI recommendations\n• Strength workouts\n• Progress photos",
+        faqText: "❓ FAQ:\n\n• Start day at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 ready workouts\n• Custom tasks\n• Character system\n• AI recommendations\n• Strength workouts",
         
         // Messages
         confirmReset: "Reset all progress?",
@@ -742,14 +705,6 @@ let strengthToday = JSON.parse(localStorage.getItem(STORAGE_KEYS.STRENGTH_TODAY)
     }
 };
 
-// ========== СОСТОЯНИЕ ДЛЯ ПРОГРЕСС-ФОТО ==========
-let progressPhotos = JSON.parse(localStorage.getItem(STORAGE_KEYS.PROGRESS_PHOTOS)) || [];
-let startWeight = parseFloat(localStorage.getItem(STORAGE_KEYS.START_WEIGHT)) || 0;
-let currentWeight = parseFloat(localStorage.getItem(STORAGE_KEYS.CURRENT_WEIGHT)) || 0;
-
-let selectedPhotoFile = null;
-let selectedPhotoBase64 = null;
-
 let currentStrengthType = 'pullups';
 
 const strengthQuotes = [
@@ -770,7 +725,7 @@ let currentCharacter = parseInt(localStorage.getItem(STORAGE_KEYS.CURRENT_CHARAC
 let weeklyGoal = CHARACTERS[currentCharacter].goal;
 let weeklyProgress = parseFloat(localStorage.getItem(STORAGE_KEYS.WEEKLY_PROGRESS)) || 0;
 let weekStartDate = localStorage.getItem(STORAGE_KEYS.WEEK_START_DATE) || new Date().toISOString();
-let unlockedCharacters = JSON.parse(localStorage.getItem(STORAGE_KEYS.UNLOCKED_CHARACTERS)) || [1]; // Первый персонаж разблокирован по умолчанию
+let unlockedCharacters = JSON.parse(localStorage.getItem(STORAGE_KEYS.UNLOCKED_CHARACTERS)) || [1];
 
 let currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
 let currentTab = 'diary';
@@ -794,12 +749,19 @@ function checkAndResetWeek() {
     const weekStart = new Date(weekStartDate);
     const diffDays = Math.floor((now - weekStart) / (1000 * 60 * 60 * 24));
     
+    // Если прошло больше недели, сбрасываем прогресс
     if (diffDays >= 7) {
-        // Новая неделя
         weeklyProgress = 0;
         weekStartDate = now.toISOString();
         localStorage.setItem(STORAGE_KEYS.WEEK_START_DATE, weekStartDate);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
+        
+        // Показываем уведомление о новой неделе
+        tg.showPopup({
+            title: '📅',
+            message: currentLanguage === 'ru' ? 'Новая неделя! Цель обновлена' : 'New week! Goal updated',
+            buttons: [{ type: 'close' }]
+        });
     }
 }
 
@@ -812,6 +774,7 @@ function updateCharacterProgress(distance) {
     // Проверяем, достигнута ли цель
     if (weeklyProgress >= weeklyGoal) {
         const nextCharacterId = CHARACTERS[currentCharacter].nextCharacter;
+        
         if (nextCharacterId && !unlockedCharacters.includes(nextCharacterId)) {
             // Разблокируем нового персонажа
             unlockedCharacters.push(nextCharacterId);
@@ -825,14 +788,22 @@ function updateCharacterProgress(distance) {
             });
         }
         
-        // Сбрасываем прогресс для новой недели
+        // Переходим на следующий уровень или остаемся на текущем
+        if (nextCharacterId) {
+            currentCharacter = nextCharacterId;
+            weeklyGoal = CHARACTERS[nextCharacterId].goal;
+        }
+        
+        // Оставляем остаток прогресса для новой недели
         weeklyProgress = weeklyProgress - weeklyGoal;
-        weeklyGoal = CHARACTERS[nextCharacterId || currentCharacter].goal;
-        currentCharacter = nextCharacterId || currentCharacter;
         
         localStorage.setItem(STORAGE_KEYS.CURRENT_CHARACTER, currentCharacter);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_GOAL, weeklyGoal);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
+        
+        // Сбрасываем дату начала недели
+        weekStartDate = new Date().toISOString();
+        localStorage.setItem(STORAGE_KEYS.WEEK_START_DATE, weekStartDate);
     }
     
     renderCharacter();
@@ -852,20 +823,20 @@ function renderCharacter() {
     const currentChar = CHARACTERS[currentCharacter];
     const nextChar = CHARACTERS[currentChar.nextCharacter];
     
-    characterAvatar.textContent = currentChar.image;
+    characterAvatar.textContent = currentChar.emoji;
     characterName.textContent = currentChar.name[currentLanguage];
     characterDescription.textContent = currentChar.description[currentLanguage];
     
     const percent = Math.min(100, (weeklyProgress / weeklyGoal) * 100);
     characterProgress.style.width = percent + '%';
-    weeklyGoalText.textContent = `${weeklyProgress.toFixed(1)}/${weeklyGoal} ${t('distance')}`;
+    weeklyGoalText.textContent = `${weeklyProgress.toFixed(1)}/${weeklyGoal} км`;
     
-    characterLevel.textContent = `${t('level')} ${unlockedCharacters.length}`;
+    characterLevel.textContent = `${currentLanguage === 'ru' ? 'Уровень' : 'Level'} ${unlockedCharacters.length}`;
     
     if (nextChar) {
-        nextCharacterName.textContent = `${nextChar.image} ${nextChar.name[currentLanguage]} (${nextChar.goal} ${t('distance')})`;
+        nextCharacterName.textContent = `${nextChar.emoji} ${nextChar.name[currentLanguage]} (${nextChar.goal} км)`;
     } else {
-        nextCharacterName.textContent = currentLanguage === 'ru' ? 'Максимальный уровень' : 'Maximum level';
+        nextCharacterName.textContent = currentLanguage === 'ru' ? '👑 Максимальный уровень' : '👑 Maximum level';
     }
     
     renderCharactersCollection();
@@ -877,6 +848,7 @@ function renderCharactersCollection() {
     
     grid.innerHTML = '';
     
+    // Показываем всех персонажей по порядку
     for (let i = 1; i <= 5; i++) {
         const char = CHARACTERS[i];
         const isUnlocked = unlockedCharacters.includes(i);
@@ -885,8 +857,9 @@ function renderCharactersCollection() {
         const item = document.createElement('div');
         item.className = `character-collection-item ${isUnlocked ? 'unlocked' : ''} ${isCurrent ? 'current' : ''}`;
         item.innerHTML = `
-            <div class="collection-avatar">${char.image}</div>
+            <div class="collection-avatar">${char.emoji}</div>
             <div class="collection-name">${char.name[currentLanguage].split(' ')[1] || char.name[currentLanguage]}</div>
+            <div class="collection-goal">${char.goal} км</div>
         `;
         
         grid.appendChild(item);
@@ -1027,11 +1000,6 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS, bestPushups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_TODAY, JSON.stringify(strengthToday));
     
-    // Сохраняем прогресс-фото
-    localStorage.setItem(STORAGE_KEYS.PROGRESS_PHOTOS, JSON.stringify(progressPhotos));
-    localStorage.setItem(STORAGE_KEYS.START_WEIGHT, startWeight);
-    localStorage.setItem(STORAGE_KEYS.CURRENT_WEIGHT, currentWeight);
-    
     // Сохраняем персонажей
     localStorage.setItem(STORAGE_KEYS.CURRENT_CHARACTER, currentCharacter);
     localStorage.setItem(STORAGE_KEYS.WEEKLY_GOAL, weeklyGoal);
@@ -1126,26 +1094,6 @@ function getPersonalizedRecommendation() {
     const needRecovery = needsRecovery();
     const streak = calculateStreak();
     const lang = currentLanguage;
-    
-    // Советы по весу и фото
-    if (progressPhotos.length > 0 && Math.random() < 0.2) {
-        const change = (currentWeight - startWeight).toFixed(1);
-        if (change < 0) {
-            return {
-                icon: "🎉",
-                text: lang === 'ru' 
-                    ? `Ты сбросил ${Math.abs(change)} кг! Отличный результат!`
-                    : `You lost ${Math.abs(change)} kg! Great result!`
-            };
-        } else if (change > 0) {
-            return {
-                icon: "💪",
-                text: lang === 'ru'
-                    ? `Набор массы +${change} кг. Так держать!`
-                    : `Mass gain +${change} kg. Keep it up!`
-            };
-        }
-    }
     
     // Советы по персонажам
     if (Math.random() < 0.15) {
@@ -1940,312 +1888,6 @@ function updateStrengthStats() {
     if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
-// ========== ФУНКЦИИ ДЛЯ ПРОГРЕСС-ФОТО ==========
-
-function initPhotoDate() {
-    const dateInput = document.getElementById('photo-date');
-    if (dateInput) {
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        dateInput.value = `${yyyy}-${mm}-${dd}`;
-    }
-}
-
-function selectPhoto() {
-    tg.showPopup({
-        title: '📸 ' + (currentLanguage === 'ru' ? 'Выберите фото' : 'Select photo'),
-        message: currentLanguage === 'ru' ? 'Выберите фото из галереи' : 'Select photo from gallery',
-        buttons: [
-            { id: 'gallery', type: 'default', text: currentLanguage === 'ru' ? '📁 Галерея' : '📁 Gallery' },
-            { type: 'cancel', text: currentLanguage === 'ru' ? 'Отмена' : 'Cancel' }
-        ]
-    }, (buttonId) => {
-        if (buttonId === 'gallery') {
-            simulatePhotoSelection();
-        }
-    });
-}
-
-function simulatePhotoSelection() {
-    const canvas = document.createElement('canvas');
-    canvas.width = 200;
-    canvas.height = 200;
-    const ctx = canvas.getContext('2d');
-    
-    const gradient = ctx.createLinearGradient(0, 0, 200, 200);
-    gradient.addColorStop(0, '#0066ff');
-    gradient.addColorStop(1, '#8a2be2');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, 200, 200);
-    
-    ctx.font = 'bold 80px Arial';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('📸', 100, 100);
-    
-    ctx.font = '20px Arial';
-    ctx.fillStyle = 'white';
-    ctx.fillText(currentLanguage === 'ru' ? 'Демо-фото' : 'Demo photo', 100, 170);
-    
-    selectedPhotoBase64 = canvas.toDataURL('image/png');
-    selectedPhotoFile = { name: 'photo.png' };
-    
-    const preview = document.getElementById('photo-preview');
-    const previewImg = document.getElementById('preview-img');
-    if (preview && previewImg) {
-        previewImg.src = selectedPhotoBase64;
-        preview.style.display = 'block';
-    }
-    
-    const saveBtn = document.getElementById('save-photo-btn');
-    if (saveBtn) saveBtn.disabled = false;
-    
-    tg.showAlert(currentLanguage === 'ru' ? '📸 Демо-фото создано' : '📸 Demo photo created');
-}
-
-function saveProgressPhoto() {
-    const weightInput = document.getElementById('photo-weight');
-    const dateInput = document.getElementById('photo-date');
-    
-    const weight = parseFloat(weightInput.value);
-    const date = dateInput.value;
-    
-    if (!selectedPhotoBase64) {
-        tg.showAlert(currentLanguage === 'ru' ? 'Сначала выберите фото' : 'Select photo first');
-        return;
-    }
-    
-    if (isNaN(weight) || weight <= 0) {
-        tg.showAlert(currentLanguage === 'ru' ? 'Введите корректный вес' : 'Enter valid weight');
-        return;
-    }
-    
-    if (!date) {
-        tg.showAlert(currentLanguage === 'ru' ? 'Выберите дату' : 'Select date');
-        return;
-    }
-    
-    const newPhoto = {
-        id: Date.now(),
-        weight: weight,
-        date: date,
-        photo: selectedPhotoBase64,
-        timestamp: new Date(date).getTime()
-    };
-    
-    progressPhotos.push(newPhoto);
-    
-    progressPhotos.sort((a, b) => a.timestamp - b.timestamp);
-    
-    if (progressPhotos.length > 0) {
-        startWeight = progressPhotos[0].weight;
-        currentWeight = progressPhotos[progressPhotos.length - 1].weight;
-    }
-    
-    saveProgressState();
-    
-    selectedPhotoBase64 = null;
-    selectedPhotoFile = null;
-    weightInput.value = currentWeight || 70;
-    initPhotoDate();
-    
-    const preview = document.getElementById('photo-preview');
-    const saveBtn = document.getElementById('save-photo-btn');
-    if (preview) preview.style.display = 'none';
-    if (saveBtn) saveBtn.disabled = true;
-    
-    renderProgressPhotos();
-    updateWeightStats();
-    renderWeightChart();
-    
-    tg.showAlert(currentLanguage === 'ru' ? '✅ Фото сохранено' : '✅ Photo saved');
-}
-
-function saveProgressState() {
-    localStorage.setItem(STORAGE_KEYS.PROGRESS_PHOTOS, JSON.stringify(progressPhotos));
-    localStorage.setItem(STORAGE_KEYS.START_WEIGHT, startWeight);
-    localStorage.setItem(STORAGE_KEYS.CURRENT_WEIGHT, currentWeight);
-}
-
-function updateWeightStats() {
-    const startWeightEl = document.getElementById('start-weight');
-    const currentWeightEl = document.getElementById('current-weight');
-    const weightChangeEl = document.getElementById('weight-change');
-    const totalPhotosEl = document.getElementById('total-photos');
-    
-    if (startWeightEl) startWeightEl.textContent = startWeight.toFixed(1);
-    if (currentWeightEl) currentWeightEl.textContent = currentWeight.toFixed(1);
-    
-    const change = (currentWeight - startWeight).toFixed(1);
-    if (weightChangeEl) {
-        weightChangeEl.textContent = (change > 0 ? '+' : '') + change;
-        weightChangeEl.style.color = change < 0 ? 'var(--success)' : change > 0 ? 'var(--danger)' : 'var(--text-secondary)';
-    }
-    
-    if (totalPhotosEl) totalPhotosEl.textContent = progressPhotos.length;
-    
-    const progressStartWeight = document.getElementById('progress-start-weight');
-    const progressCurrentWeight = document.getElementById('progress-current-weight');
-    const progressWeightChange = document.getElementById('progress-weight-change');
-    const photoCount = document.getElementById('photo-count');
-    
-    if (progressStartWeight) progressStartWeight.textContent = startWeight.toFixed(1) + ' kg';
-    if (progressCurrentWeight) progressCurrentWeight.textContent = currentWeight.toFixed(1) + ' kg';
-    
-    const changeText = (change > 0 ? '+' : '') + change + ' kg';
-    if (progressWeightChange) {
-        progressWeightChange.textContent = changeText;
-        progressWeightChange.style.color = change < 0 ? 'var(--success)' : change > 0 ? 'var(--danger)' : 'var(--text-secondary)';
-    }
-    
-    if (photoCount) photoCount.textContent = progressPhotos.length;
-}
-
-function renderProgressPhotos() {
-    const container = document.getElementById('photo-list');
-    if (!container) return;
-    
-    container.innerHTML = '';
-    
-    if (progressPhotos.length === 0) {
-        container.innerHTML = `<div class="empty-photos">${t('noPhotos')}</div>`;
-        return;
-    }
-    
-    const sortedPhotos = [...progressPhotos].reverse();
-    
-    sortedPhotos.forEach(photo => {
-        const photoDate = new Date(photo.date);
-        const formattedDate = photoDate.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-        
-        const photoItem = document.createElement('div');
-        photoItem.className = 'photo-item';
-        photoItem.innerHTML = `
-            <div class="photo-item-header">
-                <span class="photo-date">${formattedDate}</span>
-                <span class="photo-weight">${photo.weight} kg</span>
-            </div>
-            <img src="${photo.photo}" class="photo-item-img" alt="Progress photo" data-id="${photo.id}">
-            <div class="photo-item-actions">
-                <button class="photo-delete-btn" data-id="${photo.id}">
-                    <span>🗑️</span> ${t('delete')}
-                </button>
-            </div>
-        `;
-        container.appendChild(photoItem);
-    });
-    
-    document.querySelectorAll('.photo-item-img').forEach(img => {
-        img.addEventListener('click', function() {
-            const src = this.src;
-            showPhotoModal(src);
-        });
-    });
-    
-    document.querySelectorAll('.photo-delete-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const id = parseInt(this.dataset.id);
-            deleteProgressPhoto(id);
-        });
-    });
-}
-
-function showPhotoModal(src) {
-    const modal = document.createElement('div');
-    modal.className = 'photo-modal';
-    modal.innerHTML = `
-        <img src="${src}" alt="Full size">
-        <button class="photo-modal-close">✕</button>
-    `;
-    
-    document.body.appendChild(modal);
-    
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal || e.target.classList.contains('photo-modal-close')) {
-            modal.remove();
-        }
-    });
-}
-
-function deleteProgressPhoto(id) {
-    if (!confirm(currentLanguage === 'ru' ? 'Удалить это фото?' : 'Delete this photo?')) return;
-    
-    progressPhotos = progressPhotos.filter(p => p.id !== id);
-    
-    if (progressPhotos.length > 0) {
-        progressPhotos.sort((a, b) => a.timestamp - b.timestamp);
-        startWeight = progressPhotos[0].weight;
-        currentWeight = progressPhotos[progressPhotos.length - 1].weight;
-    } else {
-        startWeight = 0;
-        currentWeight = 0;
-    }
-    
-    saveProgressState();
-    renderProgressPhotos();
-    updateWeightStats();
-    renderWeightChart();
-    
-    tg.showAlert(currentLanguage === 'ru' ? '🗑️ Фото удалено' : '🗑️ Photo deleted');
-}
-
-function renderWeightChart() {
-    const chartContainer = document.getElementById('weight-chart');
-    const placeholder = document.getElementById('chart-placeholder');
-    
-    if (!chartContainer) return;
-    
-    if (progressPhotos.length < 2) {
-        if (placeholder) placeholder.style.display = 'block';
-        if (placeholder) placeholder.innerHTML = t('chartPlaceholder');
-        chartContainer.innerHTML = '';
-        return;
-    }
-    
-    if (placeholder) placeholder.style.display = 'none';
-    
-    const sorted = [...progressPhotos].sort((a, b) => a.timestamp - b.timestamp);
-    
-    const weights = sorted.map(p => p.weight);
-    const minWeight = Math.min(...weights) - 2;
-    const maxWeight = Math.max(...weights) + 2;
-    const range = maxWeight - minWeight;
-    
-    let chartHtml = '<div class="simple-chart">';
-    
-    const chartWidth = 100;
-    const pointSpacing = chartWidth / (sorted.length - 1);
-    
-    sorted.forEach((photo, index) => {
-        const y = ((photo.weight - minWeight) / range) * 100;
-        const x = index * pointSpacing;
-        
-        chartHtml += `<div class="chart-point" style="left: ${x}%; bottom: ${y}%;" data-weight="${photo.weight}" data-date="${new Date(photo.date).toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US')}">●</div>`;
-    });
-    
-    chartHtml += '<div class="chart-line"></div>';
-    chartHtml += '</div>';
-    
-    chartContainer.innerHTML = chartHtml;
-}
-
-function resetProgressPhotos() {
-    progressPhotos = [];
-    startWeight = 0;
-    currentWeight = 0;
-    selectedPhotoBase64 = null;
-    selectedPhotoFile = null;
-    saveProgressState();
-}
-
 // ========== СТАТИСТИКА ==========
 function updateStats() {
     const totalWorkoutsEl = document.getElementById('total-workouts');
@@ -2348,7 +1990,6 @@ function updateStats() {
     }
     
     updateStrengthStats();
-    updateWeightStats();
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
@@ -2664,8 +2305,8 @@ function updateAllText() {
     if (refreshBtn) refreshBtn.textContent = t('refreshRecommendation');
     
     // Персонажи
-    const weeklyGoalEl = document.querySelector('.progress-label span:first-child');
-    if (weeklyGoalEl) weeklyGoalEl.textContent = t('weeklyGoal');
+    const progressLabel = document.querySelector('.character-progress-container .progress-label span:first-child');
+    if (progressLabel) progressLabel.textContent = t('weeklyGoal');
     
     const nextRewardLabel = document.querySelector('.next-reward span:first-child');
     if (nextRewardLabel) nextRewardLabel.textContent = `🔓 ${t('nextLevel')}:`;
@@ -2762,36 +2403,6 @@ function updateAllText() {
     if (summaryLabels[1]) summaryLabels[1].textContent = t('summaryPushups');
     if (summaryLabels[2]) summaryLabels[2].textContent = t('summaryCalories');
     
-    // Прогресс-фото
-    const progressTitle = document.querySelector('.progress-photo-title');
-    if (progressTitle) progressTitle.textContent = t('progressTitle');
-    
-    const addPhotoCardH3 = document.querySelector('.add-photo-card h3');
-    if (addPhotoCardH3) addPhotoCardH3.textContent = t('addPhoto');
-    
-    const weightLabel = document.querySelector('.weight-input-group label');
-    if (weightLabel) weightLabel.textContent = t('weight');
-    
-    const dateLabel = document.querySelector('.date-input-group label');
-    if (dateLabel) dateLabel.textContent = t('date');
-    
-    const selectPhotoBtn = document.getElementById('select-photo-btn');
-    if (selectPhotoBtn) {
-        selectPhotoBtn.innerHTML = `<span class="btn-icon">📷</span><span class="btn-text">${t('selectPhoto')}</span>`;
-    }
-    
-    const savePhotoBtn = document.getElementById('save-photo-btn');
-    if (savePhotoBtn) savePhotoBtn.textContent = t('save');
-    
-    const photoHistoryH3 = document.querySelector('.photo-history-header h3');
-    if (photoHistoryH3) photoHistoryH3.textContent = t('photoHistory');
-    
-    const weightChartH3 = document.querySelector('.weight-chart-card h3');
-    if (weightChartH3) weightChartH3.textContent = t('weightChart');
-    
-    const chartPlaceholder = document.getElementById('chart-placeholder');
-    if (chartPlaceholder) chartPlaceholder.innerHTML = t('chartPlaceholder');
-    
     // Меню
     const menuTitles = document.querySelectorAll('.menu-title');
     if (menuTitles[0]) menuTitles[0].textContent = t('marathon');
@@ -2841,9 +2452,6 @@ function updateAllText() {
     renderPushupsSets();
     renderMixedSets();
     updateStrengthProgress();
-    renderProgressPhotos();
-    updateWeightStats();
-    renderWeightChart();
     
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
     const quoteEl = document.getElementById('strength-quote');
@@ -2869,7 +2477,6 @@ window.switchPage = function(pageIndex) {
     if (pageIndex === 2) { renderCharacter(); renderDiary(); }
     if (pageIndex === 3) { renderCustomCreator(); renderSavedWorkouts(); renderActiveWorkout(); }
     if (pageIndex === 4) { renderPullupsSets(); renderPushupsSets(); renderMixedSets(); updateStrengthProgress(); }
-    if (pageIndex === 5) { renderProgressPhotos(); updateWeightStats(); renderWeightChart(); }
 };
 
 window.setTheme = function(theme) {
@@ -2920,10 +2527,6 @@ window.setLanguage = function(lang) {
         renderPushupsSets();
         renderMixedSets();
         updateStrengthProgress();
-    } else if (currentSlide === 5) {
-        renderProgressPhotos();
-        updateWeightStats();
-        renderWeightChart();
     }
 };
 
@@ -2945,6 +2548,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateStats();
     updateAllText();
     updateUI();
+    renderCharacter();
+    renderDiary();
     renderSavedWorkouts();
     renderActiveWorkout();
 
@@ -2954,12 +2559,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePullupsGoal();
     updatePushupsGoal();
     updateStrengthProgress();
-    
-    // Инициализация прогресс-фото
-    initPhotoDate();
-    renderProgressPhotos();
-    updateWeightStats();
-    renderWeightChart();
 
     document.querySelectorAll('.type-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -3141,23 +2740,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const completeWorkoutBtn = document.getElementById('complete-workout-btn');
     if (completeWorkoutBtn) completeWorkoutBtn.addEventListener('click', completeWorkout);
-    
-    // Обработчики для прогресс-фото
-    const selectPhotoBtn = document.getElementById('select-photo-btn');
-    if (selectPhotoBtn) selectPhotoBtn.addEventListener('click', selectPhoto);
-    
-    const savePhotoBtn = document.getElementById('save-photo-btn');
-    if (savePhotoBtn) savePhotoBtn.addEventListener('click', saveProgressPhoto);
-    
-    const removePhotoBtn = document.getElementById('remove-photo-btn');
-    if (removePhotoBtn) {
-        removePhotoBtn.addEventListener('click', function() {
-            selectedPhotoBase64 = null;
-            selectedPhotoFile = null;
-            document.getElementById('photo-preview').style.display = 'none';
-            document.getElementById('save-photo-btn').disabled = true;
-        });
-    }
 
     const menuBtn = document.getElementById('menu-btn');
     if (menuBtn) {
@@ -3230,7 +2812,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 weekStartDate = new Date().toISOString();
                 unlockedCharacters = [1];
                 
-                resetProgressPhotos();
                 localStorage.clear();
                 
                 updateUI();
@@ -3244,9 +2825,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderPushupsSets();
                 renderMixedSets();
                 updateStrengthProgress();
-                renderProgressPhotos();
-                updateWeightStats();
-                renderWeightChart();
                 
                 const menu = document.getElementById('menu-dropdown');
                 const menuBtn = document.getElementById('menu-btn');
