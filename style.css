@@ -5,37 +5,8 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-:root {
-    /* АБСОЛЮТНО ЧЕРНАЯ ТЕМА */
-    --bg-primary: #000000;
-    --bg-secondary: #0a0a0a;
-    --bg-card: #111111;
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --text-muted: #888888;
-    --blue: #0066ff;
-    --blue-dark: #0044cc;
-    --purple: #8a2be2;
-    --green: #00cc88;
-    --red: #ff4757;
-    --orange: #ffaa00;
-    --border-color: #222222;
-    --border-light: #1a1a1a;
-    --shadow-sm: 0 2px 8px rgba(0,0,0,0.8);
-    --shadow-md: 0 4px 16px rgba(0,0,0,0.9);
-    --shadow-lg: 0 8px 24px rgba(0,0,0,1);
-    --gradient-blue: linear-gradient(135deg, #0066ff, #8a2be2);
-    --gradient-green: linear-gradient(135deg, #00cc88, #0066ff);
-    --icon-active: #0066ff;
-    --icon-inactive: #444444;
-    --success: #00cc88;
-    --success-light: rgba(0,204,136,0.1);
-    --warning: #ffaa00;
-    --danger: #ff4757;
-}
-
 body {
-    background: #000000 !important;
+    background: #000000;
     color: #ffffff;
     min-height: 100vh;
     display: flex;
@@ -55,6 +26,7 @@ body {
     min-height: 100vh;
     position: relative;
     padding-bottom: 70px;
+    overflow-x: hidden; /* Запрещаем горизонтальный скролл */
 }
 
 /* Шапка */
@@ -68,11 +40,13 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    width: 100%;
 }
 
 .logo {
     font-size: 20px;
     font-weight: 800;
+    white-space: nowrap;
 }
 
 .logo-white {
@@ -96,6 +70,7 @@ body {
     gap: 6px;
     padding: 8px;
     border-radius: 8px;
+    flex-shrink: 0;
 }
 
 .menu-btn.active {
@@ -133,6 +108,7 @@ body {
     border-radius: 16px;
     padding: 16px;
     min-width: 260px;
+    max-width: 280px;
     z-index: 1000;
     box-shadow: 0 8px 24px rgba(0,0,0,1);
 }
@@ -160,6 +136,10 @@ body {
     border-radius: 8px;
     font-size: 14px;
     margin-bottom: 2px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .menu-item:hover {
@@ -178,6 +158,8 @@ body {
     justify-content: space-between;
     margin-bottom: 10px;
     font-size: 13px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .theme-selector span, .language-selector span {
@@ -187,6 +169,7 @@ body {
 .theme-buttons-menu, .lang-buttons-menu {
     display: flex;
     gap: 6px;
+    flex-wrap: wrap;
 }
 
 .theme-btn-small, .lang-btn-small {
@@ -197,6 +180,7 @@ body {
     border-radius: 16px;
     font-size: 11px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .theme-btn-small.active, .lang-btn-small.active {
@@ -217,6 +201,8 @@ body {
     align-items: center;
     margin-bottom: 8px;
     font-size: 13px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .contact-item:last-child {
@@ -226,6 +212,7 @@ body {
 .contact-highlight {
     color: #0066ff;
     font-weight: 600;
+    word-break: break-word;
 }
 
 /* Дата */
@@ -236,6 +223,7 @@ body {
     color: #cccccc;
     font-size: 14px;
     background: #111111;
+    width: 100%;
 }
 
 /* Контейнер для слайдов */
@@ -247,6 +235,7 @@ body {
     scroll-behavior: smooth;
     height: calc(100vh - 170px);
     background: #000000;
+    width: 100%;
 }
 
 .slides-container::-webkit-scrollbar {
@@ -259,6 +248,7 @@ body {
     overflow-y: auto;
     padding: 16px;
     background: #000000;
+    width: 100%;
 }
 
 /* ===== СТИЛИ ДЛЯ ПЕРСОНАЖЕЙ ===== */
@@ -269,6 +259,7 @@ body {
     padding: 20px;
     margin-bottom: 20px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .character-header {
@@ -276,6 +267,7 @@ body {
     align-items: center;
     gap: 16px;
     margin-bottom: 16px;
+    flex-wrap: wrap;
 }
 
 .character-avatar {
@@ -287,21 +279,25 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 40px;
+    flex-shrink: 0;
 }
 
 .character-info {
     flex: 1;
+    min-width: 150px;
 }
 
 .character-info h3 {
     font-size: 20px;
     margin-bottom: 4px;
     color: #ffffff;
+    word-break: break-word;
 }
 
 .character-info p {
     font-size: 13px;
     color: #cccccc;
+    word-break: break-word;
 }
 
 .character-progress-container {
@@ -309,6 +305,7 @@ body {
     border-radius: 16px;
     padding: 16px;
     margin-bottom: 12px;
+    width: 100%;
 }
 
 .progress-label {
@@ -317,6 +314,8 @@ body {
     margin-bottom: 8px;
     font-size: 13px;
     color: #cccccc;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .character-progress-bar {
@@ -325,6 +324,7 @@ body {
     border-radius: 20px;
     overflow: hidden;
     margin-bottom: 8px;
+    width: 100%;
 }
 
 .character-fill {
@@ -348,6 +348,9 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 13px;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
 }
 
 .next-reward span:first-child {
@@ -357,6 +360,7 @@ body {
 .next-reward span:last-child {
     color: #0066ff;
     font-weight: 600;
+    word-break: break-word;
 }
 
 /* Коллекция персонажей */
@@ -366,6 +370,7 @@ body {
     padding: 16px;
     margin-bottom: 20px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .collection-title {
@@ -378,6 +383,7 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 6px;
+    width: 100%;
 }
 
 .character-collection-item {
@@ -391,6 +397,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 2px;
+    width: 100%;
 }
 
 .character-collection-item.unlocked {
@@ -420,6 +427,7 @@ body {
 .collection-name {
     font-size: 9px;
     font-weight: 600;
+    word-break: break-word;
 }
 
 .collection-goal {
@@ -435,12 +443,20 @@ body {
     justify-content: center;
     text-align: center;
     background: #000000;
+    width: 100%;
+}
+
+.start-content {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
 }
 
 .start-content h2 {
     font-size: 28px;
     margin-bottom: 8px;
     color: #ffffff;
+    word-break: break-word;
 }
 
 .start-content p {
@@ -459,7 +475,9 @@ body {
     cursor: pointer;
     margin-bottom: 16px;
     width: 100%;
-    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .start-day-btn:disabled {
@@ -471,6 +489,7 @@ body {
 .time-info {
     color: #cccccc;
     font-size: 14px;
+    word-break: break-word;
 }
 
 /* Экран тренировки */
@@ -480,16 +499,19 @@ body {
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .balance-title {
     font-size: 14px;
     color: #cccccc;
     margin-bottom: 12px;
+    word-break: break-word;
 }
 
 .balance-item {
     margin-bottom: 12px;
+    width: 100%;
 }
 
 .balance-label {
@@ -498,6 +520,7 @@ body {
     gap: 8px;
     margin-bottom: 6px;
     font-size: 13px;
+    flex-wrap: wrap;
 }
 
 .balance-icon {
@@ -515,6 +538,7 @@ body {
     background: #0a0a0a;
     border-radius: 20px;
     overflow: hidden;
+    width: 100%;
 }
 
 .progress-fill {
@@ -532,6 +556,7 @@ body {
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .workout-header {
@@ -541,12 +566,15 @@ body {
     margin-bottom: 16px;
     padding-bottom: 12px;
     border-bottom: 1px solid #222222;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .workout-name {
     font-size: 18px;
     font-weight: 700;
     color: #ffffff;
+    word-break: break-word;
 }
 
 .workout-difficulty {
@@ -554,6 +582,7 @@ body {
     border-radius: 20px;
     font-size: 11px;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .difficulty-easy {
@@ -575,6 +604,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    width: 100%;
 }
 
 .workout-step {
@@ -584,6 +614,8 @@ body {
     padding: 8px;
     background: #0a0a0a;
     border-radius: 12px;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .workout-step.step-completed {
@@ -595,12 +627,15 @@ body {
     height: 20px;
     cursor: pointer;
     accent-color: #00cc88;
+    flex-shrink: 0;
 }
 
 .step-text {
     flex: 1;
     font-size: 14px;
     color: #ffffff;
+    word-break: break-word;
+    min-width: 120px;
 }
 
 .step-distance {
@@ -610,10 +645,12 @@ body {
     background: #111111;
     padding: 4px 8px;
     border-radius: 16px;
+    white-space: nowrap;
 }
 
 .additional-header {
     margin: 16px 0 12px;
+    width: 100%;
 }
 
 .additional-header h3 {
@@ -626,6 +663,7 @@ body {
     flex-direction: column;
     gap: 10px;
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .extra-step {
@@ -644,6 +682,9 @@ body {
     font-weight: 600;
     cursor: pointer;
     margin: 16px 0 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .complete-day-btn:disabled {
@@ -656,6 +697,7 @@ body {
     text-align: center;
     font-size: 13px;
     color: #cccccc;
+    word-break: break-word;
 }
 
 /* Экран завершения */
@@ -667,12 +709,14 @@ body {
     justify-content: center;
     text-align: center;
     background: #000000;
+    width: 100%;
 }
 
 .congrats h2 {
     font-size: 24px;
     color: #00cc88;
     margin-bottom: 16px;
+    word-break: break-word;
 }
 
 .final-balance {
@@ -684,12 +728,15 @@ body {
     font-weight: 700;
     color: #0066ff;
     border: 1px solid #222222;
+    width: 100%;
+    max-width: 280px;
 }
 
 /* Статистика */
 .stats-section {
     padding-bottom: 20px;
     background: #000000;
+    width: 100%;
 }
 
 .stats-title {
@@ -704,6 +751,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .stat-card {
@@ -712,6 +760,7 @@ body {
     padding: 12px 4px;
     text-align: center;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .stat-value {
@@ -720,11 +769,13 @@ body {
     font-weight: 700;
     color: #0066ff;
     margin-bottom: 4px;
+    word-break: break-word;
 }
 
 .stat-label {
     font-size: 10px;
     color: #cccccc;
+    word-break: break-word;
 }
 
 .strength-stats-grid {
@@ -732,6 +783,7 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .strength-stat {
@@ -749,6 +801,7 @@ body {
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .weekly-card h3, .recommendations-card h3, .recent-card h3 {
@@ -771,10 +824,12 @@ body {
     gap: 12px;
     margin-bottom: 12px;
     min-height: 60px;
+    flex-wrap: wrap;
 }
 
 .recommendation-icon {
     font-size: 28px;
+    flex-shrink: 0;
 }
 
 .recommendation-text {
@@ -782,6 +837,8 @@ body {
     font-size: 13px;
     line-height: 1.4;
     color: #ffffff;
+    word-break: break-word;
+    min-width: 150px;
 }
 
 .refresh-recommendation {
@@ -792,11 +849,13 @@ body {
     color: #cccccc;
     font-size: 12px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .comparison-card {
     color: #cccccc;
     font-size: 13px;
+    word-break: break-word;
 }
 
 .history-list {
@@ -805,6 +864,7 @@ body {
     gap: 8px;
     max-height: 200px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .history-item {
@@ -812,6 +872,7 @@ body {
     border-radius: 12px;
     padding: 12px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .history-date {
@@ -832,6 +893,7 @@ body {
     border-radius: 20px;
     padding: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .diary-title {
@@ -855,6 +917,9 @@ body {
     justify-content: center;
     gap: 8px;
     margin-bottom: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .add-entry-form {
@@ -863,6 +928,7 @@ body {
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .add-entry-form textarea {
@@ -873,13 +939,20 @@ body {
     border-radius: 12px;
     color: #ffffff;
     font-size: 14px;
-    resize: none;
+    resize: vertical;
     margin-bottom: 12px;
+    font-family: inherit;
+}
+
+.add-entry-form textarea:focus {
+    outline: none;
+    border-color: #0066ff;
 }
 
 .form-buttons {
     display: flex;
     gap: 10px;
+    width: 100%;
 }
 
 .btn-small {
@@ -890,6 +963,9 @@ body {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #save-entry-btn {
@@ -909,6 +985,7 @@ body {
     gap: 12px;
     max-height: 300px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .entry-item {
@@ -917,6 +994,7 @@ body {
     padding: 14px;
     border: 1px solid #222222;
     position: relative;
+    width: 100%;
 }
 
 .entry-date {
@@ -929,6 +1007,7 @@ body {
     font-size: 14px;
     color: #ffffff;
     padding-right: 30px;
+    word-break: break-word;
 }
 
 .entry-delete {
@@ -943,6 +1022,9 @@ body {
     color: #cccccc;
     font-size: 14px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .empty-entries {
@@ -953,12 +1035,14 @@ body {
     background: #0a0a0a;
     border-radius: 12px;
     border: 1px dashed #222222;
+    width: 100%;
 }
 
 /* Создание тренировки */
 .custom-workout-section {
     padding-bottom: 20px;
     background: #000000;
+    width: 100%;
 }
 
 .custom-title {
@@ -974,6 +1058,7 @@ body {
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .goal-card h3, .tasks-creator h3, .saved-workouts-title {
@@ -986,6 +1071,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 100%;
 }
 
 .goal-input input {
@@ -997,11 +1083,18 @@ body {
     color: #ffffff;
     font-size: 16px;
     font-weight: 600;
+    min-width: 80px;
+}
+
+.goal-input input:focus {
+    outline: none;
+    border-color: #0066ff;
 }
 
 .goal-input span {
     font-size: 14px;
     color: #cccccc;
+    white-space: nowrap;
 }
 
 .add-task-form {
@@ -1009,6 +1102,7 @@ body {
     gap: 8px;
     margin-bottom: 16px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .add-task-form input[type="text"] {
@@ -1021,6 +1115,11 @@ body {
     color: #ffffff;
 }
 
+.add-task-form input[type="text"]:focus {
+    outline: none;
+    border-color: #0066ff;
+}
+
 .task-distance-input {
     display: flex;
     align-items: center;
@@ -1029,6 +1128,7 @@ body {
     border: 1px solid #222222;
     border-radius: 10px;
     padding: 0 8px;
+    min-width: 100px;
 }
 
 .task-distance-input input {
@@ -1041,9 +1141,14 @@ body {
     text-align: center;
 }
 
+.task-distance-input input:focus {
+    outline: none;
+}
+
 .task-distance-input span {
     font-size: 12px;
     color: #cccccc;
+    white-space: nowrap;
 }
 
 .add-task-btn {
@@ -1054,12 +1159,15 @@ body {
     color: white;
     font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
+    height: 44px;
 }
 
 .tasks-list {
     min-height: 50px;
     max-height: 200px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .empty-tasks {
@@ -1069,6 +1177,7 @@ body {
     font-size: 13px;
     border: 1px dashed #222222;
     border-radius: 10px;
+    width: 100%;
 }
 
 .custom-task-item {
@@ -1080,12 +1189,16 @@ body {
     border-radius: 10px;
     margin-bottom: 6px;
     border: 1px solid #222222;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .custom-task-text {
     flex: 1;
     font-size: 14px;
     color: #ffffff;
+    word-break: break-word;
+    min-width: 120px;
 }
 
 .custom-task-distance {
@@ -1095,6 +1208,7 @@ body {
     background: #111111;
     padding: 4px 8px;
     border-radius: 16px;
+    white-space: nowrap;
 }
 
 .custom-task-delete {
@@ -1104,6 +1218,7 @@ body {
     font-size: 18px;
     cursor: pointer;
     padding: 4px 8px;
+    flex-shrink: 0;
 }
 
 .create-plan-btn {
@@ -1117,6 +1232,9 @@ body {
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .create-plan-btn:disabled {
@@ -1131,6 +1249,7 @@ body {
     gap: 8px;
     max-height: 250px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .empty-workouts {
@@ -1148,6 +1267,8 @@ body {
     background: #0a0a0a;
     border-radius: 14px;
     border: 1px solid #222222;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .saved-workout-item.active {
@@ -1157,10 +1278,12 @@ body {
 
 .saved-workout-icon {
     font-size: 24px;
+    flex-shrink: 0;
 }
 
 .saved-workout-info {
     flex: 1;
+    min-width: 120px;
 }
 
 .saved-workout-name {
@@ -1169,16 +1292,19 @@ body {
     font-weight: 600;
     margin-bottom: 2px;
     color: #ffffff;
+    word-break: break-word;
 }
 
 .saved-workout-meta {
     font-size: 11px;
     color: #cccccc;
+    word-break: break-word;
 }
 
 .saved-workout-actions {
     display: flex;
     gap: 4px;
+    flex-shrink: 0;
 }
 
 .workout-start-btn, .workout-delete-btn {
@@ -1188,6 +1314,9 @@ body {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .workout-start-btn {
@@ -1206,6 +1335,7 @@ body {
     border-radius: 20px;
     padding: 20px;
     border: 2px solid #0066ff;
+    width: 100%;
 }
 
 .active-workout-header {
@@ -1213,11 +1343,14 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .active-workout-header h3 {
     font-size: 18px;
     color: #0066ff;
+    word-break: break-word;
 }
 
 .active-workout-goal {
@@ -1227,10 +1360,12 @@ body {
     font-size: 13px;
     font-weight: 600;
     color: #0066ff;
+    white-space: nowrap;
 }
 
 .active-workout-progress {
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .progress-percent {
@@ -1248,6 +1383,7 @@ body {
     margin-bottom: 16px;
     max-height: 250px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .workout-step-compact {
@@ -1258,6 +1394,8 @@ body {
     background: #0a0a0a;
     border-radius: 12px;
     border: 1px solid #222222;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .workout-step-compact.step-completed {
@@ -1269,6 +1407,7 @@ body {
     height: 20px;
     cursor: pointer;
     accent-color: #00cc88;
+    flex-shrink: 0;
 }
 
 .complete-workout-btn {
@@ -1281,6 +1420,9 @@ body {
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .complete-workout-btn:disabled {
@@ -1292,6 +1434,7 @@ body {
 .strength-section {
     padding-bottom: 20px;
     background: #000000;
+    width: 100%;
 }
 
 .strength-title {
@@ -1307,6 +1450,7 @@ body {
     padding: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .progress-header {
@@ -1314,6 +1458,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .progress-title {
@@ -1328,6 +1474,7 @@ body {
     background: #0a0a0a;
     padding: 4px;
     border-radius: 40px;
+    width: 100%;
 }
 
 .type-btn {
@@ -1342,6 +1489,7 @@ body {
     border-radius: 30px;
     color: #cccccc;
     cursor: pointer;
+    min-width: 0;
 }
 
 .type-btn.active {
@@ -1355,6 +1503,10 @@ body {
 
 .type-name {
     font-size: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
 }
 
 .exercise-card {
@@ -1363,6 +1515,7 @@ body {
     padding: 16px;
     margin-bottom: 20px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .exercise-header {
@@ -1372,6 +1525,7 @@ body {
     margin-bottom: 16px;
     padding-bottom: 12px;
     border-bottom: 1px solid #222222;
+    flex-wrap: wrap;
 }
 
 .exercise-icon {
@@ -1383,16 +1537,19 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 22px;
+    flex-shrink: 0;
 }
 
 .exercise-title {
     flex: 1;
+    min-width: 120px;
 }
 
 .exercise-title h3 {
     font-size: 16px;
     margin-bottom: 2px;
     color: #ffffff;
+    word-break: break-word;
 }
 
 .exercise-subtitle {
@@ -1407,6 +1564,7 @@ body {
     background: #0a0a0a;
     padding: 6px 12px;
     border-radius: 30px;
+    white-space: nowrap;
 }
 
 .goal-settings {
@@ -1414,6 +1572,7 @@ body {
     border-radius: 16px;
     padding: 16px;
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .goal-slider label {
@@ -1427,6 +1586,7 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-wrap: wrap;
 }
 
 .slider-container input[type="range"] {
@@ -1435,6 +1595,7 @@ body {
     -webkit-appearance: none;
     background: linear-gradient(135deg, #0066ff, #8a2be2);
     border-radius: 6px;
+    min-width: 150px;
 }
 
 .slider-container input[type="range"]::-webkit-slider-thumb {
@@ -1456,6 +1617,7 @@ body {
     background: #111111;
     padding: 6px 10px;
     border-radius: 30px;
+    white-space: nowrap;
 }
 
 .sets-container {
@@ -1465,6 +1627,7 @@ body {
     margin-bottom: 16px;
     max-height: 300px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .set-card {
@@ -1472,6 +1635,7 @@ body {
     border-radius: 16px;
     padding: 12px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .set-card.completed {
@@ -1484,6 +1648,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .set-number {
@@ -1493,6 +1659,7 @@ body {
     background: #111111;
     padding: 4px 10px;
     border-radius: 20px;
+    white-space: nowrap;
 }
 
 .set-remove {
@@ -1509,6 +1676,7 @@ body {
     gap: 12px;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .set-reps {
@@ -1519,11 +1687,13 @@ body {
     background: #111111;
     padding: 8px 12px;
     border-radius: 12px;
+    min-width: 150px;
 }
 
 .set-reps label {
     font-size: 12px;
     color: #cccccc;
+    white-space: nowrap;
 }
 
 .set-reps input {
@@ -1538,6 +1708,11 @@ body {
     text-align: center;
 }
 
+.set-reps input:focus {
+    outline: none;
+    border-color: #0066ff;
+}
+
 .set-complete {
     display: flex;
     align-items: center;
@@ -1546,6 +1721,7 @@ body {
     padding: 6px 12px;
     background: #111111;
     border-radius: 30px;
+    white-space: nowrap;
 }
 
 .set-complete input[type="checkbox"] {
@@ -1575,6 +1751,9 @@ body {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .mixed-workout {
@@ -1584,6 +1763,7 @@ body {
     margin-bottom: 16px;
     max-height: 350px;
     overflow-y: auto;
+    width: 100%;
 }
 
 .mixed-exercise {
@@ -1591,6 +1771,7 @@ body {
     border-radius: 16px;
     padding: 12px;
     border: 1px solid #222222;
+    width: 100%;
 }
 
 .mixed-exercise.completed {
@@ -1605,12 +1786,15 @@ body {
     margin-bottom: 10px;
     padding-bottom: 6px;
     border-bottom: 1px solid #222222;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .mixed-name {
     font-size: 14px;
     font-weight: 600;
     color: #0066ff;
+    word-break: break-word;
 }
 
 .mixed-check {
@@ -1627,6 +1811,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
 }
 
 .mixed-item {
@@ -1636,12 +1821,16 @@ body {
     padding: 8px;
     background: #111111;
     border-radius: 12px;
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .item-name {
     flex: 1;
     font-size: 13px;
     color: #ffffff;
+    word-break: break-word;
+    min-width: 80px;
 }
 
 .item-input {
@@ -1656,10 +1845,16 @@ body {
     text-align: center;
 }
 
+.item-input:focus {
+    outline: none;
+    border-color: #0066ff;
+}
+
 .item-unit {
     font-size: 11px;
     color: #cccccc;
     min-width: 30px;
+    white-space: nowrap;
 }
 
 .item-check {
@@ -1667,6 +1862,7 @@ body {
     height: 20px;
     cursor: pointer;
     accent-color: #00cc88;
+    flex-shrink: 0;
 }
 
 .strength-summary {
@@ -1677,10 +1873,14 @@ body {
     border-radius: 16px;
     margin-bottom: 16px;
     border: 1px solid #222222;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .summary-item {
     text-align: center;
+    min-width: 70px;
 }
 
 .summary-label {
@@ -1688,6 +1888,7 @@ body {
     font-size: 11px;
     color: #cccccc;
     margin-bottom: 4px;
+    white-space: nowrap;
 }
 
 .summary-value {
@@ -1707,6 +1908,9 @@ body {
     font-weight: 600;
     cursor: pointer;
     margin-bottom: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .complete-strength-btn:disabled {
@@ -1724,6 +1928,8 @@ body {
     border-top: 1px solid #222222;
     background: #0a0a0a;
     border-radius: 12px;
+    width: 100%;
+    word-break: break-word;
 }
 
 /* Нижняя навигация */
@@ -1740,6 +1946,7 @@ body {
     z-index: 100;
     max-width: 600px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .nav-btn {
@@ -1754,6 +1961,7 @@ body {
     padding: 6px 2px;
     border-radius: 8px;
     cursor: pointer;
+    min-width: 44px;
 }
 
 .nav-icon {
@@ -1765,6 +1973,7 @@ body {
     font-size: 9px;
     font-weight: 500;
     color: #444444;
+    white-space: nowrap;
 }
 
 .nav-btn.active .nav-icon {
@@ -1788,7 +1997,6 @@ body {
     
     .next-reward {
         flex-direction: column;
-        gap: 8px;
         text-align: center;
     }
     
@@ -1817,7 +2025,8 @@ body {
     }
     
     .exercise-header {
-        flex-wrap: wrap;
+        flex-direction: column;
+        text-align: center;
     }
     
     .exercise-stats {
@@ -1852,6 +2061,7 @@ body {
     
     .mixed-item {
         flex-wrap: wrap;
+        justify-content: center;
     }
     
     .strength-summary {
@@ -1865,5 +2075,42 @@ body {
     
     .nav-icon {
         font-size: 18px;
+    }
+    
+    .add-task-form {
+        flex-direction: column;
+    }
+    
+    .add-task-btn {
+        width: 100%;
+        padding: 12px;
+    }
+    
+    .task-distance-input {
+        width: 100%;
+    }
+    
+    .saved-workout-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .saved-workout-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .workout-step {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .step-distance {
+        align-self: flex-end;
+    }
+    
+    .workout-step-compact {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
