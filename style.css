@@ -6,7 +6,7 @@
 }
 
 :root {
-    /* Цвета для темной темы (по умолчанию) */
+    /* Черная тема (по умолчанию) */
     --bg-primary: #0a0f1a;
     --bg-secondary: #141b2b;
     --bg-card: #1e2a3a;
@@ -471,19 +471,23 @@ body {
 
 .characters-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 8px;
 }
 
 .character-collection-item {
     background: var(--bg-primary);
     border-radius: 16px;
-    padding: 10px;
+    padding: 10px 4px;
     text-align: center;
     border: 2px solid var(--border-color);
     transition: all 0.2s ease;
     opacity: 0.5;
     cursor: default;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
 }
 
 .character-collection-item.unlocked {
@@ -492,18 +496,13 @@ body {
     background: var(--gradient-blue);
     color: white;
     box-shadow: var(--shadow-glow);
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
 }
 
 .character-collection-item.current {
     border-width: 3px;
     border-color: var(--green);
     position: relative;
+    transform: scale(1.05);
 }
 
 .character-collection-item.current::after {
@@ -512,176 +511,28 @@ body {
     top: -8px;
     right: -8px;
     font-size: 16px;
+    background: var(--bg-card);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
 }
 
 .collection-avatar {
     font-size: 24px;
-    margin-bottom: 4px;
 }
 
 .collection-name {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
 }
 
-/* Дневник */
-.diary-section {
-    background: var(--bg-card);
-    border-radius: 24px;
-    padding: 16px;
-    border: 1px solid var(--border-color);
-}
-
-.diary-title {
-    font-size: 16px;
-    color: var(--text-secondary);
-    margin-bottom: 12px;
-    font-weight: 600;
-}
-
-.add-entry-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--gradient-blue);
-    border: none;
-    border-radius: 40px;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow-md);
-    transition: all 0.2s ease;
-}
-
-.add-entry-btn:active {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.add-entry-form {
-    background: var(--bg-primary);
-    border-radius: 20px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-}
-
-.add-entry-form textarea {
-    width: 100%;
-    padding: 12px;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    color: var(--text-primary);
-    font-size: 14px;
-    resize: none;
-    margin-bottom: 12px;
-}
-
-.add-entry-form textarea:focus {
-    border-color: var(--blue);
-    outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.form-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.btn-small {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 40px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-#save-entry-btn {
-    background: var(--gradient-green);
-    color: white;
-}
-
-.cancel-btn {
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
-.entries-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.entry-item {
-    background: var(--bg-primary);
-    border-radius: 16px;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    position: relative;
-    animation: slideIn 0.2s ease;
-}
-
-@keyframes slideIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.entry-date {
-    font-size: 11px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-}
-
-.entry-content {
-    font-size: 14px;
-    line-height: 1.5;
-    color: var(--text-primary);
-    padding-right: 30px;
-}
-
-.entry-delete {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
-    background: var(--bg-card);
-    border: none;
-    border-radius: 50%;
-    color: var(--text-secondary);
-    font-size: 14px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.entry-delete:active {
-    background: var(--danger);
-    color: white;
-}
-
-.empty-entries {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 14px;
-    background: var(--bg-primary);
-    border-radius: 16px;
-    border: 2px dashed var(--border-color);
+.collection-goal {
+    font-size: 8px;
+    opacity: 0.8;
 }
 
 /* Стартовый экран */
@@ -799,10 +650,6 @@ body {
 
 .strength-fill {
     background: var(--gradient-green);
-}
-
-.team-fill {
-    background: var(--gradient-red);
 }
 
 .workout-card {
@@ -1130,6 +977,166 @@ body {
     padding: 20px;
     color: var(--text-secondary);
     font-size: 13px;
+}
+
+/* Дневник */
+.diary-section {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.diary-title {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.add-entry-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--gradient-blue);
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
+}
+
+.add-entry-btn:active {
+    transform: scale(0.98);
+    box-shadow: var(--shadow-sm);
+}
+
+.add-entry-form {
+    background: var(--bg-primary);
+    border-radius: 20px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.add-entry-form textarea {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 16px;
+    color: var(--text-primary);
+    font-size: 14px;
+    resize: none;
+    margin-bottom: 12px;
+}
+
+.add-entry-form textarea:focus {
+    border-color: var(--blue);
+    outline: none;
+    box-shadow: var(--shadow-glow);
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-small {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#save-entry-btn {
+    background: var(--gradient-green);
+    color: white;
+}
+
+.cancel-btn {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.entry-item {
+    background: var(--bg-primary);
+    border-radius: 16px;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.entry-date {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.entry-content {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    padding-right: 30px;
+}
+
+.entry-delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: var(--bg-card);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.entry-delete:active {
+    background: var(--danger);
+    color: white;
+}
+
+.empty-entries {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    background: var(--bg-primary);
+    border-radius: 16px;
+    border: 2px dashed var(--border-color);
 }
 
 /* Создание тренировки */
@@ -2045,401 +2052,6 @@ body {
     font-weight: 500;
 }
 
-/* Прогресс-фото */
-.progress-photo-section {
-    background: var(--bg-card);
-    border-radius: 20px;
-    padding: 16px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 16px;
-}
-
-.progress-photo-title {
-    text-align: center;
-    color: var(--blue);
-    margin-bottom: 16px;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-shadow: var(--shadow-glow);
-}
-
-.weight-stats-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.weight-stat-card {
-    background: var(--gradient-blue);
-    border-radius: 14px;
-    padding: 12px;
-    text-align: center;
-    color: white;
-    box-shadow: var(--shadow-md);
-}
-
-.weight-stat-label {
-    display: block;
-    font-size: 11px;
-    opacity: 0.9;
-    margin-bottom: 6px;
-}
-
-.weight-stat-value {
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.weight-chart-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.weight-chart-card h3 {
-    color: var(--text-secondary);
-    font-size: 13px;
-    margin-bottom: 12px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.weight-chart {
-    min-height: 120px;
-    position: relative;
-}
-
-.chart-placeholder {
-    text-align: center;
-    padding: 30px 16px;
-    color: var(--text-secondary);
-    font-size: 13px;
-    background: var(--bg-card);
-    border-radius: 12px;
-    border: 2px dashed var(--border-color);
-}
-
-/* Добавление фото */
-.add-photo-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    margin-bottom: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.add-photo-card h3 {
-    color: var(--text-secondary);
-    font-size: 13px;
-    margin-bottom: 16px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.add-photo-form {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.weight-input-group, .date-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.weight-input-group label, .date-input-group label {
-    font-size: 13px;
-    color: var(--text-secondary);
-    font-weight: 500;
-}
-
-.weight-input-group input, .date-input-group input {
-    padding: 12px;
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-size: 15px;
-    transition: all 0.2s ease;
-}
-
-.weight-input-group input:focus, .date-input-group input:focus {
-    border-color: var(--blue);
-    outline: none;
-    box-shadow: var(--shadow-glow);
-}
-
-.select-photo-btn {
-    background: var(--gradient-blue);
-    border: none;
-    border-radius: 14px;
-    padding: 14px;
-    color: white;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-md);
-}
-
-.select-photo-btn:active {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.select-photo-btn .btn-icon {
-    font-size: 18px;
-}
-
-.photo-preview {
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-    border: 2px solid var(--blue);
-    box-shadow: var(--shadow-md);
-}
-
-.photo-preview img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.remove-photo-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 32px;
-    height: 32px;
-    background: rgba(0, 0, 0, 0.6);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-    transition: all 0.2s ease;
-}
-
-.remove-photo-btn:active {
-    background: var(--danger);
-    transform: scale(0.95);
-}
-
-.save-photo-btn {
-    background: var(--gradient-green);
-    border: none;
-    border-radius: 40px;
-    padding: 16px;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-md);
-}
-
-.save-photo-btn:active:not(:disabled) {
-    transform: scale(0.98);
-    box-shadow: var(--shadow-sm);
-}
-
-.save-photo-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: var(--text-secondary);
-    box-shadow: none;
-}
-
-/* История фото */
-.photo-history-card {
-    background: var(--bg-primary);
-    border-radius: 18px;
-    padding: 16px;
-    border: 1px solid var(--border-color);
-    box-shadow: var(--shadow-sm);
-}
-
-.photo-history-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.photo-history-header h3 {
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.photo-count {
-    background: var(--blue);
-    color: white;
-    padding: 3px 8px;
-    border-radius: 24px;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-.photo-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 350px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-.photo-item {
-    background: var(--bg-card);
-    border-radius: 16px;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    transition: all 0.2s ease;
-    box-shadow: var(--shadow-sm);
-}
-
-.photo-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--blue);
-}
-
-.photo-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.photo-date {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--blue);
-}
-
-.photo-weight {
-    background: var(--gradient-green);
-    color: white;
-    padding: 4px 12px;
-    border-radius: 24px;
-    font-size: 12px;
-    font-weight: 600;
-}
-
-.photo-item-img {
-    width: 100%;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.photo-item-img:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-md);
-}
-
-.photo-item-actions {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.photo-delete-btn {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
-    padding: 6px 14px;
-    color: var(--text-secondary);
-    font-size: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.2s ease;
-}
-
-.photo-delete-btn:active {
-    background: var(--danger-light);
-    color: var(--danger);
-    border-color: var(--danger);
-}
-
-.empty-photos {
-    text-align: center;
-    padding: 30px;
-    color: var(--text-secondary);
-    font-size: 13px;
-    background: var(--bg-card);
-    border-radius: 14px;
-    border: 2px dashed var(--border-color);
-}
-
-/* Модальное окно для просмотра фото */
-.photo-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    z-index: 2000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-    animation: fadeIn 0.2s ease;
-}
-
-.photo-modal img {
-    max-width: 100%;
-    max-height: 80vh;
-    border-radius: 14px;
-    box-shadow: var(--shadow-lg);
-}
-
-.photo-modal-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 44px;
-    height: 44px;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    border-radius: 50%;
-    color: white;
-    font-size: 22px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    transition: all 0.2s ease;
-}
-
-.photo-modal-close:active {
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(0.95);
-}
-
 /* Нижняя навигация */
 .bottom-nav {
     position: fixed;
@@ -2496,7 +2108,7 @@ body {
     color: var(--icon-active);
 }
 
-/* Адаптация */
+/* Адаптация для мобильных */
 @media (max-width: 480px) {
     .character-header {
         flex-direction: column;
@@ -2514,7 +2126,23 @@ body {
     }
     
     .characters-grid {
-        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+    }
+    
+    .character-collection-item {
+        padding: 8px 2px;
+    }
+    
+    .collection-avatar {
+        font-size: 20px;
+    }
+    
+    .collection-name {
+        font-size: 8px;
+    }
+    
+    .collection-goal {
+        font-size: 7px;
     }
     
     .stats-grid {
