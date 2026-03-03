@@ -1446,6 +1446,24 @@ function switchStrengthType(type) {
     updateStrengthProgress();
 }
 
+function updatePullupsDisplay() {
+    const todaySpan = document.getElementById('pullups-today');
+    if (todaySpan) {
+        const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+        const goal = strengthToday.pullups.goal;
+        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    }
+}
+
+function updatePushupsDisplay() {
+    const todaySpan = document.getElementById('pushups-today');
+    if (todaySpan) {
+        const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+        const goal = strengthToday.pushups.goal;
+        todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    }
+}
+
 function renderPullupsSets() {
     const container = document.getElementById('pullups-sets');
     if (!container) return;
@@ -1486,6 +1504,7 @@ function renderPullupsSets() {
             strengthToday.pullups.sets.splice(index, 1);
             renderPullupsSets();
             updatePullupsStats();
+            updatePullupsDisplay();
             saveState();
         });
     });
@@ -1496,6 +1515,7 @@ function renderPullupsSets() {
             const value = parseInt(this.value) || 0;
             strengthToday.pullups.sets[index].reps = value;
             updatePullupsStats();
+            updatePullupsDisplay();
             saveState();
         });
     });
@@ -1510,11 +1530,13 @@ function renderPullupsSets() {
             else setCard.classList.remove('completed');
             
             updatePullupsStats();
+            updatePullupsDisplay();
             saveState();
         });
     });
     
     updatePullupsStats();
+    updatePullupsDisplay();
 }
 
 function renderPushupsSets() {
@@ -1557,6 +1579,7 @@ function renderPushupsSets() {
             strengthToday.pushups.sets.splice(index, 1);
             renderPushupsSets();
             updatePushupsStats();
+            updatePushupsDisplay();
             saveState();
         });
     });
@@ -1567,6 +1590,7 @@ function renderPushupsSets() {
             const value = parseInt(this.value) || 0;
             strengthToday.pushups.sets[index].reps = value;
             updatePushupsStats();
+            updatePushupsDisplay();
             saveState();
         });
     });
@@ -1581,11 +1605,13 @@ function renderPushupsSets() {
             else setCard.classList.remove('completed');
             
             updatePushupsStats();
+            updatePushupsDisplay();
             saveState();
         });
     });
     
     updatePushupsStats();
+    updatePushupsDisplay();
 }
 
 function renderMixedSets() {
@@ -1668,9 +1694,11 @@ function addSet(type) {
     if (type === 'pullups') {
         strengthToday.pullups.sets.push({ reps: 8, completed: false });
         renderPullupsSets();
+        updatePullupsDisplay();
     } else if (type === 'pushups') {
         strengthToday.pushups.sets.push({ reps: 12, completed: false });
         renderPushupsSets();
+        updatePushupsDisplay();
     }
     saveState();
 }
@@ -1699,15 +1727,24 @@ function updatePullupsGoal() {
     const goalSpan = document.getElementById('pullups-goal');
     
     if (slider && valueSpan && goalSpan) {
+        // Устанавливаем начальное значение из состояния
         slider.value = strengthToday.pullups.goal;
         valueSpan.textContent = strengthToday.pullups.goal;
         goalSpan.textContent = strengthToday.pullups.goal;
+        
+        // Обновляем отображение 0/цель
+        updatePullupsDisplay();
         
         slider.addEventListener('input', function() {
             const value = this.value;
             valueSpan.textContent = value;
             goalSpan.textContent = value;
             strengthToday.pullups.goal = parseInt(value);
+            
+            // Обновляем отображение 0/цель
+            updatePullupsDisplay();
+            
+            // Пересчитываем прогресс
             updatePullupsStats();
             saveState();
         });
@@ -1720,15 +1757,24 @@ function updatePushupsGoal() {
     const goalSpan = document.getElementById('pushups-goal');
     
     if (slider && valueSpan && goalSpan) {
+        // Устанавливаем начальное значение из состояния
         slider.value = strengthToday.pushups.goal;
         valueSpan.textContent = strengthToday.pushups.goal;
         goalSpan.textContent = strengthToday.pushups.goal;
+        
+        // Обновляем отображение 0/цель
+        updatePushupsDisplay();
         
         slider.addEventListener('input', function() {
             const value = this.value;
             valueSpan.textContent = value;
             goalSpan.textContent = value;
             strengthToday.pushups.goal = parseInt(value);
+            
+            // Обновляем отображение 0/цель
+            updatePushupsDisplay();
+            
+            // Пересчитываем прогресс
             updatePushupsStats();
             saveState();
         });
@@ -1736,13 +1782,11 @@ function updatePushupsGoal() {
 }
 
 function updatePullupsStats() {
-    const todaySpan = document.getElementById('pullups-today');
     const summaryPullups = document.getElementById('summary-pullups');
     
     const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pullups.goal;
     
-    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
     if (summaryPullups) summaryPullups.textContent = totalCompleted;
     
     strengthToday.pullups.completed = totalCompleted >= goal;
@@ -1750,13 +1794,11 @@ function updatePullupsStats() {
 }
 
 function updatePushupsStats() {
-    const todaySpan = document.getElementById('pushups-today');
     const summaryPushups = document.getElementById('summary-pushups');
     
     const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pushups.goal;
     
-    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
     if (summaryPushups) summaryPushups.textContent = totalCompleted;
     
     strengthToday.pushups.completed = totalCompleted >= goal;
@@ -2476,7 +2518,14 @@ window.switchPage = function(pageIndex) {
     if (pageIndex === 1) { updateStats(); updateRecommendation(); }
     if (pageIndex === 2) { renderCharacter(); renderDiary(); }
     if (pageIndex === 3) { renderCustomCreator(); renderSavedWorkouts(); renderActiveWorkout(); }
-    if (pageIndex === 4) { renderPullupsSets(); renderPushupsSets(); renderMixedSets(); updateStrengthProgress(); }
+    if (pageIndex === 4) { 
+        renderPullupsSets(); 
+        renderPushupsSets(); 
+        renderMixedSets(); 
+        updatePullupsGoal();
+        updatePushupsGoal();
+        updateStrengthProgress(); 
+    }
 };
 
 window.setTheme = function(theme) {
@@ -2526,6 +2575,8 @@ window.setLanguage = function(lang) {
         renderPullupsSets();
         renderPushupsSets();
         renderMixedSets();
+        updatePullupsGoal();
+        updatePushupsGoal();
         updateStrengthProgress();
     }
 };
@@ -2580,24 +2631,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (completeStrengthBtn) completeStrengthBtn.addEventListener('click', function(e) { e.preventDefault(); if (!this.disabled) completeStrengthWorkout(); });
 
     const pullupsSlider = document.getElementById('pullups-goal-slider');
-    if (pullupsSlider) pullupsSlider.addEventListener('input', function() {
-        const value = this.value;
-        document.getElementById('pullups-goal-value').textContent = value;
-        document.getElementById('pullups-goal').textContent = value;
-        strengthToday.pullups.goal = parseInt(value);
-        updatePullupsStats();
-        saveState();
-    });
+    if (pullupsSlider) {
+        // Инициализация уже происходит в updatePullupsGoal
+    }
 
     const pushupsSlider = document.getElementById('pushups-goal-slider');
-    if (pushupsSlider) pushupsSlider.addEventListener('input', function() {
-        const value = this.value;
-        document.getElementById('pushups-goal-value').textContent = value;
-        document.getElementById('pushups-goal').textContent = value;
-        strengthToday.pushups.goal = parseInt(value);
-        updatePushupsStats();
-        saveState();
-    });
+    if (pushupsSlider) {
+        // Инициализация уже происходит в updatePushupsGoal
+    }
 
     const refreshBtn = document.getElementById('refresh-recommendation');
     if (refreshBtn) refreshBtn.addEventListener('click', updateRecommendation);
@@ -2824,6 +2865,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderPullupsSets();
                 renderPushupsSets();
                 renderMixedSets();
+                updatePullupsGoal();
+                updatePushupsGoal();
                 updateStrengthProgress();
                 
                 const menu = document.getElementById('menu-dropdown');
