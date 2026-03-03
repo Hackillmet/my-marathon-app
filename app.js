@@ -141,13 +141,10 @@ const CHARACTERS = {
 // ========== ПЕРЕВОДЫ ==========
 const translations = {
     ru: {
-        // Общие
         ready: "Готов к тренировке?",
         startBtn: "🏃 Начать бег",
         completeBtn: "✅ Завершить день",
         progress: "Прогресс",
-        
-        // Время
         waitUntil4am: "⏰ Старт в 4:00",
         waitHours: (h, m) => `⏳ Новый день через ${h}ч ${m}м`,
         waitUntilNextDay: (h, m) => `⏳ Следующий день в 4:00 (осталось ${h}ч ${m}м)`,
@@ -158,21 +155,15 @@ const translations = {
         dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется в 4:00 утра.",
         newDayAvailable: "🌟 Новый день доступен!",
         startAt4am: "⏰ Старт в 4:00 утра",
-        
-        // Тренировка
         mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
         addedTasks: "➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ",
         easy: "Легкая",
         medium: "Средняя",
         hard: "Сложная",
         my: "Моя",
-        
-        // Завершение
         congrats: "🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!",
         youRan: "Ты пробежал(а):",
         home: "🏠 На главную",
-        
-        // Статистика
         stats: "📊 РАСШИРЕННАЯ СТАТИСТИКА",
         workouts: "Тренировок",
         totalKm: "Всего км",
@@ -186,24 +177,16 @@ const translations = {
         days: "дней",
         history: "ИСТОРИЯ ТРЕНИРОВОК",
         noWorkouts: "Пока нет тренировок",
-        
-        // Детали тренировки
         distance: "км",
         minutes: "мин",
         kcal: "ккал",
         pace: "мин/км",
-        
-        // Сравнение
         vsLastMonth: "vs прошлый месяц",
         better: "лучше",
         worse: "хуже",
         same: "так же",
-        
-        // AI рекомендации
         aiRecommendations: "🤖 AI-РЕКОМЕНДАЦИИ",
         refreshRecommendation: "🔄 Обновить",
-        
-        // Дневник
         newEntry: "➕ Новая запись",
         save: "Сохранить",
         cancel: "Отмена",
@@ -211,8 +194,6 @@ const translations = {
         entryPlaceholder: "Как прошла тренировка? Напиши свои мысли...",
         entryDeleted: "Запись удалена",
         entrySaved: "Запись сохранена",
-        
-        // Персонажи
         weeklyGoal: "🏆 Недельная цель",
         currentCharacter: "Текущий персонаж",
         nextLevel: "Следующий уровень",
@@ -221,8 +202,6 @@ const translations = {
         characters: "ПЕРСОНАЖИ",
         newCharacterUnlocked: "🎉 Новый персонаж разблокирован!",
         goalCompleted: "🌟 Цель достигнута!",
-        
-        // Создание тренировки
         createTitle: "🎯 СОЗДАТЬ ТРЕНИРОВКУ",
         goal: "ЦЕЛЬ",
         goalPlaceholder: "км",
@@ -237,8 +216,6 @@ const translations = {
         workoutCompleted: "🎉 Тренировка завершена!",
         deleteWorkout: "✕",
         noTasks: "➕ Добавьте задания",
-        
-        // Силовые тренировки
         strengthTitle: "💪 СИЛОВАЯ ТРЕНИРОВКА",
         pullups: "ПОДТЯГИВАНИЯ",
         pushups: "ОТЖИМАНИЯ",
@@ -259,8 +236,6 @@ const translations = {
         completeStrength: "✅ Завершить силовую тренировку",
         strengthCompleted: "🎉 Силовая тренировка завершена!",
         maxRounds: "Максимум 5 кругов",
-        
-        // Меню
         marathon: "🏃 МАРАФОН",
         reset: "🔄 Сбросить",
         statsMenu: "📊 Статистика",
@@ -276,11 +251,7 @@ const translations = {
         contacts: "📞 КОНТАКТЫ",
         author: "👤 Автор:",
         version: "Версия:",
-        
-        // FAQ текст
         faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Система персонажей\n• AI рекомендации\n• Силовые тренировки",
-        
-        // Сообщения
         confirmReset: "Сбросить весь прогресс?",
         enterTask: "Введите задание",
         tasksAdded: (count) => `✅ Добавлено заданий: ${count}`,
@@ -290,13 +261,10 @@ const translations = {
         completeSteps: "⚠️ Выполни все шаги!"
     },
     en: {
-        // Common
         ready: "Ready for workout?",
         startBtn: "🏃 Start Run",
         completeBtn: "✅ Complete Day",
         progress: "Progress",
-        
-        // Time
         waitUntil4am: "⏰ Start at 4:00 AM",
         waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
         waitUntilNextDay: (h, m) => `⏳ Next day at 4:00 AM (${h}h ${m}m left)`,
@@ -307,21 +275,15 @@ const translations = {
         dayExpiredMsg: "⏰ Workout expired! Next day starts at 4:00 AM.",
         newDayAvailable: "🌟 New day available!",
         startAt4am: "⏰ Start at 4:00 AM",
-        
-        // Workout
         mainWorkout: "MAIN WORKOUT",
         addedTasks: "➕ ADDED TASKS",
         easy: "Easy",
         medium: "Medium",
         hard: "Hard",
         my: "My",
-        
-        // Completion
         congrats: "🎉 WORKOUT COMPLETED!",
         youRan: "You ran:",
         home: "🏠 Home",
-        
-        // Statistics
         stats: "📊 EXTENDED STATISTICS",
         workouts: "Workouts",
         totalKm: "Total km",
@@ -335,24 +297,16 @@ const translations = {
         days: "days",
         history: "WORKOUT HISTORY",
         noWorkouts: "No workouts yet",
-        
-        // Workout details
         distance: "km",
         minutes: "min",
         kcal: "kcal",
         pace: "min/km",
-        
-        // Comparison
         vsLastMonth: "vs last month",
         better: "better",
         worse: "worse",
         same: "same",
-        
-        // AI recommendations
         aiRecommendations: "🤖 AI RECOMMENDATIONS",
         refreshRecommendation: "🔄 Refresh",
-        
-        // Diary
         newEntry: "➕ New entry",
         save: "Save",
         cancel: "Cancel",
@@ -360,8 +314,6 @@ const translations = {
         entryPlaceholder: "How was your workout? Write your thoughts...",
         entryDeleted: "Entry deleted",
         entrySaved: "Entry saved",
-        
-        // Characters
         weeklyGoal: "🏆 Weekly Goal",
         currentCharacter: "Current Character",
         nextLevel: "Next Level",
@@ -370,8 +322,6 @@ const translations = {
         characters: "CHARACTERS",
         newCharacterUnlocked: "🎉 New character unlocked!",
         goalCompleted: "🌟 Goal completed!",
-        
-        // Create tasks
         createTitle: "🎯 CREATE WORKOUT",
         goal: "GOAL",
         goalPlaceholder: "km",
@@ -386,8 +336,6 @@ const translations = {
         workoutCompleted: "🎉 Workout completed!",
         deleteWorkout: "✕",
         noTasks: "➕ Add tasks",
-        
-        // Strength workouts
         strengthTitle: "💪 STRENGTH TRAINING",
         pullups: "PULL-UPS",
         pushups: "PUSH-UPS",
@@ -408,8 +356,6 @@ const translations = {
         completeStrength: "✅ Complete strength workout",
         strengthCompleted: "🎉 Strength workout completed!",
         maxRounds: "Maximum 5 rounds",
-        
-        // Menu
         marathon: "🏃 MARATHON",
         reset: "🔄 Reset",
         statsMenu: "📊 Statistics",
@@ -425,11 +371,7 @@ const translations = {
         contacts: "📞 CONTACTS",
         author: "👤 Author:",
         version: "Version:",
-        
-        // FAQ text
         faqText: "❓ FAQ:\n\n• Start day at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 ready workouts\n• Custom tasks\n• Character system\n• AI recommendations\n• Strength workouts",
-        
-        // Messages
         confirmReset: "Reset all progress?",
         enterTask: "Enter task",
         tasksAdded: (count) => `✅ Added: ${count} tasks`,
@@ -648,13 +590,10 @@ const recommendations = {
 function getCurrentMarathonDay() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     const start = new Date(MARATHON_START_DATE);
     start.setHours(0, 0, 0, 0);
-
     const diffTime = today - start;
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
     if (diffDays < 0) return 1;
     return diffDays + 1;
 }
@@ -749,14 +688,12 @@ function checkAndResetWeek() {
     const weekStart = new Date(weekStartDate);
     const diffDays = Math.floor((now - weekStart) / (1000 * 60 * 60 * 24));
     
-    // Если прошло больше недели, сбрасываем прогресс
     if (diffDays >= 7) {
         weeklyProgress = 0;
         weekStartDate = now.toISOString();
         localStorage.setItem(STORAGE_KEYS.WEEK_START_DATE, weekStartDate);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
         
-        // Показываем уведомление о новой неделе
         tg.showPopup({
             title: '📅',
             message: currentLanguage === 'ru' ? 'Новая неделя! Цель обновлена' : 'New week! Goal updated',
@@ -771,16 +708,13 @@ function updateCharacterProgress(distance) {
     weeklyProgress += distance;
     localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
     
-    // Проверяем, достигнута ли цель
     if (weeklyProgress >= weeklyGoal) {
         const nextCharacterId = CHARACTERS[currentCharacter].nextCharacter;
         
         if (nextCharacterId && !unlockedCharacters.includes(nextCharacterId)) {
-            // Разблокируем нового персонажа
             unlockedCharacters.push(nextCharacterId);
             localStorage.setItem(STORAGE_KEYS.UNLOCKED_CHARACTERS, JSON.stringify(unlockedCharacters));
             
-            // Показываем уведомление
             tg.showPopup({
                 title: '🎉',
                 message: CHARACTERS[nextCharacterId].reward[currentLanguage],
@@ -788,20 +722,17 @@ function updateCharacterProgress(distance) {
             });
         }
         
-        // Переходим на следующий уровень или остаемся на текущем
         if (nextCharacterId) {
             currentCharacter = nextCharacterId;
             weeklyGoal = CHARACTERS[nextCharacterId].goal;
         }
         
-        // Оставляем остаток прогресса для новой недели
         weeklyProgress = weeklyProgress - weeklyGoal;
         
         localStorage.setItem(STORAGE_KEYS.CURRENT_CHARACTER, currentCharacter);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_GOAL, weeklyGoal);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
         
-        // Сбрасываем дату начала недели
         weekStartDate = new Date().toISOString();
         localStorage.setItem(STORAGE_KEYS.WEEK_START_DATE, weekStartDate);
     }
@@ -848,7 +779,6 @@ function renderCharactersCollection() {
     
     grid.innerHTML = '';
     
-    // Показываем всех персонажей по порядку
     for (let i = 1; i <= 5; i++) {
         const char = CHARACTERS[i];
         const isUnlocked = unlockedCharacters.includes(i);
@@ -1000,7 +930,6 @@ function saveState() {
     localStorage.setItem(STORAGE_KEYS.STRENGTH_BEST_PUSHUPS, bestPushups);
     localStorage.setItem(STORAGE_KEYS.STRENGTH_TODAY, JSON.stringify(strengthToday));
     
-    // Сохраняем персонажей
     localStorage.setItem(STORAGE_KEYS.CURRENT_CHARACTER, currentCharacter);
     localStorage.setItem(STORAGE_KEYS.WEEKLY_GOAL, weeklyGoal);
     localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
@@ -1095,7 +1024,6 @@ function getPersonalizedRecommendation() {
     const streak = calculateStreak();
     const lang = currentLanguage;
     
-    // Советы по персонажам
     if (Math.random() < 0.15) {
         const nextChar = CHARACTERS[currentCharacter].nextCharacter;
         if (nextChar) {
@@ -1408,7 +1336,6 @@ function completeWorkout() {
     totalTime += Math.round(actualDistance * 6);
     totalCalories += Math.round(actualDistance * 60);
     
-    // Обновляем прогресс персонажа
     updateCharacterProgress(actualDistance);
     
     saveState();
@@ -1448,19 +1375,23 @@ function switchStrengthType(type) {
 
 function updatePullupsDisplay() {
     const todaySpan = document.getElementById('pullups-today');
-    if (todaySpan) {
+    const goalSpan = document.getElementById('pullups-goal');
+    if (todaySpan && goalSpan) {
         const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         const goal = strengthToday.pullups.goal;
         todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+        goalSpan.textContent = goal;
     }
 }
 
 function updatePushupsDisplay() {
     const todaySpan = document.getElementById('pushups-today');
-    if (todaySpan) {
+    const goalSpan = document.getElementById('pushups-goal');
+    if (todaySpan && goalSpan) {
         const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         const goal = strengthToday.pushups.goal;
         todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+        goalSpan.textContent = goal;
     }
 }
 
@@ -1724,27 +1655,19 @@ function addMixedSet() {
 function updatePullupsGoal() {
     const slider = document.getElementById('pullups-goal-slider');
     const valueSpan = document.getElementById('pullups-goal-value');
-    const goalSpan = document.getElementById('pullups-goal');
     
-    if (slider && valueSpan && goalSpan) {
-        // Устанавливаем начальное значение из состояния
+    if (slider && valueSpan) {
         slider.value = strengthToday.pullups.goal;
         valueSpan.textContent = strengthToday.pullups.goal;
-        goalSpan.textContent = strengthToday.pullups.goal;
         
-        // Обновляем отображение 0/цель
         updatePullupsDisplay();
         
         slider.addEventListener('input', function() {
             const value = this.value;
             valueSpan.textContent = value;
-            goalSpan.textContent = value;
             strengthToday.pullups.goal = parseInt(value);
             
-            // Обновляем отображение 0/цель
             updatePullupsDisplay();
-            
-            // Пересчитываем прогресс
             updatePullupsStats();
             saveState();
         });
@@ -1754,27 +1677,19 @@ function updatePullupsGoal() {
 function updatePushupsGoal() {
     const slider = document.getElementById('pushups-goal-slider');
     const valueSpan = document.getElementById('pushups-goal-value');
-    const goalSpan = document.getElementById('pushups-goal');
     
-    if (slider && valueSpan && goalSpan) {
-        // Устанавливаем начальное значение из состояния
+    if (slider && valueSpan) {
         slider.value = strengthToday.pushups.goal;
         valueSpan.textContent = strengthToday.pushups.goal;
-        goalSpan.textContent = strengthToday.pushups.goal;
         
-        // Обновляем отображение 0/цель
         updatePushupsDisplay();
         
         slider.addEventListener('input', function() {
             const value = this.value;
             valueSpan.textContent = value;
-            goalSpan.textContent = value;
             strengthToday.pushups.goal = parseInt(value);
             
-            // Обновляем отображение 0/цель
             updatePushupsDisplay();
-            
-            // Пересчитываем прогресс
             updatePushupsStats();
             saveState();
         });
@@ -1908,6 +1823,8 @@ function completeStrengthWorkout() {
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
+    updatePullupsGoal();
+    updatePushupsGoal();
     updateStrengthProgress();
     updateStrengthStats();
     
@@ -2292,7 +2209,6 @@ function updateDate() {
 }
 
 function updateAllText() {
-    // Стартовый экран
     const startMessage = document.getElementById('start-message');
     if (startMessage) startMessage.textContent = t('ready');
     
@@ -2306,7 +2222,6 @@ function updateAllText() {
         completeBtn.textContent = t('completeBtn');
     }
     
-    // Заголовки
     const balanceTitle = document.querySelector('.balance-title');
     if (balanceTitle) {
         const daySpan = balanceTitle.querySelector('span');
@@ -2319,7 +2234,6 @@ function updateAllText() {
     const additionalHeader = document.querySelector('.additional-header h3');
     if (additionalHeader) additionalHeader.textContent = t('addedTasks');
     
-    // Экран завершения
     const congratsH2 = document.querySelector('#congrats h2');
     if (congratsH2) congratsH2.textContent = t('congrats');
     
@@ -2329,7 +2243,6 @@ function updateAllText() {
     const continueBtn = document.getElementById('continue-btn');
     if (continueBtn) continueBtn.textContent = t('home');
     
-    // Статистика
     const statsTitle = document.querySelector('.stats-title');
     if (statsTitle) statsTitle.textContent = t('stats');
     
@@ -2339,14 +2252,12 @@ function updateAllText() {
     const recentCardH3 = document.querySelector('.recent-card h3');
     if (recentCardH3) recentCardH3.textContent = t('history');
     
-    // AI рекомендации
     const recommendationsTitle = document.querySelector('.recommendations-card h3');
     if (recommendationsTitle) recommendationsTitle.textContent = t('aiRecommendations');
     
     const refreshBtn = document.getElementById('refresh-recommendation');
     if (refreshBtn) refreshBtn.textContent = t('refreshRecommendation');
     
-    // Персонажи
     const progressLabel = document.querySelector('.character-progress-container .progress-label span:first-child');
     if (progressLabel) progressLabel.textContent = t('weeklyGoal');
     
@@ -2356,7 +2267,6 @@ function updateAllText() {
     const collectionTitle = document.querySelector('.collection-title');
     if (collectionTitle) collectionTitle.textContent = `🌟 ${t('characters')}`;
     
-    // Дневник
     const diaryTitle = document.querySelector('.diary-title');
     if (diaryTitle) diaryTitle.textContent = `📔 ${t('characters') ? 'ДНЕВНИК ТРЕНИРОВОК' : 'WORKOUT DIARY'}`;
     
@@ -2372,7 +2282,6 @@ function updateAllText() {
     const entryText = document.getElementById('entry-text');
     if (entryText) entryText.placeholder = t('entryPlaceholder');
     
-    // Создание тренировки
     const customTitle = document.querySelector('.custom-title');
     if (customTitle) customTitle.textContent = t('createTitle');
     
@@ -2400,7 +2309,6 @@ function updateAllText() {
     const completeWorkoutBtn = document.getElementById('complete-workout-btn');
     if (completeWorkoutBtn) completeWorkoutBtn.textContent = t('completeWorkout');
     
-    // Силовые тренировки
     const strengthTitle = document.querySelector('.strength-title');
     if (strengthTitle) strengthTitle.textContent = t('strengthTitle');
     
@@ -2445,7 +2353,6 @@ function updateAllText() {
     if (summaryLabels[1]) summaryLabels[1].textContent = t('summaryPushups');
     if (summaryLabels[2]) summaryLabels[2].textContent = t('summaryCalories');
     
-    // Меню
     const menuTitles = document.querySelectorAll('.menu-title');
     if (menuTitles[0]) menuTitles[0].textContent = t('marathon');
     if (menuTitles[1]) menuTitles[1].textContent = t('settings');
@@ -2467,7 +2374,6 @@ function updateAllText() {
     const faqMenuItem = document.getElementById('faq');
     if (faqMenuItem) faqMenuItem.innerHTML = `❓ ${t('faq')}`;
     
-    // Настройки в меню
     const themeLabel = document.querySelector('.theme-selector span');
     if (themeLabel) themeLabel.textContent = `${t('theme')}:`;
     
@@ -2493,6 +2399,8 @@ function updateAllText() {
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
+    updatePullupsGoal();
+    updatePushupsGoal();
     updateStrengthProgress();
     
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
@@ -2522,8 +2430,10 @@ window.switchPage = function(pageIndex) {
         renderPullupsSets(); 
         renderPushupsSets(); 
         renderMixedSets(); 
-        updatePullupsGoal();
-        updatePushupsGoal();
+        setTimeout(() => {
+            updatePullupsGoal();
+            updatePushupsGoal();
+        }, 100);
         updateStrengthProgress(); 
     }
 };
@@ -2543,18 +2453,15 @@ window.setLanguage = function(lang) {
     currentLanguage = lang;
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
     
-    // Обновляем активные кнопки в меню
     const langRu = document.getElementById('lang-ru-menu');
     const langEn = document.getElementById('lang-en-menu');
     if (langRu) langRu.classList.toggle('active', lang === 'ru');
     if (langEn) langEn.classList.toggle('active', lang === 'en');
     
-    // Обновляем весь текст
     updateAllText();
     updateDate();
     updateStats();
     
-    // Обновляем текущий слайд
     if (currentSlide === 0) {
         if (dayStarted) {
             renderWorkout();
@@ -2575,8 +2482,10 @@ window.setLanguage = function(lang) {
         renderPullupsSets();
         renderPushupsSets();
         renderMixedSets();
-        updatePullupsGoal();
-        updatePushupsGoal();
+        setTimeout(() => {
+            updatePullupsGoal();
+            updatePushupsGoal();
+        }, 100);
         updateStrengthProgress();
     }
 };
@@ -2604,11 +2513,17 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSavedWorkouts();
     renderActiveWorkout();
 
+    // Важно: сначала рендерим сеты, потом настраиваем ползунки
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
-    updatePullupsGoal();
-    updatePushupsGoal();
+    
+    // Небольшая задержка для гарантии, что DOM обновился
+    setTimeout(() => {
+        updatePullupsGoal();
+        updatePushupsGoal();
+    }, 200);
+    
     updateStrengthProgress();
 
     document.querySelectorAll('.type-btn').forEach(btn => {
@@ -2629,16 +2544,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const completeStrengthBtn = document.getElementById('complete-strength-btn');
     if (completeStrengthBtn) completeStrengthBtn.addEventListener('click', function(e) { e.preventDefault(); if (!this.disabled) completeStrengthWorkout(); });
-
-    const pullupsSlider = document.getElementById('pullups-goal-slider');
-    if (pullupsSlider) {
-        // Инициализация уже происходит в updatePullupsGoal
-    }
-
-    const pushupsSlider = document.getElementById('pushups-goal-slider');
-    if (pushupsSlider) {
-        // Инициализация уже происходит в updatePushupsGoal
-    }
 
     const refreshBtn = document.getElementById('refresh-recommendation');
     if (refreshBtn) refreshBtn.addEventListener('click', updateRecommendation);
@@ -2717,7 +2622,6 @@ document.addEventListener('DOMContentLoaded', function() {
             totalTime += actualTime;
             totalCalories += actualCalories;
             
-            // Обновляем прогресс персонажа
             updateCharacterProgress(actualDistance);
             
             additionalTasks = [];
@@ -2846,7 +2750,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 };
                 
-                // Сброс персонажей
                 currentCharacter = 1;
                 weeklyGoal = CHARACTERS[1].goal;
                 weeklyProgress = 0;
@@ -2865,8 +2768,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderPullupsSets();
                 renderPushupsSets();
                 renderMixedSets();
-                updatePullupsGoal();
-                updatePushupsGoal();
+                setTimeout(() => {
+                    updatePullupsGoal();
+                    updatePushupsGoal();
+                }, 200);
                 updateStrengthProgress();
                 
                 const menu = document.getElementById('menu-dropdown');
