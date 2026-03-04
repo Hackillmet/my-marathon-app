@@ -22,26 +22,26 @@
             </button>
         </div>
 
-        <!-- Меню (с настройками) -->
+        <!-- Меню -->
         <div class="menu-dropdown" id="menu-dropdown" style="display: none;">
             <div class="menu-section">
-                <div class="menu-title">🏃 МАРАФОН</div>
+                <div class="menu-title">МАРАФОН</div>
                 <a href="#" class="menu-item" id="reset-marathon">🔄 Сбросить марафон</a>
                 <a href="#" class="menu-item" id="stats-menu">📊 Статистика</a>
             </div>
             
             <div class="menu-section">
-                <div class="menu-title">⚙️ НАСТРОЙКИ</div>
+                <div class="menu-title">НАСТРОЙКИ</div>
                 <div class="settings-menu">
                     <div class="theme-selector">
-                        <span>🎨 Тема:</span>
+                        <span>Тема:</span>
                         <div class="theme-buttons-menu">
                             <button class="theme-btn-small" id="theme-dark-menu" onclick="setTheme('dark')">🌑 Темная</button>
                             <button class="theme-btn-small" id="theme-light-menu" onclick="setTheme('light')">☀️ Светлая</button>
                         </div>
                     </div>
                     <div class="language-selector">
-                        <span>🌍 Язык:</span>
+                        <span>Язык:</span>
                         <div class="lang-buttons-menu">
                             <button class="lang-btn-small" id="lang-ru-menu" onclick="setLanguage('ru')">🇷🇺 Русский</button>
                             <button class="lang-btn-small" id="lang-en-menu" onclick="setLanguage('en')">🇬🇧 English</button>
@@ -51,23 +51,21 @@
             </div>
             
             <div class="menu-section">
-                <div class="menu-title">🆘 ПОМОЩЬ</div>
+                <div class="menu-title">ПОМОЩЬ</div>
                 <a href="#" class="menu-item" id="support">💬 Поддержка</a>
-                <a href="#" class="menu-item" id="telegram-support">
-                    📱 Связаться: @frontendchikk
-                </a>
+                <a href="#" class="menu-item" id="telegram-support">📱 Связаться: @frontendchikk</a>
                 <a href="#" class="menu-item" id="faq">❓ FAQ</a>
             </div>
             
             <div class="menu-section">
-                <div class="menu-title">📞 КОНТАКТЫ</div>
+                <div class="menu-title">КОНТАКТЫ</div>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <span>👤 Автор:</span>
+                        <span>Автор:</span>
                         <span class="contact-highlight">@frontendchikk</span>
                     </div>
                     <div class="contact-item">
-                        <span>📱 Версия:</span>
+                        <span>Версия:</span>
                         <span class="contact-highlight">10.0.0</span>
                     </div>
                 </div>
@@ -79,26 +77,24 @@
             <span id="current-date"></span>
         </div>
 
-        <!-- Контейнер для слайдов (5 слайдов) -->
+        <!-- Контейнер для слайдов -->
         <div class="slides-container" id="slidesContainer">
             <!-- СЛАЙД 1: БЕГ -->
             <div class="slide active" id="slide1">
-                <!-- Стартовый экран -->
                 <div id="start-screen" class="start-screen">
                     <div class="start-content">
                         <h2>Бег <span id="start-day-number">1</span></h2>
                         <p id="start-message">Готов к тренировке?</p>
                         <button class="start-day-btn" id="start-day-btn">
-                            🏃 Начать бег
+                            Начать бег
                         </button>
                         <div class="time-info" id="time-info"></div>
                     </div>
                 </div>
 
-                <!-- Экран тренировки -->
                 <div id="marathon-screen" style="display: none;">
                     <div class="balance-section">
-                        <h3 class="balance-title">🏃 ОСНОВНАЯ ТРЕНИРОВКА <span id="current-day">1</span></h3>
+                        <h3 class="balance-title">ОСНОВНАЯ ТРЕНИРОВКА <span id="current-day">1</span></h3>
                         <div class="balance-bars">
                             <div class="balance-item">
                                 <div class="balance-label">
@@ -113,7 +109,6 @@
                         </div>
                     </div>
 
-                    <!-- Основные шаги тренировки -->
                     <div class="workout-card">
                         <div class="workout-header">
                             <span class="workout-name" id="workout-name">Легкая пробежка</span>
@@ -123,29 +118,27 @@
                         <div class="workout-steps" id="workout-steps"></div>
                     </div>
 
-                    <!-- Раздел с добавленными заданиями -->
                     <div id="additional-tasks-section" style="display: none;">
                         <div class="additional-header">
-                            <h3>➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ</h3>
+                            <h3>ДОБАВЛЕННЫЕ ЗАДАНИЯ</h3>
                         </div>
                         <div class="additional-steps" id="additional-steps"></div>
                     </div>
 
                     <button class="complete-day-btn" id="complete-day-btn" disabled>
-                        ✅ Завершить день
+                        Завершить день
                     </button>
                     <div class="deadline-info" id="deadline-info"></div>
                 </div>
 
-                <!-- Экран завершения -->
                 <div class="congrats" id="congrats" style="display: none;">
-                    <h2>🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!</h2>
+                    <h2>ТРЕНИРОВКА ЗАВЕРШЕНА</h2>
                     <p>Ты пробежал(а):</p>
                     <div class="final-balance">
-                        <div>🏃 <span id="final-distance">0</span> км</div>
+                        <div><span id="final-distance">0</span> км</div>
                     </div>
                     <button class="start-day-btn" id="continue-btn">
-                        🏠 На главную
+                        На главную
                     </button>
                 </div>
             </div>
@@ -153,7 +146,7 @@
             <!-- СЛАЙД 2: СТАТИСТИКА -->
             <div class="slide" id="slide2">
                 <div class="stats-section">
-                    <h2 class="stats-title">📊 РАСШИРЕННАЯ СТАТИСТИКА</h2>
+                    <h2 class="stats-title">РАСШИРЕННАЯ СТАТИСТИКА</h2>
                     
                     <div class="stats-grid">
                         <div class="stat-card">
@@ -190,7 +183,6 @@
                         </div>
                     </div>
 
-                    <!-- Статистика по силовым -->
                     <div class="strength-stats-grid">
                         <div class="stat-card strength-stat">
                             <span class="stat-value" id="total-pullups">0</span>
@@ -211,7 +203,7 @@
                     </div>
 
                     <div class="weekly-card">
-                        <h3>📅 ПРОГРЕСС ЗА МЕСЯЦ</h3>
+                        <h3>ПРОГРЕСС ЗА МЕСЯЦ</h3>
                         <div class="progress-bar">
                             <div class="progress-fill mind-fill" id="week-progress" style="width: 0%;"></div>
                         </div>
@@ -220,23 +212,20 @@
                         </div>
                     </div>
 
-                    <!-- AI-РЕКОМЕНДАЦИИ -->
                     <div class="recommendations-card" id="recommendations-card">
-                        <h3>🤖 AI-РЕКОМЕНДАЦИИ</h3>
-                        <div class="recommendation-content" id="recommendation-content">
-                            <!-- Здесь будут появляться рекомендации -->
-                        </div>
+                        <h3>AI-РЕКОМЕНДАЦИИ</h3>
+                        <div class="recommendation-content" id="recommendation-content"></div>
                         <button class="refresh-recommendation" id="refresh-recommendation">
-                            🔄 Обновить
+                            Обновить
                         </button>
                     </div>
 
                     <div class="comparison-card" id="month-comparison">
-                        📊 vs прошлый месяц: —
+                        vs прошлый месяц: —
                     </div>
 
                     <div class="recent-card">
-                        <h3>📋 ИСТОРИЯ ТРЕНИРОВОК</h3>
+                        <h3>ИСТОРИЯ ТРЕНИРОВОК</h3>
                         <div class="history-list" id="history-list"></div>
                     </div>
                 </div>
@@ -245,7 +234,6 @@
             <!-- СЛАЙД 3: ПЕРСОНАЖИ И ДНЕВНИК -->
             <div class="slide" id="slide3">
                 <div class="combined-section">
-                    <!-- КАРТОЧКА ПЕРСОНАЖА -->
                     <div class="character-card" id="character-card">
                         <div class="character-header">
                             <div class="character-avatar" id="character-avatar">👟</div>
@@ -255,10 +243,9 @@
                             </div>
                         </div>
                         
-                        <!-- Шкала прогресса персонажа -->
                         <div class="character-progress-container">
                             <div class="progress-label">
-                                <span>🏆 Недельная цель</span>
+                                <span>Недельная цель</span>
                                 <span id="weekly-goal-text">0/15 км</span>
                             </div>
                             <div class="progress-bar character-progress-bar">
@@ -269,24 +256,19 @@
                             </div>
                         </div>
                         
-                        <!-- Следующий уровень -->
                         <div class="next-reward" id="next-reward">
-                            <span>🔓 Следующий уровень:</span>
+                            <span>Следующий уровень:</span>
                             <span id="next-character-name">Бегун (25 км)</span>
                         </div>
                     </div>
 
-                    <!-- КОЛЛЕКЦИЯ ПЕРСОНАЖЕЙ -->
                     <div class="characters-collection">
-                        <h3 class="collection-title">🌟 КОЛЛЕКЦИЯ ПЕРСОНАЖЕЙ</h3>
-                        <div class="characters-grid" id="characters-grid">
-                            <!-- Сюда будут загружаться персонажи -->
-                        </div>
+                        <h3 class="collection-title">КОЛЛЕКЦИЯ ПЕРСОНАЖЕЙ</h3>
+                        <div class="characters-grid" id="characters-grid"></div>
                     </div>
 
-                    <!-- ДНЕВНИК -->
                     <div class="diary-section">
-                        <h3 class="diary-title">📔 ДНЕВНИК ТРЕНИРОВОК</h3>
+                        <h3 class="diary-title">ДНЕВНИК ТРЕНИРОВОК</h3>
                         
                         <button class="add-entry-btn" id="add-entry-btn">
                             <span class="plus-icon">+</span> Новая запись
@@ -305,14 +287,13 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 4: СОЗДАТЬ И ВЫПОЛНИТЬ -->
+            <!-- СЛАЙД 4: СОЗДАТЬ ТРЕНИРОВКУ -->
             <div class="slide" id="slide4">
                 <div class="custom-workout-section">
-                    <h2 class="custom-title">🎯 СОЗДАТЬ ТРЕНИРОВКУ</h2>
+                    <h2 class="custom-title">СОЗДАТЬ ТРЕНИРОВКУ</h2>
                     
-                    <!-- Форма создания -->
                     <div class="goal-card">
-                        <h3>🎯 ЦЕЛЬ</h3>
+                        <h3>ЦЕЛЬ</h3>
                         <div class="goal-input">
                             <input type="number" id="goal-distance" value="5" min="1" max="30" step="0.5">
                             <span>км</span>
@@ -320,7 +301,7 @@
                     </div>
                     
                     <div class="tasks-creator">
-                        <h3>📝 ДОБАВИТЬ ЗАДАНИЕ</h3>
+                        <h3>ДОБАВИТЬ ЗАДАНИЕ</h3>
                         <div class="add-task-form">
                             <input type="text" id="new-task-text" placeholder="Например: Разминка">
                             <div class="task-distance-input">
@@ -331,23 +312,19 @@
                         </div>
                         
                         <div class="tasks-list" id="custom-tasks-list">
-                            <div class="empty-tasks">➕ Добавь задания</div>
+                            <div class="empty-tasks">Добавь задания</div>
                         </div>
                     </div>
                     
                     <button class="create-plan-btn" id="create-plan-btn" disabled>
-                        💾 Сохранить тренировку
+                        Сохранить тренировку
                     </button>
                     
-                    <!-- СПИСОК СОХРАНЕННЫХ ТРЕНИРОВОК -->
                     <div class="saved-workouts-section">
-                        <h3 class="saved-workouts-title">📋 МОИ ТРЕНИРОВКИ</h3>
-                        <div class="saved-workouts-list" id="saved-workouts-list">
-                            <!-- Сюда будут загружаться сохраненные тренировки -->
-                        </div>
+                        <h3 class="saved-workouts-title">МОИ ТРЕНИРОВКИ</h3>
+                        <div class="saved-workouts-list" id="saved-workouts-list"></div>
                     </div>
                     
-                    <!-- АКТИВНАЯ ТРЕНИРОВКА -->
                     <div class="active-workout" id="active-workout" style="display: none;">
                         <div class="active-workout-header">
                             <h3 id="active-workout-name">Моя тренировка</h3>
@@ -361,23 +338,20 @@
                             <span class="progress-percent" id="active-workout-percent">0%</span>
                         </div>
                         
-                        <div class="active-workout-steps" id="active-workout-steps">
-                            <!-- Шаги активной тренировки -->
-                        </div>
+                        <div class="active-workout-steps" id="active-workout-steps"></div>
                         
                         <button class="complete-workout-btn" id="complete-workout-btn" disabled>
-                            ✅ Завершить тренировку
+                            Завершить тренировку
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- СЛАЙД 5: ПОДТЯГИВАНИЯ И ОТЖИМАНИЯ -->
+            <!-- СЛАЙД 5: СИЛОВАЯ ТРЕНИРОВКА -->
             <div class="slide" id="slide5">
                 <div class="strength-section">
-                    <h2 class="strength-title">💪 СИЛОВАЯ ТРЕНИРОВКА</h2>
+                    <h2 class="strength-title">СИЛОВАЯ ТРЕНИРОВКА</h2>
                     
-                    <!-- Прогресс дня -->
                     <div class="strength-progress-card">
                         <div class="progress-header">
                             <span class="progress-title">Прогресс сегодня</span>
@@ -388,7 +362,6 @@
                         </div>
                     </div>
 
-                    <!-- Карточка с выбором типа тренировки -->
                     <div class="workout-type-selector">
                         <button class="type-btn active" id="type-pullups" data-type="pullups">
                             <span class="type-icon">🏋️</span>
@@ -404,7 +377,6 @@
                         </button>
                     </div>
 
-                    <!-- Блок ПОДТЯГИВАНИЯ -->
                     <div class="exercise-card" id="pullups-card">
                         <div class="exercise-header">
                             <div class="exercise-icon">🏋️</div>
@@ -417,7 +389,6 @@
                             </div>
                         </div>
 
-                        <!-- Настройка цели -->
                         <div class="goal-settings">
                             <div class="goal-slider">
                                 <label>Цель на сегодня:</label>
@@ -428,7 +399,6 @@
                             </div>
                         </div>
 
-                        <!-- Сет для подтягиваний -->
                         <div class="sets-container" id="pullups-sets"></div>
 
                         <button class="add-set-btn" id="add-pullups-set">
@@ -437,7 +407,6 @@
                         </button>
                     </div>
 
-                    <!-- Блок ОТЖИМАНИЯ -->
                     <div class="exercise-card" id="pushups-card" style="display: none;">
                         <div class="exercise-header">
                             <div class="exercise-icon">💪</div>
@@ -450,7 +419,6 @@
                             </div>
                         </div>
 
-                        <!-- Настройка цели -->
                         <div class="goal-settings">
                             <div class="goal-slider">
                                 <label>Цель на сегодня:</label>
@@ -461,7 +429,6 @@
                             </div>
                         </div>
 
-                        <!-- Сет для отжиманий -->
                         <div class="sets-container" id="pushups-sets"></div>
 
                         <button class="add-set-btn" id="add-pushups-set">
@@ -470,7 +437,6 @@
                         </button>
                     </div>
 
-                    <!-- Блок КОМПЛЕКС (микс) -->
                     <div class="exercise-card" id="mixed-card" style="display: none;">
                         <div class="exercise-header">
                             <div class="exercise-icon">⚡</div>
@@ -483,10 +449,7 @@
                             </div>
                         </div>
 
-                        <!-- Комплексная тренировка -->
-                        <div class="mixed-workout" id="mixed-workout">
-                            <!-- Круги будут добавляться динамически -->
-                        </div>
+                        <div class="mixed-workout" id="mixed-workout"></div>
 
                         <button class="add-mixed-set-btn" id="add-mixed-set">
                             <span class="btn-icon">➕</span>
@@ -494,7 +457,6 @@
                         </button>
                     </div>
 
-                    <!-- Статистика за день -->
                     <div class="strength-summary">
                         <div class="summary-item">
                             <span class="summary-label">Подтягивания</span>
@@ -510,12 +472,10 @@
                         </div>
                     </div>
 
-                    <!-- Кнопка завершения -->
                     <button class="complete-strength-btn" id="complete-strength-btn" disabled>
-                        ✅ Завершить силовую тренировку
+                        Завершить силовую тренировку
                     </button>
 
-                    <!-- Мотивационная цитата -->
                     <div class="strength-quote" id="strength-quote">
                         "Сила не приходит от побед. Силу рождает борьба."
                     </div>
@@ -523,7 +483,7 @@
             </div>
         </div>
 
-        <!-- Нижняя навигация (5 кнопок) -->
+        <!-- Нижняя навигация -->
         <div class="bottom-nav">
             <button class="nav-btn active" id="nav-run" onclick="switchPage(0)">
                 <span class="nav-icon">🏃</span>
