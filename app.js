@@ -49,90 +49,90 @@ const CHARACTERS = {
     1: {
         id: 1,
         name: {
-            ru: "🏃 Новичок",
-            en: "🏃 Beginner"
+            ru: "Новичок",
+            en: "Beginner"
         },
         description: {
             ru: "Твой первый шаг к здоровому образу жизни",
             en: "Your first step to a healthy lifestyle"
         },
         emoji: "👟",
-        goal: 15, // км за неделю
+        goal: 15,
         reward: {
-            ru: "🔥 Разблокирован Бегун!",
-            en: "🔥 Runner unlocked!"
+            ru: "Разблокирован Бегун!",
+            en: "Runner unlocked!"
         },
         nextCharacter: 2
     },
     2: {
         id: 2,
         name: {
-            ru: "⚡ Бегун",
-            en: "⚡ Runner"
+            ru: "Бегун",
+            en: "Runner"
         },
         description: {
             ru: "Ты уже чувствуешь силу в ногах",
             en: "You already feel the power in your legs"
         },
         emoji: "🏃",
-        goal: 25, // км за неделю
+        goal: 25,
         reward: {
-            ru: "🌟 Разблокирован Спортсмен!",
-            en: "🌟 Athlete unlocked!"
+            ru: "Разблокирован Спортсмен!",
+            en: "Athlete unlocked!"
         },
         nextCharacter: 3
     },
     3: {
         id: 3,
         name: {
-            ru: "🏆 Спортсмен",
-            en: "🏆 Athlete"
+            ru: "Спортсмен",
+            en: "Athlete"
         },
         description: {
             ru: "Тренировки вошли в привычку",
             en: "Workouts have become a habit"
         },
         emoji: "🎯",
-        goal: 35, // км за неделю
+        goal: 35,
         reward: {
-            ru: "💫 Разблокирован Марафонец!",
-            en: "💫 Marathoner unlocked!"
+            ru: "Разблокирован Марафонец!",
+            en: "Marathoner unlocked!"
         },
         nextCharacter: 4
     },
     4: {
         id: 4,
         name: {
-            ru: "🔥 Марафонец",
-            en: "🔥 Marathoner"
+            ru: "Марафонец",
+            en: "Marathoner"
         },
         description: {
             ru: "Длинные дистанции - твоя стихия",
             en: "Long distances are your element"
         },
         emoji: "🌟",
-        goal: 50, // км за неделю
+        goal: 50,
         reward: {
-            ru: "👑 Разблокирован Легенда!",
-            en: "👑 Legend unlocked!"
+            ru: "Разблокирован Легенда!",
+            en: "Legend unlocked!"
         },
         nextCharacter: 5
     },
     5: {
         id: 5,
         name: {
-            ru: "👑 Легенда",
-            en: "👑 Legend"
+            ru: "Легенда",
+            en: "Legend"
         },
         description: {
             ru: "Ты достиг высшего уровня!",
             en: "You've reached the highest level!"
         },
         emoji: "🏅",
-        goal: 75, // км за неделю
+        goal: 75,
         reward: {
-            ru: "⭐ Максимальный уровень!",
-            en: "⭐ Maximum level!"
+            ru: "Максимальный уровень!",
+            en: "Maximum level!"
         },
         nextCharacter: null
     }
@@ -142,29 +142,29 @@ const CHARACTERS = {
 const translations = {
     ru: {
         ready: "Готов к тренировке?",
-        startBtn: "🏃 Начать бег",
-        completeBtn: "✅ Завершить день",
+        startBtn: "Начать бег",
+        completeBtn: "Завершить день",
         progress: "Прогресс",
-        waitUntil4am: "⏰ Старт в 4:00",
-        waitHours: (h, m) => `⏳ Новый день через ${h}ч ${m}м`,
-        waitUntilNextDay: (h, m) => `⏳ Следующий день в 4:00 (осталось ${h}ч ${m}м)`,
-        canStart: "✅ Можно начинать",
-        dayExpired: "⏰ День истек",
-        until23: "⏳ До 23:00",
-        timeLeft: (h, m) => `⏳ Осталось: ${h}ч ${m}м`,
-        dayExpiredMsg: "⏰ Время тренировки истекло! Новый день начнется в 4:00 утра.",
-        newDayAvailable: "🌟 Новый день доступен!",
-        startAt4am: "⏰ Старт в 4:00 утра",
+        waitUntil4am: "Старт в 4:00",
+        waitHours: (h, m) => `Новый день через ${h}ч ${m}м`,
+        waitUntilNextDay: (h, m) => `Следующий день в 4:00 (осталось ${h}ч ${m}м)`,
+        canStart: "Можно начинать",
+        dayExpired: "День истек",
+        until23: "До 23:00",
+        timeLeft: (h, m) => `Осталось: ${h}ч ${m}м`,
+        dayExpiredMsg: "Время тренировки истекло! Новый день начнется в 4:00 утра.",
+        newDayAvailable: "Новый день доступен!",
+        startAt4am: "Старт в 4:00 утра",
         mainWorkout: "ОСНОВНАЯ ТРЕНИРОВКА",
-        addedTasks: "➕ ДОБАВЛЕННЫЕ ЗАДАНИЯ",
+        addedTasks: "ДОБАВЛЕННЫЕ ЗАДАНИЯ",
         easy: "Легкая",
         medium: "Средняя",
         hard: "Сложная",
         my: "Моя",
-        congrats: "🎉 ТРЕНИРОВКА ЗАВЕРШЕНА!",
+        congrats: "ТРЕНИРОВКА ЗАВЕРШЕНА",
         youRan: "Ты пробежал(а):",
-        home: "🏠 На главную",
-        stats: "📊 РАСШИРЕННАЯ СТАТИСТИКА",
+        home: "На главную",
+        stats: "РАСШИРЕННАЯ СТАТИСТИКА",
         workouts: "Тренировок",
         totalKm: "Всего км",
         totalTime: "Всего времени",
@@ -185,38 +185,38 @@ const translations = {
         better: "лучше",
         worse: "хуже",
         same: "так же",
-        aiRecommendations: "🤖 AI-РЕКОМЕНДАЦИИ",
-        refreshRecommendation: "🔄 Обновить",
-        newEntry: "➕ Новая запись",
+        aiRecommendations: "AI-РЕКОМЕНДАЦИИ",
+        refreshRecommendation: "Обновить",
+        newEntry: "Новая запись",
         save: "Сохранить",
         cancel: "Отмена",
-        noEntries: "📝 Пока нет записей",
+        noEntries: "Пока нет записей",
         entryPlaceholder: "Как прошла тренировка? Напиши свои мысли...",
         entryDeleted: "Запись удалена",
         entrySaved: "Запись сохранена",
-        weeklyGoal: "🏆 Недельная цель",
+        weeklyGoal: "Недельная цель",
         currentCharacter: "Текущий персонаж",
         nextLevel: "Следующий уровень",
         unlocked: "Разблокировано",
         level: "Уровень",
         characters: "ПЕРСОНАЖИ",
-        newCharacterUnlocked: "🎉 Новый персонаж разблокирован!",
-        goalCompleted: "🌟 Цель достигнута!",
-        createTitle: "🎯 СОЗДАТЬ ТРЕНИРОВКУ",
+        newCharacterUnlocked: "Новый персонаж разблокирован!",
+        goalCompleted: "Цель достигнута!",
+        createTitle: "СОЗДАТЬ ТРЕНИРОВКУ",
         goal: "ЦЕЛЬ",
         goalPlaceholder: "км",
         addTask: "ДОБАВИТЬ ЗАДАНИЕ",
         taskPlaceholder: "Например: Разминка",
-        addTaskBtn: "+ Добавить",
-        saveWorkoutBtn: "💾 Сохранить тренировку",
-        myWorkouts: "📋 МОИ ТРЕНИРОВКИ",
+        addTaskBtn: "Добавить",
+        saveWorkoutBtn: "Сохранить тренировку",
+        myWorkouts: "МОИ ТРЕНИРОВКИ",
         noWorkouts: "У вас пока нет тренировок",
-        startWorkout: "▶️ Начать",
-        completeWorkout: "✅ Завершить тренировку",
-        workoutCompleted: "🎉 Тренировка завершена!",
+        startWorkout: "Начать",
+        completeWorkout: "Завершить тренировку",
+        workoutCompleted: "Тренировка завершена!",
         deleteWorkout: "✕",
-        noTasks: "➕ Добавьте задания",
-        strengthTitle: "💪 СИЛОВАЯ ТРЕНИРОВКА",
+        noTasks: "Добавьте задания",
+        strengthTitle: "СИЛОВАЯ ТРЕНИРОВКА",
         pullups: "ПОДТЯГИВАНИЯ",
         pushups: "ОТЖИМАНИЯ",
         mixed: "КОМПЛЕКС",
@@ -233,58 +233,58 @@ const translations = {
         summaryPullups: "Подтягивания",
         summaryPushups: "Отжимания",
         summaryCalories: "Калории",
-        completeStrength: "✅ Завершить силовую тренировку",
-        strengthCompleted: "🎉 Силовая тренировка завершена!",
+        completeStrength: "Завершить силовую тренировку",
+        strengthCompleted: "Силовая тренировка завершена!",
         maxRounds: "Максимум 5 кругов",
-        marathon: "🏃 МАРАФОН",
-        reset: "🔄 Сбросить",
-        statsMenu: "📊 Статистика",
-        settings: "⚙️ НАСТРОЙКИ",
-        theme: "🎨 Тема",
-        dark: "🌑 Темная",
-        light: "☀️ Светлая",
-        language: "🌍 Язык",
-        help: "🆘 ПОМОЩЬ",
-        support: "💬 Поддержка",
+        marathon: "МАРАФОН",
+        reset: "Сбросить",
+        statsMenu: "Статистика",
+        settings: "НАСТРОЙКИ",
+        theme: "Тема",
+        dark: "Темная",
+        light: "Светлая",
+        language: "Язык",
+        help: "ПОМОЩЬ",
+        support: "Поддержка",
         contact: "Связаться:",
-        faq: "❓ FAQ",
-        contacts: "📞 КОНТАКТЫ",
-        author: "👤 Автор:",
+        faq: "FAQ",
+        contacts: "КОНТАКТЫ",
+        author: "Автор:",
         version: "Версия:",
-        faqText: "❓ FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Система персонажей\n• AI рекомендации\n• Силовые тренировки",
+        faqText: "FAQ:\n\n• Начать день с 4:00 утра\n• Завершить до 23:00\n• Новый день в 4:00 утра\n• 30 готовых тренировок\n• Свои задания\n• Система персонажей\n• AI рекомендации\n• Силовые тренировки",
         confirmReset: "Сбросить весь прогресс?",
         enterTask: "Введите задание",
-        tasksAdded: (count) => `✅ Добавлено заданий: ${count}`,
-        waitMessage: (h, m) => `⏳ Подожди ${h}ч ${m}м`,
-        onlyFrom4am: "⏰ Тренировки доступны с 4:00 до 23:00",
-        onlyUntil23: "⏰ Только до 23:00!",
-        completeSteps: "⚠️ Выполни все шаги!"
+        tasksAdded: (count) => `Добавлено заданий: ${count}`,
+        waitMessage: (h, m) => `Подожди ${h}ч ${m}м`,
+        onlyFrom4am: "Тренировки доступны с 4:00 до 23:00",
+        onlyUntil23: "Только до 23:00!",
+        completeSteps: "Выполни все шаги!"
     },
     en: {
         ready: "Ready for workout?",
-        startBtn: "🏃 Start Run",
-        completeBtn: "✅ Complete Day",
+        startBtn: "Start Run",
+        completeBtn: "Complete Day",
         progress: "Progress",
-        waitUntil4am: "⏰ Start at 4:00 AM",
-        waitHours: (h, m) => `⏳ Next day in ${h}h ${m}m`,
-        waitUntilNextDay: (h, m) => `⏳ Next day at 4:00 AM (${h}h ${m}m left)`,
-        canStart: "✅ You can start",
-        dayExpired: "⏰ Day expired",
-        until23: "⏳ Until 11:00 PM",
-        timeLeft: (h, m) => `⏳ Time left: ${h}h ${m}m`,
-        dayExpiredMsg: "⏰ Workout expired! Next day starts at 4:00 AM.",
-        newDayAvailable: "🌟 New day available!",
-        startAt4am: "⏰ Start at 4:00 AM",
+        waitUntil4am: "Start at 4:00 AM",
+        waitHours: (h, m) => `Next day in ${h}h ${m}m`,
+        waitUntilNextDay: (h, m) => `Next day at 4:00 AM (${h}h ${m}m left)`,
+        canStart: "You can start",
+        dayExpired: "Day expired",
+        until23: "Until 11:00 PM",
+        timeLeft: (h, m) => `Time left: ${h}h ${m}m`,
+        dayExpiredMsg: "Workout expired! Next day starts at 4:00 AM.",
+        newDayAvailable: "New day available!",
+        startAt4am: "Start at 4:00 AM",
         mainWorkout: "MAIN WORKOUT",
-        addedTasks: "➕ ADDED TASKS",
+        addedTasks: "ADDED TASKS",
         easy: "Easy",
         medium: "Medium",
         hard: "Hard",
         my: "My",
-        congrats: "🎉 WORKOUT COMPLETED!",
+        congrats: "WORKOUT COMPLETED",
         youRan: "You ran:",
-        home: "🏠 Home",
-        stats: "📊 EXTENDED STATISTICS",
+        home: "Home",
+        stats: "EXTENDED STATISTICS",
         workouts: "Workouts",
         totalKm: "Total km",
         totalTime: "Total time",
@@ -305,38 +305,38 @@ const translations = {
         better: "better",
         worse: "worse",
         same: "same",
-        aiRecommendations: "🤖 AI RECOMMENDATIONS",
-        refreshRecommendation: "🔄 Refresh",
-        newEntry: "➕ New entry",
+        aiRecommendations: "AI RECOMMENDATIONS",
+        refreshRecommendation: "Refresh",
+        newEntry: "New entry",
         save: "Save",
         cancel: "Cancel",
-        noEntries: "📝 No entries yet",
+        noEntries: "No entries yet",
         entryPlaceholder: "How was your workout? Write your thoughts...",
         entryDeleted: "Entry deleted",
         entrySaved: "Entry saved",
-        weeklyGoal: "🏆 Weekly Goal",
+        weeklyGoal: "Weekly Goal",
         currentCharacter: "Current Character",
         nextLevel: "Next Level",
         unlocked: "Unlocked",
         level: "Level",
         characters: "CHARACTERS",
-        newCharacterUnlocked: "🎉 New character unlocked!",
-        goalCompleted: "🌟 Goal completed!",
-        createTitle: "🎯 CREATE WORKOUT",
+        newCharacterUnlocked: "New character unlocked!",
+        goalCompleted: "Goal completed!",
+        createTitle: "CREATE WORKOUT",
         goal: "GOAL",
         goalPlaceholder: "km",
         addTask: "ADD TASK",
         taskPlaceholder: "Example: Warm-up",
-        addTaskBtn: "+ Add",
-        saveWorkoutBtn: "💾 Save Workout",
-        myWorkouts: "📋 MY WORKOUTS",
+        addTaskBtn: "Add",
+        saveWorkoutBtn: "Save Workout",
+        myWorkouts: "MY WORKOUTS",
         noWorkouts: "No workouts yet",
-        startWorkout: "▶️ Start",
-        completeWorkout: "✅ Complete Workout",
-        workoutCompleted: "🎉 Workout completed!",
+        startWorkout: "Start",
+        completeWorkout: "Complete Workout",
+        workoutCompleted: "Workout completed!",
         deleteWorkout: "✕",
-        noTasks: "➕ Add tasks",
-        strengthTitle: "💪 STRENGTH TRAINING",
+        noTasks: "Add tasks",
+        strengthTitle: "STRENGTH TRAINING",
         pullups: "PULL-UPS",
         pushups: "PUSH-UPS",
         mixed: "MIXED",
@@ -353,102 +353,102 @@ const translations = {
         summaryPullups: "Pull-ups",
         summaryPushups: "Push-ups",
         summaryCalories: "Calories",
-        completeStrength: "✅ Complete strength workout",
-        strengthCompleted: "🎉 Strength workout completed!",
+        completeStrength: "Complete strength workout",
+        strengthCompleted: "Strength workout completed!",
         maxRounds: "Maximum 5 rounds",
-        marathon: "🏃 MARATHON",
-        reset: "🔄 Reset",
-        statsMenu: "📊 Statistics",
-        settings: "⚙️ SETTINGS",
-        theme: "🎨 Theme",
-        dark: "🌑 Dark",
-        light: "☀️ Light",
-        language: "🌍 Language",
-        help: "🆘 HELP",
-        support: "💬 Support",
+        marathon: "MARATHON",
+        reset: "Reset",
+        statsMenu: "Statistics",
+        settings: "SETTINGS",
+        theme: "Theme",
+        dark: "Dark",
+        light: "Light",
+        language: "Language",
+        help: "HELP",
+        support: "Support",
         contact: "Contact:",
-        faq: "❓ FAQ",
-        contacts: "📞 CONTACTS",
-        author: "👤 Author:",
+        faq: "FAQ",
+        contacts: "CONTACTS",
+        author: "Author:",
         version: "Version:",
-        faqText: "❓ FAQ:\n\n• Start day at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 ready workouts\n• Custom tasks\n• Character system\n• AI recommendations\n• Strength workouts",
+        faqText: "FAQ:\n\n• Start day at 4:00 AM\n• Complete before 11:00 PM\n• New day at 4:00 AM\n• 30 ready workouts\n• Custom tasks\n• Character system\n• AI recommendations\n• Strength workouts",
         confirmReset: "Reset all progress?",
         enterTask: "Enter task",
-        tasksAdded: (count) => `✅ Added: ${count} tasks`,
-        waitMessage: (h, m) => `⏳ Wait ${h}h ${m}m`,
-        onlyFrom4am: "⏰ Workouts available from 4:00 AM to 11:00 PM",
-        onlyUntil23: "⏰ Only until 11:00 PM!",
-        completeSteps: "⚠️ Complete all steps!"
+        tasksAdded: (count) => `Added: ${count} tasks`,
+        waitMessage: (h, m) => `Wait ${h}h ${m}m`,
+        onlyFrom4am: "Workouts available from 4:00 AM to 11:00 PM",
+        onlyUntil23: "Only until 11:00 PM!",
+        completeSteps: "Complete all steps!"
     }
 };
 
 // ========== БАЗОВЫЕ ТРЕНИРОВКИ (30 ДНЕЙ) ==========
 const BASE_WORKOUTS = {
     1: {
-        name: "🔥 Day 1: Easy Start",
-        name_ru: "🔥 День 1: Легкий старт",
+        name: "Day 1: Easy Start",
+        name_ru: "День 1: Легкий старт",
         difficulty: "easy",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
-            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут в легком темпе", distance: 2.0, time: 15, calories: 150 },
-            { id: 3, text: "🦵 Leg swings", text_ru: "🦵 Спец беговые: махи ногами", distance: 0, time: 5, calories: 20 },
-            { id: 4, text: "⚡ 4x200m acceleration", text_ru: "⚡ Ускорение 4х200 метров", distance: 0.8, time: 8, calories: 80 }
+            { id: 1, text: "Warm-up 10 min", text_ru: "Разминка 10 минут", distance: 0, time: 10, calories: 30 },
+            { id: 2, text: "Easy run 15 min", text_ru: "Бег 15 минут в легком темпе", distance: 2.0, time: 15, calories: 150 },
+            { id: 3, text: "Leg swings", text_ru: "Спец беговые: махи ногами", distance: 0, time: 5, calories: 20 },
+            { id: 4, text: "4x200m acceleration", text_ru: "Ускорение 4х200 метров", distance: 0.8, time: 8, calories: 80 }
         ],
         totalDistance: 2.8,
         totalTime: 38,
         totalCalories: 280
     },
     2: {
-        name: "⚡ Day 2: Intervals",
-        name_ru: "⚡ День 2: Интервалы",
+        name: "Day 2: Intervals",
+        name_ru: "День 2: Интервалы",
         difficulty: "medium",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
-            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 200 },
-            { id: 3, text: "🦵 Jumping", text_ru: "🦵 Спец беговые: прыжки", distance: 0, time: 8, calories: 40 },
-            { id: 4, text: "⚡ 6x200m acceleration", text_ru: "⚡ Ускорение 6х200 метров", distance: 1.2, time: 12, calories: 120 }
+            { id: 1, text: "Warm-up 15 min", text_ru: "Разминка 15 минут", distance: 0, time: 15, calories: 45 },
+            { id: 2, text: "Run 20 min", text_ru: "Бег 20 минут", distance: 3.0, time: 20, calories: 200 },
+            { id: 3, text: "Jumping", text_ru: "Спец беговые: прыжки", distance: 0, time: 8, calories: 40 },
+            { id: 4, text: "6x200m acceleration", text_ru: "Ускорение 6х200 метров", distance: 1.2, time: 12, calories: 120 }
         ],
         totalDistance: 4.2,
         totalTime: 55,
         totalCalories: 405
     },
     3: {
-        name: "🏔️ Day 3: Strength",
-        name_ru: "🏔️ День 3: Силовая",
+        name: "Day 3: Strength",
+        name_ru: "День 3: Силовая",
         difficulty: "hard",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 20 min", text_ru: "🏋️ Разминка 20 минут", distance: 0, time: 20, calories: 60 },
-            { id: 2, text: "🏃 Run 25 min", text_ru: "🏃 Бег 25 минут", distance: 4.0, time: 25, calories: 250 },
-            { id: 3, text: "🦵 Multiple jumps", text_ru: "🦵 Спец беговые: многоскоки", distance: 0, time: 10, calories: 50 },
-            { id: 4, text: "⚡ 8x200m acceleration", text_ru: "⚡ Ускорение 8х200 метров", distance: 1.6, time: 16, calories: 160 }
+            { id: 1, text: "Warm-up 20 min", text_ru: "Разминка 20 минут", distance: 0, time: 20, calories: 60 },
+            { id: 2, text: "Run 25 min", text_ru: "Бег 25 минут", distance: 4.0, time: 25, calories: 250 },
+            { id: 3, text: "Multiple jumps", text_ru: "Спец беговые: многоскоки", distance: 0, time: 10, calories: 50 },
+            { id: 4, text: "8x200m acceleration", text_ru: "Ускорение 8х200 метров", distance: 1.6, time: 16, calories: 160 }
         ],
         totalDistance: 5.6,
         totalTime: 71,
         totalCalories: 520
     },
     4: {
-        name: "🌅 Day 4: Recovery",
-        name_ru: "🌅 День 4: Восстановление",
+        name: "Day 4: Recovery",
+        name_ru: "День 4: Восстановление",
         difficulty: "easy",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 10 min", text_ru: "🏋️ Разминка 10 минут", distance: 0, time: 10, calories: 30 },
-            { id: 2, text: "🏃 Easy run 15 min", text_ru: "🏃 Бег 15 минут легкий", distance: 2.0, time: 15, calories: 130 },
-            { id: 3, text: "🦵 Stretching", text_ru: "🦵 Спец беговые: растяжка", distance: 0, time: 10, calories: 25 },
-            { id: 4, text: "⚡ 4x100m acceleration", text_ru: "⚡ Ускорение 4х100 метров", distance: 0.4, time: 5, calories: 40 }
+            { id: 1, text: "Warm-up 10 min", text_ru: "Разминка 10 минут", distance: 0, time: 10, calories: 30 },
+            { id: 2, text: "Easy run 15 min", text_ru: "Бег 15 минут легкий", distance: 2.0, time: 15, calories: 130 },
+            { id: 3, text: "Stretching", text_ru: "Спец беговые: растяжка", distance: 0, time: 10, calories: 25 },
+            { id: 4, text: "4x100m acceleration", text_ru: "Ускорение 4х100 метров", distance: 0.4, time: 5, calories: 40 }
         ],
         totalDistance: 2.4,
         totalTime: 40,
         totalCalories: 225
     },
     5: {
-        name: "🔥 Day 5: Speed",
-        name_ru: "🔥 День 5: Скорость",
+        name: "Day 5: Speed",
+        name_ru: "День 5: Скорость",
         difficulty: "hard",
         steps: [
-            { id: 1, text: "🏋️ Warm-up 15 min", text_ru: "🏋️ Разминка 15 минут", distance: 0, time: 15, calories: 45 },
-            { id: 2, text: "🏃 Run 20 min", text_ru: "🏃 Бег 20 минут", distance: 3.0, time: 20, calories: 210 },
-            { id: 3, text: "🦵 High knees", text_ru: "🦵 Спец беговые: семенящий", distance: 0, time: 8, calories: 35 },
-            { id: 4, text: "⚡ 10x100m acceleration", text_ru: "⚡ Ускорение 10х100 метров", distance: 1.0, time: 12, calories: 110 }
+            { id: 1, text: "Warm-up 15 min", text_ru: "Разминка 15 минут", distance: 0, time: 15, calories: 45 },
+            { id: 2, text: "Run 20 min", text_ru: "Бег 20 минут", distance: 3.0, time: 20, calories: 210 },
+            { id: 3, text: "High knees", text_ru: "Спец беговые: семенящий", distance: 0, time: 8, calories: 35 },
+            { id: 4, text: "10x100m acceleration", text_ru: "Ускорение 10х100 метров", distance: 1.0, time: 12, calories: 110 }
         ],
         totalDistance: 4.0,
         totalTime: 55,
@@ -767,7 +767,7 @@ function renderCharacter() {
     if (nextChar) {
         nextCharacterName.textContent = `${nextChar.emoji} ${nextChar.name[currentLanguage]} (${nextChar.goal} км)`;
     } else {
-        nextCharacterName.textContent = currentLanguage === 'ru' ? '👑 Максимальный уровень' : '👑 Maximum level';
+        nextCharacterName.textContent = currentLanguage === 'ru' ? 'Максимальный уровень' : 'Maximum level';
     }
     
     renderCharactersCollection();
@@ -788,7 +788,7 @@ function renderCharactersCollection() {
         item.className = `character-collection-item ${isUnlocked ? 'unlocked' : ''} ${isCurrent ? 'current' : ''}`;
         item.innerHTML = `
             <div class="collection-avatar">${char.emoji}</div>
-            <div class="collection-name">${char.name[currentLanguage].split(' ')[1] || char.name[currentLanguage]}</div>
+            <div class="collection-name">${char.name[currentLanguage]}</div>
             <div class="collection-goal">${char.goal} км</div>
         `;
         
@@ -1095,7 +1095,7 @@ function renderCustomCreator() {
         taskDiv.className = 'custom-task-item';
         taskDiv.innerHTML = `
             <span class="custom-task-text">${task.text}</span>
-            <span class="custom-task-distance">${task.distance > 0 ? '+' + task.distance + ' ' + t('distance') : 'warm-up'}</span>
+            <span class="custom-task-distance">${task.distance > 0 ? task.distance + ' ' + t('distance') : 'разминка'}</span>
             <button class="custom-task-delete" data-index="${index}">✕</button>
         `;
         container.appendChild(taskDiv);
@@ -1131,7 +1131,7 @@ function saveWorkout() {
     
     const newWorkout = {
         id: Date.now(),
-        name: `🏋️ ${t('myWorkouts')} ${savedWorkouts.length + 1}`,
+        name: `Тренировка ${savedWorkouts.length + 1}`,
         goal: goal,
         tasks: [...currentCustomTasks],
         steps: currentCustomTasks.map((task, index) => ({
@@ -1291,7 +1291,7 @@ function renderActiveWorkout() {
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" ${step.completed ? 'checked' : ''}>
             <span class="step-text">${step.text}</span>
-            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} ${t('distance')}</span>` : ''}
+            ${step.distance > 0 ? `<span class="step-distance">${step.distance} ${t('distance')}</span>` : ''}
         `;
         
         stepsContainer.appendChild(stepDiv);
@@ -1351,7 +1351,6 @@ function completeWorkout() {
 // ========== ФУНКЦИИ ДЛЯ СИЛОВЫХ ТРЕНИРОВОК ==========
 
 function switchStrengthType(type) {
-    console.log('Switching to type:', type);
     currentStrengthType = type;
     
     document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
@@ -1556,20 +1555,20 @@ function renderMixedSets() {
         roundDiv.className = `mixed-exercise ${round.completed ? 'completed' : ''}`;
         roundDiv.innerHTML = `
             <div class="mixed-header">
-                <span class="mixed-name">🔥 ${t('round')} ${index + 1}</span>
+                <span class="mixed-name">Круг ${index + 1}</span>
                 <span class="mixed-check">✓</span>
             </div>
             <div class="mixed-items">
                 <div class="mixed-item ${round.pullupsCompleted ? 'completed' : ''}">
-                    <span class="item-name">${t('pullups')}</span>
+                    <span class="item-name">Подтягивания</span>
                     <input type="number" class="item-input" data-round="${index}" data-exercise="pullups" value="${round.pullups}" min="1" max="30" ${round.completed ? 'disabled' : ''}>
-                    <span class="item-unit">${t('reps')}</span>
+                    <span class="item-unit">раз</span>
                     <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pullups" ${round.pullupsCompleted ? 'checked' : ''}>
                 </div>
                 <div class="mixed-item ${round.pushupsCompleted ? 'completed' : ''}">
-                    <span class="item-name">${t('pushups')}</span>
+                    <span class="item-name">Отжимания</span>
                     <input type="number" class="item-input" data-round="${index}" data-exercise="pushups" value="${round.pushups}" min="1" max="50" ${round.completed ? 'disabled' : ''}>
-                    <span class="item-unit">${t('reps')}</span>
+                    <span class="item-unit">раз</span>
                     <input type="checkbox" class="item-check" data-round="${index}" data-exercise="pushups" ${round.pushupsCompleted ? 'checked' : ''}>
                 </div>
             </div>
@@ -1735,7 +1734,7 @@ function updateMixedStats() {
     
     if (summaryPullups) summaryPullups.textContent = totalPullupsCompleted;
     if (summaryPushups) summaryPushups.textContent = totalPushupsCompleted;
-    if (mixedToday) mixedToday.textContent = `${completedRounds}/${strengthToday.mixed.rounds.length} ${t('round')}`;
+    if (mixedToday) mixedToday.textContent = `${completedRounds}/${strengthToday.mixed.rounds.length} круга`;
     
     strengthToday.mixed.completed = completedRounds === strengthToday.mixed.rounds.length;
     updateStrengthProgress();
@@ -1866,7 +1865,7 @@ function updateStats() {
     if (totalTimeEl) {
         const hours = Math.floor(totalTime / 60);
         const minutes = totalTime % 60;
-        totalTimeEl.textContent = hours > 0 ? `${hours}h ${minutes}m` : `${minutes} ${t('minutes')}`;
+        totalTimeEl.textContent = hours > 0 ? `${hours}ч ${minutes}м` : `${minutes} ${t('minutes')}`;
     }
     if (totalCaloriesEl) totalCaloriesEl.textContent = totalCalories + ' ' + t('kcal');
     
@@ -1902,12 +1901,12 @@ function updateStats() {
         const lastMonthDistance = lastMonth.reduce((sum, w) => sum + w.distance, 0);
         
         let comparisonText = '';
-        if (lastMonthDistance === 0) comparisonText = `📊 ${t('vsLastMonth')}: —`;
+        if (lastMonthDistance === 0) comparisonText = `${t('vsLastMonth')}: —`;
         else {
             const diff = ((thisMonthDistance - lastMonthDistance) / lastMonthDistance * 100).toFixed(0);
-            if (diff > 0) comparisonText = `📈 ${t('vsLastMonth')}: +${diff}% ${t('better')}`;
-            else if (diff < 0) comparisonText = `📉 ${t('vsLastMonth')}: ${diff}% ${t('worse')}`;
-            else comparisonText = `📊 ${t('vsLastMonth')}: ${t('same')}`;
+            if (diff > 0) comparisonText = `${t('vsLastMonth')}: +${diff}% ${t('better')}`;
+            else if (diff < 0) comparisonText = `${t('vsLastMonth')}: ${diff}% ${t('worse')}`;
+            else comparisonText = `${t('vsLastMonth')}: ${t('same')}`;
         }
         comparisonEl.textContent = comparisonText;
     }
@@ -1929,12 +1928,12 @@ function updateStats() {
                 const item = document.createElement('div');
                 item.className = 'history-item';
                 item.innerHTML = `
-                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div>
                         <div style="display: flex; justify-content: space-between;">
                             <span class="history-date">${formattedDate}</span>
-                            <span class="history-workout">${workout.name || `Day ${workout.day}`}</span>
+                            <span class="history-workout">${workout.name || `День ${workout.day}`}</span>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 12px;">
+                        <div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 4px;">
                             <span>${workout.distance} ${t('distance')}</span>
                             <span>${workout.time} ${t('minutes')}</span>
                             <span>${workout.calories} ${t('kcal')}</span>
@@ -2067,7 +2066,7 @@ function renderWorkout() {
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="main" ${completedSteps[index] ? 'checked' : ''}>
             <span class="step-text">${stepText}</span>
-            ${step.distance > 0 ? `<span class="step-distance">+${step.distance} ${t('distance')}</span>` : ''}
+            ${step.distance > 0 ? `<span class="step-distance">${step.distance} ${t('distance')}</span>` : ''}
         `;
         
         stepsContainer.appendChild(stepDiv);
@@ -2088,7 +2087,7 @@ function renderWorkout() {
                 stepDiv.innerHTML = `
                     <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="extra" ${additionalCompleted[index] ? 'checked' : ''}>
                     <span class="step-text">${task.text}</span>
-                    ${task.distance > 0 ? `<span class="step-distance">+${task.distance} ${t('distance')}</span>` : ''}
+                    ${task.distance > 0 ? `<span class="step-distance">${task.distance} ${t('distance')}</span>` : ''}
                 `;
                 
                 additionalContainer.appendChild(stepDiv);
@@ -2226,7 +2225,7 @@ function updateAllText() {
     if (balanceTitle) {
         const daySpan = balanceTitle.querySelector('span');
         if (daySpan) {
-            balanceTitle.innerHTML = `🏃 ${t('mainWorkout')} `;
+            balanceTitle.innerHTML = `${t('mainWorkout')} `;
             balanceTitle.appendChild(daySpan);
         }
     }
@@ -2262,13 +2261,13 @@ function updateAllText() {
     if (progressLabel) progressLabel.textContent = t('weeklyGoal');
     
     const nextRewardLabel = document.querySelector('.next-reward span:first-child');
-    if (nextRewardLabel) nextRewardLabel.textContent = `🔓 ${t('nextLevel')}:`;
+    if (nextRewardLabel) nextRewardLabel.textContent = `${t('nextLevel')}:`;
     
     const collectionTitle = document.querySelector('.collection-title');
-    if (collectionTitle) collectionTitle.textContent = `🌟 ${t('characters')}`;
+    if (collectionTitle) collectionTitle.textContent = t('characters');
     
     const diaryTitle = document.querySelector('.diary-title');
-    if (diaryTitle) diaryTitle.textContent = `📔 ${t('characters') ? 'ДНЕВНИК ТРЕНИРОВОК' : 'WORKOUT DIARY'}`;
+    if (diaryTitle) diaryTitle.textContent = t('characters') ? 'ДНЕВНИК ТРЕНИРОВОК' : 'WORKOUT DIARY';
     
     const addEntryBtn = document.getElementById('add-entry-btn');
     if (addEntryBtn) addEntryBtn.innerHTML = `<span class="plus-icon">+</span> ${t('newEntry')}`;
@@ -2360,19 +2359,19 @@ function updateAllText() {
     if (menuTitles[3]) menuTitles[3].textContent = t('contacts');
     
     const resetMenuItem = document.getElementById('reset-marathon');
-    if (resetMenuItem) resetMenuItem.innerHTML = `🔄 ${t('reset')} ${t('marathon').toLowerCase()}`;
+    if (resetMenuItem) resetMenuItem.innerHTML = `${t('reset')} ${t('marathon')}`;
     
     const statsMenuItem = document.getElementById('stats-menu');
-    if (statsMenuItem) statsMenuItem.innerHTML = `📊 ${t('statsMenu')}`;
+    if (statsMenuItem) statsMenuItem.innerHTML = t('statsMenu');
     
     const supportMenuItem = document.getElementById('support');
-    if (supportMenuItem) supportMenuItem.innerHTML = `💬 ${t('support')}`;
+    if (supportMenuItem) supportMenuItem.innerHTML = t('support');
     
     const telegramMenuItem = document.getElementById('telegram-support');
-    if (telegramMenuItem) telegramMenuItem.innerHTML = `📱 ${t('contact')} @frontendchikk`;
+    if (telegramMenuItem) telegramMenuItem.innerHTML = `${t('contact')} @frontendchikk`;
     
     const faqMenuItem = document.getElementById('faq');
-    if (faqMenuItem) faqMenuItem.innerHTML = `❓ ${t('faq')}`;
+    if (faqMenuItem) faqMenuItem.innerHTML = t('faq');
     
     const themeLabel = document.querySelector('.theme-selector span');
     if (themeLabel) themeLabel.textContent = `${t('theme')}:`;
@@ -2387,8 +2386,8 @@ function updateAllText() {
     
     const langRu = document.getElementById('lang-ru-menu');
     const langEn = document.getElementById('lang-en-menu');
-    if (langRu) langRu.textContent = '🇷🇺 Русский';
-    if (langEn) langEn.textContent = '🇬🇧 English';
+    if (langRu) langRu.textContent = 'Русский';
+    if (langEn) langEn.textContent = 'English';
 
     if (dayStarted) renderWorkout();
     updateRecommendation();
@@ -2513,12 +2512,10 @@ document.addEventListener('DOMContentLoaded', function() {
     renderSavedWorkouts();
     renderActiveWorkout();
 
-    // Важно: сначала рендерим сеты, потом настраиваем ползунки
     renderPullupsSets();
     renderPushupsSets();
     renderMixedSets();
     
-    // Небольшая задержка для гарантии, что DOM обновился
     setTimeout(() => {
         updatePullupsGoal();
         updatePushupsGoal();
@@ -2786,7 +2783,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (statsMenu) statsMenu.addEventListener('click', function(e) { e.preventDefault(); switchPage(1); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
 
     const supportBtn = document.getElementById('support');
-    if (supportBtn) supportBtn.addEventListener('click', function(e) { e.preventDefault(); tg.showAlert(`💬 ${t('support')}: @frontendchikk`); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+    if (supportBtn) supportBtn.addEventListener('click', function(e) { e.preventDefault(); tg.showAlert(`${t('support')}: @frontendchikk`); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
 
     const telegramBtn = document.getElementById('telegram-support');
     if (telegramBtn) telegramBtn.addEventListener('click', function(e) { e.preventDefault(); tg.openTelegramLink('https://t.me/frontendchikk'); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
