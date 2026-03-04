@@ -1419,10 +1419,16 @@ function switchStrengthType(type) {
         customExercisesContainer.style.display = type === 'custom' ? 'block' : 'none';
     }
     
-    if (type === 'pullups') renderPullupsSets();
-    else if (type === 'pushups') renderPushupsSets();
-    else if (type === 'mixed') renderMixedSets();
-    else if (type === 'custom') {
+    if (type === 'pullups') {
+        renderPullupsSets();
+        updatePullupsStats();
+    } else if (type === 'pushups') {
+        renderPushupsSets();
+        updatePushupsStats();
+    } else if (type === 'mixed') {
+        renderMixedSets();
+        updateMixedStats();
+    } else if (type === 'custom') {
         renderSavedExercisesList();
         initCustomExercises();
         renderCustomExercises();
@@ -2094,15 +2100,30 @@ function updateStrengthProgress() {
     let totalGoal = 0;
     let totalCaloriesToday = 0;
     
+    // Получаем элементы для отображения статистики
+    const summaryPullups = document.getElementById('summary-pullups');
+    const summaryPushups = document.getElementById('summary-pushups');
+    const summaryCalories = document.getElementById('summary-calories');
+    
     if (currentStrengthType === 'pullups') {
         totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalGoal = strengthToday.pullups.goal;
-        totalCaloriesToday = Math.round(totalCompleted * 0.5); // 0.5 калории за подтягивание
+        totalCaloriesToday = Math.round(totalCompleted * 0.5);
+        
+        // Показываем только подтягивания и калории
+        if (summaryPullups) summaryPullups.textContent = totalCompleted;
+        if (summaryPushups) summaryPushups.textContent = '0';
+        if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
     } 
     else if (currentStrengthType === 'pushups') {
         totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalGoal = strengthToday.pushups.goal;
-        totalCaloriesToday = Math.round(totalCompleted * 0.3); // 0.3 калории за отжимание
+        totalCaloriesToday = Math.round(totalCompleted * 0.3);
+        
+        // Показываем только отжимания и калории
+        if (summaryPullups) summaryPullups.textContent = '0';
+        if (summaryPushups) summaryPushups.textContent = totalCompleted;
+        if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
     } 
     else if (currentStrengthType === 'mixed') {
         strengthToday.mixed.rounds.forEach(round => {
@@ -2119,20 +2140,29 @@ function updateStrengthProgress() {
             totalGoal += round.pullups + round.pushups;
         });
         totalCaloriesToday = Math.round(totalCaloriesToday);
+        
+        // Показываем оба типа и калории
+        if (summaryPullups) summaryPullups.textContent = totalCompleted;
+        if (summaryPushups) summaryPushups.textContent = totalCompleted;
+        if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
     } 
     else if (currentStrengthType === 'custom') {
-        // Подсчет для своих упражнений
+        // Подсчет только для своих упражнений
         customExercisesToday.forEach(exercise => {
             exercise.sets.forEach(set => {
                 if (set.completed) {
                     totalCompleted += set.reps;
-                    // Для своих упражнений считаем 0.4 калории за повторение (среднее значение)
                     totalCaloriesToday += set.reps * 0.4;
                 }
                 totalGoal += set.reps;
             });
         });
         totalCaloriesToday = Math.round(totalCaloriesToday);
+        
+        // Показываем только калории, подтягивания и отжимания обнуляем
+        if (summaryPullups) summaryPullups.textContent = '0';
+        if (summaryPushups) summaryPushups.textContent = '0';
+        if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
     }
     
     // Обновляем прогресс-бар
@@ -2157,12 +2187,6 @@ function updateStrengthProgress() {
     }
     
     if (completeBtn) completeBtn.disabled = !canComplete;
-    
-    // Обновляем отображение калорий
-    const summaryCalories = document.getElementById('summary-calories');
-    if (summaryCalories) {
-        summaryCalories.textContent = totalCaloriesToday;
-    }
 }
 
 // ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАВЕРШЕНИЯ ТРЕНИРОВКИ ==========
@@ -2176,10 +2200,14 @@ function completeStrengthWorkout() {
     if (currentStrengthType === 'pullups') {
         totalPullupsToday = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalCaloriesBurned = Math.round(totalPullupsToday * 0.5);
+        
+        totalPullups += totalPullupsToday;
     } 
     else if (currentStrengthType === 'pushups') {
         totalPushupsToday = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalCaloriesBurned = Math.round(totalPushupsToday * 0.3);
+        
+        totalPushups += totalPushupsToday;
     } 
     else if (currentStrengthType === 'mixed') {
         strengthToday.mixed.rounds.forEach(round => {
@@ -2193,6 +2221,9 @@ function completeStrengthWorkout() {
             }
         });
         totalCaloriesBurned = Math.round(totalCaloriesBurned);
+        
+        totalPullups += totalPullupsToday;
+        totalPushups += totalPushupsToday;
     } 
     else if (currentStrengthType === 'custom') {
         customExercisesToday.forEach(exercise => {
@@ -2204,12 +2235,11 @@ function completeStrengthWorkout() {
             });
         });
         totalCaloriesBurned = Math.round(totalCaloriesBurned);
-        // Добавляем к общим показателям (условно считаем как подтягивания для статистики)
+        // Для статистики добавляем к подтягиваниям
         totalPullupsToday += totalCustomReps;
+        totalPullups += totalPullupsToday;
     }
     
-    totalPullups += totalPullupsToday;
-    totalPushups += totalPushupsToday;
     strengthDays++;
     
     // Добавляем калории в общую статистику
