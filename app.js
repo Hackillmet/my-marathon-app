@@ -1425,12 +1425,13 @@ function switchStrengthType(type) {
     else if (type === 'custom') {
         renderSavedExercisesList();
         initCustomExercises();
+        renderCustomExercises();
     }
     
     updateStrengthProgress();
 }
 
-// ========== НОВЫЕ ФУНКЦИИ ДЛЯ СВОИХ УПРАЖНЕНИЙ ==========
+// ========== ФУНКЦИИ ДЛЯ СВОИХ УПРАЖНЕНИЙ ==========
 
 function initCustomExercises() {
     // Добавляем обработчики для выбора иконок
@@ -1452,7 +1453,6 @@ function initCustomExercises() {
     // Обработчик сохранения нового упражнения
     const saveBtn = document.getElementById('save-custom-exercise-btn');
     if (saveBtn) {
-        // Убираем старый обработчик, если есть
         saveBtn.removeEventListener('click', saveCustomExercise);
         saveBtn.addEventListener('click', saveCustomExercise);
     }
@@ -1536,6 +1536,8 @@ function renderSavedExercisesList() {
 function deleteCustomExercise(id) {
     if (confirm('Удалить это упражнение?')) {
         customExercises = customExercises.filter(ex => ex.id !== id);
+        // Также удаляем из сегодняшних
+        customExercisesToday = customExercisesToday.filter(ex => ex.id !== id);
         saveState();
         renderSavedExercisesList();
         renderCustomExercises();
@@ -1549,6 +1551,11 @@ function renderCustomExercises() {
     container.innerHTML = '';
     container.style.display = 'block';
     
+    if (customExercises.length === 0) {
+        container.innerHTML = `<div class="empty-exercises">${t('noExercises')}</div>`;
+        return;
+    }
+    
     customExercises.forEach((exercise, exerciseIndex) => {
         const exerciseCard = document.createElement('div');
         exerciseCard.className = 'custom-exercise-card-item';
@@ -1561,6 +1568,7 @@ function renderCustomExercises() {
                 id: exercise.id,
                 name: exercise.name,
                 icon: exercise.icon,
+                defaultReps: exercise.defaultReps,
                 sets: exercise.sets.map(set => ({ ...set }))
             };
             customExercisesToday.push(todayExercise);
@@ -2075,82 +2083,137 @@ function updateMixedStats() {
     updateStrengthProgress();
 }
 
+// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ПОДСЧЕТА ПРОГРЕССА И КАЛОРИЙ ==========
+
 function updateStrengthProgress() {
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
     const completeBtn = document.getElementById('complete-strength-btn');
     
-    let totalCompleted = 0, totalGoal = 0;
+    let totalCompleted = 0;
+    let totalGoal = 0;
+    let totalCaloriesToday = 0;
     
     if (currentStrengthType === 'pullups') {
         totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalGoal = strengthToday.pullups.goal;
-    } else if (currentStrengthType === 'pushups') {
+        totalCaloriesToday = Math.round(totalCompleted * 0.5); // 0.5 калории за подтягивание
+    } 
+    else if (currentStrengthType === 'pushups') {
         totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         totalGoal = strengthToday.pushups.goal;
-    } else if (currentStrengthType === 'mixed') {
+        totalCaloriesToday = Math.round(totalCompleted * 0.3); // 0.3 калории за отжимание
+    } 
+    else if (currentStrengthType === 'mixed') {
         strengthToday.mixed.rounds.forEach(round => {
-            if (round.pullupsCompleted) totalCompleted += round.pullups;
-            if (round.pushupsCompleted) totalCompleted += round.pushups;
+            if (round.pullupsCompleted) {
+                totalCompleted += round.pullups;
+                totalCaloriesToday += round.pullups * 0.5;
+            }
+            if (round.pushupsCompleted) {
+                totalCompleted += round.pushups;
+                totalCaloriesToday += round.pushups * 0.3;
+            }
         });
-        strengthToday.mixed.rounds.forEach(round => totalGoal += round.pullups + round.pushups);
-    } else if (currentStrengthType === 'custom') {
+        strengthToday.mixed.rounds.forEach(round => {
+            totalGoal += round.pullups + round.pushups;
+        });
+        totalCaloriesToday = Math.round(totalCaloriesToday);
+    } 
+    else if (currentStrengthType === 'custom') {
+        // Подсчет для своих упражнений
         customExercisesToday.forEach(exercise => {
             exercise.sets.forEach(set => {
-                if (set.completed) totalCompleted += set.reps;
+                if (set.completed) {
+                    totalCompleted += set.reps;
+                    // Для своих упражнений считаем 0.4 калории за повторение (среднее значение)
+                    totalCaloriesToday += set.reps * 0.4;
+                }
                 totalGoal += set.reps;
             });
         });
+        totalCaloriesToday = Math.round(totalCaloriesToday);
     }
     
+    // Обновляем прогресс-бар
     const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
     if (progressBar) progressBar.style.width = percent + '%';
     if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
     
+    // Проверяем, можно ли завершить тренировку
     let canComplete = false;
-    if (currentStrengthType === 'pullups') canComplete = strengthToday.pullups.completed;
-    else if (currentStrengthType === 'pushups') canComplete = strengthToday.pushups.completed;
-    else if (currentStrengthType === 'mixed') canComplete = strengthToday.mixed.completed;
-    else if (currentStrengthType === 'custom') {
-        // Проверяем, все ли подходы во всех упражнениях выполнены
-        canComplete = customExercisesToday.every(exercise => 
-            exercise.sets.every(set => set.completed)
-        );
+    if (currentStrengthType === 'pullups') {
+        canComplete = strengthToday.pullups.completed;
+    } else if (currentStrengthType === 'pushups') {
+        canComplete = strengthToday.pushups.completed;
+    } else if (currentStrengthType === 'mixed') {
+        canComplete = strengthToday.mixed.completed;
+    } else if (currentStrengthType === 'custom') {
+        // Для своих упражнений: все подходы во всех упражнениях должны быть выполнены
+        canComplete = customExercisesToday.length > 0 && 
+                      customExercisesToday.every(exercise => 
+                          exercise.sets.every(set => set.completed)
+                      );
     }
     
     if (completeBtn) completeBtn.disabled = !canComplete;
     
-    const calories = Math.round(totalCompleted * 0.5);
+    // Обновляем отображение калорий
     const summaryCalories = document.getElementById('summary-calories');
-    if (summaryCalories) summaryCalories.textContent = calories;
+    if (summaryCalories) {
+        summaryCalories.textContent = totalCaloriesToday;
+    }
 }
 
+// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАВЕРШЕНИЯ ТРЕНИРОВКИ ==========
+
 function completeStrengthWorkout() {
-    let totalPullupsToday = 0, totalPushupsToday = 0;
+    let totalPullupsToday = 0;
+    let totalPushupsToday = 0;
     let totalCustomReps = 0;
+    let totalCaloriesBurned = 0;
     
     if (currentStrengthType === 'pullups') {
         totalPullupsToday = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
-    } else if (currentStrengthType === 'pushups') {
+        totalCaloriesBurned = Math.round(totalPullupsToday * 0.5);
+    } 
+    else if (currentStrengthType === 'pushups') {
         totalPushupsToday = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
-    } else if (currentStrengthType === 'mixed') {
+        totalCaloriesBurned = Math.round(totalPushupsToday * 0.3);
+    } 
+    else if (currentStrengthType === 'mixed') {
         strengthToday.mixed.rounds.forEach(round => {
-            if (round.pullupsCompleted) totalPullupsToday += round.pullups;
-            if (round.pushupsCompleted) totalPushupsToday += round.pushups;
+            if (round.pullupsCompleted) {
+                totalPullupsToday += round.pullups;
+                totalCaloriesBurned += round.pullups * 0.5;
+            }
+            if (round.pushupsCompleted) {
+                totalPushupsToday += round.pushups;
+                totalCaloriesBurned += round.pushups * 0.3;
+            }
         });
-    } else if (currentStrengthType === 'custom') {
+        totalCaloriesBurned = Math.round(totalCaloriesBurned);
+    } 
+    else if (currentStrengthType === 'custom') {
         customExercisesToday.forEach(exercise => {
             exercise.sets.forEach(set => {
-                if (set.completed) totalCustomReps += set.reps;
+                if (set.completed) {
+                    totalCustomReps += set.reps;
+                    totalCaloriesBurned += set.reps * 0.4;
+                }
             });
         });
-        // Добавляем к общим показателям (условно считаем как подтягивания)
+        totalCaloriesBurned = Math.round(totalCaloriesBurned);
+        // Добавляем к общим показателям (условно считаем как подтягивания для статистики)
         totalPullupsToday += totalCustomReps;
     }
     
     totalPullups += totalPullupsToday;
     totalPushups += totalPushupsToday;
     strengthDays++;
+    
+    // Добавляем калории в общую статистику
+    totalCalories += totalCaloriesBurned;
     
     if (totalPullupsToday > bestPullups) bestPullups = totalPullupsToday;
     if (totalPushupsToday > bestPushups) bestPushups = totalPushupsToday;
@@ -2160,6 +2223,7 @@ function completeStrengthWorkout() {
         pullups: totalPullupsToday, 
         pushups: totalPushupsToday, 
         custom: totalCustomReps,
+        calories: totalCaloriesBurned,
         type: currentStrengthType 
     });
     
@@ -2188,6 +2252,7 @@ function completeStrengthWorkout() {
     renderCustomExercises();
     updateStrengthProgress();
     updateStrengthStats();
+    updateStats(); // Обновляем общую статистику
     
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
     const quoteEl = document.getElementById('strength-quote');
