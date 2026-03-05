@@ -1440,7 +1440,6 @@ function switchStrengthType(type) {
 // ========== ФУНКЦИИ ДЛЯ СВОИХ УПРАЖНЕНИЙ ==========
 
 function initCustomExercises() {
-    // Добавляем обработчики для выбора иконок
     document.querySelectorAll('.icon-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.icon-btn').forEach(b => b.classList.remove('selected'));
@@ -1449,14 +1448,12 @@ function initCustomExercises() {
         });
     });
     
-    // Выбираем первую иконку по умолчанию
     const firstIcon = document.querySelector('.icon-btn');
     if (firstIcon) {
         firstIcon.classList.add('selected');
         selectedCustomIcon = firstIcon.dataset.icon;
     }
     
-    // Обработчик сохранения нового упражнения
     const saveBtn = document.getElementById('save-custom-exercise-btn');
     if (saveBtn) {
         saveBtn.removeEventListener('click', saveCustomExercise);
@@ -1487,11 +1484,9 @@ function saveCustomExercise() {
     customExercises.push(newExercise);
     saveState();
     
-    // Очищаем форму
     nameInput.value = '';
     repsInput.value = '15';
     
-    // Сбрасываем выбор иконки
     document.querySelectorAll('.icon-btn').forEach(btn => btn.classList.remove('selected'));
     const firstIcon = document.querySelector('.icon-btn');
     if (firstIcon) {
@@ -1542,7 +1537,6 @@ function renderSavedExercisesList() {
 function deleteCustomExercise(id) {
     if (confirm('Удалить это упражнение?')) {
         customExercises = customExercises.filter(ex => ex.id !== id);
-        // Также удаляем из сегодняшних
         customExercisesToday = customExercisesToday.filter(ex => ex.id !== id);
         saveState();
         renderSavedExercisesList();
@@ -1567,7 +1561,6 @@ function renderCustomExercises() {
         exerciseCard.className = 'custom-exercise-card-item';
         exerciseCard.setAttribute('data-exercise-id', exercise.id);
         
-        // Находим сегодняшние данные для этого упражнения
         let todayExercise = customExercisesToday.find(ex => ex.id === exercise.id);
         if (!todayExercise) {
             todayExercise = {
@@ -1608,11 +1601,9 @@ function renderCustomExercises() {
         container.appendChild(exerciseCard);
     });
     
-    // Добавляем обработчики для каждого упражнения
     customExercises.forEach(exercise => {
         const exerciseId = exercise.id;
         
-        // Обработчики для удаления подходов
         document.querySelectorAll(`#custom-sets-${exerciseId} .set-remove`).forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1627,7 +1618,6 @@ function renderCustomExercises() {
             });
         });
         
-        // Обработчики для изменения количества
         document.querySelectorAll(`#custom-sets-${exerciseId} .set-reps-input`).forEach(input => {
             input.addEventListener('change', function() {
                 const setId = parseInt(this.dataset.index);
@@ -1642,7 +1632,6 @@ function renderCustomExercises() {
             });
         });
         
-        // Обработчики для чекбоксов
         document.querySelectorAll(`#custom-sets-${exerciseId} .set-complete-check`).forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 const setId = parseInt(this.dataset.index);
@@ -1661,7 +1650,6 @@ function renderCustomExercises() {
             });
         });
         
-        // Обработчик для добавления подхода
         const addBtn = document.getElementById(`add-custom-set-${exerciseId}`);
         if (addBtn) {
             addBtn.addEventListener('click', function(e) {
@@ -2100,7 +2088,6 @@ function updateStrengthProgress() {
     let totalGoal = 0;
     let totalCaloriesToday = 0;
     
-    // Получаем элементы для отображения статистики
     const summaryPullups = document.getElementById('summary-pullups');
     const summaryPushups = document.getElementById('summary-pushups');
     const summaryCalories = document.getElementById('summary-calories');
@@ -2110,7 +2097,6 @@ function updateStrengthProgress() {
         totalGoal = strengthToday.pullups.goal;
         totalCaloriesToday = Math.round(totalCompleted * 0.5);
         
-        // Показываем только подтягивания и калории
         if (summaryPullups) summaryPullups.textContent = totalCompleted;
         if (summaryPushups) summaryPushups.textContent = '0';
         if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
@@ -2120,7 +2106,6 @@ function updateStrengthProgress() {
         totalGoal = strengthToday.pushups.goal;
         totalCaloriesToday = Math.round(totalCompleted * 0.3);
         
-        // Показываем только отжимания и калории
         if (summaryPullups) summaryPullups.textContent = '0';
         if (summaryPushups) summaryPushups.textContent = totalCompleted;
         if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
@@ -2141,13 +2126,11 @@ function updateStrengthProgress() {
         });
         totalCaloriesToday = Math.round(totalCaloriesToday);
         
-        // Показываем оба типа и калории
         if (summaryPullups) summaryPullups.textContent = totalCompleted;
         if (summaryPushups) summaryPushups.textContent = totalCompleted;
         if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
     } 
     else if (currentStrengthType === 'custom') {
-        // Подсчет только для своих упражнений
         customExercisesToday.forEach(exercise => {
             exercise.sets.forEach(set => {
                 if (set.completed) {
@@ -2159,18 +2142,15 @@ function updateStrengthProgress() {
         });
         totalCaloriesToday = Math.round(totalCaloriesToday);
         
-        // Показываем только калории, подтягивания и отжимания обнуляем
         if (summaryPullups) summaryPullups.textContent = '0';
         if (summaryPushups) summaryPushups.textContent = '0';
         if (summaryCalories) summaryCalories.textContent = totalCaloriesToday;
     }
     
-    // Обновляем прогресс-бар
     const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
     if (progressBar) progressBar.style.width = percent + '%';
     if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
     
-    // Проверяем, можно ли завершить тренировку
     let canComplete = false;
     if (currentStrengthType === 'pullups') {
         canComplete = strengthToday.pullups.completed;
@@ -2179,7 +2159,6 @@ function updateStrengthProgress() {
     } else if (currentStrengthType === 'mixed') {
         canComplete = strengthToday.mixed.completed;
     } else if (currentStrengthType === 'custom') {
-        // Для своих упражнений: все подходы во всех упражнениях должны быть выполнены
         canComplete = customExercisesToday.length > 0 && 
                       customExercisesToday.every(exercise => 
                           exercise.sets.every(set => set.completed)
@@ -2235,14 +2214,12 @@ function completeStrengthWorkout() {
             });
         });
         totalCaloriesBurned = Math.round(totalCaloriesBurned);
-        // Для статистики добавляем к подтягиваниям
         totalPullupsToday += totalCustomReps;
         totalPullups += totalPullupsToday;
     }
     
     strengthDays++;
     
-    // Добавляем калории в общую статистику
     totalCalories += totalCaloriesBurned;
     
     if (totalPullupsToday > bestPullups) bestPullups = totalPullupsToday;
@@ -2257,7 +2234,6 @@ function completeStrengthWorkout() {
         type: currentStrengthType 
     });
     
-    // Сбрасываем сегодняшние упражнения
     customExercisesToday = [];
     
     strengthToday = {
@@ -2282,7 +2258,7 @@ function completeStrengthWorkout() {
     renderCustomExercises();
     updateStrengthProgress();
     updateStrengthStats();
-    updateStats(); // Обновляем общую статистику
+    updateStats();
     
     const randomQuote = strengthQuotes[Math.floor(Math.random() * strengthQuotes.length)];
     const quoteEl = document.getElementById('strength-quote');
@@ -2833,16 +2809,16 @@ function updateAllText() {
     const themeLabel = document.querySelector('.theme-selector span');
     if (themeLabel) themeLabel.textContent = `${t('theme')}:`;
     
-    const themeDark = document.getElementById('theme-dark-menu');
-    const themeLight = document.getElementById('theme-light-menu');
+    const themeDark = document.getElementById('theme-dark-btn');
+    const themeLight = document.getElementById('theme-light-btn');
     if (themeDark) themeDark.textContent = t('dark');
     if (themeLight) themeLight.textContent = t('light');
     
     const langLabel = document.querySelector('.language-selector span');
     if (langLabel) langLabel.textContent = `${t('language')}:`;
     
-    const langRu = document.getElementById('lang-ru-menu');
-    const langEn = document.getElementById('lang-en-menu');
+    const langRu = document.getElementById('lang-ru-btn');
+    const langEn = document.getElementById('lang-en-btn');
     if (langRu) langRu.textContent = 'Русский';
     if (langEn) langEn.textContent = 'English';
 
@@ -2898,25 +2874,44 @@ window.switchPage = function(pageIndex) {
     }
 };
 
+// ========== ФУНКЦИИ ДЛЯ ТЕМЫ И ЯЗЫКА ==========
+
 window.setTheme = function(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEYS.THEME, theme);
     
-    const themeDark = document.getElementById('theme-dark-menu');
-    const themeLight = document.getElementById('theme-light-menu');
+    const themeDark = document.getElementById('theme-dark-btn');
+    const themeLight = document.getElementById('theme-light-btn');
     
-    if (themeDark) themeDark.classList.toggle('active', theme === 'dark');
-    if (themeLight) themeLight.classList.toggle('active', theme === 'light');
+    if (themeDark && themeLight) {
+        if (theme === 'dark') {
+            themeDark.classList.add('active');
+            themeLight.classList.remove('active');
+        } else {
+            themeDark.classList.remove('active');
+            themeLight.classList.add('active');
+        }
+    }
 };
 
 window.setLanguage = function(lang) {
     currentLanguage = lang;
     localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
     
-    const langRu = document.getElementById('lang-ru-menu');
-    const langEn = document.getElementById('lang-en-menu');
-    if (langRu) langRu.classList.toggle('active', lang === 'ru');
-    if (langEn) langEn.classList.toggle('active', lang === 'en');
+    const langRu = document.getElementById('lang-ru-btn');
+    const langEn = document.getElementById('lang-en-btn');
+    
+    if (langRu && langEn) {
+        if (lang === 'ru') {
+            langRu.classList.add('active');
+            langEn.classList.remove('active');
+        } else {
+            langRu.classList.remove('active');
+            langEn.classList.add('active');
+        }
+    }
+    
+    document.documentElement.setAttribute('lang', lang);
     
     updateAllText();
     updateDate();
@@ -2960,12 +2955,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTheme(savedTheme);
     
     const savedLang = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ru';
-    currentLanguage = savedLang;
-    
-    const langRu = document.getElementById('lang-ru-menu');
-    const langEn = document.getElementById('lang-en-menu');
-    if (langRu) langRu.classList.toggle('active', savedLang === 'ru');
-    if (langEn) langEn.classList.toggle('active', savedLang === 'en');
+    setLanguage(savedLang);
     
     updateDate();
     updateStats();
@@ -3214,14 +3204,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 };
                 
-                // Сброс персонажей
                 currentCharacter = 1;
                 weeklyGoal = CHARACTERS[1].goal;
                 weeklyProgress = 0;
                 weekStartDate = new Date().toISOString();
                 unlockedCharacters = [1];
                 
-                // Сброс своих упражнений
                 customExercises = [
                     { id: 1, name: "Приседания", defaultReps: 20, icon: "🏋️", sets: [{ reps: 20, completed: false }] },
                     { id: 2, name: "Выпады", defaultReps: 15, icon: "🦵", sets: [{ reps: 15, completed: false }] },
