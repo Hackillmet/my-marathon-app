@@ -2663,6 +2663,71 @@ body {
     margin-bottom: 12px;
 }
 
+/* ===== НАСТРОЙКИ В МЕНЮ ===== */
+.settings-menu {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.theme-selector, .language-selector {
+    margin-bottom: 16px;
+}
+
+.theme-selector:last-child, .language-selector:last-child {
+    margin-bottom: 0;
+}
+
+.theme-selector span, .language-selector span {
+    display: block;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.theme-buttons, .lang-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.theme-btn, .lang-btn {
+    flex: 1;
+    padding: 10px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.theme-btn:hover, .lang-btn:hover {
+    background: var(--bg-primary);
+    transform: translateY(-1px);
+}
+
+.theme-btn:active, .lang-btn:active {
+    transform: scale(0.97);
+}
+
+.theme-btn.active, .lang-btn.active {
+    background: var(--gradient-blue);
+    color: white;
+    border-color: transparent;
+    box-shadow: var(--shadow-glow);
+}
+
+.theme-btn.active span, .lang-btn.active span {
+    color: white;
+}
+
 /* Нижняя навигация */
 .bottom-nav {
     position: fixed;
