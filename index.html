@@ -35,16 +35,16 @@
                 <div class="settings-menu">
                     <div class="theme-selector">
                         <span>Тема:</span>
-                        <div class="theme-buttons-menu">
-                            <button class="theme-btn-small" id="theme-dark-menu" onclick="setTheme('dark')">🌑 Темная</button>
-                            <button class="theme-btn-small" id="theme-light-menu" onclick="setTheme('light')">☀️ Светлая</button>
+                        <div class="theme-buttons">
+                            <button class="theme-btn" id="theme-dark-btn" onclick="setTheme('dark')">🌑 Темная</button>
+                            <button class="theme-btn" id="theme-light-btn" onclick="setTheme('light')">☀️ Светлая</button>
                         </div>
                     </div>
                     <div class="language-selector">
                         <span>Язык:</span>
-                        <div class="lang-buttons-menu">
-                            <button class="lang-btn-small" id="lang-ru-menu" onclick="setLanguage('ru')">🇷🇺 Русский</button>
-                            <button class="lang-btn-small" id="lang-en-menu" onclick="setLanguage('en')">🇬🇧 English</button>
+                        <div class="lang-buttons">
+                            <button class="lang-btn" id="lang-ru-btn" onclick="setLanguage('ru')">🇷🇺 Русский</button>
+                            <button class="lang-btn" id="lang-en-btn" onclick="setLanguage('en')">🇬🇧 English</button>
                         </div>
                     </div>
                 </div>
@@ -347,7 +347,7 @@
                 </div>
             </div>
 
-            <!-- СЛАЙД 5: СИЛОВАЯ ТРЕНИРОВКА (ОБНОВЛЕННЫЙ) -->
+            <!-- СЛАЙД 5: СИЛОВАЯ ТРЕНИРОВКА -->
             <div class="slide" id="slide5">
                 <div class="strength-section">
                     <h2 class="strength-title">СИЛОВАЯ ТРЕНИРОВКА</h2>
@@ -381,7 +381,7 @@
                         </button>
                     </div>
 
-                    <!-- НОВЫЙ БЛОК: Создание своего упражнения -->
+                    <!-- Блок создания своего упражнения -->
                     <div class="custom-exercise-card" id="custom-exercise-card" style="display: none;">
                         <div class="custom-exercise-header">
                             <h3>⚙️ СОЗДАТЬ СВОЕ УПРАЖНЕНИЕ</h3>
@@ -423,9 +423,7 @@
                         <!-- Список сохраненных упражнений -->
                         <div class="saved-exercises-section">
                             <h4>МОИ УПРАЖНЕНИЯ</h4>
-                            <div class="saved-exercises-list" id="saved-exercises-list">
-                                <!-- Сюда будут загружаться сохраненные упражнения -->
-                            </div>
+                            <div class="saved-exercises-list" id="saved-exercises-list"></div>
                         </div>
                     </div>
 
@@ -512,10 +510,8 @@
                         </button>
                     </div>
 
-                    <!-- НОВЫЙ БЛОК: Свои упражнения (динамический) -->
-                    <div class="custom-exercises-container" id="custom-exercises-container" style="display: none;">
-                        <!-- Сюда будут добавляться карточки созданных упражнений -->
-                    </div>
+                    <!-- Контейнер для своих упражнений -->
+                    <div class="custom-exercises-container" id="custom-exercises-container" style="display: none;"></div>
 
                     <div class="strength-summary">
                         <div class="summary-item">
