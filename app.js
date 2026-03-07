@@ -275,7 +275,12 @@ const translations = {
         noExercises: "У вас пока нет своих упражнений",
         deleteExercise: "Удалить",
         addSet: "Добавить подход",
-        reps_: "раз"
+        reps_: "раз",
+        
+        // Для темпа
+        enterPace: "Введи свой темп",
+        pacePlaceholder: "мин/км",
+        paceRequired: "Введи темп для беговых шагов"
     },
     en: {
         ready: "Ready for workout?",
@@ -408,7 +413,12 @@ const translations = {
         noExercises: "No custom exercises yet",
         deleteExercise: "Delete",
         addSet: "Add set",
-        reps_: "reps"
+        reps_: "reps",
+        
+        // For pace
+        enterPace: "Enter your pace",
+        pacePlaceholder: "min/km",
+        paceRequired: "Enter pace for running steps"
     }
 };
 
@@ -419,10 +429,10 @@ const BASE_WORKOUTS = {
         name_ru: "День 1: Легкий старт",
         difficulty: "easy",
         steps: [
-            { id: 1, text: "Warm-up 10 min", text_ru: "Разминка 10 минут", distance: 0, time: 10, calories: 30 },
-            { id: 2, text: "Easy run 15 min", text_ru: "Бег 15 минут в легком темпе", distance: 2.0, time: 15, calories: 150 },
-            { id: 3, text: "Leg swings", text_ru: "Спец беговые: махи ногами", distance: 0, time: 5, calories: 20 },
-            { id: 4, text: "4x200m acceleration", text_ru: "Ускорение 4х200 метров", distance: 0.8, time: 8, calories: 80 }
+            { id: 1, text: "Warm-up 10 min", text_ru: "Разминка 10 минут", distance: 0, time: 10, calories: 30, pace: null },
+            { id: 2, text: "Easy run 15 min", text_ru: "Бег 15 минут в легком темпе", distance: 2.0, time: null, calories: 150, pace: null },
+            { id: 3, text: "Leg swings", text_ru: "Спец беговые: махи ногами", distance: 0, time: 5, calories: 20, pace: null },
+            { id: 4, text: "4x200m acceleration", text_ru: "Ускорение 4х200 метров", distance: 0.8, time: null, calories: 80, pace: null }
         ],
         totalDistance: 2.8,
         totalTime: 38,
@@ -433,10 +443,10 @@ const BASE_WORKOUTS = {
         name_ru: "День 2: Интервалы",
         difficulty: "medium",
         steps: [
-            { id: 1, text: "Warm-up 15 min", text_ru: "Разминка 15 минут", distance: 0, time: 15, calories: 45 },
-            { id: 2, text: "Run 20 min", text_ru: "Бег 20 минут", distance: 3.0, time: 20, calories: 200 },
-            { id: 3, text: "Jumping", text_ru: "Спец беговые: прыжки", distance: 0, time: 8, calories: 40 },
-            { id: 4, text: "6x200m acceleration", text_ru: "Ускорение 6х200 метров", distance: 1.2, time: 12, calories: 120 }
+            { id: 1, text: "Warm-up 15 min", text_ru: "Разминка 15 минут", distance: 0, time: 15, calories: 45, pace: null },
+            { id: 2, text: "Run 20 min", text_ru: "Бег 20 минут", distance: 3.0, time: null, calories: 200, pace: null },
+            { id: 3, text: "Jumping", text_ru: "Спец беговые: прыжки", distance: 0, time: 8, calories: 40, pace: null },
+            { id: 4, text: "6x200m acceleration", text_ru: "Ускорение 6х200 метров", distance: 1.2, time: null, calories: 120, pace: null }
         ],
         totalDistance: 4.2,
         totalTime: 55,
@@ -447,10 +457,10 @@ const BASE_WORKOUTS = {
         name_ru: "День 3: Силовая",
         difficulty: "hard",
         steps: [
-            { id: 1, text: "Warm-up 20 min", text_ru: "Разминка 20 минут", distance: 0, time: 20, calories: 60 },
-            { id: 2, text: "Run 25 min", text_ru: "Бег 25 минут", distance: 4.0, time: 25, calories: 250 },
-            { id: 3, text: "Multiple jumps", text_ru: "Спец беговые: многоскоки", distance: 0, time: 10, calories: 50 },
-            { id: 4, text: "8x200m acceleration", text_ru: "Ускорение 8х200 метров", distance: 1.6, time: 16, calories: 160 }
+            { id: 1, text: "Warm-up 20 min", text_ru: "Разминка 20 минут", distance: 0, time: 20, calories: 60, pace: null },
+            { id: 2, text: "Run 25 min", text_ru: "Бег 25 минут", distance: 4.0, time: null, calories: 250, pace: null },
+            { id: 3, text: "Multiple jumps", text_ru: "Спец беговые: многоскоки", distance: 0, time: 10, calories: 50, pace: null },
+            { id: 4, text: "8x200m acceleration", text_ru: "Ускорение 8х200 метров", distance: 1.6, time: null, calories: 160, pace: null }
         ],
         totalDistance: 5.6,
         totalTime: 71,
@@ -461,10 +471,10 @@ const BASE_WORKOUTS = {
         name_ru: "День 4: Восстановление",
         difficulty: "easy",
         steps: [
-            { id: 1, text: "Warm-up 10 min", text_ru: "Разминка 10 минут", distance: 0, time: 10, calories: 30 },
-            { id: 2, text: "Easy run 15 min", text_ru: "Бег 15 минут легкий", distance: 2.0, time: 15, calories: 130 },
-            { id: 3, text: "Stretching", text_ru: "Спец беговые: растяжка", distance: 0, time: 10, calories: 25 },
-            { id: 4, text: "4x100m acceleration", text_ru: "Ускорение 4х100 метров", distance: 0.4, time: 5, calories: 40 }
+            { id: 1, text: "Warm-up 10 min", text_ru: "Разминка 10 минут", distance: 0, time: 10, calories: 30, pace: null },
+            { id: 2, text: "Easy run 15 min", text_ru: "Бег 15 минут легкий", distance: 2.0, time: null, calories: 130, pace: null },
+            { id: 3, text: "Stretching", text_ru: "Спец беговые: растяжка", distance: 0, time: 10, calories: 25, pace: null },
+            { id: 4, text: "4x100m acceleration", text_ru: "Ускорение 4х100 метров", distance: 0.4, time: null, calories: 40, pace: null }
         ],
         totalDistance: 2.4,
         totalTime: 40,
@@ -475,10 +485,10 @@ const BASE_WORKOUTS = {
         name_ru: "День 5: Скорость",
         difficulty: "hard",
         steps: [
-            { id: 1, text: "Warm-up 15 min", text_ru: "Разминка 15 минут", distance: 0, time: 15, calories: 45 },
-            { id: 2, text: "Run 20 min", text_ru: "Бег 20 минут", distance: 3.0, time: 20, calories: 210 },
-            { id: 3, text: "High knees", text_ru: "Спец беговые: семенящий", distance: 0, time: 8, calories: 35 },
-            { id: 4, text: "10x100m acceleration", text_ru: "Ускорение 10х100 метров", distance: 1.0, time: 12, calories: 110 }
+            { id: 1, text: "Warm-up 15 min", text_ru: "Разминка 15 минут", distance: 0, time: 15, calories: 45, pace: null },
+            { id: 2, text: "Run 20 min", text_ru: "Бег 20 минут", distance: 3.0, time: null, calories: 210, pace: null },
+            { id: 3, text: "High knees", text_ru: "Спец беговые: семенящий", distance: 0, time: 8, calories: 35, pace: null },
+            { id: 4, text: "10x100m acceleration", text_ru: "Ускорение 10х100 метров", distance: 1.0, time: null, calories: 110, pace: null }
         ],
         totalDistance: 4.0,
         totalTime: 55,
@@ -628,13 +638,61 @@ function getCurrentMarathonDay() {
     return diffDays + 1;
 }
 
+// ========== ФУНКЦИЯ ПРОВЕРКИ СИНХРОНИЗАЦИИ С КАЛЕНДАРЕМ ==========
+function checkCalendarSync() {
+    // Проверяем, есть ли сохраненный прогресс
+    const hasSavedProgress = localStorage.getItem(STORAGE_KEYS.CURRENT_DAY) !== null;
+    
+    // Если это первый запуск (нет сохранений) - ничего не делаем
+    if (!hasSavedProgress) return;
+    
+    const calendarDay = getCurrentMarathonDay();
+    
+    // Если пользователь отстал от календаря больше чем на 3 дня
+    if (calendarDay > currentDay + 3) {
+        tg.showPopup({
+            title: '📅 Календарь марафона',
+            message: `Сейчас по календарю идет ${calendarDay} день. Ты на ${currentDay} дне. Хочешь синхронизироваться и перейти на актуальный день?`,
+            buttons: [
+                { id: 'sync', type: 'default', text: '✅ Да, синхронизировать' },
+                { id: 'keep', type: 'default', text: '⏳ Оставить свой прогресс' },
+                { type: 'cancel', text: '❌ Отмена' }
+            ]
+        }, (buttonId) => {
+            if (buttonId === 'sync') {
+                currentDay = calendarDay;
+                saveState();
+                updateUI();
+                tg.showAlert(`✅ Ты перешел на ${calendarDay} день марафона!`);
+            }
+        });
+    }
+    
+    // Если пользователь сильно обогнал календарь (больше чем на 7 дней)
+    else if (currentDay > calendarDay + 7) {
+        tg.showPopup({
+            title: '🔥 Ты чемпион!',
+            message: `Ты прошел ${currentDay} дней, хотя по календарю только ${calendarDay}. Ты настоящий марафонец!`,
+            buttons: [{ type: 'close', text: '🏃 Продолжить' }]
+        });
+    }
+}
+
 // ========== СОСТОЯНИЕ ==========
 let currentDay = (function() {
     const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_DAY);
     if (saved) {
         return parseInt(saved);
     } else {
-        return getCurrentMarathonDay();
+        // Новый пользователь - показываем приветствие и начинаем с 1 дня
+        setTimeout(() => {
+            tg.showPopup({
+                title: '🏃 Добро пожаловать!',
+                message: 'Твой беговой марафон начинается. Каждый день новая тренировка!',
+                buttons: [{ type: 'close', text: 'Начать тренировку' }]
+            });
+        }, 500);
+        return 1;
     }
 })();
 
@@ -1182,7 +1240,8 @@ function saveWorkout() {
             id: index + 1,
             text: task.text,
             completed: false,
-            distance: task.distance || 0
+            distance: task.distance || 0,
+            pace: null
         })),
         date: new Date().toISOString(),
         completed: false
@@ -1284,7 +1343,8 @@ function startWorkout(id) {
                 id: index + 1,
                 text: task.text,
                 completed: false,
-                distance: task.distance || 0
+                distance: task.distance || 0,
+                pace: null
             }))
     };
     
@@ -1332,13 +1392,37 @@ function renderActiveWorkout() {
         
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step-compact ${step.completed ? 'step-completed' : ''}`;
+        
+        // Добавляем поле для ввода темпа для беговых шагов
+        const paceInput = step.distance > 0 ? `
+            <div class="pace-input-compact">
+                <input type="number" class="pace-input" data-index="${index}" 
+                       placeholder="${t('pace')}" min="1" max="20" step="0.1" 
+                       value="${step.pace || ''}">
+                <span>${t('pace')}</span>
+            </div>
+        ` : '';
+        
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" ${step.completed ? 'checked' : ''}>
             <span class="step-text">${step.text}</span>
             ${step.distance > 0 ? `<span class="step-distance">${step.distance} ${t('distance')}</span>` : ''}
+            ${paceInput}
         `;
         
         stepsContainer.appendChild(stepDiv);
+    });
+    
+    // Добавляем обработчики для полей темпа
+    document.querySelectorAll('#active-workout-steps .pace-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            const pace = parseFloat(this.value);
+            if (pace > 0) {
+                activeWorkout.steps[index].pace = pace;
+                localStorage.setItem(STORAGE_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
+            }
+        });
     });
     
     const progress = (completedCount / activeWorkout.steps.length) * 100;
@@ -1362,22 +1446,38 @@ function completeWorkout() {
     if (!activeWorkout) return;
     
     let actualDistance = 0;
+    let totalPace = 0;
+    let paceCount = 0;
+    
     activeWorkout.steps.forEach(step => {
-        if (step.completed) actualDistance += step.distance || 0;
+        if (step.completed) {
+            actualDistance += step.distance || 0;
+            if (step.pace) {
+                totalPace += step.pace;
+                paceCount++;
+            }
+        }
     });
+    
+    const avgPace = paceCount > 0 ? (totalPace / paceCount).toFixed(1) : null;
     
     workoutHistory.push({
         day: currentDay,
         distance: actualDistance,
-        time: Math.round(actualDistance * 6),
+        time: avgPace ? Math.round(actualDistance * avgPace) : Math.round(actualDistance * 6),
         calories: Math.round(actualDistance * 60),
+        pace: avgPace,
         date: new Date().toISOString(),
         name: activeWorkout.name
     });
     
     totalWorkouts++;
     totalDistance += actualDistance;
-    totalTime += Math.round(actualDistance * 6);
+    if (avgPace) {
+        totalTime += Math.round(actualDistance * avgPace);
+    } else {
+        totalTime += Math.round(actualDistance * 6);
+    }
     totalCalories += Math.round(actualDistance * 60);
     
     updateCharacterProgress(actualDistance);
@@ -2308,8 +2408,20 @@ function updateStats() {
     const bestDistance = workoutHistory.length > 0 ? Math.max(...workoutHistory.map(w => w.distance)).toFixed(1) : 0;
     if (bestDistanceEl) bestDistanceEl.textContent = bestDistance + ' ' + t('distance');
     
+    // Рассчитываем средний темп на основе сохраненных данных
     let avgPace = 0;
-    if (totalDistance > 0) avgPace = (totalTime / totalDistance).toFixed(1);
+    let paceCount = 0;
+    workoutHistory.forEach(w => {
+        if (w.pace) {
+            avgPace += parseFloat(w.pace);
+            paceCount++;
+        }
+    });
+    if (paceCount > 0) {
+        avgPace = (avgPace / paceCount).toFixed(1);
+    } else if (totalDistance > 0) {
+        avgPace = (totalTime / totalDistance).toFixed(1);
+    }
     if (avgPaceEl) avgPaceEl.textContent = avgPace + ' ' + t('pace');
     
     const avgCalories = totalWorkouts > 0 ? Math.round(totalCalories / totalWorkouts) : 0;
@@ -2356,7 +2468,7 @@ function updateStats() {
             recent.forEach(workout => {
                 const date = new Date(workout.date);
                 const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', { day: 'numeric', month: 'short' });
-                const pace = (workout.time / workout.distance).toFixed(1);
+                const pace = workout.pace ? workout.pace.toFixed(1) : (workout.time / workout.distance).toFixed(1);
                 
                 const item = document.createElement('div');
                 item.className = 'history-item';
@@ -2468,6 +2580,8 @@ function updateUI() {
     }
 }
 
+// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ РЕНДЕРА ТРЕНИРОВКИ ==========
+
 function renderWorkout() {
     const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
     
@@ -2496,10 +2610,22 @@ function renderWorkout() {
         
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step ${completedSteps[index] ? 'step-completed' : ''}`;
+        
+        // Добавляем поле для ввода темпа, если это беговой шаг (distance > 0)
+        const paceInput = step.distance > 0 ? `
+            <div class="pace-input-container">
+                <input type="number" class="pace-input" data-index="${index}" 
+                       placeholder="${t('pace')}" min="1" max="20" step="0.1" 
+                       value="${step.pace || ''}">
+                <span>${t('pace')}</span>
+            </div>
+        ` : '';
+        
         stepDiv.innerHTML = `
             <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="main" ${completedSteps[index] ? 'checked' : ''}>
             <span class="step-text">${stepText}</span>
             ${step.distance > 0 ? `<span class="step-distance">${step.distance} ${t('distance')}</span>` : ''}
+            ${paceInput}
         `;
         
         stepsContainer.appendChild(stepDiv);
@@ -2517,10 +2643,22 @@ function renderWorkout() {
             additionalTasks.forEach((task, index) => {
                 const stepDiv = document.createElement('div');
                 stepDiv.className = `workout-step ${additionalCompleted[index] ? 'step-completed' : ''} extra-step`;
+                
+                // Добавляем поле для ввода темпа для дополнительных заданий с дистанцией
+                const paceInput = task.distance > 0 ? `
+                    <div class="pace-input-container">
+                        <input type="number" class="pace-input" data-index="${index}" data-type="extra"
+                               placeholder="${t('pace')}" min="1" max="20" step="0.1" 
+                               value="${task.pace || ''}">
+                        <span>${t('pace')}</span>
+                    </div>
+                ` : '';
+                
                 stepDiv.innerHTML = `
                     <input type="checkbox" class="workout-checkbox" data-index="${index}" data-type="extra" ${additionalCompleted[index] ? 'checked' : ''}>
                     <span class="step-text">${task.text}</span>
                     ${task.distance > 0 ? `<span class="step-distance">${task.distance} ${t('distance')}</span>` : ''}
+                    ${paceInput}
                 `;
                 
                 additionalContainer.appendChild(stepDiv);
@@ -2530,6 +2668,7 @@ function renderWorkout() {
         if (additionalSection) additionalSection.style.display = 'none';
     }
     
+    // Добавляем обработчики для чекбоксов
     document.querySelectorAll('.workout-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -2547,8 +2686,126 @@ function renderWorkout() {
         });
     });
     
+    // Добавляем обработчики для полей темпа
+    document.querySelectorAll('.pace-input').forEach(input => {
+        input.addEventListener('change', function() {
+            const index = parseInt(this.dataset.index);
+            const type = this.dataset.type;
+            const pace = parseFloat(this.value);
+            
+            if (pace > 0) {
+                if (type === 'main') {
+                    const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
+                    if (workout.steps[index]) {
+                        workout.steps[index].pace = pace;
+                    }
+                } else {
+                    if (additionalTasks[index]) {
+                        additionalTasks[index].pace = pace;
+                    }
+                }
+                saveState();
+            }
+        });
+    });
+    
     updateProgress();
 }
+
+// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАВЕРШЕНИЯ ДНЯ ==========
+
+function completeDay() {
+    if (!canCompleteDay()) { 
+        tg.showAlert(t('onlyUntil23')); 
+        return; 
+    }
+    
+    if (isDayExpired()) { 
+        tg.showAlert(t('dayExpiredMsg')); 
+        return; 
+    }
+    
+    const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
+    
+    let actualDistance = 0, actualTime = 0, actualCalories = 0;
+    let totalPace = 0;
+    let paceCount = 0;
+    
+    // Считаем основные шаги
+    workout.steps.forEach((step, index) => {
+        if (completedSteps[index]) {
+            actualDistance += step.distance || 0;
+            actualTime += step.time || 0;
+            actualCalories += step.calories || 0;
+            
+            // Учитываем темп, если он был введен
+            if (step.pace && step.distance > 0) {
+                totalPace += step.pace;
+                paceCount++;
+                // Пересчитываем время на основе темпа
+                actualTime += step.distance * step.pace;
+            }
+        }
+    });
+    
+    // Считаем дополнительные задания
+    additionalTasks.forEach((task, index) => {
+        if (additionalCompleted[index]) {
+            actualDistance += task.distance || 0;
+            actualTime += 5; // базовое время для доп. заданий
+            actualCalories += 30; // базовые калории для доп. заданий
+            
+            // Учитываем темп для доп. заданий с дистанцией
+            if (task.pace && task.distance > 0) {
+                totalPace += task.pace;
+                paceCount++;
+                actualTime += task.distance * task.pace;
+            }
+        }
+    });
+    
+    const avgPace = paceCount > 0 ? (totalPace / paceCount).toFixed(1) : null;
+    
+    workoutHistory.push({
+        day: currentDay,
+        distance: actualDistance,
+        time: actualTime,
+        calories: actualCalories,
+        pace: avgPace,
+        date: new Date().toISOString(),
+        name: (currentLanguage === 'ru' ? workout.name_ru : workout.name) + (additionalTasks.length > 0 ? (currentLanguage === 'ru' ? ' + доп.' : ' + add') : '')
+    });
+    
+    totalDistance += actualDistance;
+    totalWorkouts++;
+    totalTime += actualTime;
+    totalCalories += actualCalories;
+    
+    updateCharacterProgress(actualDistance);
+    
+    additionalTasks = [];
+    additionalCompleted = [];
+    
+    const finalDistance = document.getElementById('final-distance');
+    if (finalDistance) finalDistance.textContent = actualDistance.toFixed(1);
+    
+    const marathonScreen = document.getElementById('marathon-screen');
+    const congratsScreen = document.getElementById('congrats');
+    
+    if (marathonScreen) marathonScreen.style.display = 'none';
+    if (congratsScreen) congratsScreen.style.display = 'block';
+    
+    dayStarted = false;
+    dayCompletedTime = getCurrentTime().toString();
+    dayStartTime = null;
+    currentDay++;
+    completedSteps = [];
+    
+    saveState();
+    updateStats();
+}
+
+// ========== ОСТАЛЬНЫЕ ФУНКЦИИ (БЕЗ ИЗМЕНЕНИЙ) ==========
 
 function updateProgress() {
     const mainCompleted = completedSteps.filter(v => v).length;
@@ -3045,12 +3302,20 @@ document.addEventListener('DOMContentLoaded', function() {
             const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
             
             let actualDistance = 0, actualTime = 0, actualCalories = 0;
+            let totalPace = 0;
+            let paceCount = 0;
             
             workout.steps.forEach((step, index) => {
                 if (completedSteps[index]) {
                     actualDistance += step.distance || 0;
                     actualTime += step.time || 0;
                     actualCalories += step.calories || 0;
+                    
+                    if (step.pace && step.distance > 0) {
+                        totalPace += step.pace;
+                        paceCount++;
+                        actualTime += step.distance * step.pace;
+                    }
                 }
             });
             
@@ -3059,14 +3324,23 @@ document.addEventListener('DOMContentLoaded', function() {
                     actualDistance += task.distance || 0;
                     actualTime += 5;
                     actualCalories += 30;
+                    
+                    if (task.pace && task.distance > 0) {
+                        totalPace += task.pace;
+                        paceCount++;
+                        actualTime += task.distance * task.pace;
+                    }
                 }
             });
+            
+            const avgPace = paceCount > 0 ? (totalPace / paceCount).toFixed(1) : null;
             
             workoutHistory.push({
                 day: currentDay,
                 distance: actualDistance,
                 time: actualTime,
                 calories: actualCalories,
+                pace: avgPace,
                 date: new Date().toISOString(),
                 name: (currentLanguage === 'ru' ? workout.name_ru : workout.name) + (additionalTasks.length > 0 ? (currentLanguage === 'ru' ? ' + доп.' : ' + add') : '')
             });
@@ -3119,7 +3393,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return; 
             }
             
-            currentCustomTasks.push({ text: taskText, distance: taskDistance });
+            currentCustomTasks.push({ text: taskText, distance: taskDistance, pace: null });
             
             const taskTextInput = document.getElementById('new-task-text');
             const taskDistanceInput = document.getElementById('new-task-distance');
