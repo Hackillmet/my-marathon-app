@@ -280,7 +280,10 @@ const translations = {
         // Для темпа
         enterPace: "Введи свой темп",
         pacePlaceholder: "мин/км",
-        paceRequired: "Введи темп для беговых шагов"
+        paceRequired: "Введи темп для беговых шагов",
+        editPace: "Редактировать темп",
+        savePace: "Сохранить",
+        cancel: "Отмена"
     },
     en: {
         ready: "Ready for workout?",
@@ -418,7 +421,10 @@ const translations = {
         // For pace
         enterPace: "Enter your pace",
         pacePlaceholder: "min/km",
-        paceRequired: "Enter pace for running steps"
+        paceRequired: "Enter pace for running steps",
+        editPace: "Edit pace",
+        savePace: "Save",
+        cancel: "Cancel"
     }
 };
 
@@ -640,15 +646,12 @@ function getCurrentMarathonDay() {
 
 // ========== ФУНКЦИЯ ПРОВЕРКИ СИНХРОНИЗАЦИИ С КАЛЕНДАРЕМ ==========
 function checkCalendarSync() {
-    // Проверяем, есть ли сохраненный прогресс
     const hasSavedProgress = localStorage.getItem(STORAGE_KEYS.CURRENT_DAY) !== null;
     
-    // Если это первый запуск (нет сохранений) - ничего не делаем
     if (!hasSavedProgress) return;
     
     const calendarDay = getCurrentMarathonDay();
     
-    // Если пользователь отстал от календаря больше чем на 3 дня
     if (calendarDay > currentDay + 3) {
         tg.showPopup({
             title: '📅 Календарь марафона',
@@ -667,8 +670,6 @@ function checkCalendarSync() {
             }
         });
     }
-    
-    // Если пользователь сильно обогнал календарь (больше чем на 7 дней)
     else if (currentDay > calendarDay + 7) {
         tg.showPopup({
             title: '🔥 Ты чемпион!',
@@ -684,7 +685,6 @@ let currentDay = (function() {
     if (saved) {
         return parseInt(saved);
     } else {
-        // Новый пользователь - показываем приветствие и начинаем с 1 дня
         setTimeout(() => {
             tg.showPopup({
                 title: '🏃 Добро пожаловать!',
@@ -1393,7 +1393,6 @@ function renderActiveWorkout() {
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step-compact ${step.completed ? 'step-completed' : ''}`;
         
-        // Добавляем поле для ввода темпа для беговых шагов
         const paceInput = step.distance > 0 ? `
             <div class="pace-input-compact">
                 <input type="number" class="pace-input" data-index="${index}" 
@@ -1413,7 +1412,6 @@ function renderActiveWorkout() {
         stepsContainer.appendChild(stepDiv);
     });
     
-    // Добавляем обработчики для полей темпа
     document.querySelectorAll('#active-workout-steps .pace-input').forEach(input => {
         input.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -2177,8 +2175,6 @@ function updateMixedStats() {
     updateStrengthProgress();
 }
 
-// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ПОДСЧЕТА ПРОГРЕССА И КАЛОРИЙ ==========
-
 function updateStrengthProgress() {
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
@@ -2267,8 +2263,6 @@ function updateStrengthProgress() {
     
     if (completeBtn) completeBtn.disabled = !canComplete;
 }
-
-// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАВЕРШЕНИЯ ТРЕНИРОВКИ ==========
 
 function completeStrengthWorkout() {
     let totalPullupsToday = 0;
@@ -2379,7 +2373,43 @@ function updateStrengthStats() {
     if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
-// ========== СТАТИСТИКА ==========
+// ========== НОВАЯ ФУНКЦИЯ ДЛЯ РЕДАКТИРОВАНИЯ ТЕМПА В СТАТИСТИКЕ ==========
+
+function editWorkoutPace(index) {
+    const workout = workoutHistory[index];
+    
+    tg.showPopup({
+        title: '🏃 Редактировать темп',
+        message: `Тренировка ${workout.name || `День ${workout.day}`}\nТекущий темп: ${workout.pace || 'не указан'} мин/км`,
+        buttons: [
+            { id: 'edit', type: 'default', text: '✏️ Изменить' },
+            { type: 'cancel', text: '❌ Отмена' }
+        ]
+    }, (buttonId) => {
+        if (buttonId === 'edit') {
+            const newPace = prompt('Введите новый темп (мин/км):', workout.pace || '');
+            if (newPace && !isNaN(parseFloat(newPace)) && parseFloat(newPace) > 0) {
+                const pace = parseFloat(newPace);
+                const oldTime = workout.time;
+                const newTime = Math.round(workout.distance * pace);
+                
+                workout.pace = pace;
+                workout.time = newTime;
+                
+                // Обновляем общую статистику
+                totalTime = totalTime - oldTime + newTime;
+                
+                saveState();
+                updateStats();
+                
+                tg.showAlert(`✅ Темп обновлен: ${pace} мин/км`);
+            }
+        }
+    });
+}
+
+// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ СТАТИСТИКИ ==========
+
 function updateStats() {
     const totalWorkoutsEl = document.getElementById('total-workouts');
     const totalDistanceEl = document.getElementById('total-distance');
@@ -2465,7 +2495,8 @@ function updateStats() {
         } else {
             const recent = [...workoutHistory].reverse().slice(0, 10);
             
-            recent.forEach(workout => {
+            recent.forEach((workout, idx) => {
+                const originalIndex = workoutHistory.length - 1 - idx;
                 const date = new Date(workout.date);
                 const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', { day: 'numeric', month: 'short' });
                 const pace = workout.pace ? workout.pace.toFixed(1) : (workout.time / workout.distance).toFixed(1);
@@ -2474,20 +2505,31 @@ function updateStats() {
                 item.className = 'history-item';
                 item.innerHTML = `
                     <div>
-                        <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="history-date">${formattedDate}</span>
                             <span class="history-workout">${workout.name || `День ${workout.day}`}</span>
+                            <button class="edit-pace-btn" data-index="${originalIndex}" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 4px 10px; font-size: 11px; cursor: pointer; color: var(--text-secondary);">
+                                ✏️ ${t('editPace')}
+                            </button>
                         </div>
                         <div style="display: flex; justify-content: space-between; font-size: 12px; margin-top: 4px;">
                             <span>${workout.distance} ${t('distance')}</span>
                             <span>${workout.time} ${t('minutes')}</span>
                             <span>${workout.calories} ${t('kcal')}</span>
-                            <span>${pace} ${t('pace')}</span>
+                            <span class="pace-value" data-index="${originalIndex}">${pace} ${t('pace')}</span>
                         </div>
                     </div>
                 `;
                 
                 historyList.appendChild(item);
+            });
+            
+            // Добавляем обработчики для кнопок редактирования темпа
+            document.querySelectorAll('.edit-pace-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    editWorkoutPace(index);
+                });
             });
         }
     }
@@ -2580,8 +2622,6 @@ function updateUI() {
     }
 }
 
-// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ РЕНДЕРА ТРЕНИРОВКИ ==========
-
 function renderWorkout() {
     const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
     
@@ -2611,7 +2651,6 @@ function renderWorkout() {
         const stepDiv = document.createElement('div');
         stepDiv.className = `workout-step ${completedSteps[index] ? 'step-completed' : ''}`;
         
-        // Добавляем поле для ввода темпа, если это беговой шаг (distance > 0)
         const paceInput = step.distance > 0 ? `
             <div class="pace-input-container">
                 <input type="number" class="pace-input" data-index="${index}" 
@@ -2644,7 +2683,6 @@ function renderWorkout() {
                 const stepDiv = document.createElement('div');
                 stepDiv.className = `workout-step ${additionalCompleted[index] ? 'step-completed' : ''} extra-step`;
                 
-                // Добавляем поле для ввода темпа для дополнительных заданий с дистанцией
                 const paceInput = task.distance > 0 ? `
                     <div class="pace-input-container">
                         <input type="number" class="pace-input" data-index="${index}" data-type="extra"
@@ -2668,7 +2706,6 @@ function renderWorkout() {
         if (additionalSection) additionalSection.style.display = 'none';
     }
     
-    // Добавляем обработчики для чекбоксов
     document.querySelectorAll('.workout-checkbox').forEach(cb => {
         cb.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -2686,7 +2723,6 @@ function renderWorkout() {
         });
     });
     
-    // Добавляем обработчики для полей темпа
     document.querySelectorAll('.pace-input').forEach(input => {
         input.addEventListener('change', function() {
             const index = parseInt(this.dataset.index);
@@ -2711,101 +2747,6 @@ function renderWorkout() {
     
     updateProgress();
 }
-
-// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ ЗАВЕРШЕНИЯ ДНЯ ==========
-
-function completeDay() {
-    if (!canCompleteDay()) { 
-        tg.showAlert(t('onlyUntil23')); 
-        return; 
-    }
-    
-    if (isDayExpired()) { 
-        tg.showAlert(t('dayExpiredMsg')); 
-        return; 
-    }
-    
-    const workout = BASE_WORKOUTS[currentDay] || BASE_WORKOUTS[((currentDay - 1) % 30) + 1];
-    
-    let actualDistance = 0, actualTime = 0, actualCalories = 0;
-    let totalPace = 0;
-    let paceCount = 0;
-    
-    // Считаем основные шаги
-    workout.steps.forEach((step, index) => {
-        if (completedSteps[index]) {
-            actualDistance += step.distance || 0;
-            actualTime += step.time || 0;
-            actualCalories += step.calories || 0;
-            
-            // Учитываем темп, если он был введен
-            if (step.pace && step.distance > 0) {
-                totalPace += step.pace;
-                paceCount++;
-                // Пересчитываем время на основе темпа
-                actualTime += step.distance * step.pace;
-            }
-        }
-    });
-    
-    // Считаем дополнительные задания
-    additionalTasks.forEach((task, index) => {
-        if (additionalCompleted[index]) {
-            actualDistance += task.distance || 0;
-            actualTime += 5; // базовое время для доп. заданий
-            actualCalories += 30; // базовые калории для доп. заданий
-            
-            // Учитываем темп для доп. заданий с дистанцией
-            if (task.pace && task.distance > 0) {
-                totalPace += task.pace;
-                paceCount++;
-                actualTime += task.distance * task.pace;
-            }
-        }
-    });
-    
-    const avgPace = paceCount > 0 ? (totalPace / paceCount).toFixed(1) : null;
-    
-    workoutHistory.push({
-        day: currentDay,
-        distance: actualDistance,
-        time: actualTime,
-        calories: actualCalories,
-        pace: avgPace,
-        date: new Date().toISOString(),
-        name: (currentLanguage === 'ru' ? workout.name_ru : workout.name) + (additionalTasks.length > 0 ? (currentLanguage === 'ru' ? ' + доп.' : ' + add') : '')
-    });
-    
-    totalDistance += actualDistance;
-    totalWorkouts++;
-    totalTime += actualTime;
-    totalCalories += actualCalories;
-    
-    updateCharacterProgress(actualDistance);
-    
-    additionalTasks = [];
-    additionalCompleted = [];
-    
-    const finalDistance = document.getElementById('final-distance');
-    if (finalDistance) finalDistance.textContent = actualDistance.toFixed(1);
-    
-    const marathonScreen = document.getElementById('marathon-screen');
-    const congratsScreen = document.getElementById('congrats');
-    
-    if (marathonScreen) marathonScreen.style.display = 'none';
-    if (congratsScreen) congratsScreen.style.display = 'block';
-    
-    dayStarted = false;
-    dayCompletedTime = getCurrentTime().toString();
-    dayStartTime = null;
-    currentDay++;
-    completedSteps = [];
-    
-    saveState();
-    updateStats();
-}
-
-// ========== ОСТАЛЬНЫЕ ФУНКЦИИ (БЕЗ ИЗМЕНЕНИЙ) ==========
 
 function updateProgress() {
     const mainCompleted = completedSteps.filter(v => v).length;
@@ -3130,8 +3071,6 @@ window.switchPage = function(pageIndex) {
         updateStrengthProgress(); 
     }
 };
-
-// ========== ФУНКЦИИ ДЛЯ ТЕМЫ И ЯЗЫКА ==========
 
 window.setTheme = function(theme) {
     document.documentElement.setAttribute('data-theme', theme);
