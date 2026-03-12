@@ -2066,22 +2066,38 @@ function addMixedSet() {
     saveState();
 }
 
+// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ДЛЯ МГНОВЕННОГО ОБНОВЛЕНИЯ ПОЛЗУНКОВ ==========
+
 function updatePullupsGoal() {
     const slider = document.getElementById('pullups-goal-slider');
     const valueSpan = document.getElementById('pullups-goal-value');
+    const goalSpan = document.getElementById('pullups-goal');
+    const todaySpan = document.getElementById('pullups-today');
     
-    if (slider && valueSpan) {
+    if (slider && valueSpan && goalSpan) {
+        // Устанавливаем начальное значение
         slider.value = strengthToday.pullups.goal;
         valueSpan.textContent = strengthToday.pullups.goal;
+        goalSpan.textContent = strengthToday.pullups.goal;
         
-        updatePullupsDisplay();
+        // Обновляем отображение 0/цель
+        const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+        if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pullups.goal}`;
         
+        // Используем input для мгновенного обновления
         slider.addEventListener('input', function() {
             const value = this.value;
+            
+            // Мгновенно обновляем все элементы
             valueSpan.textContent = value;
+            goalSpan.textContent = value;
             strengthToday.pullups.goal = parseInt(value);
             
-            updatePullupsDisplay();
+            // Обновляем отображение 0/цель
+            const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+            if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
+            
+            // Обновляем прогресс в реальном времени
             updatePullupsStats();
             saveState();
         });
@@ -2091,19 +2107,33 @@ function updatePullupsGoal() {
 function updatePushupsGoal() {
     const slider = document.getElementById('pushups-goal-slider');
     const valueSpan = document.getElementById('pushups-goal-value');
+    const goalSpan = document.getElementById('pushups-goal');
+    const todaySpan = document.getElementById('pushups-today');
     
-    if (slider && valueSpan) {
+    if (slider && valueSpan && goalSpan) {
+        // Устанавливаем начальное значение
         slider.value = strengthToday.pushups.goal;
         valueSpan.textContent = strengthToday.pushups.goal;
+        goalSpan.textContent = strengthToday.pushups.goal;
         
-        updatePushupsDisplay();
+        // Обновляем отображение 0/цель
+        const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+        if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pushups.goal}`;
         
+        // Используем input для мгновенного обновления
         slider.addEventListener('input', function() {
             const value = this.value;
+            
+            // Мгновенно обновляем все элементы
             valueSpan.textContent = value;
+            goalSpan.textContent = value;
             strengthToday.pushups.goal = parseInt(value);
             
-            updatePushupsDisplay();
+            // Обновляем отображение 0/цель
+            const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+            if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
+            
+            // Обновляем прогресс в реальном времени
             updatePushupsStats();
             saveState();
         });
@@ -2112,32 +2142,70 @@ function updatePushupsGoal() {
 
 function updatePullupsStats() {
     const summaryPullups = document.getElementById('summary-pullups');
+    const progressBar = document.getElementById('strength-progress');
+    const percentSpan = document.getElementById('strength-percent');
     
     const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pullups.goal;
     
     if (summaryPullups) summaryPullups.textContent = totalCompleted;
     
+    // Проверяем, выполнена ли цель
     strengthToday.pullups.completed = totalCompleted >= goal;
-    updateStrengthProgress();
+    
+    // Обновляем прогресс-бар если это текущий тип тренировки
+    if (currentStrengthType === 'pullups') {
+        const percent = goal > 0 ? Math.min(100, (totalCompleted / goal) * 100) : 0;
+        if (progressBar) progressBar.style.width = percent + '%';
+        if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
+        
+        // Обновляем кнопку завершения
+        const completeBtn = document.getElementById('complete-strength-btn');
+        if (completeBtn) completeBtn.disabled = !strengthToday.pullups.completed;
+        
+        // Обновляем калории
+        const calories = Math.round(totalCompleted * 0.5);
+        const summaryCalories = document.getElementById('summary-calories');
+        if (summaryCalories) summaryCalories.textContent = calories;
+    }
 }
 
 function updatePushupsStats() {
     const summaryPushups = document.getElementById('summary-pushups');
+    const progressBar = document.getElementById('strength-progress');
+    const percentSpan = document.getElementById('strength-percent');
     
     const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pushups.goal;
     
     if (summaryPushups) summaryPushups.textContent = totalCompleted;
     
+    // Проверяем, выполнена ли цель
     strengthToday.pushups.completed = totalCompleted >= goal;
-    updateStrengthProgress();
+    
+    // Обновляем прогресс-бар если это текущий тип тренировки
+    if (currentStrengthType === 'pushups') {
+        const percent = goal > 0 ? Math.min(100, (totalCompleted / goal) * 100) : 0;
+        if (progressBar) progressBar.style.width = percent + '%';
+        if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
+        
+        // Обновляем кнопку завершения
+        const completeBtn = document.getElementById('complete-strength-btn');
+        if (completeBtn) completeBtn.disabled = !strengthToday.pushups.completed;
+        
+        // Обновляем калории
+        const calories = Math.round(totalCompleted * 0.3);
+        const summaryCalories = document.getElementById('summary-calories');
+        if (summaryCalories) summaryCalories.textContent = calories;
+    }
 }
 
 function updateMixedStats() {
     const summaryPullups = document.getElementById('summary-pullups');
     const summaryPushups = document.getElementById('summary-pushups');
     const mixedToday = document.getElementById('mixed-today');
+    const progressBar = document.getElementById('strength-progress');
+    const percentSpan = document.getElementById('strength-percent');
     
     let totalPullupsCompleted = 0, totalPushupsCompleted = 0, completedRounds = 0;
     
@@ -2152,6 +2220,26 @@ function updateMixedStats() {
     if (mixedToday) mixedToday.textContent = `${completedRounds}/${strengthToday.mixed.rounds.length} круга`;
     
     strengthToday.mixed.completed = completedRounds === strengthToday.mixed.rounds.length;
+    
+    // Обновляем прогресс-бар если это текущий тип тренировки
+    if (currentStrengthType === 'mixed') {
+        const totalCompleted = totalPullupsCompleted + totalPushupsCompleted;
+        const totalGoal = strengthToday.mixed.rounds.reduce((sum, round) => sum + round.pullups + round.pushups, 0);
+        
+        const percent = totalGoal > 0 ? Math.min(100, (totalCompleted / totalGoal) * 100) : 0;
+        if (progressBar) progressBar.style.width = percent + '%';
+        if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
+        
+        // Обновляем кнопку завершения
+        const completeBtn = document.getElementById('complete-strength-btn');
+        if (completeBtn) completeBtn.disabled = !strengthToday.mixed.completed;
+        
+        // Обновляем калории
+        const calories = Math.round(totalPullupsCompleted * 0.5 + totalPushupsCompleted * 0.3);
+        const summaryCalories = document.getElementById('summary-calories');
+        if (summaryCalories) summaryCalories.textContent = calories;
+    }
+    
     updateStrengthProgress();
 }
 
