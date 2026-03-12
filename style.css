@@ -2904,3 +2904,181 @@ body {
         grid-template-columns: repeat(4, 1fr);
     }
 }
+/* ===== СТИЛИ ДЛЯ СВАЙПА В ИСТОРИИ ===== */
+
+.history-item {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y pinch-zoom;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.history-item.swiping {
+    transition: none;
+}
+
+.history-item.deleting {
+    animation: slideOut 0.3s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes slideOut {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(-100%); opacity: 0; }
+}
+
+.delete-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 80px;
+    background: linear-gradient(90deg, transparent, var(--danger));
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 16px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 5;
+}
+
+.delete-overlay.active {
+    opacity: 1;
+}
+
+.delete-overlay span {
+    background: white;
+    color: var(--danger);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+.history-item-content {
+    position: relative;
+    z-index: 10;
+    background: inherit;
+    transition: transform 0.2s ease;
+    width: 100%;
+    padding: 12px;
+}
+
+.history-item.swiping .history-item-content {
+    transform: translateX(-40px);
+}
+
+.delete-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.delete-confirm-card {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 24px;
+    width: 280px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.delete-confirm-card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: var(--danger);
+}
+
+.delete-confirm-card p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.delete-confirm-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.delete-confirm-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-confirm-btn.delete {
+    background: var(--gradient-red);
+    color: white;
+}
+
+.delete-confirm-btn.cancel {
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.delete-confirm-btn:active {
+    transform: scale(0.97);
+}
+
+/* Анимация восстановления */
+@keyframes slideIn {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.history-item.restoring {
+    animation: slideIn 0.3s ease;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 480px) {
+    .delete-overlay {
+        width: 60px;
+        padding-right: 8px;
+    }
+    
+    .delete-overlay span {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+    
+    .delete-confirm-card {
+        width: 260px;
+        padding: 20px;
+    }
+}
