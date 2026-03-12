@@ -218,7 +218,7 @@ const translations = {
         startWorkout: "Начать",
         completeWorkout: "Завершить тренировку",
         workoutCompleted: "Тренировка завершена!",
-        deleteWorkout: "✕",
+        deleteWorkout: "Удалить",
         noTasks: "Добавьте задания",
         strengthTitle: "СИЛОВАЯ ТРЕНИРОВКА",
         pullups: "ПОДТЯГИВАНИЯ",
@@ -281,9 +281,14 @@ const translations = {
         enterPace: "Введи свой темп",
         pacePlaceholder: "мин/км",
         paceRequired: "Введи темп для беговых шагов",
-        editPace: "Редактировать темп",
+        editPace: "Изменить темп",
         savePace: "Сохранить",
-        cancel: "Отмена"
+        
+        // Для удаления тренировок
+        deleteWorkoutConfirm: "Удалить тренировку?",
+        workoutDeleted: "✅ Тренировка удалена",
+        swipeToDelete: "Свайпни влево для удаления",
+        confirmDelete: "Ты уверен, что хочешь удалить эту тренировку?"
     },
     en: {
         ready: "Ready for workout?",
@@ -359,7 +364,7 @@ const translations = {
         startWorkout: "Start",
         completeWorkout: "Complete Workout",
         workoutCompleted: "Workout completed!",
-        deleteWorkout: "✕",
+        deleteWorkout: "Delete",
         noTasks: "Add tasks",
         strengthTitle: "STRENGTH TRAINING",
         pullups: "PULL-UPS",
@@ -424,7 +429,12 @@ const translations = {
         paceRequired: "Enter pace for running steps",
         editPace: "Edit pace",
         savePace: "Save",
-        cancel: "Cancel"
+        
+        // For deleting workouts
+        deleteWorkoutConfirm: "Delete workout?",
+        workoutDeleted: "✅ Workout deleted",
+        swipeToDelete: "Swipe left to delete",
+        confirmDelete: "Are you sure you want to delete this workout?"
     }
 };
 
@@ -653,29 +663,15 @@ function checkCalendarSync() {
     const calendarDay = getCurrentMarathonDay();
     
     if (calendarDay > currentDay + 3) {
-        tg.showPopup({
-            title: '📅 Календарь марафона',
-            message: `Сейчас по календарю идет ${calendarDay} день. Ты на ${currentDay} дне. Хочешь синхронизироваться и перейти на актуальный день?`,
-            buttons: [
-                { id: 'sync', type: 'default', text: '✅ Да, синхронизировать' },
-                { id: 'keep', type: 'default', text: '⏳ Оставить свой прогресс' },
-                { type: 'cancel', text: '❌ Отмена' }
-            ]
-        }, (buttonId) => {
-            if (buttonId === 'sync') {
-                currentDay = calendarDay;
-                saveState();
-                updateUI();
-                tg.showAlert(`✅ Ты перешел на ${calendarDay} день марафона!`);
-            }
-        });
+        if (confirm(`📅 Календарь марафона\n\nСейчас по календарю идет ${calendarDay} день. Ты на ${currentDay} дне. Хочешь синхронизироваться и перейти на актуальный день?`)) {
+            currentDay = calendarDay;
+            saveState();
+            updateUI();
+            alert(`✅ Ты перешел на ${calendarDay} день марафона!`);
+        }
     }
     else if (currentDay > calendarDay + 7) {
-        tg.showPopup({
-            title: '🔥 Ты чемпион!',
-            message: `Ты прошел ${currentDay} дней, хотя по календарю только ${calendarDay}. Ты настоящий марафонец!`,
-            buttons: [{ type: 'close', text: '🏃 Продолжить' }]
-        });
+        alert(`🔥 Ты чемпион!\n\nТы прошел ${currentDay} дней, хотя по календарю только ${calendarDay}. Ты настоящий марафонец!`);
     }
 }
 
@@ -686,11 +682,7 @@ let currentDay = (function() {
         return parseInt(saved);
     } else {
         setTimeout(() => {
-            tg.showPopup({
-                title: '🏃 Добро пожаловать!',
-                message: 'Твой беговой марафон начинается. Каждый день новая тренировка!',
-                buttons: [{ type: 'close', text: 'Начать тренировку' }]
-            });
+            alert('🏃 Добро пожаловать!\n\nТвой беговой марафон начинается. Каждый день новая тренировка!');
         }, 500);
         return 1;
     }
@@ -793,11 +785,7 @@ function checkAndResetWeek() {
         localStorage.setItem(STORAGE_KEYS.WEEK_START_DATE, weekStartDate);
         localStorage.setItem(STORAGE_KEYS.WEEKLY_PROGRESS, weeklyProgress);
         
-        tg.showPopup({
-            title: '📅',
-            message: currentLanguage === 'ru' ? 'Новая неделя! Цель обновлена' : 'New week! Goal updated',
-            buttons: [{ type: 'close' }]
-        });
+        alert(currentLanguage === 'ru' ? '📅 Новая неделя! Цель обновлена' : '📅 New week! Goal updated');
     }
 }
 
@@ -814,11 +802,7 @@ function updateCharacterProgress(distance) {
             unlockedCharacters.push(nextCharacterId);
             localStorage.setItem(STORAGE_KEYS.UNLOCKED_CHARACTERS, JSON.stringify(unlockedCharacters));
             
-            tg.showPopup({
-                title: '🎉',
-                message: CHARACTERS[nextCharacterId].reward[currentLanguage],
-                buttons: [{ type: 'close' }]
-            });
+            alert(`🎉 ${CHARACTERS[nextCharacterId].reward[currentLanguage]}`);
         }
         
         if (nextCharacterId) {
@@ -993,11 +977,7 @@ function checkNewDayAvailability() {
         dayCompletedTime = null;
         saveState();
 
-        tg.showPopup({
-            title: '🌟',
-            message: t('newDayAvailable'),
-            buttons: [{ type: 'close' }]
-        });
+        alert(`🌟 ${t('newDayAvailable')}`);
 
         return true;
     }
@@ -1077,7 +1057,7 @@ function renderDiary() {
             diaryEntries = diaryEntries.filter(e => e.id !== id);
             localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
             renderDiary();
-            tg.showAlert(t('entryDeleted'));
+            alert(t('entryDeleted'));
         });
     });
 }
@@ -1224,7 +1204,7 @@ function updateCreateButtonState() {
 
 function saveWorkout() {
     if (currentCustomTasks.length === 0) {
-        tg.showAlert(t('enterTask'));
+        alert(t('enterTask'));
         return;
     }
     
@@ -1258,7 +1238,7 @@ function saveWorkout() {
     };
     localStorage.setItem(STORAGE_KEYS.ACTIVE_WORKOUT, JSON.stringify(activeWorkout));
     
-    tg.showAlert(t('workoutCompleted'));
+    alert(t('workoutCompleted'));
     
     currentCustomTasks = [];
     goalInput.value = 5;
@@ -1482,7 +1462,7 @@ function completeWorkout() {
     
     saveState();
     
-    tg.showPopup({ title: '🎉', message: t('workoutCompleted'), buttons: [{ type: 'close' }] });
+    alert(`🎉 ${t('workoutCompleted')}`);
     
     activeWorkout = null;
     localStorage.removeItem(STORAGE_KEYS.ACTIVE_WORKOUT);
@@ -1567,7 +1547,7 @@ function saveCustomExercise() {
     const reps = parseInt(repsInput.value) || 15;
     
     if (!name) {
-        tg.showAlert('Введите название упражнения');
+        alert('Введите название упражнения');
         return;
     }
     
@@ -1595,7 +1575,7 @@ function saveCustomExercise() {
     renderSavedExercisesList();
     renderCustomExercises();
     
-    tg.showAlert('Упражнение сохранено!');
+    alert('Упражнение сохранено!');
 }
 
 function renderSavedExercisesList() {
@@ -2070,7 +2050,7 @@ function addSet(type) {
 
 function addMixedSet() {
     if (strengthToday.mixed.rounds.length >= 5) {
-        tg.showAlert(t('maxRounds'));
+        alert(t('maxRounds'));
         return;
     }
     
@@ -2358,7 +2338,7 @@ function completeStrengthWorkout() {
     const quoteEl = document.getElementById('strength-quote');
     if (quoteEl) quoteEl.textContent = randomQuote[currentLanguage];
     
-    tg.showPopup({ title: '🎉', message: t('strengthCompleted'), buttons: [{ type: 'close' }] });
+    alert(`🎉 ${t('strengthCompleted')}`);
 }
 
 function updateStrengthStats() {
@@ -2378,37 +2358,192 @@ function updateStrengthStats() {
 function editWorkoutPace(index) {
     const workout = workoutHistory[index];
     
-    tg.showPopup({
-        title: '🏃 Редактировать темп',
-        message: `Тренировка ${workout.name || `День ${workout.day}`}\nТекущий темп: ${workout.pace || 'не указан'} мин/км`,
-        buttons: [
-            { id: 'edit', type: 'default', text: '✏️ Изменить' },
-            { type: 'cancel', text: '❌ Отмена' }
-        ]
-    }, (buttonId) => {
-        if (buttonId === 'edit') {
-            const newPace = prompt('Введите новый темп (мин/км):', workout.pace || '');
-            if (newPace && !isNaN(parseFloat(newPace)) && parseFloat(newPace) > 0) {
-                const pace = parseFloat(newPace);
-                const oldTime = workout.time;
-                const newTime = Math.round(workout.distance * pace);
-                
-                workout.pace = pace;
-                workout.time = newTime;
-                
-                // Обновляем общую статистику
-                totalTime = totalTime - oldTime + newTime;
-                
-                saveState();
-                updateStats();
-                
-                tg.showAlert(`✅ Темп обновлен: ${pace} мин/км`);
+    const newPace = prompt(
+        `🏃 ${t('editPace')}\n\n${t('workout')}: ${workout.name || `День ${workout.day}`}\n${t('currentPace')}: ${workout.pace || t('notSpecified')} ${t('pace')}`,
+        workout.pace || ''
+    );
+    
+    if (newPace && !isNaN(parseFloat(newPace)) && parseFloat(newPace) > 0) {
+        const pace = parseFloat(newPace);
+        const oldTime = workout.time;
+        const newTime = Math.round(workout.distance * pace);
+        
+        workout.pace = pace;
+        workout.time = newTime;
+        
+        // Обновляем общую статистику
+        totalTime = totalTime - oldTime + newTime;
+        
+        saveState();
+        updateStats();
+        
+        alert(`✅ ${t('paceUpdated')}: ${pace} ${t('pace')}`);
+    }
+}
+
+// ========== НОВЫЕ ФУНКЦИИ ДЛЯ УДАЛЕНИЯ ТРЕНИРОВОК ==========
+
+let touchStartX = 0;
+let touchCurrentX = 0;
+let isSwiping = false;
+const SWIPE_THRESHOLD = 50; // Минимальное расстояние для свайпа
+
+function initSwipeDetection(item, index) {
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    
+    const handleTouchStart = (e) => {
+        // Предотвращаем скролл страницы
+        e.preventDefault();
+        
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        item.classList.add('swiping');
+        
+        // Убираем предыдущий активный свайп
+        document.querySelectorAll('.history-item.swiping').forEach(el => {
+            if (el !== item) {
+                el.classList.remove('swiping');
+                const overlay = el.querySelector('.delete-overlay');
+                if (overlay) overlay.classList.remove('active');
+                const content = el.querySelector('.history-item-content');
+                if (content) content.style.transform = 'translateX(0)';
             }
+        });
+    };
+    
+    const handleTouchMove = (e) => {
+        if (!isDragging) return;
+        
+        currentX = e.touches[0].clientX;
+        const diff = currentX - startX;
+        
+        // Только свайп влево (отрицательная разница)
+        if (diff < 0) {
+            const translateX = Math.max(diff, -80); // Ограничиваем до -80px
+            const content = item.querySelector('.history-item-content');
+            if (content) {
+                content.style.transform = `translateX(${translateX}px)`;
+            }
+            
+            // Показываем оверлей удаления
+            const overlay = item.querySelector('.delete-overlay');
+            if (overlay) {
+                const opacity = Math.min(Math.abs(diff) / 80, 1);
+                overlay.style.opacity = opacity;
+                if (opacity > 0.1) {
+                    overlay.classList.add('active');
+                }
+            }
+        }
+    };
+    
+    const handleTouchEnd = (e) => {
+        if (!isDragging) return;
+        
+        const diff = currentX - startX;
+        const content = item.querySelector('.history-item-content');
+        const overlay = item.querySelector('.delete-overlay');
+        
+        if (diff < -SWIPE_THRESHOLD) {
+            // Свайп достаточно длинный - показываем подтверждение
+            showDeleteConfirm(index, item);
+        } else {
+            // Возвращаем в исходное положение
+            if (content) {
+                content.style.transform = 'translateX(0)';
+            }
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.classList.remove('active');
+            }
+        }
+        
+        item.classList.remove('swiping');
+        isDragging = false;
+    };
+    
+    item.addEventListener('touchstart', handleTouchStart, { passive: false });
+    item.addEventListener('touchmove', handleTouchMove, { passive: false });
+    item.addEventListener('touchend', handleTouchEnd);
+}
+
+function showDeleteConfirm(index, item) {
+    // Создаем оверлей подтверждения
+    const overlay = document.createElement('div');
+    overlay.className = 'delete-confirm-overlay';
+    
+    const workout = workoutHistory[index];
+    const date = new Date(workout.date).toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
+        day: 'numeric', month: 'long', year: 'numeric'
+    });
+    
+    overlay.innerHTML = `
+        <div class="delete-confirm-card">
+            <h3>🗑️ ${t('deleteWorkoutConfirm')}</h3>
+            <p>${workout.name || `День ${workout.day}`}<br>${date}</p>
+            <div class="delete-confirm-buttons">
+                <button class="delete-confirm-btn cancel">${t('cancel')}</button>
+                <button class="delete-confirm-btn delete">${t('deleteWorkout')}</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    
+    // Анимируем возврат элемента
+    const content = item.querySelector('.history-item-content');
+    if (content) {
+        content.style.transform = 'translateX(0)';
+    }
+    const deleteOverlay = item.querySelector('.delete-overlay');
+    if (deleteOverlay) {
+        deleteOverlay.style.opacity = '0';
+        deleteOverlay.classList.remove('active');
+    }
+    
+    // Обработчики кнопок
+    const cancelBtn = overlay.querySelector('.cancel');
+    const deleteBtn = overlay.querySelector('.delete');
+    
+    cancelBtn.addEventListener('click', () => {
+        overlay.remove();
+    });
+    
+    deleteBtn.addEventListener('click', () => {
+        // Добавляем класс анимации удаления
+        item.classList.add('deleting');
+        
+        setTimeout(() => {
+            // Удаляем тренировку из истории
+            const deletedWorkout = workoutHistory[index];
+            workoutHistory.splice(index, 1);
+            
+            // Пересчитываем общую статистику
+            totalDistance -= deletedWorkout.distance;
+            totalTime -= deletedWorkout.time;
+            totalCalories -= deletedWorkout.calories;
+            totalWorkouts--;
+            
+            saveState();
+            updateStats(); // Перерисовываем историю
+            
+            alert(t('workoutDeleted'));
+        }, 300);
+        
+        overlay.remove();
+    });
+    
+    // Закрытие по клику на оверлей
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) {
+            overlay.remove();
         }
     });
 }
 
-// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ СТАТИСТИКИ ==========
+// ========== ОБНОВЛЕННАЯ ФУНКЦИЯ СТАТИСТИКИ С ПОДДЕРЖКОЙ СВАЙПА ==========
 
 function updateStats() {
     const totalWorkoutsEl = document.getElementById('total-workouts');
@@ -2493,18 +2628,27 @@ function updateStats() {
         if (workoutHistory.length === 0) {
             historyList.innerHTML = `<div class="empty-history">${t('noWorkouts')}</div>`;
         } else {
-            const recent = [...workoutHistory].reverse().slice(0, 10);
+            const recent = [...workoutHistory].reverse().slice(0, 20); // Показываем больше записей
             
             recent.forEach((workout, idx) => {
                 const originalIndex = workoutHistory.length - 1 - idx;
                 const date = new Date(workout.date);
-                const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', { day: 'numeric', month: 'short' });
+                const formattedDate = date.toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', { 
+                    day: 'numeric', 
+                    month: 'short',
+                    year: 'numeric'
+                });
                 const pace = workout.pace ? workout.pace.toFixed(1) : (workout.time / workout.distance).toFixed(1);
                 
                 const item = document.createElement('div');
                 item.className = 'history-item';
+                item.setAttribute('data-index', originalIndex);
+                
                 item.innerHTML = `
-                    <div>
+                    <div class="delete-overlay">
+                        <span>🗑️</span>
+                    </div>
+                    <div class="history-item-content">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span class="history-date">${formattedDate}</span>
                             <span class="history-workout">${workout.name || `День ${workout.day}`}</span>
@@ -2522,11 +2666,15 @@ function updateStats() {
                 `;
                 
                 historyList.appendChild(item);
+                
+                // Инициализируем свайп для этого элемента
+                initSwipeDetection(item, originalIndex);
             });
             
             // Добавляем обработчики для кнопок редактирования темпа
             document.querySelectorAll('.edit-pace-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     const index = parseInt(this.dataset.index);
                     editWorkoutPace(index);
                 });
@@ -2562,7 +2710,7 @@ function updateUI() {
             completedSteps = [];
             additionalCompleted = [];
             saveState();
-            tg.showAlert(t('dayExpiredMsg'));
+            alert(t('dayExpiredMsg'));
         }
     }
 
@@ -3203,12 +3351,12 @@ document.addEventListener('DOMContentLoaded', function() {
         startBtn.addEventListener('click', function() {
             if (dayCompletedTime && !canStartNewDay()) {
                 const remaining = getTimeUntilNextDay4am();
-                if (remaining) tg.showAlert(t('waitMessage', remaining.hours, remaining.minutes));
+                if (remaining) alert(t('waitMessage', remaining.hours, remaining.minutes));
                 return;
             }
             
             if (!canStartDay()) {
-                tg.showAlert(t('onlyFrom4am'));
+                alert(t('onlyFrom4am'));
                 return;
             }
             
@@ -3229,12 +3377,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (completeBtn) {
         completeBtn.addEventListener('click', function() {
             if (!canCompleteDay()) { 
-                tg.showAlert(t('onlyUntil23')); 
+                alert(t('onlyUntil23')); 
                 return; 
             }
             
             if (isDayExpired()) { 
-                tg.showAlert(t('dayExpiredMsg')); 
+                alert(t('dayExpiredMsg')); 
                 return; 
             }
             
@@ -3328,7 +3476,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const taskDistance = parseFloat(document.getElementById('new-task-distance')?.value) || 0;
             
             if (!taskText) { 
-                tg.showAlert(t('enterTask')); 
+                alert(t('enterTask')); 
                 return; 
             }
             
@@ -3463,13 +3611,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (statsMenu) statsMenu.addEventListener('click', function(e) { e.preventDefault(); switchPage(1); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
 
     const supportBtn = document.getElementById('support');
-    if (supportBtn) supportBtn.addEventListener('click', function(e) { e.preventDefault(); tg.showAlert(`${t('support')}: @frontendchikk`); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+    if (supportBtn) supportBtn.addEventListener('click', function(e) { e.preventDefault(); alert(`${t('support')}: @frontendchikk`); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
 
     const telegramBtn = document.getElementById('telegram-support');
-    if (telegramBtn) telegramBtn.addEventListener('click', function(e) { e.preventDefault(); tg.openTelegramLink('https://t.me/frontendchikk'); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+    if (telegramBtn) telegramBtn.addEventListener('click', function(e) { e.preventDefault(); window.open('https://t.me/frontendchikk', '_blank'); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
 
     const faqBtn = document.getElementById('faq');
-    if (faqBtn) faqBtn.addEventListener('click', function(e) { e.preventDefault(); tg.showAlert(t('faqText')); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
+    if (faqBtn) faqBtn.addEventListener('click', function(e) { e.preventDefault(); alert(t('faqText')); const menu = document.getElementById('menu-dropdown'); const menuBtn = document.getElementById('menu-btn'); if (menu) menu.style.display = 'none'; if (menuBtn) menuBtn.classList.remove('active'); });
 
     const addEntryBtn = document.getElementById('add-entry-btn');
     if (addEntryBtn) addEntryBtn.addEventListener('click', function() {
@@ -3487,7 +3635,7 @@ document.addEventListener('DOMContentLoaded', function() {
             diaryEntries.push({ id: Date.now(), text: text, date: new Date().toISOString() });
             localStorage.setItem(STORAGE_KEYS.DIARY_ENTRIES, JSON.stringify(diaryEntries));
             renderDiary();
-            tg.showAlert(t('entrySaved'));
+            alert(t('entrySaved'));
             
             const textarea = document.getElementById('entry-text');
             const form = document.getElementById('add-entry-form');
