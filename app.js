@@ -2069,96 +2069,117 @@ function addMixedSet() {
 // ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ДЛЯ МГНОВЕННОГО ОБНОВЛЕНИЯ ПОЛЗУНКОВ ==========
 
 function updatePullupsGoal() {
+    console.log('updatePullupsGoal вызван');
     const slider = document.getElementById('pullups-goal-slider');
     const valueSpan = document.getElementById('pullups-goal-value');
     const goalSpan = document.getElementById('pullups-goal');
     const todaySpan = document.getElementById('pullups-today');
     
-    if (slider && valueSpan && goalSpan) {
-        // Устанавливаем начальное значение
-        slider.value = strengthToday.pullups.goal;
-        valueSpan.textContent = strengthToday.pullups.goal;
-        goalSpan.textContent = strengthToday.pullups.goal;
+    if (!slider) {
+        console.error('Слайдер для подтягиваний не найден');
+        return;
+    }
+    
+    if (!valueSpan) console.error('valueSpan не найден');
+    if (!goalSpan) console.error('goalSpan не найден');
+    
+    // Устанавливаем начальное значение
+    slider.value = strengthToday.pullups.goal;
+    if (valueSpan) valueSpan.textContent = strengthToday.pullups.goal;
+    if (goalSpan) goalSpan.textContent = strengthToday.pullups.goal;
+    
+    // Обновляем отображение выполнено/цель
+    const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pullups.goal}`;
+    
+    // Удаляем все старые обработчики и добавляем новый
+    slider.oninput = null;
+    
+    // Добавляем новый обработчик
+    slider.addEventListener('input', function(e) {
+        const value = parseInt(e.target.value);
+        console.log('Ползунок подтягиваний движется:', value);
+        
+        // Обновляем все элементы
+        if (valueSpan) valueSpan.textContent = value;
+        if (goalSpan) goalSpan.textContent = value;
+        strengthToday.pullups.goal = value;
         
         // Обновляем отображение выполнено/цель
         const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
-        if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pullups.goal}`;
+        if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
         
-        // Удаляем старые обработчики, чтобы не было дублирования
-        const newSlider = slider.cloneNode(true);
-        slider.parentNode.replaceChild(newSlider, slider);
-        
-        // Добавляем обработчик input для мгновенного обновления
-        newSlider.addEventListener('input', function() {
-            const value = this.value;
-            
-            // Мгновенно обновляем все элементы
-            valueSpan.textContent = value;
-            goalSpan.textContent = value;
-            strengthToday.pullups.goal = parseInt(value);
-            
-            // Обновляем отображение выполнено/цель
-            const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
-            if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
-            
-            // Обновляем прогресс в реальном времени
-            updatePullupsStats();
-            saveState();
-        });
-    }
+        // Обновляем прогресс
+        updatePullupsStats();
+        saveState();
+    });
+    
+    console.log('Обработчик input добавлен для подтягиваний');
 }
 
 function updatePushupsGoal() {
+    console.log('updatePushupsGoal вызван');
     const slider = document.getElementById('pushups-goal-slider');
     const valueSpan = document.getElementById('pushups-goal-value');
     const goalSpan = document.getElementById('pushups-goal');
     const todaySpan = document.getElementById('pushups-today');
     
-    if (slider && valueSpan && goalSpan) {
-        // Устанавливаем начальное значение
-        slider.value = strengthToday.pushups.goal;
-        valueSpan.textContent = strengthToday.pushups.goal;
-        goalSpan.textContent = strengthToday.pushups.goal;
+    if (!slider) {
+        console.error('Слайдер для отжиманий не найден');
+        return;
+    }
+    
+    // Устанавливаем начальное значение
+    slider.value = strengthToday.pushups.goal;
+    if (valueSpan) valueSpan.textContent = strengthToday.pushups.goal;
+    if (goalSpan) goalSpan.textContent = strengthToday.pushups.goal;
+    
+    // Обновляем отображение выполнено/цель
+    const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
+    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pushups.goal}`;
+    
+    // Удаляем все старые обработчики
+    slider.oninput = null;
+    
+    // Добавляем новый обработчик
+    slider.addEventListener('input', function(e) {
+        const value = parseInt(e.target.value);
+        console.log('Ползунок отжиманий движется:', value);
+        
+        // Обновляем все элементы
+        if (valueSpan) valueSpan.textContent = value;
+        if (goalSpan) goalSpan.textContent = value;
+        strengthToday.pushups.goal = value;
         
         // Обновляем отображение выполнено/цель
         const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
-        if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pushups.goal}`;
+        if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
         
-        // Удаляем старые обработчики, чтобы не было дублирования
-        const newSlider = slider.cloneNode(true);
-        slider.parentNode.replaceChild(newSlider, slider);
-        
-        // Добавляем обработчик input для мгновенного обновления
-        newSlider.addEventListener('input', function() {
-            const value = this.value;
-            
-            // Мгновенно обновляем все элементы
-            valueSpan.textContent = value;
-            goalSpan.textContent = value;
-            strengthToday.pushups.goal = parseInt(value);
-            
-            // Обновляем отображение выполнено/цель
-            const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
-            if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
-            
-            // Обновляем прогресс в реальном времени
-            updatePushupsStats();
-            saveState();
-        });
-    }
+        // Обновляем прогресс
+        updatePushupsStats();
+        saveState();
+    });
+    
+    console.log('Обработчик input добавлен для отжиманий');
 }
 
 function updatePullupsStats() {
+    console.log('updatePullupsStats вызван');
     const summaryPullups = document.getElementById('summary-pullups');
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
     const todaySpan = document.getElementById('pullups-today');
     const goalSpan = document.getElementById('pullups-goal');
     const valueSpan = document.getElementById('pullups-goal-value');
+    const completeBtn = document.getElementById('complete-strength-btn');
+    const summaryCalories = document.getElementById('summary-calories');
     
     const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pullups.goal;
     
+    console.log('Обновление статистики подтягиваний:', totalCompleted, '/', goal);
+    
+    // Обновляем все элементы
     if (summaryPullups) summaryPullups.textContent = totalCompleted;
     if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
     if (goalSpan) goalSpan.textContent = goal;
@@ -2174,27 +2195,31 @@ function updatePullupsStats() {
         if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
         
         // Обновляем кнопку завершения
-        const completeBtn = document.getElementById('complete-strength-btn');
         if (completeBtn) completeBtn.disabled = !strengthToday.pullups.completed;
         
         // Обновляем калории
         const calories = Math.round(totalCompleted * 0.5);
-        const summaryCalories = document.getElementById('summary-calories');
         if (summaryCalories) summaryCalories.textContent = calories;
     }
 }
 
 function updatePushupsStats() {
+    console.log('updatePushupsStats вызван');
     const summaryPushups = document.getElementById('summary-pushups');
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
     const todaySpan = document.getElementById('pushups-today');
     const goalSpan = document.getElementById('pushups-goal');
     const valueSpan = document.getElementById('pushups-goal-value');
+    const completeBtn = document.getElementById('complete-strength-btn');
+    const summaryCalories = document.getElementById('summary-calories');
     
     const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pushups.goal;
     
+    console.log('Обновление статистики отжиманий:', totalCompleted, '/', goal);
+    
+    // Обновляем все элементы
     if (summaryPushups) summaryPushups.textContent = totalCompleted;
     if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
     if (goalSpan) goalSpan.textContent = goal;
@@ -2210,12 +2235,10 @@ function updatePushupsStats() {
         if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
         
         // Обновляем кнопку завершения
-        const completeBtn = document.getElementById('complete-strength-btn');
         if (completeBtn) completeBtn.disabled = !strengthToday.pushups.completed;
         
         // Обновляем калории
         const calories = Math.round(totalCompleted * 0.3);
-        const summaryCalories = document.getElementById('summary-calories');
         if (summaryCalories) summaryCalories.textContent = calories;
     }
 }
@@ -2226,6 +2249,8 @@ function updateMixedStats() {
     const mixedToday = document.getElementById('mixed-today');
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
+    const completeBtn = document.getElementById('complete-strength-btn');
+    const summaryCalories = document.getElementById('summary-calories');
     
     let totalPullupsCompleted = 0, totalPushupsCompleted = 0, completedRounds = 0;
     
@@ -2234,6 +2259,8 @@ function updateMixedStats() {
         if (round.pushupsCompleted) totalPushupsCompleted += round.pushups;
         if (round.completed) completedRounds++;
     });
+    
+    console.log('Обновление статистики комплекса:', totalPullupsCompleted, '/', totalPushupsCompleted);
     
     if (summaryPullups) summaryPullups.textContent = totalPullupsCompleted;
     if (summaryPushups) summaryPushups.textContent = totalPushupsCompleted;
@@ -2251,12 +2278,10 @@ function updateMixedStats() {
         if (percentSpan) percentSpan.textContent = Math.round(percent) + '%';
         
         // Обновляем кнопку завершения
-        const completeBtn = document.getElementById('complete-strength-btn');
         if (completeBtn) completeBtn.disabled = !strengthToday.mixed.completed;
         
         // Обновляем калории
         const calories = Math.round(totalPullupsCompleted * 0.5 + totalPushupsCompleted * 0.3);
-        const summaryCalories = document.getElementById('summary-calories');
         if (summaryCalories) summaryCalories.textContent = calories;
     }
     
