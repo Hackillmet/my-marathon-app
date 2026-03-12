@@ -2080,12 +2080,16 @@ function updatePullupsGoal() {
         valueSpan.textContent = strengthToday.pullups.goal;
         goalSpan.textContent = strengthToday.pullups.goal;
         
-        // Обновляем отображение 0/цель
+        // Обновляем отображение выполнено/цель
         const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pullups.goal}`;
         
-        // Используем input для мгновенного обновления
-        slider.addEventListener('input', function() {
+        // Удаляем старые обработчики, чтобы не было дублирования
+        const newSlider = slider.cloneNode(true);
+        slider.parentNode.replaceChild(newSlider, slider);
+        
+        // Добавляем обработчик input для мгновенного обновления
+        newSlider.addEventListener('input', function() {
             const value = this.value;
             
             // Мгновенно обновляем все элементы
@@ -2093,7 +2097,7 @@ function updatePullupsGoal() {
             goalSpan.textContent = value;
             strengthToday.pullups.goal = parseInt(value);
             
-            // Обновляем отображение 0/цель
+            // Обновляем отображение выполнено/цель
             const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
             if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
             
@@ -2116,12 +2120,16 @@ function updatePushupsGoal() {
         valueSpan.textContent = strengthToday.pushups.goal;
         goalSpan.textContent = strengthToday.pushups.goal;
         
-        // Обновляем отображение 0/цель
+        // Обновляем отображение выполнено/цель
         const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
         if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pushups.goal}`;
         
-        // Используем input для мгновенного обновления
-        slider.addEventListener('input', function() {
+        // Удаляем старые обработчики, чтобы не было дублирования
+        const newSlider = slider.cloneNode(true);
+        slider.parentNode.replaceChild(newSlider, slider);
+        
+        // Добавляем обработчик input для мгновенного обновления
+        newSlider.addEventListener('input', function() {
             const value = this.value;
             
             // Мгновенно обновляем все элементы
@@ -2129,7 +2137,7 @@ function updatePushupsGoal() {
             goalSpan.textContent = value;
             strengthToday.pushups.goal = parseInt(value);
             
-            // Обновляем отображение 0/цель
+            // Обновляем отображение выполнено/цель
             const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
             if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${value}`;
             
@@ -2144,11 +2152,17 @@ function updatePullupsStats() {
     const summaryPullups = document.getElementById('summary-pullups');
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
+    const todaySpan = document.getElementById('pullups-today');
+    const goalSpan = document.getElementById('pullups-goal');
+    const valueSpan = document.getElementById('pullups-goal-value');
     
     const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pullups.goal;
     
     if (summaryPullups) summaryPullups.textContent = totalCompleted;
+    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    if (goalSpan) goalSpan.textContent = goal;
+    if (valueSpan) valueSpan.textContent = goal;
     
     // Проверяем, выполнена ли цель
     strengthToday.pullups.completed = totalCompleted >= goal;
@@ -2174,11 +2188,17 @@ function updatePushupsStats() {
     const summaryPushups = document.getElementById('summary-pushups');
     const progressBar = document.getElementById('strength-progress');
     const percentSpan = document.getElementById('strength-percent');
+    const todaySpan = document.getElementById('pushups-today');
+    const goalSpan = document.getElementById('pushups-goal');
+    const valueSpan = document.getElementById('pushups-goal-value');
     
     const totalCompleted = strengthToday.pushups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     const goal = strengthToday.pushups.goal;
     
     if (summaryPushups) summaryPushups.textContent = totalCompleted;
+    if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${goal}`;
+    if (goalSpan) goalSpan.textContent = goal;
+    if (valueSpan) valueSpan.textContent = goal;
     
     // Проверяем, выполнена ли цель
     strengthToday.pushups.completed = totalCompleted >= goal;
@@ -2441,13 +2461,13 @@ function updateStrengthStats() {
     if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
-// ========== НОВАЯ ФУНКЦИЯ ДЛЯ РЕДАКТИРОВАНИЯ ТЕМПА В СТАТИСТИКЕ ==========
+// ========== ФУНКЦИЯ ДЛЯ РЕДАКТИРОВАНИЯ ТЕМПА В СТАТИСТИКЕ ==========
 
 function editWorkoutPace(index) {
     const workout = workoutHistory[index];
     
     const newPace = prompt(
-        `🏃 ${t('editPace')}\n\n${t('workout')}: ${workout.name || `День ${workout.day}`}\n${t('currentPace')}: ${workout.pace || t('notSpecified')} ${t('pace')}`,
+        `🏃 ${t('editPace')}\n\nТренировка: ${workout.name || `День ${workout.day}`}\nТекущий темп: ${workout.pace || 'не указан'} ${t('pace')}`,
         workout.pace || ''
     );
     
@@ -2465,11 +2485,11 @@ function editWorkoutPace(index) {
         saveState();
         updateStats();
         
-        alert(`✅ ${t('paceUpdated')}: ${pace} ${t('pace')}`);
+        alert(`✅ Темп обновлен: ${pace} ${t('pace')}`);
     }
 }
 
-// ========== НОВЫЕ ФУНКЦИИ ДЛЯ УДАЛЕНИЯ ТРЕНИРОВОК ==========
+// ========== ФУНКЦИИ ДЛЯ УДАЛЕНИЯ ТРЕНИРОВОК ==========
 
 let touchStartX = 0;
 let touchCurrentX = 0;
