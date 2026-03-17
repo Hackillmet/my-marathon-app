@@ -3185,3 +3185,187 @@ body {
         font-size: 18px;
     }
 }
+/* ===== СТИЛИ ДЛЯ СВАЙП-МЕНЮ ===== */
+
+.history-item {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y pinch-zoom;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.history-item.swiping {
+    transition: none;
+}
+
+.history-item.deleting {
+    animation: slideOut 0.3s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes slideOut {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(-100%); opacity: 0; }
+}
+
+.history-item-content {
+    position: relative;
+    z-index: 10;
+    background: inherit;
+    transition: transform 0.2s ease;
+    width: 100%;
+    padding: 12px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+}
+
+/* Свайп-меню */
+.swipe-menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 12px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.swipe-menu-button {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 22px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
+    pointer-events: auto;
+    opacity: 0.9;
+}
+
+.swipe-menu-button.edit-btn {
+    background: var(--gradient-blue);
+    color: white;
+}
+
+.swipe-menu-button.delete-btn {
+    background: var(--gradient-red);
+    color: white;
+}
+
+.swipe-menu-button:active {
+    transform: scale(0.9);
+    opacity: 1;
+}
+
+/* Анимация восстановления */
+@keyframes slideIn {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.history-item.restoring {
+    animation: slideIn 0.3s ease;
+}
+
+/* Подтверждение удаления */
+.delete-confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.delete-confirm-card {
+    background: var(--bg-card);
+    border-radius: 24px;
+    padding: 24px;
+    width: 280px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.delete-confirm-card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: var(--danger);
+}
+
+.delete-confirm-card p {
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.delete-confirm-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.delete-confirm-btn {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.delete-confirm-btn.delete {
+    background: var(--gradient-red);
+    color: white;
+}
+
+.delete-confirm-btn.cancel {
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.delete-confirm-btn:active {
+    transform: scale(0.97);
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 480px) {
+    .swipe-menu-button {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    
+    .delete-confirm-card {
+        width: 260px;
+        padding: 20px;
+    }
+}
