@@ -283,6 +283,7 @@ const translations = {
         paceRequired: "Введи темп для беговых шагов",
         editPace: "Изменить темп",
         savePace: "Сохранить",
+        paceUpdated: "Темп обновлен",
         
         // Для удаления тренировок
         deleteWorkoutConfirm: "Удалить тренировку?",
@@ -429,6 +430,7 @@ const translations = {
         paceRequired: "Enter pace for running steps",
         editPace: "Edit pace",
         savePace: "Save",
+        paceUpdated: "Pace updated",
         
         // For deleting workouts
         deleteWorkoutConfirm: "Delete workout?",
@@ -2066,7 +2068,7 @@ function addMixedSet() {
     saveState();
 }
 
-// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ДЛЯ МГНОВЕННОГО ОБНОВЛЕНИЯ ПОЛЗУНКОВ ==========
+// ========== ФУНКЦИИ ДЛЯ МГНОВЕННОГО ОБНОВЛЕНИЯ ПОЛЗУНКОВ ==========
 
 function updatePullupsGoal() {
     console.log('updatePullupsGoal вызван');
@@ -2080,9 +2082,6 @@ function updatePullupsGoal() {
         return;
     }
     
-    if (!valueSpan) console.error('valueSpan не найден');
-    if (!goalSpan) console.error('goalSpan не найден');
-    
     // Устанавливаем начальное значение
     slider.value = strengthToday.pullups.goal;
     if (valueSpan) valueSpan.textContent = strengthToday.pullups.goal;
@@ -2092,7 +2091,7 @@ function updatePullupsGoal() {
     const totalCompleted = strengthToday.pullups.sets.filter(set => set.completed).reduce((sum, set) => sum + set.reps, 0);
     if (todaySpan) todaySpan.innerHTML = `${totalCompleted}/${strengthToday.pullups.goal}`;
     
-    // Удаляем все старые обработчики и добавляем новый
+    // Удаляем все старые обработчики
     slider.oninput = null;
     
     // Добавляем новый обработчик
@@ -2486,53 +2485,109 @@ function updateStrengthStats() {
     if (bestPullupsEl) bestPullupsEl.textContent = bestPullups;
 }
 
-// ========== ФУНКЦИЯ ДЛЯ РЕДАКТИРОВАНИЯ ТЕМПА В СТАТИСТИКЕ ==========
+// ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ ДЛЯ РЕДАКТИРОВАНИЯ ТЕМПА ==========
 
 function editWorkoutPace(index) {
+    console.log('editWorkoutPace вызван с индексом:', index);
+    
+    // Проверяем, что индекс корректен
+    if (index === undefined || index === null || index < 0 || index >= workoutHistory.length) {
+        console.error('Неверный индекс тренировки:', index);
+        alert('Ошибка: тренировка не найдена');
+        return;
+    }
+    
     const workout = workoutHistory[index];
     
-    const newPace = prompt(
-        `🏃 ${t('editPace')}\n\nТренировка: ${workout.name || `День ${workout.day}`}\nТекущий темп: ${workout.pace || 'не указан'} ${t('pace')}`,
-        workout.pace || ''
-    );
+    // Проверяем, что тренировка существует
+    if (!workout) {
+        console.error('Тренировка не найдена по индексу:', index);
+        alert('Ошибка: тренировка не найдена');
+        return;
+    }
+    
+    console.log('Редактирование тренировки:', workout);
+    
+    // Проверяем, есть ли дистанция
+    if (!workout.distance || workout.distance <= 0) {
+        alert('У этой тренировки нет дистанции для расчета темпа');
+        return;
+    }
+    
+    const currentPace = workout.pace ? workout.pace.toFixed(1) : '';
+    const message = `🏃 ${t('editPace')}\n\nТренировка: ${workout.name || `День ${workout.day}`}\nТекущий темп: ${currentPace || 'не указан'} ${t('pace')}\nДистанция: ${workout.distance} ${t('distance')}`;
+    
+    const newPace = prompt(message, currentPace);
+    
+    if (newPace === null) {
+        console.log('Пользователь отменил редактирование');
+        return; // Пользователь нажал "Отмена"
+    }
     
     if (newPace && !isNaN(parseFloat(newPace)) && parseFloat(newPace) > 0) {
         const pace = parseFloat(newPace);
         const oldTime = workout.time;
         const newTime = Math.round(workout.distance * pace);
         
+        console.log('Новый темп:', pace, 'старое время:', oldTime, 'новое время:', newTime);
+        
+        // Сохраняем старые значения для пересчета статистики
+        const oldDistance = workout.distance;
+        const oldCalories = workout.calories;
+        
+        // Обновляем тренировку
         workout.pace = pace;
         workout.time = newTime;
         
-        // Обновляем общую статистику
+        // Пересчитываем общую статистику
+        // Время
         totalTime = totalTime - oldTime + newTime;
         
-        saveState();
-        updateStats();
+        // Дистанция не меняется, калории тоже (они от дистанции)
         
-        alert(`✅ Темп обновлен: ${pace} ${t('pace')}`);
+        saveState();
+        updateStats(); // Перерисовываем историю
+        
+        alert(`✅ ${t('paceUpdated') || 'Темп обновлен'}: ${pace} ${t('pace')}`);
+    } else if (newPace !== '') {
+        alert('❌ Введите корректное положительное число');
     }
 }
 
-// ========== ФУНКЦИИ ДЛЯ УДАЛЕНИЯ ТРЕНИРОВОК ==========
+// ========== ИСПРАВЛЕННЫЕ ФУНКЦИИ ДЛЯ УДАЛЕНИЯ ТРЕНИРОВОК ==========
 
 let touchStartX = 0;
 let touchCurrentX = 0;
 let isSwiping = false;
+let currentSwipeItem = null;
+let currentSwipeIndex = -1;
 const SWIPE_THRESHOLD = 50; // Минимальное расстояние для свайпа
 
 function initSwipeDetection(item, index) {
+    if (!item) return;
+    
+    console.log('Инициализация свайпа для элемента с индексом:', index);
+    
     let startX = 0;
     let currentX = 0;
     let isDragging = false;
     
-    const handleTouchStart = (e) => {
-        // Предотвращаем скролл страницы
-        e.preventDefault();
+    // Удаляем старые обработчики, чтобы не было дублирования
+    item.removeEventListener('touchstart', handleTouchStart);
+    item.removeEventListener('touchmove', handleTouchMove);
+    item.removeEventListener('touchend', handleTouchEnd);
+    
+    function handleTouchStart(e) {
+        // Предотвращаем скролл страницы только если это одиночное касание
+        if (e.touches.length === 1) {
+            e.preventDefault();
+        }
         
         startX = e.touches[0].clientX;
         isDragging = true;
         item.classList.add('swiping');
+        currentSwipeItem = item;
+        currentSwipeIndex = index;
         
         // Убираем предыдущий активный свайп
         document.querySelectorAll('.history-item.swiping').forEach(el => {
@@ -2544,9 +2599,9 @@ function initSwipeDetection(item, index) {
                 if (content) content.style.transform = 'translateX(0)';
             }
         });
-    };
+    }
     
-    const handleTouchMove = (e) => {
+    function handleTouchMove(e) {
         if (!isDragging) return;
         
         currentX = e.touches[0].clientX;
@@ -2570,9 +2625,9 @@ function initSwipeDetection(item, index) {
                 }
             }
         }
-    };
+    }
     
-    const handleTouchEnd = (e) => {
+    function handleTouchEnd(e) {
         if (!isDragging) return;
         
         const diff = currentX - startX;
@@ -2580,6 +2635,7 @@ function initSwipeDetection(item, index) {
         const overlay = item.querySelector('.delete-overlay');
         
         if (diff < -SWIPE_THRESHOLD) {
+            console.log('Свайп влево обнаружен, показываем подтверждение для индекса:', index);
             // Свайп достаточно длинный - показываем подтверждение
             showDeleteConfirm(index, item);
         } else {
@@ -2595,7 +2651,9 @@ function initSwipeDetection(item, index) {
         
         item.classList.remove('swiping');
         isDragging = false;
-    };
+        currentSwipeItem = null;
+        currentSwipeIndex = -1;
+    }
     
     item.addEventListener('touchstart', handleTouchStart, { passive: false });
     item.addEventListener('touchmove', handleTouchMove, { passive: false });
@@ -2603,11 +2661,27 @@ function initSwipeDetection(item, index) {
 }
 
 function showDeleteConfirm(index, item) {
+    console.log('showDeleteConfirm вызван с индексом:', index);
+    
+    // Проверяем, что индекс корректен
+    if (index === undefined || index === null || index < 0 || index >= workoutHistory.length) {
+        console.error('Неверный индекс для удаления:', index);
+        alert('Ошибка: тренировка не найдена');
+        return;
+    }
+    
+    const workout = workoutHistory[index];
+    
+    if (!workout) {
+        console.error('Тренировка не найдена по индексу:', index);
+        alert('Ошибка: тренировка не найдена');
+        return;
+    }
+    
     // Создаем оверлей подтверждения
     const overlay = document.createElement('div');
     overlay.className = 'delete-confirm-overlay';
     
-    const workout = workoutHistory[index];
     const date = new Date(workout.date).toLocaleDateString(currentLanguage === 'ru' ? 'ru-RU' : 'en-US', {
         day: 'numeric', month: 'long', year: 'numeric'
     });
@@ -2645,12 +2719,23 @@ function showDeleteConfirm(index, item) {
     });
     
     deleteBtn.addEventListener('click', () => {
+        console.log('Подтверждено удаление тренировки с индексом:', index);
+        
         // Добавляем класс анимации удаления
         item.classList.add('deleting');
         
         setTimeout(() => {
             // Удаляем тренировку из истории
             const deletedWorkout = workoutHistory[index];
+            
+            if (!deletedWorkout) {
+                console.error('Тренировка не найдена при удалении');
+                overlay.remove();
+                return;
+            }
+            
+            console.log('Удаляемая тренировка:', deletedWorkout);
+            
             workoutHistory.splice(index, 1);
             
             // Пересчитываем общую статистику
@@ -2679,6 +2764,8 @@ function showDeleteConfirm(index, item) {
 // ========== ОБНОВЛЕННАЯ ФУНКЦИЯ СТАТИСТИКИ С ПОДДЕРЖКОЙ СВАЙПА ==========
 
 function updateStats() {
+    console.log('updateStats вызван, история тренировок:', workoutHistory.length);
+    
     const totalWorkoutsEl = document.getElementById('total-workouts');
     const totalDistanceEl = document.getElementById('total-distance');
     const totalTimeEl = document.getElementById('total-time');
@@ -2776,6 +2863,7 @@ function updateStats() {
                 const item = document.createElement('div');
                 item.className = 'history-item';
                 item.setAttribute('data-index', originalIndex);
+                item.setAttribute('data-id', workout.id || originalIndex);
                 
                 item.innerHTML = `
                     <div class="delete-overlay">
@@ -2806,16 +2894,24 @@ function updateStats() {
             
             // Добавляем обработчики для кнопок редактирования темпа
             document.querySelectorAll('.edit-pace-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const index = parseInt(this.dataset.index);
-                    editWorkoutPace(index);
-                });
+                // Удаляем старые обработчики
+                btn.removeEventListener('click', handleEditPaceClick);
+                
+                // Добавляем новый обработчик
+                btn.addEventListener('click', handleEditPaceClick);
             });
         }
     }
     
     updateStrengthStats();
+}
+
+// Обработчик для кнопок редактирования темпа
+function handleEditPaceClick(e) {
+    e.stopPropagation();
+    const index = parseInt(this.dataset.index);
+    console.log('Кнопка редактирования темпа нажата для индекса:', index);
+    editWorkoutPace(index);
 }
 
 // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА БЕГА ==========
