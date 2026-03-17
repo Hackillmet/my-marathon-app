@@ -2504,56 +2504,60 @@ function initSwipeMenu(item, index) {
     let startX = 0;
     let currentX = 0;
     let isDragging = false;
-    let menuVisible = false;
     
     // Удаляем старые обработчики
     item.removeEventListener('touchstart', handleTouchStart);
     item.removeEventListener('touchmove', handleTouchMove);
     item.removeEventListener('touchend', handleTouchEnd);
     
-    // Создаем меню, если его нет
-    let menu = item.querySelector('.swipe-menu');
-    if (!menu) {
-        menu = document.createElement('div');
-        menu.className = 'swipe-menu';
-        menu.innerHTML = `
-            <button class="swipe-menu-button edit-btn" data-index="${index}">✏️</button>
-            <button class="swipe-menu-button delete-btn" data-index="${index}">🗑️</button>
-        `;
-        item.appendChild(menu);
-        
-        // Добавляем обработчики для кнопок
-        const editBtn = menu.querySelector('.edit-btn');
-        const deleteBtn = menu.querySelector('.delete-btn');
-        
-        editBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Кнопка редактирования нажата для индекса:', index);
-            editWorkoutPace(index);
-            
-            // Скрываем меню
-            const content = item.querySelector('.history-item-content');
-            if (content) {
-                content.style.transform = 'translateX(0)';
-            }
-            menuVisible = false;
-        });
-        
-        deleteBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Кнопка удаления нажата для индекса:', index);
-            showDeleteConfirm(index, item);
-            
-            // Скрываем меню
-            const content = item.querySelector('.history-item-content');
-            if (content) {
-                content.style.transform = 'translateX(0)';
-            }
-            menuVisible = false;
-        });
+    // Удаляем старое меню, если есть
+    const oldMenu = item.querySelector('.swipe-menu');
+    if (oldMenu) {
+        oldMenu.remove();
     }
+    
+    // Создаем новое меню
+    const menu = document.createElement('div');
+    menu.className = 'swipe-menu';
+    menu.innerHTML = `
+        <button class="swipe-menu-button edit-btn" data-index="${index}">✏️</button>
+        <button class="swipe-menu-button delete-btn" data-index="${index}">🗑️</button>
+    `;
+    item.appendChild(menu);
+    
+    // Добавляем обработчики для кнопок с остановкой всплытия
+    const editBtn = menu.querySelector('.edit-btn');
+    const deleteBtn = menu.querySelector('.delete-btn');
+    
+    editBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Кнопка редактирования нажата для индекса:', index);
+        
+        // Скрываем меню
+        const content = item.querySelector('.history-item-content');
+        if (content) {
+            content.style.transform = 'translateX(0)';
+        }
+        
+        // Вызываем функцию редактирования
+        editWorkoutPace(index);
+    });
+    
+    deleteBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Кнопка удаления нажата для индекса:', index);
+        
+        // Скрываем меню
+        const content = item.querySelector('.history-item-content');
+        if (content) {
+            content.style.transform = 'translateX(0)';
+        }
+        
+        // Вызываем функцию удаления
+        showDeleteConfirm(index, item);
+    });
     
     function handleTouchStart(e) {
         // Предотвращаем скролл страницы только если это одиночное касание
@@ -2611,22 +2615,8 @@ function initSwipeMenu(item, index) {
             if (content) {
                 content.style.transform = `translateX(-${SWIPE_MENU_WIDTH}px)`;
             }
-            menuVisible = true;
-        } else {
-            // Возвращаем в исходное положение
-            if (content) {
-                content.style.transform = 'translateX(0)';
-            }
-            menuVisible = false;
-        }
-        
-        item.classList.remove('swiping');
-        isDragging = false;
-        currentSwipeItem = null;
-        currentSwipeIndex = -1;
-        
-        // Автоматически закрываем меню через 5 секунд
-        if (menuVisible) {
+            
+            // Автоматически закрываем меню через 5 секунд
             if (swipeMenuTimeout) {
                 clearTimeout(swipeMenuTimeout);
             }
@@ -2635,7 +2625,17 @@ function initSwipeMenu(item, index) {
                     content.style.transform = 'translateX(0)';
                 }
             }, 5000);
+        } else {
+            // Возвращаем в исходное положение
+            if (content) {
+                content.style.transform = 'translateX(0)';
+            }
         }
+        
+        item.classList.remove('swiping');
+        isDragging = false;
+        currentSwipeItem = null;
+        currentSwipeIndex = -1;
     }
     
     item.addEventListener('touchstart', handleTouchStart, { passive: false });
@@ -2686,11 +2686,15 @@ function showDeleteConfirm(index, item) {
     const cancelBtn = overlay.querySelector('.cancel');
     const deleteBtn = overlay.querySelector('.delete');
     
-    cancelBtn.addEventListener('click', () => {
+    cancelBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         overlay.remove();
     });
     
-    deleteBtn.addEventListener('click', () => {
+    deleteBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         console.log('Подтверждено удаление тренировки с индексом:', index);
         
         // Добавляем класс анимации удаления
@@ -2726,7 +2730,7 @@ function showDeleteConfirm(index, item) {
     });
     
     // Закрытие по клику на оверлей
-    overlay.addEventListener('click', (e) => {
+    overlay.addEventListener('click', function(e) {
         if (e.target === overlay) {
             overlay.remove();
         }
